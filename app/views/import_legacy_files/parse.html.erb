@@ -1,0 +1,61 @@
+<h2>
+    filename: <%= @legacy_import_file.filename %>
+</h2>
+<h2>
+    path: <%= @legacy_import_file.filepath %>
+</h2>
+<h2>
+    modified at <%= @legacy_import_file.last_modified_at_time %>
+</h2>
+<div>
+    <%= form_tag update_parser_import_legacy_files_path(id: @legacy_import_file.id), method: :put do %>
+        <%= select_tag :legacy_files_parser_id,
+                       options_from_collection_for_select(LegacyFilesParser.all, :id, :parser_name, @legacy_import_file.legacy_files_parser_id), include_blank: true %>
+        <%= submit_tag %>
+    <% end %>
+</div>
+
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>Nº</th>
+            <th>Nombres</th>
+            <th>Grupo</th>
+            <th>Actividad</th>
+            <th>Rango</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Duración</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @legacy_person_activities.each do |legacy_person_activity| %>
+            <tr>
+                <td>
+                    <%= legacy_person_activity.row_number %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.nombres %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.activity_group_str %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.activity_str %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.activity_dates %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.start_date %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.end_date %>
+                </td>
+                <td>
+                    <%= legacy_person_activity.duracion %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

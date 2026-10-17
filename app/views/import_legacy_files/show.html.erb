@@ -6,3 +6,46 @@
         - -
     </h1>
 </div>
+
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>Filename</th>
+            <th>Filepath</th>
+            <th>Last modified at</th>
+            <th>Weight</th>
+            <th>Status</th>
+            <th>Records</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @legacy_import_files.each do |legacy_import_file| %>
+            <tr>
+                <td>
+                    <%= legacy_import_file.filename %>
+                </td>
+                <td>
+                    <%= legacy_import_file.filepath %>
+                </td>
+                <td>
+                    <%= legacy_import_file.last_modified_at_time %>
+                </td>
+                <td>
+                    <%= number_to_human_size legacy_import_file.weight %>
+                </td>
+                <td>
+                    <%= legacy_import_file.status %>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <%= link_to "Parse", parse_import_legacy_files_path(id: legacy_import_file.id) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= paginate @legacy_import_files %>
+

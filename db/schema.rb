@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_134428) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_214806) do
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
   create_table "activities", force: :cascade do |t|
     t.integer "activity_group_id", null: false
     t.string "nombre", null: false
@@ -47,6 +75,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_134428) do
     t.string "sheet_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "file_format"
+  end
+
+  create_table "legacy_import_files", force: :cascade do |t|
+    t.string "filename"
+    t.string "filepath"
+    t.string "last_modified_at"
+    t.integer "legacy_files_parser_id"
+    t.integer "status", default: 0
+    t.integer "duplicate_of_id"
+    t.string "weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["legacy_files_parser_id"], name: "index_legacy_import_files_on_legacy_files_parser_id"
   end
 
   create_table "legacy_person_activities", force: :cascade do |t|
@@ -87,7 +129,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_134428) do
     t.datetime "created_at", null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_groups"
+  add_foreign_key "legacy_import_files", "legacy_files_parsers"
   add_foreign_key "person_activities", "activities", column: "coursable_id"
   add_foreign_key "person_activities", "people"
 end

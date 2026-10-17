@@ -12,7 +12,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resource :import_legacy_files, only: :show
+  resource :import_legacy_files, only: [:show, :create] do
+    member do
+      get :parse
+      put :update_parser
+    end
+  end
   resources :import_people, only: [:new, :create]
   resources :import_people_activities, only: [:new, :create]
   resources :people_activities, only: :index

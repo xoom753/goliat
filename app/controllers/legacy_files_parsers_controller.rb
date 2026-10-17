@@ -65,6 +65,6 @@ class LegacyFilesParsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def legacy_files_parser_params
-      params.expect(legacy_files_parser: [ :parser_name, :row_number, :nombres, :activity_group_str, :activity_str, :activity_dates, :duracion, :start_date_index_from, :start_date_index_to, :end_date_index_from, :end_date_index_to, :sheet_name ])
+      params.expect(legacy_files_parser: [ :parser_name, :row_number, :nombres, :activity_group_str, :activity_str, :activity_dates, :duracion, :start_date_index_from, :start_date_index_to, :end_date_index_from, :end_date_index_to, :sheet_name, :file_format ])
     end
 end

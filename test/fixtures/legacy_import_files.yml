@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  filename: MyString
+  filepath: MyString
+  last_modified_at: MyString
+  legacy_files_parser: one
+  status: 1
+  duplicate_of_id: 1
+  weight: MyString
+
+two:
+  filename: MyString
+  filepath: MyString
+  last_modified_at: MyString
+  legacy_files_parser: two
+  status: 1
+  duplicate_of_id: 1
+  weight: MyString
