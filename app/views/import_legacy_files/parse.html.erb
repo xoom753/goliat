@@ -11,7 +11,7 @@
     <%= form_tag update_parser_import_legacy_files_path(id: @legacy_import_file.id), method: :put do %>
         <%= select_tag :legacy_files_parser_id,
                        options_from_collection_for_select(LegacyFilesParser.all, :id, :parser_name, @legacy_import_file.legacy_files_parser_id), include_blank: true %>
-        <%= submit_tag %>
+        <%= submit_tag "Update parser" %>
     <% end %>
 </div>
 
@@ -59,3 +59,10 @@
         <% end %>
     </tbody>
 </table>
+
+<% if @legacy_import_file.legacy_files_parser.present? %>
+    <%= form_tag import_records_import_legacy_files_path(id: @legacy_import_file.id) do %>
+        <%= @legacy_person_activities.count %> records
+        <%= submit_tag "Import records" %>
+    <% end %>
+<% end %>

@@ -35,10 +35,16 @@ class LegacyFileParseService
                     start_date: activity_dates[start_date_index_from, start_date_index_to],
                     end_date: activity_dates[end_date_index_from, end_date_index_to]
                 )
-                # legacy_person_activity.save!
             end
         end
         activities
+    end
+
+    def import_records!
+        records.each do |record|
+            record.save!
+        end
+        @legacy_import_file.update!(status: :imported)
     end
 
     private

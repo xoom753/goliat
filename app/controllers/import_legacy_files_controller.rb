@@ -32,4 +32,12 @@ class ImportLegacyFilesController < ApplicationController
         )
         redirect_to action: :parse, id: params[:id]
     end
+
+    def import_records
+        @legacy_import_file = LegacyImportFile.find params[:id]
+        ::LegacyFileParseService.new(
+            @legacy_import_file
+        ).import_records!
+        redirect_to action: :show
+    end
 end

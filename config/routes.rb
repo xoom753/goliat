@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     member do
       get :parse
       put :update_parser
+      post :import_records
     end
   end
   resources :import_people, only: [:new, :create]
