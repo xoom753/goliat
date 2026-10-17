@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   resources :courses, only: [:edit, :update, :destroy]
   resources :import_errors, only: :index
   resources :legacy_activities, only: :index
+  resources :legacy_activity_groups, only: :index
+  resources :legacy_person_activities, only: :index
   resources :extra_activities, only: [:index, :new, :edit, :update, :destroy] do
     member do
       put :update_name

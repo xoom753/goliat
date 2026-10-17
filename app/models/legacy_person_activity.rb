@@ -1,10 +1,11 @@
 class LegacyPersonActivity < ApplicationRecord
+    attr_accessor :nombres_str,
+                  :activity_group_str,
+                  :activity_str
+
     belongs_to :legacy_person, optional: true
     belongs_to :legacy_activity, optional: true
     belongs_to :legacy_activity_group, optional: true
-    # attr_accessor :nombres_str,
-    #               :activity_group_str,
-    #               :activity_str
 
     before_save :reference_legacy_person!
     before_save :reference_legacy_activity!
@@ -14,7 +15,7 @@ class LegacyPersonActivity < ApplicationRecord
 
     def reference_legacy_person!
         self.legacy_person = LegacyPerson.where(
-            nombres: nombres
+            nombres: nombres_str
         ).first_or_create!
     end
 

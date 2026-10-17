@@ -1,0 +1,16 @@
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @legacy_activity_groups.each do |legacy_activity| %>
+            <tr>
+                <td>
+                    <%= legacy_activity.nombre %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

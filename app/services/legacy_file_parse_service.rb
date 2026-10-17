@@ -27,7 +27,7 @@ class LegacyFileParseService
                 activity_dates = hash[:fecha].strip
                 activities << legacy_person_activity = LegacyPersonActivity.new(
                     row_number: hash[:row_number],
-                    nombres: hash[:nombres].strip,
+                    nombres_str: hash[:nombres].strip,
                     activity_group_str: hash[:servicios],
                     activity_str: hash[:actividad],
                     activity_dates: activity_dates,
