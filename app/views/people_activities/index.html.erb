@@ -1,0 +1,54 @@
+<div>
+    <%= form_tag people_activities_path, method: :get do %>
+        <%= select_tag :activity_group_id,
+                       options_from_collection_for_select(ActivityGroup.all, :id, :nombre, params[:activity_group_id]),
+                      include_blank: true %>
+        <%= select_tag :activity_id,
+                       options_from_collection_for_select(Activity.all, :id, :nombre, params[:activity_id]), include_blank: true %>
+        <%= select_month Date.today, include_blank: true %>
+        <%= submit_tag "search" %>
+    <% end %>
+</div>
+
+<table id=datatables border=1>
+    <thead>
+        <tr>
+            <th>Eje</th>
+            <th>Actividad</th>
+            <th>Persona</th>
+            <th>DNI</th>
+            <th>Año</th>
+            <th>Mes</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% @people_activities.each do |person_activity| %>
+        <tr>
+            <td>
+                <%= person_activity.activity.activity_group.nombre %>
+            </td>
+            <td>
+                <%= person_activity.activity.nombre %>
+            </td>
+            <td>
+                <%= person_activity.person.nombres %>
+            </td>
+            <td>
+                <%= person_activity.person.dni %>
+            </td>
+            <td>
+                <%= person_activity.anio %>
+            </td>
+            <td>
+                <%= Date::MONTHNAMES[person_activity.mes] %>
+            </td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+
+<%= javascript_tag do %>
+    const table = new DataTable('#datatables', {
+    // Options
+});
+<% end %>

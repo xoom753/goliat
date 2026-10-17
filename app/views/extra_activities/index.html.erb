@@ -1,0 +1,24 @@
+<%= link_to "New Extra Activity",
+            new_extra_activity_path %>
+
+<table class="table is-striped is-hoverable">
+    <tbody>
+        <% @extra_activities.each do |activity| %>
+            <tr>
+                <td>
+                    <%= activity.nombre %>
+                </td>
+                <td>
+                    <%= activity.created_at %>
+                </td>
+                <td>
+                    <%= link_to "Edit",
+                                edit_extra_activity_path(activity) %>
+                    ·
+                    <%= link_to "Export",
+                                export_extra_activity_path(activity) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

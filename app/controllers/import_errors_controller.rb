@@ -1,0 +1,2 @@
+class ImportErrorsController < ApplicationController
+end

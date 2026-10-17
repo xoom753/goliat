@@ -1,0 +1,12 @@
+<h1>Import people activities</h1>
+
+<%= form_tag import_people_activities_path do %>
+    <div>
+        <%= select_tag :activity_id,
+                        options_from_collection_for_select(Activity.all, :id, :nombre) %>
+    </div>
+    <div><%= select_month Date.today %></div>
+    <div><%= select_year Date.today %></div>
+    <div><%= textarea_tag :people_activities %></div>
+    <%= submit_tag %>
+    <% end %>

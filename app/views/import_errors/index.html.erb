@@ -1,0 +1,14 @@
+<table>
+    <tbody class="table is-striped is-hoverable is-narrow">
+        <% ImportError.all.each do |import_error| %>
+            <tr>
+                <td>
+                    <%= import_error.details %>
+                </td>
+                <td>
+                    <%= import_error.created_at %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

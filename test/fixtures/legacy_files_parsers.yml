@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  parser_name: MyString
+  row_number: 1
+  nombres: MyString
+  activity_group_str: MyString
+  activity_str: MyString
+  activity_dates: MyString
+  duracion: MyString
+  start_date_index_from: 1
+  start_date_index_to: 1
+  end_date_index_from: 1
+  end_date_index_to: 1
+  sheet_name: MyString
+
+two:
+  parser_name: MyString
+  row_number: 1
+  nombres: MyString
+  activity_group_str: MyString
+  activity_str: MyString
+  activity_dates: MyString
+  duracion: MyString
+  start_date_index_from: 1
+  start_date_index_to: 1
+  end_date_index_from: 1
+  end_date_index_to: 1
+  sheet_name: MyString

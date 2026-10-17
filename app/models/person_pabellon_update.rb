@@ -1,0 +1,2 @@
+class PersonPabellonUpdate < ApplicationRecord
+end

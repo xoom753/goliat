@@ -1,0 +1,20 @@
+<table>
+    <tbody class="table is-striped is-hoverable is-narrow">
+        <% PersonPabellonUpdate.all.each_with_index do |update, index| %>
+            <tr>
+                <td>
+                    <%= update.id %>
+                </td>
+                <td>
+                    <%= update.nombres %>
+                </td>
+                <td>
+                    <%= update.pabellon %>
+                </td>
+                <td>
+                    <%= update.created_at %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

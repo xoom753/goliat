@@ -1,0 +1,47 @@
+<%= form_tag courses_by_month_path, method: :get do %>
+    <%= select_month @month.to_i %>
+    <%= select_year @year.to_i %>
+    <%= submit_tag "Filter" %>
+<% end %>
+
+<% @activity_groups.each do |activity_group| %>
+    <h3>
+        <%= activity_group.nombre %>
+    </h3>
+    <% activity_group.activities.each do |activity| %>
+        <table class="table is-striped is-hoverable">
+            <tbody>
+                <tr>
+                    <td colspan=4 align=center>
+                        <h4>
+                            <%= activity.nombre %>
+                        </h4>
+                        <%= link_to "Edit",
+                                    edit_course_path(activity, month: @month, year: @year) %>
+                        ·
+                        <%= link_to "Export",
+                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year) %>
+                    </td>
+                </tr>
+
+                <% activity.person_activities.where(mes: @month, anio: @year).each do |person_activity| %>
+                    <tr>
+                        <td>
+                            <%= person_activity.person.nombres %>
+                        </td>
+                        <td>
+                            <%= person_activity.person.dni %>
+                        </td>
+                        <td>
+                            <%= person_activity.cargo %>
+                        </td>
+                        <td>
+                            <%= person_activity.person.pabellon %>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <hr />
+    <% end %>
+<% end %>

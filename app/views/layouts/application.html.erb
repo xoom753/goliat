@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Goliat" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Goliat">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "bulma.min", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "slimselect.min", "data-turbo-track": "reload" %>
+
+    <%= javascript_include_tag "datatables.js", "data-turbolinks-track" => true  %>
+
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div>
+      <%= link_to "People", people_dashboard_path %>
+    </div>
+    <div>
+      <%= link_to "Courses", courses_by_month_path %>
+    </div>
+    <div>
+      <%= link_to "Extra Activities", extra_activities_path %>
+    </div>
+    <div>
+      <%= link_to "Legacy Activities", legacy_activities_path %>
+    </div>
+    <div>
+      <%= link_to "Legacy files parsers", legacy_files_parsers_path %>
+    </div>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<% @activity_groups.each do |activity_group| %>
+    <% activity_group.activities.each do |activity| %>
+        <% person_activities = activity.person_activities.where(person: person) %>
+        <% coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning" %>
+        <td class="<%= coursed_status %>">
+            <% if person_activities.empty? %>
+                NO
+            <% end %>
+            <ul>
+                <% person_activities.each do |person_activity| %>
+                    <li>
+                        <%= Date::MONTHNAMES[person_activity.mes] %>
+                        <%= person_activity.anio %>:
+                        <%= person_activity.cargo %>
+                    </li>
+                <% end %>
+            </ul>
+        </td>
+    <% end %>
+<% end %>

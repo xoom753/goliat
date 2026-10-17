@@ -1,0 +1,55 @@
+<%= form_tag update_name_extra_activity_path, method: :put do %>
+    <%= text_field_tag :nombre, @extra_activity.nombre %>
+    <%= submit_tag %>
+<% end %>
+
+<hr />
+
+<div data-controller="add-person-to-course">
+    <%= form_tag extra_activity_path,
+                 method: :put,
+                 data: {"add-person-to-course-target" => "form"} do %>
+        <%= hidden_field_tag :month, @month %>
+        <%= hidden_field_tag :year, @year %>
+        <%= hidden_field_tag :person_id, nil, data: {"add-person-to-course-target" => "personInput"} %>
+        
+        <select data-add-person-to-course-target="select">
+        </select>
+    <% end %>
+</div>
+
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>
+                Nombres
+            </th>
+            <th>
+                DNI
+            </th>
+            <th>
+                Pabellón
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @person_activities.each do |person_activity| %>
+            <tr>
+                <td>
+                    <%= person_activity.person.nombres %>
+                </td>
+                <td>
+                    <%= person_activity.person.dni %>
+                </td>
+                <td>
+                    <%= person_activity.person.pabellon %>
+                </td>
+                <td>
+                    <%= link_to "Remove", extra_activity_path(person_activity_id: person_activity.id, month: @month, year: @year), data: { turbo_method: :delete } %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

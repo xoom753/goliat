@@ -1,0 +1,2 @@
+class ImportLegacyFilesController < ApplicationController
+end

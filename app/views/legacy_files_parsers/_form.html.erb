@@ -1,0 +1,77 @@
+<%= form_with(model: legacy_files_parser) do |form| %>
+  <% if legacy_files_parser.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(legacy_files_parser.errors.count, "error") %> prohibited this legacy_files_parser from being saved:</h2>
+
+      <ul>
+        <% legacy_files_parser.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :parser_name, style: "display: block" %>
+    <%= form.text_field :parser_name %>
+  </div>
+
+  <div>
+    <%= form.label :row_number, style: "display: block" %>
+    <%= form.text_field :row_number %>
+  </div>
+
+  <div>
+    <%= form.label :nombres, style: "display: block" %>
+    <%= form.text_field :nombres %>
+  </div>
+
+  <div>
+    <%= form.label :activity_group_str, style: "display: block" %>
+    <%= form.text_field :activity_group_str %>
+  </div>
+
+  <div>
+    <%= form.label :activity_str, style: "display: block" %>
+    <%= form.text_field :activity_str %>
+  </div>
+
+  <div>
+    <%= form.label :activity_dates, style: "display: block" %>
+    <%= form.text_field :activity_dates %>
+  </div>
+
+  <div>
+    <%= form.label :duracion, style: "display: block" %>
+    <%= form.text_field :duracion %>
+  </div>
+
+  <div>
+    <%= form.label :start_date_index_from, style: "display: block" %>
+    <%= form.number_field :start_date_index_from %>
+  </div>
+
+  <div>
+    <%= form.label :start_date_index_to, style: "display: block" %>
+    <%= form.number_field :start_date_index_to %>
+  </div>
+
+  <div>
+    <%= form.label :end_date_index_from, style: "display: block" %>
+    <%= form.number_field :end_date_index_from %>
+  </div>
+
+  <div>
+    <%= form.label :end_date_index_to, style: "display: block" %>
+    <%= form.number_field :end_date_index_to %>
+  </div>
+
+  <div>
+    <%= form.label :sheet_name, style: "display: block" %>
+    <%= form.text_field :sheet_name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

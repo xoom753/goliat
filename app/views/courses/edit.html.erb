@@ -1,0 +1,66 @@
+<h2>
+    <%= @activity.nombre %>
+    -
+    <%= @activity.activity_group.nombre %>
+</h2>
+<h3>
+    <%= Date::MONTHNAMES[@month.to_i] %>
+    <%= @year %>
+</h3>
+
+<div data-controller="add-person-to-course">
+    <%= form_tag course_path,
+                 method: :put,
+                 data: {"add-person-to-course-target" => "form"} do %>
+        <%= hidden_field_tag :month, @month %>
+        <%= hidden_field_tag :year, @year %>
+        <%= hidden_field_tag :person_id, nil, data: {"add-person-to-course-target" => "personInput"} %>
+        
+        <select data-add-person-to-course-target="select">
+        </select>
+    <% end %>
+</div>
+
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>
+                Nombres
+            </th>
+            <th>
+                DNI
+            </th>
+            <th>
+                Cargo
+            </th>
+            <th>
+                Pabellón
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @person_activities.each do |person_activity| %>
+            <tr>
+                <td>
+                    <%= person_activity.person.nombres %>
+                </td>
+                <td>
+                    <%= person_activity.person.dni %>
+                </td>
+                <td>
+                    <%= person_activity.cargo %>
+                </td>
+                <td>
+                    <%= person_activity.person.pabellon %>
+                </td>
+                <td>
+                    <%= link_to "Remove", course_path(person_activity_id: person_activity.id, month: @month, year: @year), data: { turbo_method: :delete } %>
+                </td>
+            </tr>
+            <%= render "already_coursed_notice", person_activity: person_activity %>
+            <%= render "duplicate_coursant_notice", person_activity: person_activity %>
+        <% end %>
+    </tbody>
+</table>

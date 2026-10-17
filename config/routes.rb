@@ -1,0 +1,42 @@
+Rails.application.routes.draw do
+  resources :legacy_files_parsers
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
+  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+
+  # Defines the root path route ("/")
+  # root "posts#index"
+  resource :import_legacy_files, only: :show
+  resources :import_people, only: [:new, :create]
+  resources :import_people_activities, only: [:new, :create]
+  resources :people_activities, only: :index
+  resources :courses, only: [:edit, :update, :destroy]
+  resources :import_errors, only: :index
+  resources :legacy_activities, only: :index
+  resources :extra_activities, only: [:index, :new, :edit, :update, :destroy] do
+    member do
+      put :update_name
+      get :export
+    end
+  end
+  resource :courses_by_month, only: [:show] do
+    collection do
+      get :export
+    end
+  end
+  resources :person_pabellon_updates, only: [:index, :new, :create]
+  resource :dashboard, only: [] do
+    collection do
+      get :people
+    end
+  end
+  namespace :api do
+    get :people
+  end
+end

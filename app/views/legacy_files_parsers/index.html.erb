@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Legacy files parsers" %>
+
+<h1>Legacy files parsers</h1>
+
+<div id="legacy_files_parsers">
+  <% @legacy_files_parsers.each do |legacy_files_parser| %>
+    <%= render legacy_files_parser %>
+    <p>
+      <%= link_to "Show this legacy files parser", legacy_files_parser %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New legacy files parser", new_legacy_files_parser_path %>

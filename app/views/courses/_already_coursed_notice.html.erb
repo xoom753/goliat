@@ -1,0 +1,20 @@
+<%
+    person = person_activity.person
+    activity = person_activity.coursable
+    courses_coursed = person.person_activities.where(coursable: activity).where.not(mes: person_activity.mes, anio: person_activity.anio)
+%>
+<% if courses_coursed.exists? %>
+    <tr>
+        <td colspan=4 class="is-warning">
+            WARN: Already coursed course in
+            <% courses_coursed.each do |coursed| %>
+                <div>
+                    <%= Date::MONTHNAMES[coursed.mes] %>
+                    <%= coursed.anio %>
+                    -
+                    <%= coursed.cargo %>
+                </div>
+            <% end %>
+        </td>
+    </tr>
+<% end %>

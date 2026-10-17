@@ -1,0 +1,2 @@
+class LegacyFilesParser < ApplicationRecord
+end

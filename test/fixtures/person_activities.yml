@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person: one
+  activity: one
+  mes: MyString
+  anio: MyString
+  qty_h: MyString
+
+two:
+  person: two
+  activity: two
+  mes: MyString
+  anio: MyString
+  qty_h: MyString

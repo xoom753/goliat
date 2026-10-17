@@ -1,0 +1,46 @@
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>Nº</th>
+            <th>Nombres</th>
+            <th>Grupo</th>
+            <th>Actividad</th>
+            <th>Rango</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Duración</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @legacy_activities.each do |legacy_activity| %>
+            <tr>
+                <td>
+                    <%= legacy_activity.row_number %>
+                </td>
+                <td>
+                    <%= legacy_activity.nombres %>
+                </td>
+                <td>
+                    <%= legacy_activity.activity_group_str %>
+                </td>
+                <td>
+                    <%= legacy_activity.activity_str %>
+                </td>
+                <td>
+                    <%= legacy_activity.activity_dates %>
+                </td>
+                <td>
+                    <%= legacy_activity.start_date %>
+                </td>
+                <td>
+                    <%= legacy_activity.end_date %>
+                </td>
+                <td>
+                    <%= legacy_activity.duracion %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= paginate @legacy_activities %>

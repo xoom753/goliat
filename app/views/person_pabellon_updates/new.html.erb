@@ -1,0 +1,13 @@
+<h1>Update people and their cells</h1>
+
+<code>
+example:
+<br>
+ENCALADA SANCHEZ JHON PAUL"\t"CELDA_E_002"\n"<br>
+ESTRADA FALCON OSWALDO JOSE"\t"CELDA_E_002	
+</code>
+
+<%= form_tag person_pabellon_updates_path do %>
+    <%= textarea_tag :updates %>
+    <%= submit_tag %>
+<% end %>
