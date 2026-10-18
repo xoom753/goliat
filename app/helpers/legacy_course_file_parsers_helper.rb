@@ -1,0 +1,2 @@
+module LegacyCourseFileParsersHelper
+end

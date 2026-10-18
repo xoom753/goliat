@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @legacy_course_file_parser %>
+
+<div>
+  <%= link_to "Edit this legacy course file parser", edit_legacy_course_file_parser_path(@legacy_course_file_parser) %> |
+  <%= link_to "Back to legacy course file parsers", legacy_course_file_parsers_path %>
+
+  <%= button_to "Destroy this legacy course file parser", @legacy_course_file_parser, method: :delete %>
+</div>

@@ -1,0 +1,1 @@
+json.partial! "legacy_course_file_parsers/legacy_course_file_parser", legacy_course_file_parser: @legacy_course_file_parser

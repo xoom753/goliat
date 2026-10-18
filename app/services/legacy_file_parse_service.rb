@@ -7,7 +7,7 @@ class LegacyFileParseService
 
     def initialize(legacy_import_file)
         @legacy_import_file = legacy_import_file
-        @legacy_files_parser = @legacy_import_file.legacy_files_parser
+        @legacy_files_parser = @legacy_import_file.parseable
     end
 
     def records
@@ -17,20 +17,8 @@ class LegacyFileParseService
             if parsing_first_row
                 parsing_first_row = false
             elsif hash[:nombres].present?
-                activity_detail_str = hash[:activity_detail].presence || ""
-                activity_dates = hash[:fecha].strip
-                start_date = activity_dates[start_date_index_from, start_date_index_to]
-                end_date = activity_dates[end_date_index_from, end_date_index_to]
-                activities << legacy_person_activity = LegacyPersonActivity.new(
-                    row_number: hash[:row_number],
-                    nombres_str: hash[:nombres].strip,
-                    activity_group_str: hash[:servicios].strip,
-                    activity_str: hash[:actividad].strip,
-                    activity_detail_str: activity_detail_str.strip,
-                    activity_dates: activity_dates,
-                    duracion: hash[:duracion].strip,
-                    start_date: start_date,
-                    end_date: end_date
+                activities << build_legacy_person_activity(
+                    hash
                 )
             end
         end
@@ -45,6 +33,28 @@ class LegacyFileParseService
     end
 
     private
+
+    def build_legacy_person_activity(hash)
+        nombres_str = hash[:nombres].strip.titleize
+        hash[:actividad].strip.titleize
+        activity_str = activity_group_str = hash[:servicios].strip.titleize
+        activity_detail_str = hash[:activity_detail].presence || ""
+        activity_dates = hash[:fecha].strip
+        start_date = activity_dates[start_date_index_from, start_date_index_to]
+        end_date = activity_dates[end_date_index_from, end_date_index_to]
+
+        LegacyPersonActivity.new(
+            row_number: hash[:row_number],
+            nombres_str: nombres_str,
+            activity_group_str: activity_group_str,
+            activity_str: activity_str,
+            activity_detail_str: activity_detail_str.strip.titleize,
+            activity_dates: activity_dates,
+            duracion: hash[:duracion].strip,
+            start_date: start_date,
+            end_date: end_date
+        )
+    end
 
     def sheet
         file_path = ActiveStorage::Blob.service.path_for(

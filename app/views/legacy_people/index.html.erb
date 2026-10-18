@@ -1,3 +1,8 @@
+<%= form_tag legacy_people_path, method: :get do %>
+    <%= text_field_tag :q, params[:q], placeholder: "Search" %>
+    <%= submit_tag "Search" %>
+<% end %>
+
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>

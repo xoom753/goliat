@@ -34,7 +34,9 @@
                     <%= person.pabellon %>
                 </td>
                 <% @activity_groups.each do |activity_group| %>
-                    <% coursed_group_status = person.person_activities.where(coursable: activity_group.activities).exists? ? "is-primary" : "is-warning" %>
+                    <%
+                        coursed_group_status = person.person_activities.where(coursable: activity_group.activities).exists? ? "is-primary" : "is-warning"
+                    %>
                     <td align=center colspan="<%= activity_group.activities.count %>" class="<%= coursed_group_status %>">
                         <%= activity_group.nombre %>
                     </td>
@@ -43,7 +45,9 @@
             <tr>
                 <% @activity_groups.each do |activity_group| %>
                     <% activity_group.activities.each do |activity| %>
-                        <% coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning" %>
+                        <%
+                            coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning"
+                        %>
                         <td align=center class="<%= coursed_status %>">
                             <%= activity.nombre %>
                         </td>

@@ -1,0 +1,47 @@
+<%= form_with(model: legacy_course_file_parser) do |form| %>
+  <% if legacy_course_file_parser.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(legacy_course_file_parser.errors.count, "error") %> prohibited this legacy_course_file_parser from being saved:</h2>
+
+      <ul>
+        <% legacy_course_file_parser.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :parser_name, style: "display: block" %>
+    <%= form.text_field :parser_name %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.textarea :description %>
+  </div>
+
+  <div>
+    <%= form.label :skip_rows, style: "display: block" %>
+    <%= form.number_field :skip_rows %>
+  </div>
+
+  <div>
+    <%= form.label :nombres_col, style: "display: block" %>
+    <%= form.number_field :nombres_col %>
+  </div>
+
+  <div>
+    <%= form.label :fechas_cols, style: "display: block" %>
+    <%= form.text_field :fechas_cols %>
+  </div>
+
+  <div>
+    <%= form.label :file_format, style: "display: block" %>
+    <%= form.text_field :file_format %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

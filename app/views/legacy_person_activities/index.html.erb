@@ -21,10 +21,10 @@
                     <%= legacy_activity.legacy_person.nombres %>
                 </td>
                 <td>
-                    <%= legacy_activity.legacy_activity_group.nombre %>
+                    <%= legacy_activity.legacy_activity_group.try(:nombre) %>
                 </td>
                 <td>
-                    <%= legacy_activity.legacy_activity.nombre %>
+                    <%= legacy_activity.legacy_activity.try(:nombre) %>
                 </td>
                 <td>
                     <%= legacy_activity.activity_dates %>

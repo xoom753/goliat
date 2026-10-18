@@ -29,33 +29,8 @@
   </head>
 
   <body>
-    <div>
-      <%= link_to "People", people_dashboard_path %>
-    </div>
-    <div>
-      <%= link_to "Courses", courses_by_month_path %>
-    </div>
-    <div>
-      <%= link_to "Extra Activities", extra_activities_path %>
-    </div>
-    <div>
-      <%= link_to "Legacy Person activities", legacy_person_activities_path %>
-    </div>
-    <div>
-      <%= link_to "Legacy files parsers", legacy_files_parsers_path %>
-    </div>
-    <div>
-      <%= link_to "Import Legacy files", import_legacy_files_path %>
-    </div>
-    <div>
-      <%= link_to "Legacy Activity groups", legacy_activity_groups_path %>
-    </div>
-    <div>
-      <%= link_to "Legacy Activities", legacy_activities_path %>
-    </div>
-    <div>
-      <%= link_to "Legacy People", legacy_people_path %>
-    </div>
+    <%= render "layouts/navbar" %>
+
     <%= yield %>
   </body>
 </html>

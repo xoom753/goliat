@@ -1,5 +1,5 @@
 class LegacyImportFile < ApplicationRecord
-  belongs_to :legacy_files_parser, optional: true
+  belongs_to :parseable, polymorphic: true, optional: true
   has_one_attached :file
 
   enum :status, {
@@ -11,5 +11,9 @@ class LegacyImportFile < ApplicationRecord
 
   def last_modified_at_time
     Time.zone.at(last_modified_at.to_i / 1000)
+  end
+
+  def parseable_id_and_type
+    [parseable_id, parseable_type].join("_")
   end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :legacy_course_file_parsers
   resources :legacy_files_parsers
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

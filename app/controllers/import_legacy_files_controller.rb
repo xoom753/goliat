@@ -18,26 +18,45 @@ class ImportLegacyFilesController < ApplicationController
 
     def parse
         @legacy_import_file = LegacyImportFile.find params[:id]
-        if @legacy_import_file.legacy_files_parser.present?
+        if @legacy_import_file.parseable.present? && @legacy_import_file.parseable.is_a?(LegacyFilesParser)
             @legacy_person_activities = ::LegacyFileParseService.new(
                 @legacy_import_file
             ).records
+        elsif @legacy_import_file.parseable.present? && @legacy_import_file.parseable.is_a?(LegacyCourseFileParser)
+            parser_service = ::LegacyCourseFileParserService.new(
+                @legacy_import_file,
+                params: params
+            )
+            parser_service.parse!
+            @file_headers = parser_service.headers
+            @legacy_person_activities = parser_service.records
         end
     end
 
     def update_parser
         @legacy_import_file = LegacyImportFile.find params[:id]
+        parseable_id, parseable_type = params.require(:parseable_id_and_type).split("_")
         @legacy_import_file.update!(
-            legacy_files_parser_id: params.require(:legacy_files_parser_id)
+            parseable_id: parseable_id,
+            parseable_type: parseable_type
         )
         redirect_to action: :parse, id: params[:id]
     end
 
     def import_records
         @legacy_import_file = LegacyImportFile.find params[:id]
-        ::LegacyFileParseService.new(
-            @legacy_import_file
-        ).import_records!
+        if @legacy_import_file.parseable.present? && @legacy_import_file.parseable.is_a?(LegacyFilesParser)
+            ::LegacyFileParseService.new(
+                @legacy_import_file
+            ).import_records!
+        elsif @legacy_import_file.parseable.present? && @legacy_import_file.parseable.is_a?(LegacyCourseFileParser)
+            parser_service = ::LegacyCourseFileParserService.new(
+                @legacy_import_file,
+                params: params
+            )
+            parser_service.parse!
+            parser_service.import_records!
+        end
         redirect_to action: :show
     end
 end

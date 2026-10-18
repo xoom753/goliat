@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_143145) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_164500) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -63,7 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143145) do
   create_table "legacy_activities", force: :cascade do |t|
     t.string "nombre"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["nombre"], name: "index_legacy_activities_on_nombre"
   end
 
   create_table "legacy_activity_details", force: :cascade do |t|
@@ -75,9 +75,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143145) do
   create_table "legacy_activity_groups", force: :cascade do |t|
     t.string "nombre"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "activity_group_id"
     t.index ["activity_group_id"], name: "index_legacy_activity_groups_on_activity_group_id"
+    t.index ["nombre"], name: "index_legacy_activity_groups_on_nombre"
+  end
+
+  create_table "legacy_course_file_parsers", force: :cascade do |t|
+    t.string "parser_name", null: false
+    t.text "description"
+    t.integer "skip_rows"
+    t.integer "nombres_col"
+    t.string "fechas_cols"
+    t.string "file_format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "legacy_files_parsers", force: :cascade do |t|
@@ -104,13 +115,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143145) do
     t.string "filename"
     t.string "filepath"
     t.string "last_modified_at"
-    t.integer "legacy_files_parser_id"
+    t.integer "parseable_id"
     t.integer "status", default: 0
     t.integer "duplicate_of_id"
     t.string "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["legacy_files_parser_id"], name: "index_legacy_import_files_on_legacy_files_parser_id"
+    t.string "parseable_type"
+    t.index ["parseable_id"], name: "index_legacy_import_files_on_parseable_id"
   end
 
   create_table "legacy_people", force: :cascade do |t|
@@ -167,7 +179,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143145) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_groups"
   add_foreign_key "legacy_activity_groups", "activity_groups"
-  add_foreign_key "legacy_import_files", "legacy_files_parsers"
+  add_foreign_key "legacy_import_files", "legacy_files_parsers", column: "parseable_id"
   add_foreign_key "legacy_person_activities", "legacy_activities"
   add_foreign_key "legacy_person_activities", "legacy_activity_details"
   add_foreign_key "legacy_person_activities", "legacy_activity_groups"

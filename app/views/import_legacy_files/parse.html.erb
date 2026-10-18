@@ -9,11 +9,60 @@
 </h2>
 <div>
     <%= form_tag update_parser_import_legacy_files_path(id: @legacy_import_file.id), method: :put do %>
-        <%= select_tag :legacy_files_parser_id,
-                       options_from_collection_for_select(LegacyFilesParser.all, :id, :parser_name, @legacy_import_file.legacy_files_parser_id), include_blank: true %>
+        <%= select_tag :parseable_id_and_type,
+                       options_from_collection_for_select(LegacyFilesParser.all + LegacyCourseFileParser.all, :id_and_type, :parser_name, @legacy_import_file.parseable_id_and_type), include_blank: true %>
         <%= submit_tag "Update parser" %>
     <% end %>
 </div>
+
+<% if @legacy_import_file.parseable.is_a?(LegacyCourseFileParser) %>
+    <%= form_tag parse_import_legacy_files_path, method: :get do %>
+        <%= hidden_field_tag :id, @legacy_import_file.id %>
+        <div>
+            <%= text_field_tag :grupo, params[:grupo], placeholder: "Grupo" %>
+        </div>
+        <div>
+            <%= text_field_tag :actividad, params[:actividad], placeholder: "Actividad" %>
+        </div>
+        <div>
+            <%= text_field_tag :detalle, params[:detalle], placeholder: "Detalle" %>
+        </div>
+        <div>
+            <%= text_field_tag :rango, params[:rango], placeholder: "Rango" %>
+        </div>
+        <div>
+            <%= label_tag :hasta %>
+            <%= date_field_tag :hasta, params[:hasta], placeholder: "Hasta" %>
+        </div>
+        <div>
+            <%= text_field_tag :duracion, params[:duracion], placeholder: "Duración" %>
+        </div>
+        <%= submit_tag %>
+    <% end %>
+
+    <hr />
+
+    <table class="table is-striped is-hoverable is-narrow">
+        <thead>
+            <tr>
+                <th>Headers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @file_headers.each do |header_row| %>
+                <tr>
+                    <% header_row.compact.each do |col| %>
+                        <td>
+                            <%=
+                                col.is_a?(String) ? col.titleize : col
+                            %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>
 
 <% if @legacy_person_activities.present? %>
     <table class="table is-striped is-hoverable">
@@ -23,7 +72,9 @@
                 <th>Nombres</th>
                 <th>Grupo</th>
                 <th>Actividad</th>
-                <% if @legacy_import_file.legacy_files_parser.activity_detail_str.present? %>
+                <%
+                    if @legacy_import_file.parseable.is_a?(LegacyFilesParser) && @legacy_import_file.parseable.activity_detail_str.present?
+                %>
                     <th>Detalle</th>
                 <% end %>
                 <th>Rango</th>
@@ -47,7 +98,9 @@
                     <td>
                         <%= legacy_person_activity.activity_str %>
                     </td>
-                    <% if @legacy_import_file.legacy_files_parser.activity_detail_str.present? %>
+                    <%
+                        if @legacy_import_file.parseable.is_a?(LegacyFilesParser) && @legacy_import_file.parseable.activity_detail_str.present?
+                    %>
                         <td>
                             <%= legacy_person_activity.activity_detail_str %>
                         </td>
@@ -70,8 +123,15 @@
     </table>
 <% end %>
 
-<% if @legacy_import_file.legacy_files_parser.present? %>
+<% if @legacy_import_file.parseable.present? %>
     <%= form_tag import_records_import_legacy_files_path(id: @legacy_import_file.id) do %>
+        <%= hidden_field_tag :grupo, params[:grupo], placeholder: "Grupo" %>
+        <%= hidden_field_tag :actividad, params[:actividad], placeholder: "Actividad" %>
+        <%= hidden_field_tag :detalle, params[:detalle], placeholder: "detalle" %>
+        <%= hidden_field_tag :rango, params[:rango], placeholder: "Rango" %>
+
+        <%= hidden_field_tag :hasta, params[:hasta], placeholder: "Hasta" %>
+        <%= hidden_field_tag :duracion, params[:duracion], placeholder: "Duración" %>
         <%= @legacy_person_activities.count %> records
         <%= submit_tag "Import records" %>
     <% end %>
