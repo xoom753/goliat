@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Activity Group</th>
         </tr>
     </thead>
     <tbody>
@@ -9,6 +10,9 @@
             <tr>
                 <td>
                     <%= legacy_activity.nombre %>
+                </td>
+                <td>
+                    <%= legacy_activity.activity_group.nombre if legacy_activity.activity_group.present? %>
                 </td>
             </tr>
         <% end %>

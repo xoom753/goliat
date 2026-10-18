@@ -25,10 +25,14 @@
     <% @people_activities.each do |person_activity| %>
         <tr>
             <td>
-                <%= person_activity.activity.activity_group.nombre %>
+                <% if person_activity.coursable.is_a?(ExtraActivity) %>
+                    Actividad Extra
+                <% else %>
+                    <%= person_activity.coursable.activity_group.nombre %>
+                <% end %>
             </td>
             <td>
-                <%= person_activity.activity.nombre %>
+                <%= person_activity.coursable.nombre %>
             </td>
             <td>
                 <%= person_activity.person.nombres %>

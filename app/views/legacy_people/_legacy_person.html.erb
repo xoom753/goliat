@@ -1,0 +1,28 @@
+<%
+    legacy_person_activities_by_group = legacy_person.legacy_person_activities.inject({}) do |memo, legacy_person_activity|
+        activity_group_id = legacy_person_activity.legacy_activity_group.activity_group.id
+        memo[activity_group_id] ||= []
+        memo[activity_group_id] << legacy_person_activity
+        memo
+    end
+
+    rows_span = legacy_person_activities_by_group.inject(1) do |memo, (k, values)|
+        memo = memo + 1 # for each key
+        memo = memo + values.length # activities count
+        memo
+    end
+%>
+
+<tr>
+    <td rowspan="<%= rows_span %>">
+        <%= legacy_person.id %>
+    </td>
+    <td rowspan="<%= rows_span %>">
+        <%= legacy_person.nombres %>
+    </td>
+    <td rowspan="<%= rows_span %>">
+        <%= legacy_person.dni %>
+    </td>
+</tr>
+
+<%= render "legacy_person_activities", legacy_person_activities_by_group: legacy_person_activities_by_group %>

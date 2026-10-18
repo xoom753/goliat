@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :import_people_activities, only: [:new, :create]
   resources :people_activities, only: :index
   resources :courses, only: [:edit, :update, :destroy]
+  resources :legacy_people, only: :index
   resources :import_errors, only: :index
   resources :legacy_activities, only: :index
   resources :legacy_activity_groups, only: :index

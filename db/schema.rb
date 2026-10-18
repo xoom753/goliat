@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_223342) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_143145) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,10 +66,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_223342) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "legacy_activity_details", force: :cascade do |t|
+    t.string "nombre", null: false
+    t.datetime "created_at", null: false
+    t.index ["nombre"], name: "index_legacy_activity_details_on_nombre"
+  end
+
   create_table "legacy_activity_groups", force: :cascade do |t|
     t.string "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "activity_group_id"
+    t.index ["activity_group_id"], name: "index_legacy_activity_groups_on_activity_group_id"
   end
 
   create_table "legacy_files_parsers", force: :cascade do |t|
@@ -88,6 +96,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_223342) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "file_format"
+    t.string "activity_detail_str"
+    t.text "description"
   end
 
   create_table "legacy_import_files", force: :cascade do |t|
@@ -120,6 +130,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_223342) do
     t.integer "legacy_person_id"
     t.integer "legacy_activity_id"
     t.integer "legacy_activity_group_id"
+    t.integer "legacy_activity_detail_id"
+    t.index ["legacy_activity_detail_id"], name: "index_legacy_person_activities_on_legacy_activity_detail_id"
     t.index ["legacy_activity_group_id"], name: "index_legacy_person_activities_on_legacy_activity_group_id"
     t.index ["legacy_activity_id"], name: "index_legacy_person_activities_on_legacy_activity_id"
     t.index ["legacy_person_id"], name: "index_legacy_person_activities_on_legacy_person_id"
@@ -154,8 +166,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_223342) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_groups"
+  add_foreign_key "legacy_activity_groups", "activity_groups"
   add_foreign_key "legacy_import_files", "legacy_files_parsers"
   add_foreign_key "legacy_person_activities", "legacy_activities"
+  add_foreign_key "legacy_person_activities", "legacy_activity_details"
   add_foreign_key "legacy_person_activities", "legacy_activity_groups"
   add_foreign_key "legacy_person_activities", "legacy_people"
   add_foreign_key "person_activities", "activities", column: "coursable_id"

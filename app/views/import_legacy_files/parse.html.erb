@@ -15,50 +15,60 @@
     <% end %>
 </div>
 
-<table class="table is-striped is-hoverable">
-    <thead>
-        <tr>
-            <th>Nº</th>
-            <th>Nombres</th>
-            <th>Grupo</th>
-            <th>Actividad</th>
-            <th>Rango</th>
-            <th>Desde</th>
-            <th>Hasta</th>
-            <th>Duración</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @legacy_person_activities.each do |legacy_person_activity| %>
+<% if @legacy_person_activities.present? %>
+    <table class="table is-striped is-hoverable">
+        <thead>
             <tr>
-                <td>
-                    <%= legacy_person_activity.row_number %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.nombres_str %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.activity_group_str %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.activity_str %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.activity_dates %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.start_date %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.end_date %>
-                </td>
-                <td>
-                    <%= legacy_person_activity.duracion %>
-                </td>
+                <th>Nº</th>
+                <th>Nombres</th>
+                <th>Grupo</th>
+                <th>Actividad</th>
+                <% if @legacy_import_file.legacy_files_parser.activity_detail_str.present? %>
+                    <th>Detalle</th>
+                <% end %>
+                <th>Rango</th>
+                <th>Desde</th>
+                <th>Hasta</th>
+                <th>Duración</th>
             </tr>
-        <% end %>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <% @legacy_person_activities.each do |legacy_person_activity| %>
+                <tr>
+                    <td>
+                        <%= legacy_person_activity.row_number %>
+                    </td>
+                    <td>
+                        <%= legacy_person_activity.nombres_str %>
+                    </td>
+                    <td>
+                        <%= legacy_person_activity.activity_group_str %>
+                    </td>
+                    <td>
+                        <%= legacy_person_activity.activity_str %>
+                    </td>
+                    <% if @legacy_import_file.legacy_files_parser.activity_detail_str.present? %>
+                        <td>
+                            <%= legacy_person_activity.activity_detail_str %>
+                        </td>
+                    <% end %>
+                    <td>
+                        <%= legacy_person_activity.activity_dates %>
+                    </td>
+                    <td>
+                        <%= legacy_person_activity.start_date %>
+                    </td>
+                    <td>
+                        <%= legacy_person_activity.end_date %>
+                    </td>
+                    <td>
+                        <%= legacy_person_activity.duracion %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>
 
 <% if @legacy_import_file.legacy_files_parser.present? %>
     <%= form_tag import_records_import_legacy_files_path(id: @legacy_import_file.id) do %>

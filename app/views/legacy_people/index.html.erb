@@ -1,0 +1,21 @@
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>Nº</th>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Activities</th>
+            <th>Group</th>
+            <th>Detail</th>
+            <th>Date</th>
+            <th>Duración</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @legacy_people.each do |legacy_person| %>
+            <%= render "legacy_person", legacy_person: legacy_person %>
+        <% end %>
+    </tbody>
+</table>
+
+<%= paginate @legacy_people %>

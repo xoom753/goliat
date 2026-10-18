@@ -1,0 +1,31 @@
+<% legacy_person_activities_by_group.each do |activity_group_id, legacy_person_activities| %>
+    <tr>
+        <td colspan="6">
+            <strong>
+                <%= ActivityGroup.find(activity_group_id).nombre %>
+            </strong>
+        </td>
+    </tr>
+
+    <% legacy_person_activities.each do |legacy_person_activity| %>
+        <tr>
+            <td>
+                <%= legacy_person_activity.legacy_activity.nombre %>
+            </td>
+            <td>
+                <%= legacy_person_activity.legacy_activity_group.nombre %>
+            </td>
+            <td>
+                <% if legacy_person_activity.legacy_activity_detail.present? %>
+                    <%= legacy_person_activity.legacy_activity_detail.nombre %>
+                <% end %>
+            </td>
+            <td>
+                <%= legacy_person_activity.end_date %>
+            </td>
+            <td>
+                <%= legacy_person_activity.duracion %>
+            </td>
+        </tr>
+    <% end %>
+<% end %>
