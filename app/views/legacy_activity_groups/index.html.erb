@@ -12,7 +12,16 @@
                     <%= legacy_activity.nombre %>
                 </td>
                 <td>
-                    <%= legacy_activity.activity_group.nombre if legacy_activity.activity_group.present? %>
+                    <%= form_for legacy_activity,
+                                 data: { controller: "auto-submit-form" } do |form| %>
+                        <%= form.select :activity_group_id,
+                                        options_from_collection_for_select(ActivityGroup.all, :id, :nombre, legacy_activity.activity_group.try(:id)),
+                                        { include_blank: true },
+                                        {data: {"auto-submit-form-target" => "selectTag"}
+                                        }
+                        %>
+                        <%= form.submit "Submit", data: {"auto-submit-form-target" => "submitBtn"} %>
+                    <% end %>
                 </td>
             </tr>
         <% end %>

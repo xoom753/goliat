@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :legacy_people, only: :index
   resources :import_errors, only: :index
   resources :legacy_activities, only: :index
-  resources :legacy_activity_groups, only: :index
+  resources :legacy_activity_groups, only: [:index, :update]
   resources :legacy_person_activities, only: :index
   resources :extra_activities, only: [:index, :new, :edit, :update, :destroy] do
     member do
