@@ -15,7 +15,7 @@
         <%= hidden_field_tag :month, @month %>
         <%= hidden_field_tag :year, @year %>
         <%= hidden_field_tag :person_id, nil, data: {"add-person-to-course-target" => "personInput"} %>
-        
+
         <select data-add-person-to-course-target="select">
         </select>
     <% end %>
@@ -24,6 +24,9 @@
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>
+            <th>
+                Nº
+            </th>
             <th>
                 Nombres
             </th>
@@ -41,8 +44,11 @@
         </tr>
     </thead>
     <tbody>
-        <% @person_activities.each do |person_activity| %>
+        <% @person_activities.each_with_index do |person_activity, index| %>
             <tr>
+                <td>
+                    <%= index + 1 %>
+                </td>
                 <td>
                     <%= person_activity.person.nombres %>
                 </td>

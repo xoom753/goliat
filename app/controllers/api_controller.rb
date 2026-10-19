@@ -1,9 +1,9 @@
 class ApiController < ApplicationController
     def people
-        query = "'#{params[:q]}%'"
+        query = "'%#{params[:q]}%'"
         results = Person.where(
             "nombres LIKE #{query}"
-        ).limit(10)
+        ).limit(20)
         json_results = results.map do |result|
             {
                 text: "#{result.nombres} - #{result.dni}",
