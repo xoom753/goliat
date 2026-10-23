@@ -1,20 +1,55 @@
 <% @activity_groups.each do |activity_group| %>
-    <% activity_group.activities.each do |activity| %>
-        <% person_activities = activity.person_activities.where(person: person) %>
-        <% coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning" %>
-        <td class="<%= coursed_status %>">
-            <% if person_activities.empty? %>
-                NO
-            <% end %>
-            <ul>
-                <% person_activities.each do |person_activity| %>
-                    <li>
-                        <%= Date::MONTHNAMES[person_activity.mes] %>
-                        <%= person_activity.anio %>:
-                        <%= person_activity.cargo %>
-                    </li>
-                <% end %>
-            </ul>
+
+    <%
+        missing_cols = max_activities_count - activity_group.activities.count
+    %>
+
+    <%
+        coursed_group_status = person.person_activities.where(coursable: activity_group.activities).exists? ? "is-primary" : "is-warning"
+    %>
+    <tr>
+        <td align=center colspan="<%= max_activities_count %>" class="<%= coursed_group_status %>">
+            <strong>
+                <%= activity_group.nombre %>
+            </strong>
         </td>
-    <% end %>
+    </tr>
+
+    <tr>
+        <% activity_group.activities.each do |activity| %>
+            <%
+                coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning"
+            %>
+            <td align=center class="<%= coursed_status %>">
+                <%= activity.nombre %>
+            </td>
+        <% end %>
+        <% 1.upto(missing_cols).each do %>
+            <td class="is-success"></td>
+        <% end %>
+    </tr>
+
+    <tr>
+        <% activity_group.activities.each do |activity| %>
+            <% person_activities = activity.person_activities.where(person: person) %>
+            <% coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning" %>
+            <td class="<%= coursed_status %>">
+                <% if person_activities.empty? %>
+                    NO
+                <% end %>
+                <ul>
+                    <% person_activities.each do |person_activity| %>
+                        <li>
+                            <%= Date::MONTHNAMES[person_activity.mes] %>
+                            <%= person_activity.anio %>:
+                            <%= person_activity.cargo %>
+                        </li>
+                    <% end %>
+                </ul>
+            </td>
+        <% end %>
+        <% 1.upto(missing_cols).each do %>
+            <td class="is-success"></td>
+        <% end %>
+    </tr>
 <% end %>

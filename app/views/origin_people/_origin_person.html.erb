@@ -1,0 +1,188 @@
+<tr>
+    <td rowspan="<%= origin_person.origin_person_legal_processes.count + 1 %>">
+        <dl>
+            <dt>
+                Nombre
+            </dt>
+            <dd>
+                <%= origin_person.fullname %>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                DNI
+            </dt>
+            <dd>
+                <%= origin_person.dni %>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                Fecha registro
+            </dt>
+            <dd>
+                <%= origin_person.fecha_registro %>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                Situación actual
+            </dt>
+            <dd>
+                <%= origin_person.situacion_actual %>
+            </dd>
+        </dl>
+    </td>
+</tr>
+<% origin_person.origin_person_legal_processes.each do |origin_person_legal_process| %>
+    <tr colspan="7">
+        <td rowspan="1">
+            <dl>
+                <dt>
+                    Fecha detención
+                </dt>
+                <dd>
+                    <%= origin_person_legal_process.fecha_detencion %>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    Fecha delito
+                </dt>
+                <dd>
+                    <%= origin_person_legal_process.fecha_delito %>
+                </dd>
+            </dl>
+        </td>
+        <td rowspan="1">
+            <dl>
+                <dt>
+                    Estado
+                </dt>
+                <dd>
+                    <%= origin_person_legal_process.estado.titleize %>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    Proceso núm.
+                </dt>
+                <dd>
+                    <%= origin_person_legal_process.proceso_num %>
+                </dd>
+            </dl>
+        </td>
+        <td rowspan="1">
+            <% if origin_person_legal_process.estado == "con_sentencia" %>
+                <dl>
+                    <dt>
+                        Sentencia
+                    </dt>
+                    <dd>
+                        <% if origin_person_legal_process.anios_sentencia != 0 %>
+                            <%= origin_person_legal_process.anios_sentencia %>
+                            Años
+                        <% end %>
+                        <% if origin_person_legal_process.meses_sentencia != 0 %>
+                            <%= origin_person_legal_process.meses_sentencia %>
+                            Meses
+                        <% end %>
+                        <% if origin_person_legal_process.dias_sentencia != 0 %>
+                            <%= origin_person_legal_process.dias_sentencia %>
+                            Días
+                        <% end %>
+                    </dd>
+                </dl>
+            <% end %>
+        </td>
+        <td rowspan="1">
+            <% if origin_person_legal_process.observaciones.present? %>
+                <dl>
+                    <dt>
+                        Observaciones
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_process.observaciones %>
+                    </dd>
+                </dl>
+            <% end %>
+            <% if origin_person_legal_process.observaciones_2.present? %>
+                <dl>
+                    <dt>
+                        Observaciones 2
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_process.observaciones_2 %>
+                    </dd>
+                </dl>
+            <% end %>
+        </td>
+        <td rowspan="1">
+            <dl>
+                <dt>
+                    Infracción
+                </dt>
+                <dd>
+                    <%= origin_person_legal_process.infraccion %>
+                </dd>
+            </dl>
+        </td>
+        <%
+            origin_person_legal_penalty = origin_person_legal_process.origin_person_legal_penalty
+        %>
+        <td rowspan="1">
+            <% if origin_person_legal_penalty.termina_condena_at.present? %>
+                <dl>
+                    <dt>
+                        Termina condena en
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_penalty.termina_condena_at %>
+                    </dd>
+                </dl>
+            <% end %>
+        </td>
+        <td rowspan="1">
+            <% if origin_person_legal_penalty.veinte_porciento_at.present? %>
+                <dl>
+                    <dt>
+                        20%
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_penalty.veinte_porciento_at %>
+                    </dd>
+                </dl>
+            <% end %>
+            <% if origin_person_legal_penalty.cuarenta_porciento_at.present? %>
+                <dl>
+                    <dt>
+                        40%
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_penalty.cuarenta_porciento_at %>
+                    </dd>
+                </dl>
+            <% end %>
+            <% if origin_person_legal_penalty.sesenta_porciento_at.present? %>
+                <dl>
+                    <dt>
+                        60%
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_penalty.sesenta_porciento_at %>
+                    </dd>
+                </dl>
+            <% end %>
+            <% if origin_person_legal_penalty.ochenta_porciento_at.present? %>
+                <dl>
+                    <dt>
+                        80%
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_penalty.ochenta_porciento_at %>
+                    </dd>
+                </dl>
+            <% end %>
+        </td>
+    </tr>
+<% end %>

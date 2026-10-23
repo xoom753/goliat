@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post :import_records
     end
   end
+  resources :origin_people, only: :index
   resources :import_people, only: [:new, :create]
   resources :import_people_activities, only: [:new, :create]
   resources :people_activities, only: :index

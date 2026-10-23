@@ -2,6 +2,12 @@
     <%= text_field_tag :s, params[:s], placeholder: "Buscar" %>
 <% end %>
 
+<%
+    max_activities_count = @activity_groups.map{|ag|
+        ag.activities.count
+    }.max
+%>
+
 <table class="table is-striped is-hoverable is-narrow is-bordered">
     <thead>
         <tr class="is-success">
@@ -14,49 +20,42 @@
             <th>
                 Pabellón
             </th>
-            <% @activity_groups.each do |activity_group| %>
-                <th align=center colspan="<%= activity_group.activities.count %>">
-                    <%= activity_group.nombre %>
-                </th>
-            <% end %>
+            <th align=center colspan="<%= max_activities_count %>">
+                Ejes
+            </th>
         </tr>
     </thead>
     <tbody>
         <% @people.each do |person| %>
             <tr>
-                <td rowspan=3 class="is-success">
-                    <%= person.nombres %>
+                <td rowspan=10 class="is-success">
+                    <div>
+                        <%= person.nombres %>
+                    </div>
+                    <div>
+                        <%=
+                            link_to "Ver procesos",
+                            origin_people_path(s: person.nombres)
+                        %>
+                    </div>
                 </td>
-                <td rowspan=3 class="is-success">
-                    <%= person.dni %>
+                <td rowspan=10 class="is-success">
+                    <div>
+                        <%= person.dni %>
+                    </div>
+                    <div>
+                        <%=
+                            link_to "Ver procesos",
+                            origin_people_path(s: person.dni)
+                        %>
+                    </div>
                 </td>
-                <td rowspan=3 class="is-success">
+                <td rowspan=10 class="is-success">
                     <%= person.pabellon %>
                 </td>
-                <% @activity_groups.each do |activity_group| %>
-                    <%
-                        coursed_group_status = person.person_activities.where(coursable: activity_group.activities).exists? ? "is-primary" : "is-warning"
-                    %>
-                    <td align=center colspan="<%= activity_group.activities.count %>" class="<%= coursed_group_status %>">
-                        <%= activity_group.nombre %>
-                    </td>
-                <% end %>
             </tr>
-            <tr>
-                <% @activity_groups.each do |activity_group| %>
-                    <% activity_group.activities.each do |activity| %>
-                        <%
-                            coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning"
-                        %>
-                        <td align=center class="<%= coursed_status %>">
-                            <%= activity.nombre %>
-                        </td>
-                    <% end %>
-                <% end %>
-            </tr>
-            <tr>
-                <%= render "activities", person: person %>
-            </tr>
+
+            <%= render "activities", person: person, max_activities_count: max_activities_count %>
         <% end %>
     </tbody>
 </table>

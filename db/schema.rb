@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_164500) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_22_185608) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -149,6 +149,87 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_164500) do
     t.index ["legacy_person_id"], name: "index_legacy_person_activities_on_legacy_person_id"
   end
 
+  create_table "origin_people", force: :cascade do |t|
+    t.date "fecha_registro", null: false
+    t.string "father_lastname", null: false
+    t.string "mother_lastname"
+    t.string "first_name", null: false
+    t.string "middle_name"
+    t.string "fullname", null: false
+    t.string "alias_name"
+    t.string "dni_kind"
+    t.string "dni"
+    t.integer "situacion_actual", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fullname", "dni"], name: "index_origin_people_on_fullname_and_dni"
+  end
+
+  create_table "origin_person_demographics", force: :cascade do |t|
+    t.string "pais_origen"
+    t.date "fecha_nacimiento"
+    t.string "estado_civil"
+    t.string "nivel_instruccion"
+    t.string "profesion"
+    t.string "gravedad_enfermedad"
+    t.string "tipo_enfermedad"
+    t.string "tipo_discapacidad"
+    t.integer "origin_person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["origin_person_id"], name: "index_origin_person_demographics_on_origin_person_id"
+  end
+
+  create_table "origin_person_legal_penalties", force: :cascade do |t|
+    t.integer "anios_acumulacion_pena"
+    t.integer "meses_acumulacion_pena"
+    t.integer "dias_acumulacion_pena"
+    t.integer "acumulacion_total_penas"
+    t.integer "anios_pena_individual"
+    t.integer "meses_pena_individual"
+    t.integer "dias_pena_individual"
+    t.integer "acumulacion_pena_individual_total"
+    t.integer "cantidad_total_sentencia"
+    t.date "termina_condena_at"
+    t.date "veinte_porciento_at"
+    t.date "cuarenta_porciento_at"
+    t.date "sesenta_porciento_at"
+    t.date "ochenta_porciento_at"
+    t.integer "origin_person_id", null: false
+    t.integer "origin_person_legal_process_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["origin_person_id"], name: "index_origin_person_legal_penalties_on_origin_person_id"
+    t.index ["origin_person_legal_process_id"], name: "idx_on_origin_person_legal_process_id_796970cb62"
+  end
+
+  create_table "origin_person_legal_processes", force: :cascade do |t|
+    t.date "fecha_detencion"
+    t.date "fecha_delito"
+    t.date "fecha_ingreso"
+    t.integer "estado", default: 0
+    t.integer "anios_sentencia"
+    t.integer "meses_sentencia"
+    t.integer "dias_sentencia"
+    t.date "fecha_sentencia"
+    t.string "boleta_encarcelamiento"
+    t.date "fecha_boleta_encarcelamiento"
+    t.string "proceso_num"
+    t.string "normativa"
+    t.string "infraccion"
+    t.string "incisos"
+    t.string "grupo_infraccion"
+    t.string "subgrupo_infraccion"
+    t.string "parte_policial_num"
+    t.text "observaciones"
+    t.text "observaciones_2"
+    t.integer "origin_person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["origin_person_id"], name: "index_origin_person_legal_processes_on_origin_person_id"
+    t.index ["proceso_num"], name: "index_origin_person_legal_processes_on_proceso_num"
+  end
+
   create_table "people", force: :cascade do |t|
     t.string "nombres", null: false
     t.string "dni"
@@ -184,6 +265,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_164500) do
   add_foreign_key "legacy_person_activities", "legacy_activity_details"
   add_foreign_key "legacy_person_activities", "legacy_activity_groups"
   add_foreign_key "legacy_person_activities", "legacy_people"
+  add_foreign_key "origin_person_demographics", "origin_people"
+  add_foreign_key "origin_person_legal_penalties", "origin_people"
+  add_foreign_key "origin_person_legal_penalties", "origin_person_legal_processes"
+  add_foreign_key "origin_person_legal_processes", "origin_people"
   add_foreign_key "person_activities", "activities", column: "coursable_id"
   add_foreign_key "person_activities", "people"
 end

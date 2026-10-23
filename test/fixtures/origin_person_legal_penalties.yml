@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  anios_acumulacion_pena: 1
+  meses_acumulacion_pena: 1
+  dias_acumulacion_pena: 1
+  acumulacion_total_penas: 1
+  anios_pena_individual: 1
+  meses_pena_individual: 1
+  dias_pena_individual: 1
+  acumulacion_pena_individual_total: 1
+  cantidad_total_sentencia: 1
+  termina_condena_at: 2026-10-22
+  veinte_porciento_at: 2026-10-22
+  cuarenta_porciento_at: 2026-10-22
+  sesenta_porciento_at: 2026-10-22
+  ochenta_porciento_at: 2026-10-22
+  origin_person: one
+
+two:
+  anios_acumulacion_pena: 1
+  meses_acumulacion_pena: 1
+  dias_acumulacion_pena: 1
+  acumulacion_total_penas: 1
+  anios_pena_individual: 1
+  meses_pena_individual: 1
+  dias_pena_individual: 1
+  acumulacion_pena_individual_total: 1
+  cantidad_total_sentencia: 1
+  termina_condena_at: 2026-10-22
+  veinte_porciento_at: 2026-10-22
+  cuarenta_porciento_at: 2026-10-22
+  sesenta_porciento_at: 2026-10-22
+  ochenta_porciento_at: 2026-10-22
+  origin_person: two

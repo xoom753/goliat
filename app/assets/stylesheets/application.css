@@ -9,3 +9,4 @@
  * Consider organizing styles into separate files for maintainability.
  */
 @import url("./utils/generic.css");
+@import url("./utils/content_custom.css");

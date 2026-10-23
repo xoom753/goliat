@@ -22,3 +22,8 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## to do
+
+- [x] when importing presentes por pabellón: mark as inactive the ones who are not present
+- [] associate person#pabellon

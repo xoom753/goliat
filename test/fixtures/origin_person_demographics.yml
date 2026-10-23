@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pais_origen: MyString
+  fecha_nacimiento: 2026-10-22
+  estado_civil: MyString
+  nivel_instruccion: MyString
+  profesion: MyString
+  gravedad_enfermedad: MyString
+  tipo_enfermedad: MyString
+  tipo_discapacidad: MyString
+  origin_person: one
+
+two:
+  pais_origen: MyString
+  fecha_nacimiento: 2026-10-22
+  estado_civil: MyString
+  nivel_instruccion: MyString
+  profesion: MyString
+  gravedad_enfermedad: MyString
+  tipo_enfermedad: MyString
+  tipo_discapacidad: MyString
+  origin_person: two

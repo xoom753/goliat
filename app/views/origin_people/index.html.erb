@@ -1,0 +1,20 @@
+<%= form_tag origin_people_path, method: :get do %>
+    <%= text_field_tag :s, params[:s], placeholder: "Buscar" %>
+<% end %>
+
+<table class="table is-striped is-hoverable content content-custom">
+    <thead>
+        <tr>
+            <th>Persona</th>
+            <th colspan="6">Proceso</th>
+            <th colspan="2">Sentencia</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @origin_people.each do |origin_person| %>
+            <%= render "origin_person", origin_person: origin_person %>
+        <% end %>
+    </tbody>
+</table>
+
+<%= paginate @origin_people %>

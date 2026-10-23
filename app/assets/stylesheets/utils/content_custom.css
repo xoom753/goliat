@@ -1,0 +1,9 @@
+.content.content-custom {
+    dt {
+        font-weight: 500;
+        font-size: 80%;
+    }
+    dd {
+        margin-inline-start: 0;
+    }
+}

@@ -1,0 +1,45 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha_detencion: 2026-10-22
+  fecha_delito: 2026-10-22
+  fecha_ingreso: 2026-10-22
+  estado: 1
+  anios_sentencia: 1
+  meses_sentencia: 1
+  dias_sentencia: 1
+  fecha_sentencia: 2026-10-22
+  boleta_encarcelamiento: MyString
+  fecha_boleta_encarcelamiento: 2026-10-22
+  proceso_num: MyString
+  normativa: MyString
+  infraccion: MyString
+  incisos: MyString
+  grupo_infraccion: MyString
+  subgrupo_infraccion: MyString
+  parte_policial_num: MyString
+  observaciones: MyText
+  observaciones_2: MyText
+  origin_person: one
+
+two:
+  fecha_detencion: 2026-10-22
+  fecha_delito: 2026-10-22
+  fecha_ingreso: 2026-10-22
+  estado: 1
+  anios_sentencia: 1
+  meses_sentencia: 1
+  dias_sentencia: 1
+  fecha_sentencia: 2026-10-22
+  boleta_encarcelamiento: MyString
+  fecha_boleta_encarcelamiento: 2026-10-22
+  proceso_num: MyString
+  normativa: MyString
+  infraccion: MyString
+  incisos: MyString
+  grupo_infraccion: MyString
+  subgrupo_infraccion: MyString
+  parte_policial_num: MyString
+  observaciones: MyText
+  observaciones_2: MyText
+  origin_person: two
