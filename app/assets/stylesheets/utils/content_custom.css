@@ -6,4 +6,10 @@
     dd {
         margin-inline-start: 0;
     }
+
+    dl.strong {
+        dt {
+            font-weight: bold;
+        }
+    }
 }

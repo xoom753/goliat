@@ -1,5 +1,5 @@
 <tr>
-    <td rowspan="<%= origin_person.origin_person_legal_processes.count + 1 %>">
+    <td rowspan="<%= origin_person.origin_person_legal_processes.length + 1 %>">
         <dl>
             <dt>
                 Nombre
@@ -35,8 +35,8 @@
     </td>
 </tr>
 <% origin_person.origin_person_legal_processes.each do |origin_person_legal_process| %>
-    <tr colspan="7">
-        <td rowspan="1">
+    <tr colspan="6">
+        <td>
             <dl>
                 <dt>
                     Fecha detención
@@ -54,7 +54,7 @@
                 </dd>
             </dl>
         </td>
-        <td rowspan="1">
+        <td>
             <dl>
                 <dt>
                     Estado
@@ -68,11 +68,14 @@
                     Proceso núm.
                 </dt>
                 <dd>
-                    <%= origin_person_legal_process.proceso_num %>
+                    <%=
+                        link_to origin_person_legal_process.proceso_num,
+                                origin_people_path(proceso_num: origin_person_legal_process.proceso_num)
+                    %>
                 </dd>
             </dl>
         </td>
-        <td rowspan="1">
+        <td>
             <% if origin_person_legal_process.estado == "con_sentencia" %>
                 <dl>
                     <dt>
@@ -103,7 +106,7 @@
                 </dl>
             <% end %>
         </td>
-        <td rowspan="1">
+        <td>
             <% if origin_person_legal_process.observaciones.present? %>
                 <dl>
                     <dt>
@@ -125,7 +128,7 @@
                 </dl>
             <% end %>
         </td>
-        <td rowspan="1">
+        <td>
             <dl>
                 <dt>
                     Infracción
@@ -138,7 +141,7 @@
         <%
             origin_person_legal_penalty = origin_person_legal_process.origin_person_legal_penalty
         %>
-        <td rowspan="1">
+        <td>
             <% if origin_person_legal_penalty.termina_condena_at.present? %>
                 <dl>
                     <dt>
@@ -149,8 +152,6 @@
                     </dd>
                 </dl>
             <% end %>
-        </td>
-        <td rowspan="1">
             <% if origin_person_legal_penalty.veinte_porciento_at.present? %>
                 <dl>
                     <dt>
@@ -172,7 +173,7 @@
                 </dl>
             <% end %>
             <% if origin_person_legal_penalty.sesenta_porciento_at.present? %>
-                <dl>
+                <dl class="<%= 'strong' if params[:sort_by] == "sesenta" %>">
                     <dt>
                         60%
                     </dt>

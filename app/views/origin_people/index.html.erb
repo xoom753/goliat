@@ -1,13 +1,17 @@
 <%= form_tag origin_people_path, method: :get do %>
-    <%= text_field_tag :s, params[:s], placeholder: "Buscar" %>
+    <%= text_field_tag :s, params[:s], placeholder: "Nombre o DNI" %>
+    <%= text_field_tag :proceso_num, params[:proceso_num], placeholder: "Núm. Proceso" %>
+    <%= submit_tag "Search" %>
 <% end %>
+
+<%= link_to "Sort by 60%", by_percentage_origin_people_path(sort_by: "sesenta") %>
 
 <table class="table is-striped is-hoverable content content-custom">
     <thead>
         <tr>
             <th>Persona</th>
             <th colspan="5">Proceso</th>
-            <th colspan="2">Sentencia</th>
+            <th colspan="1">Sentencia</th>
         </tr>
     </thead>
     <tbody>

@@ -1,3 +1,6 @@
 .pre-line {
     white-space: pre-line;
 }
+.strong {
+    font-weight: bold !important;
+}
