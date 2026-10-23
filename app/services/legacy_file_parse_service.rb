@@ -29,7 +29,10 @@ class LegacyFileParseService
         records.each do |record|
             record.save!
         end
-        @legacy_import_file.update!(status: :imported)
+        @legacy_import_file.update!(
+            status: :imported,
+            records_count: records.count
+        )
     end
 
     private

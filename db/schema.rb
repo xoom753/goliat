@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_22_185608) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_23_152929) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -122,6 +122,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_22_185608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "parseable_type"
+    t.integer "records_count"
     t.index ["parseable_id"], name: "index_legacy_import_files_on_parseable_id"
   end
 
@@ -162,7 +163,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_22_185608) do
     t.integer "situacion_actual", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["dni"], name: "index_origin_people_on_dni"
     t.index ["fullname", "dni"], name: "index_origin_people_on_fullname_and_dni"
+    t.index ["fullname"], name: "index_origin_people_on_fullname"
   end
 
   create_table "origin_person_demographics", force: :cascade do |t|
@@ -235,6 +238,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_22_185608) do
     t.string "dni"
     t.string "pabellon"
     t.integer "estado", default: 0
+    t.index ["dni"], name: "index_people_on_dni"
+    t.index ["nombres"], name: "index_people_on_nombres"
   end
 
   create_table "person_activities", force: :cascade do |t|

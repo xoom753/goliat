@@ -15,6 +15,7 @@
             <th>Last modified at</th>
             <th>Weight</th>
             <th>Status</th>
+            <th>Parser</th>
             <th>Records</th>
             <th></th>
         </tr>
@@ -38,6 +39,17 @@
                     <%= legacy_import_file.status %>
                 </td>
                 <td>
+                    <% if legacy_import_file.parseable.present? %>
+                        <div>
+                            <%= legacy_import_file.parseable.parser_name %>
+                        </div>
+                        <div>
+                            <%= legacy_import_file.parseable.class %>
+                        </div>
+                    <% end %>
+                </td>
+                <td>
+                    <%= legacy_import_file.records_count %>
                 </td>
                 <td>
                     <%= link_to "Parse", parse_import_legacy_files_path(id: legacy_import_file.id) %>
