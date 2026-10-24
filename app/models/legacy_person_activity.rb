@@ -15,6 +15,8 @@ class LegacyPersonActivity < ApplicationRecord
     before_save :reference_legacy_activity_group!
     before_save :reference_legacy_activity_detail!
 
+    scope :sorted_by_date, -> { order(end_date: :desc) }
+
     private
 
     def reference_legacy_person!

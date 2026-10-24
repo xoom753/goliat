@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_24_150808) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_24_160631) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -145,6 +145,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_150808) do
     t.integer "legacy_activity_id"
     t.integer "legacy_activity_group_id"
     t.integer "legacy_activity_detail_id"
+    t.index ["end_date"], name: "index_legacy_person_activities_on_end_date"
     t.index ["legacy_activity_detail_id"], name: "index_legacy_person_activities_on_legacy_activity_detail_id"
     t.index ["legacy_activity_group_id"], name: "index_legacy_person_activities_on_legacy_activity_group_id"
     t.index ["legacy_activity_id"], name: "index_legacy_person_activities_on_legacy_activity_id"

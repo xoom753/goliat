@@ -1,5 +1,8 @@
 <%
-    legacy_person_activities_by_group = legacy_person.legacy_person_activities.inject({}) do |memo, legacy_person_activity|
+    legacy_person_activities_by_group =
+        legacy_person.legacy_person_activities
+                     .sorted_by_date
+                     .inject({}) do |memo, legacy_person_activity|
         activity_group_id = legacy_person_activity.legacy_activity_group.activity_group.id
         memo[activity_group_id] ||= []
         memo[activity_group_id] << legacy_person_activity
