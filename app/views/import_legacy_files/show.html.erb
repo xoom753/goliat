@@ -7,11 +7,16 @@
     </h1>
 </div>
 
+<%= link_to "Cultural", import_legacy_files_path(q: "cultural") %>
+<%= link_to "Deportivo", import_legacy_files_path(q: "deportivo") %>
+<%= link_to "Laboral", import_legacy_files_path(q: "laboral") %>
+
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>
             <th>ID</th>
             <th>Filename</th>
+            <th>Date</th>
             <th>Filepath</th>
             <th>Last modified at</th>
             <th>Weight</th>
@@ -28,7 +33,23 @@
                     <%= legacy_import_file.id %>
                 </td>
                 <td>
-                    <%= legacy_import_file.filename %>
+                    <div>
+                        <%= legacy_import_file.filename %>
+                    </div>
+                    <% if legacy_import_file.file.present? %>
+                        <div>
+                            <%= link_to "Show file", legacy_import_file.file %>
+                        </div>
+                    <% end %>
+                </td>
+                <td>
+                    <%= form_tag update_dates_import_legacy_files_path(id: legacy_import_file.id) do %>
+                        <%= legacy_import_file.year %>
+                        <%= legacy_import_file.month %>
+                        <%= number_field_tag :year, legacy_import_file.year, placeholder: "Year" %>
+                        <%= number_field_tag :month, legacy_import_file.month, placeholder: "Month" %>
+                        <%= submit_tag %>
+                    <% end %>
                 </td>
                 <td>
                     <%= legacy_import_file.filepath %>
@@ -78,7 +99,12 @@
                     </div>
                     <div>
                         <% if legacy_import_file.status == "imported" %>
-                            <%= link_to "Remove file", "#", class: "has-text-danger" %>
+                            <%=
+                                link_to "Remove file",
+                                        remove_file_import_legacy_files_path(id: legacy_import_file.id),
+                                        class: "has-text-danger",
+                                        data: { turbo_method: :post }
+                            %>
                         <% end %>
                     </div>
                 </td>

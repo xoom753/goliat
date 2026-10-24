@@ -57,7 +57,7 @@ class LegacyFileParseService
             activity_str: activity_str,
             activity_detail_str: activity_detail_str.strip.titleize,
             activity_dates: activity_dates,
-            duracion: hash[:duracion].strip,
+            duracion: hash[:duracion].to_s.strip,
             start_date: start_date,
             end_date: end_date
         )

@@ -2,7 +2,16 @@ class ImportLegacyFilesController < ApplicationController
     skip_before_action :verify_authenticity_token, :only => [:create]
 
     def show
-        @legacy_import_files = LegacyImportFile.all.page(params[:page])
+        scope = LegacyImportFile.sorted_by_date
+        if params[:q].present?
+            query = "%#{params[:q]}%"
+            scope = scope.where(
+                "filename LIKE '#{query}'"
+            )
+        end
+        @legacy_import_files =
+            scope.page(params[:page])
+                 .per(100)
     end
 
     def create
@@ -63,6 +72,22 @@ class ImportLegacyFilesController < ApplicationController
     def ignore_file
         @legacy_import_file = LegacyImportFile.find params[:id]
         @legacy_import_file.update!(status: :ignored)
+        redirect_to action: :show
+    end
+
+    def remove_file
+        @legacy_import_file = LegacyImportFile.find params[:id]
+        @legacy_import_file.file.purge
+        @legacy_import_file.update!(status: :file_removed)
+        redirect_to action: :show
+    end
+
+    def update_dates
+        @legacy_import_file = LegacyImportFile.find params[:id]
+        @legacy_import_file.update!(
+            year: params[:year],
+            month: params[:month]
+        )
         redirect_to action: :show
     end
 end

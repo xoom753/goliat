@@ -9,7 +9,23 @@ class LegacyImportFile < ApplicationRecord
     imported: 1,
     errored: 2,
     duplicate: 3,
-    ignored: 4
+    ignored: 4,
+    file_removed: 5
+  }
+
+  # scope :sorted_by_last_modified, -> {
+  #   order(
+  #     last_modified_at: :desc,
+  #     filename: :desc
+  #   )
+  # }
+  scope :sorted_by_date, -> {
+    order(
+      year: :desc,
+      month: :desc,
+      last_modified_at: :desc,
+      filename: :desc
+    )
   }
 
   def last_modified_at_time
@@ -23,8 +39,7 @@ class LegacyImportFile < ApplicationRecord
   private
 
   def check_if_duplicate!
-    return if status == "duplicate"
-    return if status == "imported"
+    return unless status == "uploaded"
 
     existing_legacy_import_file = self.class.where(
       filename: filename,
