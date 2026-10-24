@@ -59,4 +59,10 @@ class ImportLegacyFilesController < ApplicationController
         end
         redirect_to action: :show
     end
+
+    def ignore_file
+        @legacy_import_file = LegacyImportFile.find params[:id]
+        @legacy_import_file.update!(status: :ignored)
+        redirect_to action: :show
+    end
 end

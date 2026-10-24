@@ -16,26 +16,33 @@
 </div>
 
 <% if @legacy_import_file.parseable.is_a?(LegacyCourseFileParser) %>
+    <hr />
+
     <%= form_tag parse_import_legacy_files_path, method: :get do %>
         <%= hidden_field_tag :id, @legacy_import_file.id %>
         <div>
-            <%= text_field_tag :grupo, params[:grupo], placeholder: "Grupo" %>
+            <%= label_tag :grupo, "Grupo" %>
+            <%= text_field_tag :grupo, params[:grupo], placeholder: "Ej: Laboral" %>
         </div>
         <div>
-            <%= text_field_tag :actividad, params[:actividad], placeholder: "Actividad" %>
+            <%= label_tag :actividad, "Actividad" %>
+            <%= text_field_tag :actividad, params[:actividad], placeholder: "Ej: Electricidad Básica" %>
         </div>
         <div>
-            <%= text_field_tag :detalle, params[:detalle], placeholder: "Detalle" %>
+            <%= label_tag :detalle, "Detalle" %>
+            <%= text_field_tag :detalle, params[:detalle], placeholder: "Ej: Servicios auxiliares" %>
         </div>
         <div>
-            <%= text_field_tag :rango, params[:rango], placeholder: "Rango" %>
+            <%= label_tag :rango, "Rango" %>
+            <%= text_field_tag :rango, params[:rango], placeholder: "Ej: 01-12-2023 AL 29-12-2023" %>
         </div>
         <div>
-            <%= label_tag :hasta %>
+            <%= label_tag :hasta, "Hasta (fecha final)" %>
             <%= date_field_tag :hasta, params[:hasta], placeholder: "Hasta" %>
         </div>
         <div>
-            <%= text_field_tag :duracion, params[:duracion], placeholder: "Duración" %>
+            <%= label_tag :duracion, "Duración" %>
+            <%= text_field_tag :duracion, params[:duracion], placeholder: "Ej: 30 horas" %>
         </div>
         <%= submit_tag %>
     <% end %>

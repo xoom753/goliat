@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get :parse
       put :update_parser
       post :import_records
+      post :ignore_file
     end
   end
   resources :origin_people, only: :index do

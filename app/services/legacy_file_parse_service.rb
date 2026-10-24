@@ -23,6 +23,10 @@ class LegacyFileParseService
             end
         end
         activities
+    rescue Roo::HeaderRowNotFoundError => e
+        puts "\n\n=== ERR:\n\n"
+        puts e.inspect
+        []
     end
 
     def import_records!
@@ -39,8 +43,8 @@ class LegacyFileParseService
 
     def build_legacy_person_activity(hash)
         nombres_str = hash[:nombres].strip.titleize
-        hash[:actividad].strip.titleize
-        activity_str = activity_group_str = hash[:servicios].strip.titleize
+        activity_str = hash[:actividad].strip.titleize
+        activity_group_str = hash[:servicios].strip.titleize
         activity_detail_str = hash[:activity_detail].presence || ""
         activity_dates = hash[:fecha].strip
         start_date = activity_dates[start_date_index_from, start_date_index_to]

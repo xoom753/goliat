@@ -4,3 +4,7 @@
 .strong {
     font-weight: bold !important;
 }
+a[disabled] {
+    pointer-events: none;
+    color: gray;
+}

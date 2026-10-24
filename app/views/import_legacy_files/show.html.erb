@@ -1,6 +1,6 @@
-<div data-controller="drop-folders">
+<div class="content" data-controller="drop-folders">
     <h1>
-        Drop here
+        Drop files or folders here
     </h1>
     <h1>
         - -
@@ -10,6 +10,7 @@
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Filename</th>
             <th>Filepath</th>
             <th>Last modified at</th>
@@ -24,6 +25,9 @@
         <% @legacy_import_files.each do |legacy_import_file| %>
             <tr>
                 <td>
+                    <%= legacy_import_file.id %>
+                </td>
+                <td>
                     <%= legacy_import_file.filename %>
                 </td>
                 <td>
@@ -36,7 +40,11 @@
                     <%= number_to_human_size legacy_import_file.weight %>
                 </td>
                 <td>
-                    <%= legacy_import_file.status %>
+                    <% if legacy_import_file.status == "duplicate" %>
+                        Duplicate of <%= legacy_import_file.duplicate_of_id %>
+                    <% else %>
+                        <%= legacy_import_file.status %>
+                    <% end %>
                 </td>
                 <td>
                     <% if legacy_import_file.parseable.present? %>
@@ -52,7 +60,27 @@
                     <%= legacy_import_file.records_count %>
                 </td>
                 <td>
-                    <%= link_to "Parse", parse_import_legacy_files_path(id: legacy_import_file.id) %>
+                    <div>
+                        <%=
+                            parse_href_disabled = legacy_import_file.status != "uploaded"
+                            parse_href = parse_href_disabled ? "#" : parse_import_legacy_files_path(id: legacy_import_file.id)
+                            link_to "Parse", parse_href, disabled: parse_href_disabled
+                        %>
+
+                        <% if legacy_import_file.status == "uploaded" %>
+                            <%=
+                                link_to "Ignore",
+                                        ignore_file_import_legacy_files_path(id: legacy_import_file.id),
+                                        class: "has-text-warning",
+                                        data: { turbo_method: :post }
+                            %>
+                        <% end %>
+                    </div>
+                    <div>
+                        <% if legacy_import_file.status == "imported" %>
+                            <%= link_to "Remove file", "#", class: "has-text-danger" %>
+                        <% end %>
+                    </div>
                 </td>
             </tr>
         <% end %>
