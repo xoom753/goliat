@@ -43,7 +43,8 @@ gem "image_processing", "~> 1.2"
 gem "kaminari"
 gem "csv"
 gem "roo"
-gem 'roo-xls'
+gem "roo-xls"
+gem "caracal"
 
 
 group :development, :test do
@@ -64,6 +65,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "pry-rails"
+  gem "rails-erd"
 end
 
 group :test do

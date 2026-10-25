@@ -9,6 +9,9 @@ class ImportLegacyFilesController < ApplicationController
                 "filename LIKE '#{query}'"
             )
         end
+        if params[:year].present?
+            scope = scope.where(year: params[:year])
+        end
         @legacy_import_files =
             scope.page(params[:page])
                  .per(100)

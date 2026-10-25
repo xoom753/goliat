@@ -7,9 +7,17 @@
     </h1>
 </div>
 
-<%= link_to "Cultural", import_legacy_files_path(q: "cultural") %>
-<%= link_to "Deportivo", import_legacy_files_path(q: "deportivo") %>
-<%= link_to "Laboral", import_legacy_files_path(q: "laboral") %>
+<div>
+    <%= link_to_unless_current "Cultural", import_legacy_files_path(q: "cultural", year: params[:year]) %>
+    <%= link_to_unless_current "Deportivo", import_legacy_files_path(q: "deportivo", year: params[:year]) %>
+    <%= link_to_unless_current "Laboral", import_legacy_files_path(q: "laboral", year: params[:year]) %>
+</div>
+
+<div>
+    <%= link_to_unless_current "2025", import_legacy_files_path(q: params[:q], year: 2025) %>
+    <%= link_to_unless_current "2024", import_legacy_files_path(q: params[:q], year: 2024) %>
+    <%= link_to_unless_current "2023", import_legacy_files_path(q: params[:q], year: 2023) %>
+</div>
 
 <table class="table is-striped is-hoverable">
     <thead>
