@@ -44,7 +44,8 @@ gem "kaminari"
 gem "csv"
 gem "roo"
 gem "roo-xls"
-gem "caracal"
+# gem "caracal"
+gem "caracal-rails"
 
 
 group :development, :test do
@@ -66,6 +67,7 @@ group :development do
   gem "web-console"
   gem "pry-rails"
   gem "rails-erd"
+  gem "ruby-graphviz"
 end
 
 group :test do
