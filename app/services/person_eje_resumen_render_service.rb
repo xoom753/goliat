@@ -1,6 +1,9 @@
 class PersonEjeResumenRenderService
     delegate :periodos_detalle,
              :semestres_porcentuales,
+             :delitos_array,
+             :sentencias_array,
+             :acumulacion_penas,
              to: :@person_ejes_resumen
 
     SEMESTRE_NAMES = [
@@ -37,29 +40,18 @@ class PersonEjeResumenRenderService
             ],
             [
                 "Fecha de pérdida de libertad:".upcase,
-                @person_ejes_resumen.fecha_perdida_libertad
-            ],
-            [
-                "Delito 1:".upcase,
-                @person_ejes_resumen.delitos_array[0]
-            ],
-            [
-                "Sentencia 1:".upcase,
-                @person_ejes_resumen.sentencias_array[0]
-            ],
-            [
-                "Delito 2:".upcase,
-                @person_ejes_resumen.delitos_array[1]
-            ],
-            [
-                "Sentencia 2:".upcase,
-                @person_ejes_resumen.sentencias_array[1]
-            ],
-            [
-                "Acumulación de penas:".upcase,
-                @person_ejes_resumen.acumulacion_penas
+                date_to_str(@person_ejes_resumen.fecha_perdida_libertad)
             ]
-        ]
+        ] + table_rows_delitos_y_penas
+    end
+
+    def table_merged_rows_count
+        rows = 3 # base
+        if several_delitos?
+            # because it includes acumulacion de penas
+            rows += 1
+        end
+        rows + ( delitos_array.length * 2)
     end
 
     ##
@@ -85,6 +77,32 @@ class PersonEjeResumenRenderService
     end
 
     private
+
+    def several_delitos?
+        delitos_array.length > 1
+    end
+
+    def table_rows_delitos_y_penas
+        return @table_rows_delitos_y_penas if @table_rows_delitos_y_penas
+        @table_rows_delitos_y_penas = []
+        delitos_array.each_with_index do |delito, index|
+            @table_rows_delitos_y_penas << [
+                "Delito#{" #{index + 1}" if several_delitos?}:".upcase,
+                delito
+            ]
+            @table_rows_delitos_y_penas << [
+                "Sentencia#{" #{index + 1}" if several_delitos?}:".upcase,
+                sentencias_array[index]
+            ]
+            if several_delitos?
+                @table_rows_delitos_y_penas << [
+                    "Acumulación de penas:".upcase,
+                    acumulacion_penas
+                ]
+            end
+        end
+        @table_rows_delitos_y_penas
+    end
 
     def periodos_detalles_by_semestres
         # separados por una línea en blanco

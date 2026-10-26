@@ -57,6 +57,7 @@ end
 
         docx.p
 
+        table_merged_rows_count = @render_service.table_merged_rows_count
         docx.table @render_service.common_table_rows + [
             [
                 "Temporalidad".upcase,
@@ -69,7 +70,7 @@ end
             ]
         ] do
             cell_style cols[0], bold: true
-            0.upto(8).each do |row_n|
+            0.upto(table_merged_rows_count).each do |row_n|
                 cell_style rows[row_n][1], colspan: 2
             end
             cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
@@ -112,9 +113,10 @@ end
 
         docx.p
 
+        ubicacion = @person_ejes_resumen.ubicacion
         docx.p do
             text "Observación.", bold: true
-            text " Reside en el Pabellón \"A\""
+            text " Reside en el #{ubicacion}"
         end
 
         docx.p
@@ -146,6 +148,7 @@ end
 
         docx.p
 
+        table2_merged_rows_count = @render_service.table_merged_rows_count - 1
         docx.table @render_service.common_table_rows + [
             [
                 period[:semestre_str].upcase,
@@ -154,7 +157,7 @@ end
             ]
         ] do
             cell_style cols[0], bold: true
-            0.upto(7).each do |row_n|
+            0.upto(table2_merged_rows_count).each do |row_n|
                 cell_style rows[row_n][1], colspan: 2
             end
             cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}

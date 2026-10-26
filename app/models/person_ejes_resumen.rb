@@ -1,9 +1,9 @@
 class PersonEjesResumen < ApplicationRecord
     def delitos_array
-        delitos.split("\n")
+        @delitos_array ||= delitos.split("\n")
     end
 
     def sentencias_array
-        sentencias.split("\n")
+        @sentencias_array ||= sentencias.split("\n")
     end
 end
