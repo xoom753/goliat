@@ -35,7 +35,8 @@ class LegacyFileParseService
         end
         @legacy_import_file.update!(
             status: :imported,
-            records_count: records.count
+            records_count: records.count,
+            records_list: records.map(&:id).join(",")
         )
     end
 

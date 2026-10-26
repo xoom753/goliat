@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_26_154830) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_26_221950) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -125,6 +125,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_26_154830) do
     t.integer "records_count"
     t.integer "year"
     t.integer "month"
+    t.text "records_list"
     t.index ["filename", "last_modified_at", "weight", "id"], name: "idx_on_filename_last_modified_at_weight_id_5994fea729"
     t.index ["last_modified_at", "filename"], name: "index_legacy_import_files_on_last_modified_at_and_filename"
     t.index ["parseable_id"], name: "index_legacy_import_files_on_parseable_id"
