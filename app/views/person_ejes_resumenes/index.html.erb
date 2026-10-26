@@ -1,0 +1,18 @@
+<div class="content">
+    <h1>Fichas</h1>
+
+    <% @person_ejes_resumenes.each do |person_ejes_resumen| %>
+        <div>
+            <%= person_ejes_resumen.nombres %>
+            <%= link_to "Cultural.docx", cultural_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
+            <%= link_to "Deportivo.docx", deportivo_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
+            <%= link_to "Laboral.docx", laboral_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
+        </div>
+
+        <div>
+            <%= person_ejes_resumen.attributes.inspect %>
+        </div>
+
+        <hr />
+    <% end %>
+</div>

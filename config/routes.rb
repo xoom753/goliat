@@ -28,6 +28,14 @@ Rails.application.routes.draw do
       get :by_percentage
     end
   end
+  resources :person_ejes_resumenes, only: [:index, :new, :create] do
+    member do
+      get :cultural
+      get :deportivo
+      get :laboral
+    end
+  end
+  resources :caracal_example, only: :index
   resources :import_people, only: [:new, :create]
   resources :import_people_activities, only: [:new, :create]
   resources :people_activities, only: :index

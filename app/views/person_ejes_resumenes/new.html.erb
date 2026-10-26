@@ -1,0 +1,56 @@
+<div class="content">
+    <h1>Nuevo</h1>
+    <%= form_for @person_ejes_resumen do |f| %>
+        <div>
+            <%= f.label :nombres %>
+            <%= f.text_field :nombres %>
+        </div>
+        <div>
+            <%= f.label :dni %>
+            <%= f.text_field :dni %>
+        </div>
+        <div>
+            <%= f.label :ubicacion %>
+            <%= f.text_field :ubicacion %>
+        </div>
+        <div>
+            <%= f.label :fecha_perdida_libertad %>
+            <%= f.date_field :fecha_perdida_libertad %>
+        </div>
+        <div>
+            <%= f.label :delitos %>
+            <pre>delito 1
+delito 2</pre>
+            <%= f.textarea :delitos %>
+        </div>
+        <div>
+            <%= f.label :sentencias %>
+            <pre>sentencia 1
+sentencia 2</pre>
+            <%= f.textarea :sentencias %>
+        </div>
+        <div>
+            <%= f.label :acumulacion_penas %>
+            <%= f.textarea :acumulacion_penas %>
+        </div>
+        <div>
+            <%= f.label :semestres_porcentuales %>
+            <pre>20%
+40%
+60%</pre>
+            <%= f.textarea :semestres_porcentuales %>
+        </div>
+        <div>
+            <%= f.label :periodos_detalle %>
+            <pre>02/06/22	29/11/22	180	7,39%
+30/11/22	29/05/23	180	14,77%
+30/05/23	02/10/23	125	20,00%
+
+03/10/23	31/03/24	180	27,29%
+01/04/24	28/09/24	180	34,67%
+29/09/24	31/01/25	123,6	40,00%</pre>
+            <%= f.textarea :periodos_detalle %>
+        </div>
+        <%= f.submit %>
+    <% end %>
+</div>

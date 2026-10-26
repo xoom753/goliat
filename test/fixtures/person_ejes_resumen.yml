@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombres: MyString
+  dni: MyString
+  fecha_perdida_libertad: 2026-10-26
+  delitos: MyText
+  sentencias: MyText
+  acumulacion_penas: MyText
+  semestres_porcentuales: MyText
+  periodos_detalle: MyText
+
+two:
+  nombres: MyString
+  dni: MyString
+  fecha_perdida_libertad: 2026-10-26
+  delitos: MyText
+  sentencias: MyText
+  acumulacion_penas: MyText
+  semestres_porcentuales: MyText
+  periodos_detalle: MyText

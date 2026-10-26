@@ -1,0 +1,240 @@
+docx.font name: "Calibri (Cuerpo)"
+
+docx.page_margins do
+  left    1440
+  right   1440
+  top     360
+  bottom  720
+end
+
+docx.style do
+    id "Heading1"
+    name "Heading1"
+    font "Calibri (Cuerpo)"
+    size 20
+    bold true
+end
+
+docx.style do
+    id "Normal"
+    name "Normal"
+    font "Calibri (Cuerpo)"
+    size 20
+    align :both
+    line 240
+end
+
+docx.style do
+    id "TableNormal"
+    name "TableNormal"
+    font "Calibri (Cuerpo)"
+    size 20
+    align :both
+end
+
+docx.header do
+    img "vendor/images/gdec.png", width: 120, height: 50, align: :left
+    img "vendor/images/snai.png", width: 310, height: 85, align: :right
+end
+
+docx.footer do
+    img "vendor/images/snaifoot.png", width: 218, height: 69
+end
+
+@render_service.semestres_detail_hash.each do |semestre, periods|
+    periods.each do |period|
+        docx.h1 "Informe cultural CPL Loja 1".upcase do
+            align :center
+        end
+
+        docx.h1 "Proceso Cultural".upcase do
+            align :center
+        end
+
+        docx.p
+
+        docx.p "Por medio de la presente me permito informar el cumplimiento del Proceso Cultural de la Persona Privada de la Libertad:"
+
+        docx.p
+
+        docx.table @render_service.common_table_rows + [
+            [
+                "Temporalidad".upcase,
+                semestre
+            ],
+            [
+                "Semestre".upcase,
+                period[:start_date],
+                period[:end_date]
+            ]
+        ] do
+            cell_style cols[0], bold: true
+            0.upto(8).each do |row_n|
+                cell_style rows[row_n][1], colspan: 2
+            end
+            cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
+        end
+
+        docx.p
+
+        docx.p "Informe cultural".upcase,
+                bold: true
+
+        person_nombres = @person_ejes_resumen.nombres
+
+        docx.p do
+            text "Se informa que la PPL. "
+            text person_nombres.upcase, bold: true
+            text ", desde el momento de su ingreso hasta la presente fecha y de acuerdo al expediente digital que reposa en el Área Cultural del CPL Loja 1, "
+            text "SÍ", bold: true
+            text " cumple con el Proceso Cultural durante el tiempo que se encuentra privado de su libertad en este Centro."
+        end
+
+        docx.p
+
+        docx.p "Cultural permanente:".upcase, bold: true
+
+        docx.ol do
+            li "No registra actividad cultural permanente en este periodo."
+        end
+
+        docx.p
+
+        docx.p "Cultural temporal:".upcase, bold: true
+
+        docx.ol do
+            li "No registra actividad cultural temporal en este periodo."
+        end
+
+        docx.p
+
+        docx.p "Al ingresar a este Centro se le indicó que tiene que cubrir los parámetros en el Eje Cultural para la obtención de los beneficios penitenciarios."
+
+        docx.p
+
+        docx.p do
+            text "Observación.", bold: true
+            text " Reside en el Pabellón \"A\""
+        end
+
+        docx.p
+
+        docx.p "Atentamente. _"
+
+        docx.p
+        docx.p
+        docx.p
+        docx.p
+        docx.p
+
+        docx.p "Víctor Hugo Suárez Mejía"
+        docx.p "Eje Cultural CPL Loja 1".upcase, bold: true
+        docx.p "Fecha de entrega: #{Date.today.strftime('%d/%m/%Y')}"
+
+        docx.page
+
+        docx.h1 "Equipo Técnico de Tratamiento y Educación".upcase do
+            align :center
+        end
+        docx.h1 "Área Cultura".upcase do
+            align :center
+        end
+
+        docx.p
+
+        docx.p "Datos personales y jurídicos".upcase, bold: true
+
+        docx.p
+
+        docx.table @render_service.common_table_rows + [
+            [
+                period[:semestre_str].upcase,
+                period[:start_date],
+                period[:end_date]
+            ]
+        ] do
+            cell_style cols[0], bold: true
+            0.upto(7).each do |row_n|
+                cell_style rows[row_n][1], colspan: 2
+            end
+            cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
+        end
+
+        docx.p
+
+        docx.h1 "Interés por rehabilitarse".upcase do
+            align :center
+        end
+
+        docx.p
+
+        docx.table [
+            [
+                "Parámetros de Evaluación".upcase,
+                "Máx".upcase,
+                semestre
+            ],
+            [
+                "Cultural".upcase,
+                "Permanente".upcase,
+                "Literatura, artes escénicas, música, artes plásticas y visuales, producción audiovisual y radio, comunicación, entre otras.",
+                "3",
+                "0"
+            ],
+            [
+                "",
+                "Temporal".upcase,
+                "Charlas, concursos, talleres, capacitaciones, entre otras.",
+                "2",
+                "2"
+            ],
+            [
+                "Subtotal",
+                "5",
+                "2"
+            ]
+        ] do
+            column_widths  [300, 370, 1400, 110, 110]
+            border_size 4
+            cell_style cols[0], bold: true
+            cell_style rows[0][0], colspan: 3, align: :center
+            cell_style rows[0][1], align: :center, bold: true
+            cell_style rows[0][2], align: :center, bold: true
+            cell_style rows[1][0], rowspan: 2, align: :center, vertical_align: :center
+            cell_style rows[1][1], align: :center, bold: true, vertical_align: :center
+            cell_style rows[1][3], align: :center, vertical_align: :center
+            cell_style rows[1][4], align: :center, vertical_align: :center
+            cell_style rows[2][3], align: :center, vertical_align: :center
+            cell_style rows[2][4], align: :center, vertical_align: :center
+            cell_style rows[2][1], align: :center, bold: true, vertical_align: :center
+            cell_style rows[3][0], colspan: 3, align: :right, bold: true
+            cell_style rows[3][1], align: :center, bold: true
+            cell_style rows[3][2], align: :center, bold: true
+        end
+
+        docx.p
+
+        docx.p do
+            text "Observaciones:", bold: true
+            text " Durante el tiempo que ha permanecido privado de su libertad en el CPL Loja 1 "
+            text "SÍ", bold: true
+            text " cumple con el Eje Cultural."
+        end
+
+        docx.p
+
+        docx.p "Atentamente. _"
+
+        docx.p
+        docx.p
+        docx.p
+        docx.p
+        docx.p
+
+        docx.p "Víctor Hugo Suárez Mejía"
+        docx.p "Eje Cultural CPL Loja 1".upcase, bold: true
+        docx.p "Fecha de entrega: #{Date.today.strftime('%d/%m/%Y')}"
+
+        docx.page
+    end
+end

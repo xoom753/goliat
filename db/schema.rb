@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_24_200539) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_26_154830) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -259,6 +259,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_200539) do
     t.index ["coursable_id"], name: "index_person_activities_on_coursable_id"
     t.index ["coursable_type", "coursable_id"], name: "index_person_activities_on_coursable_type_and_coursable_id"
     t.index ["person_id"], name: "index_person_activities_on_person_id"
+  end
+
+  create_table "person_ejes_resumenes", force: :cascade do |t|
+    t.string "nombres", null: false
+    t.string "dni", null: false
+    t.date "fecha_perdida_libertad", null: false
+    t.text "delitos", null: false
+    t.text "sentencias", null: false
+    t.text "acumulacion_penas"
+    t.text "semestres_porcentuales", null: false
+    t.text "periodos_detalle", null: false
+    t.datetime "created_at", null: false
+    t.string "ubicacion"
   end
 
   create_table "person_pabellon_updates", force: :cascade do |t|
