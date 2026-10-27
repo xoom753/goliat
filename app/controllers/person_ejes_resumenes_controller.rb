@@ -56,6 +56,9 @@ class PersonEjesResumenesController < ApplicationController
         @render_service = PersonEjeResumenRenderService.new(
             @person_ejes_resumen
         )
+        @informe_renderer_service = InformeRendererService.new(
+            @render_service
+        )
     end
 
     def person_ejes_resumen_params

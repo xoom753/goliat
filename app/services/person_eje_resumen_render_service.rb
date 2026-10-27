@@ -1,5 +1,7 @@
 class PersonEjeResumenRenderService
-    delegate :periodos_detalle,
+    delegate :nombres,
+             :ubicacion,
+             :periodos_detalle,
              :semestres_porcentuales,
              :delitos_array,
              :sentencias_array,
