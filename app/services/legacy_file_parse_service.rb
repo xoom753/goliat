@@ -47,7 +47,7 @@ class LegacyFileParseService
         activity_str = hash[:actividad].strip.titleize
         activity_group_str = hash[:servicios].strip.titleize
         activity_detail_str = hash[:activity_detail].presence || ""
-        activity_dates = hash[:fecha].strip
+        activity_dates = hash[:fecha].to_s.strip
         start_date = activity_dates[start_date_index_from, start_date_index_to]
         end_date = activity_dates[end_date_index_from, end_date_index_to]
 

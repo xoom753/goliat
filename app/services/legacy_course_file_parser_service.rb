@@ -10,22 +10,16 @@ class LegacyCourseFileParserService
     def parse!
         @records = []
         @headers = []
-        reached_footer = false
-        current_row_n = -1 # will skip headers
-        sheet.each do |row|
-            current_row_n += 1
-            if skipping_footer? && reached_footer
-                break
-            elsif current_row_n < @legacy_course_file_parser.skip_rows
-                @headers << row
-            elsif row[@legacy_course_file_parser.nombres_col].present?
-                @records << build_legacy_person_activity(
-                    row: row,
-                    current_row_n: current_row_n
+        if @legacy_course_file_parser.sheet_numbers.present?
+            @legacy_course_file_parser.sheet_numbers.split(",").each do |num|
+                parse_sheet!(
+                    xlsx.sheet(num.to_i)
                 )
-            else
-                reached_footer = true
             end
+        else
+            parse_sheet!(
+                xlsx.sheet(0) # first sheet
+            )
         end
     end
 
@@ -41,6 +35,26 @@ class LegacyCourseFileParserService
     end
 
     private
+
+    def parse_sheet!(current_sheet)
+        reached_footer = false
+        current_row_n = -1 # will skip headers
+        current_sheet.each do |row|
+            current_row_n += 1
+            if skipping_footer? && reached_footer
+                break
+            elsif current_row_n < @legacy_course_file_parser.skip_rows
+                @headers << row
+            elsif row[@legacy_course_file_parser.nombres_col].present?
+                @records << build_legacy_person_activity(
+                    row: row,
+                    current_row_n: current_row_n
+                )
+            else
+                reached_footer = true
+            end
+        end
+    end
 
     def build_legacy_person_activity(row:, current_row_n:)
         nombres_str = row[@legacy_course_file_parser.nombres_col].strip.titleize
@@ -66,11 +80,16 @@ class LegacyCourseFileParserService
         true
     end
 
-    def sheet
-        file_path = ActiveStorage::Blob.service.path_for(
+    def xlsx
+        @xlsx ||= Roo::Spreadsheet.open(
+            file_path,
+            extension: @legacy_course_file_parser.file_format.to_sym
+        )
+    end
+
+    def file_path
+        ActiveStorage::Blob.service.path_for(
             @legacy_import_file.file.attachment.blob.key
         )
-        xlsx = Roo::Spreadsheet.open(file_path, extension: @legacy_course_file_parser.file_format.to_sym)
-        xlsx.sheet(0) # first sheet
     end
 end

@@ -49,4 +49,18 @@ class InformeRendererService::InformeDeportivoRenderer < InformeRendererService:
 
         docx.p
     end
+
+    private
+
+    def c_t(key, **options)
+        if options[:kind_f]
+            kind_str = I18n.t("common.#{kind}_f")
+        else
+            kind_str = I18n.t("common.#{kind}")
+        end
+        if options[:downcase]
+            kind_str = kind_str.downcase
+        end
+        I18n.t("common.#{key}", **options.merge(kind_str:))
+    end
 end

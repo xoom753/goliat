@@ -87,19 +87,6 @@ class InformeRendererService
         docx.p "Fecha de entrega: #{Date.today.strftime('%d/%m/%Y')}"
     end
 
-    # common.key
-    def c_t(key, **options)
-        if options[:kind_f]
-            kind_str = I18n.t("common.#{kind}_f")
-        else
-            kind_str = I18n.t("common.#{kind}")
-        end
-        if options[:downcase]
-            kind_str = kind_str.downcase
-        end
-        I18n.t("common.#{key}", **options.merge(kind_str:))
-    end
-
     private
 
     def specific_renderer

@@ -65,6 +65,6 @@ class LegacyCourseFileParsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def legacy_course_file_parser_params
-      params.expect(legacy_course_file_parser: [ :parser_name, :description, :skip_rows, :nombres_col, :fechas_cols, :file_format ])
+      params.expect(legacy_course_file_parser: [ :parser_name, :description, :skip_rows, :nombres_col, :fechas_cols, :file_format, :sheet_numbers ])
     end
 end

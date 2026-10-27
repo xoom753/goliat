@@ -1,8 +1,8 @@
 class InformeRendererService::GenericRenderer
     attr_accessor :period, :semestre
 
-    delegate :c_t,
-             :docx,
+    delegate :docx,
+             :kind,
              :person_ejes_renderer,
              to: :@informe_renderer_service
 
@@ -141,5 +141,15 @@ class InformeRendererService::GenericRenderer
             text cumple_con
         end
         docx.p
+    end
+
+    protected
+
+    def c_t(key, **options)
+        kind_str = I18n.t("common.#{kind}")
+        if options[:downcase]
+            kind_str = kind_str.downcase
+        end
+        I18n.t("common.#{key}", **options.merge(kind_str:))
     end
 end
