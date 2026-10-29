@@ -8,5 +8,6 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+@import url("./core/app.css");
 @import url("./utils/generic.css");
 @import url("./utils/content_custom.css");

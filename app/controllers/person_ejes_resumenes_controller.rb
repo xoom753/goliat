@@ -11,6 +11,16 @@ class PersonEjesResumenesController < ApplicationController
 
     def new
         @person_ejes_resumen = PersonEjesResumen.new
+        if params[:legacy_person_id].present?
+            @legacy_person = LegacyPerson.find(params[:legacy_person_id])
+            @person_data_service = PersonDataService.new(
+                @legacy_person
+            )
+            @person_ejes_resumen.nombres = @legacy_person.nombres
+            @person_ejes_resumen.dni = @person_data_service.dni
+            @person_ejes_resumen.ubicacion = @person_data_service.ubicacion
+            @person_ejes_resumen.fecha_perdida_libertad = @person_data_service.fecha_detencion
+        end
     end
 
     def create

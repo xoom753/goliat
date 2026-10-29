@@ -44,8 +44,8 @@ gem "kaminari"
 gem "csv"
 gem "roo"
 gem "roo-xls"
-# gem "caracal"
 gem "caracal-rails"
+gem "simple_form"
 
 
 group :development, :test do

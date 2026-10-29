@@ -1,5 +1,22 @@
-<%= form_tag people_dashboard_path, method: :get do %>
-    <%= text_field_tag :s, params[:s], placeholder: "Buscar" %>
+<%=
+    simple_form_for :people_dashboard_path,
+                    url: people_dashboard_path,
+                    method: :get do |f|
+%>
+  <div class="field has-addons">
+    <div class="control is-expanded">
+        <%=
+            f.input :s,
+                    label: false,
+                    placeholder: "Buscar",
+                    input_html: { name: :s, value: params[:s] },
+                    wrapper: false
+        %>
+    </div>
+    <div class="control">
+        <%= f.submit "Buscar", class: "button" %>
+    </div>
+  </div>
 <% end %>
 
 <%
@@ -8,9 +25,11 @@
     }.max
 %>
 
-<table class="table is-striped is-hoverable is-narrow is-bordered">
+<hr />
+
+<table class="table is-striped is-hoverable is-narrow">
     <thead>
-        <tr class="is-success">
+        <tr class="">
             <th>
                 Nombres
             </th>
@@ -28,7 +47,7 @@
     <tbody>
         <% @people.each do |person| %>
             <tr>
-                <td rowspan=10 class="is-success">
+                <td rowspan=10 class="">
                     <div>
                         <%= person.nombres %>
                     </div>
@@ -39,7 +58,7 @@
                         %>
                     </div>
                 </td>
-                <td rowspan=10 class="is-success">
+                <td rowspan=10 class="">
                     <div>
                         <%= person.dni %>
                     </div>
@@ -50,7 +69,7 @@
                         %>
                     </div>
                 </td>
-                <td rowspan=10 class="is-success">
+                <td rowspan=10 class="">
                     <%= person.pabellon %>
                 </td>
             </tr>
