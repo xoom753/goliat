@@ -1,3 +1,25 @@
+<%= simple_form_for :search, method: :get do |f| %>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <%= f.input :date_from,
+                        as: :date,
+                        html5: true,
+                        input_html: { name: :date_from, value: params[:date_from] }
+            %>
+            <%= f.input :date_to,
+                        as: :date,
+                        html5: true,
+                        input_html: { name: :date_to, value: params[:date_to] }
+            %>
+        </div>
+    </div>
+    <%= f.submit "Search", class: "button" %>
+<% end %>
+
+<%=
+    pluralize @legacy_person_activities.total_count, "record"
+%>
+
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>
