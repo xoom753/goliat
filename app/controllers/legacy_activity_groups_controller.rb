@@ -1,6 +1,6 @@
 class LegacyActivityGroupsController < ApplicationController
     def index
-        @legacy_activity_groups = LegacyActivityGroup.all.page(params[:page]).per(100)
+        @legacy_activity_groups = LegacyActivityGroup.all.ordered.page(params[:page]).per(100)
     end
 
     def update

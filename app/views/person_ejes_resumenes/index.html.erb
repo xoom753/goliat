@@ -1,5 +1,5 @@
 <div class="content">
-    <h1>Fichas</h1>
+    <h2>Fichas</h2>
 
     <% @person_ejes_resumenes.each do |person_ejes_resumen| %>
         <div>
@@ -9,9 +9,74 @@
             <%= link_to "Laboral.docx", laboral_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
         </div>
 
-        <div>
-            <%= person_ejes_resumen.attributes.inspect %>
-        </div>
+        <dl>
+            <dt>
+                DNI
+            </dt>
+            <dd>
+                <%= person_ejes_resumen.dni %>
+            </dd>
+
+            <dt>
+                Fecha pérdida libertad
+            </dt>
+            <dd>
+                <%= person_ejes_resumen.fecha_perdida_libertad %>
+            </dd>
+
+            <dt>
+                Ubicación
+            </dt>
+            <dd>
+                <%= person_ejes_resumen.ubicacion %>
+            </dd>
+
+            <dt>
+                Delitos
+            </dt>
+            <dd>
+                <%= person_ejes_resumen.delitos_array.join("<br />").html_safe %>
+            </dd>
+
+            <dt>
+                Sentencias
+            </dt>
+            <dd>
+                <%= person_ejes_resumen.sentencias_array.join("<br />").html_safe %>
+            </dd>
+
+            <% if person_ejes_resumen.acumulacion_penas.present? %>
+                <dt>
+                    Acumulación de penas
+                </dt>
+                <dd>
+                    <%= person_ejes_resumen.acumulacion_penas %>
+                </dd>
+            <% end %>
+
+            <%
+                renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
+                semestres_detail_hash = begin
+                    renderer.semestres_detail_hash
+                rescue StandardError => e
+                    { "error" => [{ "error" => e }] }
+                end
+            %>
+
+            <% semestres_detail_hash.each do |key, values| %>
+                <dt>
+                    <%= key %>
+                </dt>
+                <dd>
+                    <%=
+                        values_strs = values.map do |val|
+                            "#{val[:percentage]} - #{val[:semestre_str]}: #{val[:start_date]} - #{val[:end_date]}"
+                        end
+                        values_strs.join("<br />").html_safe
+                    %>
+                </dd>
+            <% end %>
+        </dl>
 
         <hr />
     <% end %>
