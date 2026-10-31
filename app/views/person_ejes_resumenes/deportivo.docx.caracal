@@ -7,6 +7,11 @@
 
 @informe_renderer_service.footer
 
+@informe_renderer_service.template_no_cumple_con_proceso
+@informe_renderer_service.template_qualy_no_cumple_con
+
+docx.page
+
 @render_service.semestres_detail_hash.each do |semestre, periods|
     periods.each do |period|
         @informe_renderer_service.period = period

@@ -50,7 +50,8 @@ class ImportLegacyFilesController < ApplicationController
         parseable_id, parseable_type = params.require(:parseable_id_and_type).split("_")
         @legacy_import_file.update!(
             parseable_id: parseable_id,
-            parseable_type: parseable_type
+            parseable_type: parseable_type,
+            override_hasta: params[:override_hasta]
         )
         redirect_to action: :parse, id: params[:id]
     end

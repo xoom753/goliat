@@ -143,6 +143,39 @@ class InformeRendererService::GenericRenderer
         docx.p
     end
 
+    def template_no_cumple_con_proceso
+        docx.p c_t("templates")
+        docx.p
+
+        person_nombres = person_ejes_renderer.nombres
+        se_informa = c_t("se_informa")
+        desde_su_ingreso = c_t("desde_su_ingreso", kind_f: true)
+        no_cumple_con_proceso = c_t(
+            "no_cumple_con_proceso",
+            kind_f: true,
+            downcase: true
+        )
+        docx.p do
+            text se_informa
+            text person_nombres.upcase, bold: true
+            text desde_su_ingreso
+            text no_cumple_con_proceso
+        end
+        docx.p
+    end
+
+    def template_qualy_no_cumple_con
+        observaciones = c_t("qualy_observaciones")
+        durante_el_tiempo = c_t("qualy_durante_el_tiempo")
+        qualy_no_cumple_con = c_t("qualy_no_cumple_con")
+        docx.p do
+            text observaciones, bold: true
+            text durante_el_tiempo
+            text qualy_no_cumple_con
+        end
+        docx.p
+    end
+
     protected
 
     def c_t(key, **options)

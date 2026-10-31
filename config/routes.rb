@@ -35,9 +35,9 @@ Rails.application.routes.draw do
       get :laboral
     end
   end
-  resources :caracal_example, only: :index
   resources :import_people, only: [:new, :create]
   resources :import_people_activities, only: [:new, :create]
+  resources :import_legacy_people_activities, only: [:new, :create]
   resources :people_activities, only: :index
   resources :courses, only: [:edit, :update, :destroy]
   resources :legacy_people, only: :index

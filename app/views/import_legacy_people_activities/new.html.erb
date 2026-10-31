@@ -1,0 +1,32 @@
+<h2>Import Legacy People Activities</h2>
+
+<%= simple_form_for :legacy_person_activities,
+                    url: import_legacy_people_activities_path do |f| %>
+
+    <div class="field">
+        <%= f.label :legacy_activity_id %>
+        <%=
+            f.input :legacy_activity_id,
+                    collection: LegacyActivity.ordered.map{|l| [l.nombre, l.id]} ,
+                    label: false,
+                    wrapper_html: { class: "control" }
+        %>
+    </div>
+
+    <div class="field">
+        <%= f.label :legacy_activity_group_id %>
+        <%=
+            f.input :legacy_activity_group_id,
+                    collection: LegacyActivityGroup.ordered.map{|l| [l.nombre, l.id]} ,
+                    label: false,
+                    wrapper_html: { class: "control" }
+        %>
+    </div>
+
+    <%= f.input :duracion, hint: "Ej: 30 horas" %>
+    <%= f.input :end_date, as: :date, html5: true %>
+
+    <%= f.input :people, as: :text, hint: "<pre>Lastname1 Lastname2 Firstname1 Firstname2\nLastname1 Lastname2 Firstname1 Firstname2</pre>".html_safe %>
+
+    <%= f.submit class: "button" %>
+<% end %>

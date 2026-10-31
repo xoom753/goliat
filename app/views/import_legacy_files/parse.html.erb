@@ -9,8 +9,26 @@
 </h2>
 <div>
     <%= form_tag update_parser_import_legacy_files_path(id: @legacy_import_file.id), method: :put do %>
-        <%= select_tag :parseable_id_and_type,
-                       options_from_collection_for_select(LegacyFilesParser.all + LegacyCourseFileParser.all, :id_and_type, :parser_name, @legacy_import_file.parseable_id_and_type), include_blank: true %>
+        <div class="field">
+            <%= label_tag :parseable_id_and_type, "Parser", class: "label" %>
+            <div class="control">
+            <div class="select">
+                <%= select_tag :parseable_id_and_type,
+                        options_from_collection_for_select(LegacyFilesParser.all + LegacyCourseFileParser.all, :id_and_type, :parser_name, @legacy_import_file.parseable_id_and_type), include_blank: true %>
+            </div>
+            </div>
+        </div>
+
+
+        <% if @legacy_import_file.parseable.is_a?(LegacyFilesParser) %>
+            <div class="field">
+                <%= label_tag :override_hasta, "Override 'Hasta'", class: "label" %>
+                <div class="control">
+                    <%= date_field_tag :override_hasta, @legacy_import_file.override_hasta, class: "input" %>
+                </div>
+            </div>
+        <% end %>
+
         <%= submit_tag "Update parser" %>
     <% end %>
 </div>

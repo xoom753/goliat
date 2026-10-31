@@ -43,13 +43,29 @@ class LegacyFileParseService
     private
 
     def build_legacy_person_activity(hash)
-        nombres_str = hash[:nombres].strip.titleize
-        activity_str = hash[:actividad].strip.titleize
         activity_group_str = hash[:servicios].strip.titleize
-        activity_detail_str = hash[:activity_detail].presence || ""
+
+        ##
+        # there's some rows in which :actividad is empty:
+        activity_str = if hash[:actividad].blank?
+            activity_group_str
+        else
+            hash[:actividad].strip.titleize
+        end
+
         activity_dates = hash[:fecha].to_s.strip
+
+        ##
+        # allow :override_hasta:
+        end_date = if @legacy_import_file.override_hasta.present?
+            @legacy_import_file.override_hasta
+        else
+            activity_dates[end_date_index_from, end_date_index_to]
+        end
+
+        nombres_str = hash[:nombres].strip.titleize
+        activity_detail_str = hash[:activity_detail].presence || ""
         start_date = activity_dates[start_date_index_from, start_date_index_to]
-        end_date = activity_dates[end_date_index_from, end_date_index_to]
 
         LegacyPersonActivity.new(
             row_number: hash[:row_number],

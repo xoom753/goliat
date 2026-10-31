@@ -16,6 +16,8 @@ class InformeRendererService
              :ficha_qualy_info_table,
              :ficha_qualy_main_table,
              :ficha_qualy_summary,
+             :template_no_cumple_con_proceso,
+             :template_qualy_no_cumple_con,
              to: :specific_renderer
 
     def initialize(person_ejes_resumen_renderer_service)

@@ -26,12 +26,14 @@ class LegacyPersonActivity < ApplicationRecord
     end
 
     def reference_legacy_activity!
+        return if activity_str.blank?
         self.legacy_activity = LegacyActivity.where(
             nombre: activity_str
         ).first_or_create!
     end
 
     def reference_legacy_activity_group!
+        return if activity_group_str.blank?
         self.legacy_activity_group = LegacyActivityGroup.where(
             nombre: activity_group_str
         ).first_or_create!

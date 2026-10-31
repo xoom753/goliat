@@ -43,6 +43,7 @@ en:
 01/04/24	28/09/24	180	34,67%\n\
 29/09/24	31/01/25	123,6	40,00%</pre>"
   common:
+    templates: "((TEMPLATES))"
     cultural: "Cultural"
     deportivo: "Deportivo"
     deportivo_f: "Deportiva"
@@ -53,7 +54,8 @@ en:
     informe_kind: "Informe %{kind_str}"
     se_informa: "Se informa que la PPL. "
     desde_su_ingreso: ", desde el momento de su ingreso hasta la presente fecha y de acuerdo al expediente digital que reposa en el Área %{kind_str} del CPL Loja 1, "
-    cumple_con_proceso: " cumple con el proceso de Actividad %{kind_str} durante el tiempo que se encuentra privado de su libertad en este Centro."
+    cumple_con_proceso: " cumple con el proceso de Actividad %{kind_str} durante este periodo que se encuentra privado de su libertad en este Centro."
+    no_cumple_con_proceso: "no registra actividad %{kind_str} durante este periodo que se encuentra privado de su libertad en este Centro."
     act_permanente: "%{kind_str} permanente:"
     no_registra_permanente: "No registra actividad %{kind_str} permanente en este periodo."
     act_temporal: "%{kind_str} temporal:"
@@ -67,5 +69,6 @@ en:
     qualy_datos: "Datos personales y jurídicos"
     qualy_main_table_title: "Interés por rehabilitarse"
     qualy_observaciones: "Observaciones:"
-    qualy_durante_el_tiempo: " Durante el tiempo que ha permanecido privado de su libertad en el CPL Loja 1 "
+    qualy_durante_el_tiempo: " Durante este periodo que ha permanecido privado de su libertad en el CPL Loja 1 "
     qualy_cumple_con: " cumple con el Eje %{kind_str}."
+    qualy_no_cumple_con: "no registra actividad en el Eje %{kind_str}."

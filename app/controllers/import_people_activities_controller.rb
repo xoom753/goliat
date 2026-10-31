@@ -9,7 +9,7 @@ class ImportPeopleActivitiesController < ApplicationController
             if person.present?
                 activity_record = PersonActivity.new(
                     person: person,
-                    activity: activity,
+                    coursable: activity,
                     mes: params[:date][:month],
                     anio: params[:date][:year]
                 )

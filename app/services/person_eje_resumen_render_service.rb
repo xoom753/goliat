@@ -84,6 +84,10 @@ class PersonEjeResumenRenderService
         delitos_array.length > 1
     end
 
+    def last_delito?(index)
+        delitos_array.length <= (index + 1)
+    end
+
     def table_rows_delitos_y_penas
         return @table_rows_delitos_y_penas if @table_rows_delitos_y_penas
         @table_rows_delitos_y_penas = []
@@ -96,7 +100,7 @@ class PersonEjeResumenRenderService
                 "Sentencia#{" #{index + 1}" if several_delitos?}:".upcase,
                 sentencias_array[index]
             ]
-            if several_delitos?
+            if several_delitos? && last_delito?(index)
                 @table_rows_delitos_y_penas << [
                     "Acumulación de penas:".upcase,
                     acumulacion_penas
