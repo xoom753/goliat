@@ -30,7 +30,7 @@ class LegacyCourseFileParserService
         @legacy_import_file.update!(
             status: :imported,
             records_count: records.count,
-            records_list: records.map(&:id).join(",")
+            records_list: nil #records.map(&:id).join(",")
         )
     end
 
@@ -68,7 +68,8 @@ class LegacyCourseFileParserService
             activity_str: activity_str,
             activity_dates: activity_dates,
             duracion: @params[:duracion],
-            end_date: @params[:hasta]
+            end_date: @params[:hasta],
+            legacy_import_file_id: @legacy_import_file.id
         )
         if @params[:detalle].present?
             legacy_person_activity.activity_detail_str = @params[:detalle].strip.titleize

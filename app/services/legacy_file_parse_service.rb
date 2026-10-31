@@ -36,7 +36,7 @@ class LegacyFileParseService
         @legacy_import_file.update!(
             status: :imported,
             records_count: records.count,
-            records_list: records.map(&:id).join(",")
+            records_list: nil #records.map(&:id).join(",")
         )
     end
 
@@ -76,7 +76,8 @@ class LegacyFileParseService
             activity_dates: activity_dates,
             duracion: hash[:duracion].to_s.strip,
             start_date: start_date,
-            end_date: end_date
+            end_date: end_date,
+            legacy_import_file_id: @legacy_import_file.id
         )
     end
 
