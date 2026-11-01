@@ -23,7 +23,11 @@
         %>
     </div>
 
+    <%= f.input :activity_detail_str, hint: "<pre>Ej:\nElaboración de granola\nContrato de trabajo\nCurso</pre>".html_safe %>
+
+    <%= f.input :activity_dates, hint: "<pre>Ej:\n01/05/2025-31/05/2025\nEnero-Febrero 2025</pre>".html_safe %>
     <%= f.input :duracion, hint: "Ej: 30 horas" %>
+    <%= f.input :start_date, as: :date, html5: true %>
     <%= f.input :end_date, as: :date, html5: true %>
 
     <%= f.input :people, as: :text, hint: "<pre>Lastname1 Lastname2 Firstname1 Firstname2\nLastname1 Lastname2 Firstname1 Firstname2</pre>".html_safe %>

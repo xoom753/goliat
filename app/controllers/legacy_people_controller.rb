@@ -14,6 +14,6 @@ class LegacyPeopleController < ApplicationController
                             :legacy_activity_detail,
                         ])
                         .page(params[:page])
-                        .per(20)
+                        .per(8)
     end
 end

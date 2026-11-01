@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_31_192935) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_01_184645) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -288,7 +288,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_192935) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_groups"
   add_foreign_key "legacy_activity_groups", "activity_groups"
-  add_foreign_key "legacy_import_files", "legacy_files_parsers", column: "parseable_id"
   add_foreign_key "legacy_person_activities", "legacy_activities"
   add_foreign_key "legacy_person_activities", "legacy_activity_details"
   add_foreign_key "legacy_person_activities", "legacy_activity_groups"
