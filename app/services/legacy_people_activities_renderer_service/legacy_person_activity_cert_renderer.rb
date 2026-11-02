@@ -25,10 +25,16 @@ class LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer
 
     def cert_string
         duracion = @legacy_person_activity.duracion.downcase
-        t_identifier =  if actividad_talleres?
+        t_identifier =  if empty_prefix?
+            "certs.empty_prefix"
+        elsif actividad_actividades?
+            "certs.actividades"
+        elsif actividad_talleres?
             "certs.taller"
         elsif actividad_cursos?
             "certs.curso"
+        elsif actividad_programas?
+            "certs.programa"
         else
             default_cert_string
         end
@@ -81,6 +87,32 @@ class LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer
     def actividad_cursos?
         [
             /panader/i
+        ].any? do |regex|
+            actividad_str =~ regex
+        end
+    end
+
+    def actividad_programas?
+        [
+            /teatral/i,
+        ].any? do |regex|
+            actividad_str =~ regex
+        end
+    end
+
+    def empty_prefix?
+        [
+            /programa/i,
+            /concurso/i,
+            /agasajo/i,
+        ].any? do |regex|
+            actividad_str =~ regex
+        end
+    end
+
+    def actividad_actividades?
+        [
+            /adecentamiento/i,
         ].any? do |regex|
             actividad_str =~ regex
         end

@@ -5,7 +5,7 @@ class LegacyPersonActivity < ApplicationRecord
                   :activity_detail_str
 
 
-    belongs_to :legacy_person
+    belongs_to :legacy_person, optional: true
     belongs_to :legacy_activity, optional: true
     belongs_to :legacy_activity_group, optional: true
     belongs_to :legacy_activity_detail, optional: true

@@ -73,6 +73,8 @@ en:
     qualy_cumple_con: " cumple con el Eje %{kind_str}."
     qualy_no_cumple_con: "no registra actividad en el Eje %{kind_str}."
   certs:
+    empty_prefix: "Por participar en el “%{actividad_str}”, realizadas durante el mes de %{mes_y_anio} con una duración de %{duracion}"
+    programa: "Por participar en el programa “%{actividad_str}”, realizadas durante el mes de %{mes_y_anio} con una duración de %{duracion}"
     actividades: "Por participar en las actividades de “%{actividad_str}”, realizadas durante el mes de %{mes_y_anio} con una duración de %{duracion}"
     taller: "Por participar en el taller de “%{actividad_str}”, realizado durante el mes de %{mes_y_anio} con una duración de %{duracion}"
     curso: "Por participar en el curso de “%{actividad_str}”, realizado durante el mes de %{mes_y_anio} con una duración de %{duracion}"

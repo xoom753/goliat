@@ -74,7 +74,7 @@ class InformeRendererService::GenericRenderer
         else
             docx.ol do
                 activities_within_period.each do |activity_str|
-                    li activity_str
+                    li "#{activity_str}."
                 end
             end
         end
