@@ -81,7 +81,9 @@ class PersonEjesResumenesController < ApplicationController
             :acumulacion_penas,
             :semestres_porcentuales,
             :periodos_detalle,
-            :ubicacion
+            :ubicacion,
+            :fecha_traslado,
+            :ubicacion_traslado
         )
     end
 end

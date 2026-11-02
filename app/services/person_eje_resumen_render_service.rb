@@ -6,7 +6,11 @@ class PersonEjeResumenRenderService
              :delitos_array,
              :sentencias_array,
              :acumulacion_penas,
+             :legacy_people_ids,
              to: :@person_ejes_resumen
+    delegate :activities_list_for,
+             :activities_by_date_for,
+             to: :legacy_person_activities_renderer
 
     SEMESTRE_NAMES = [
         "Primer semestre",
@@ -31,10 +35,11 @@ class PersonEjeResumenRenderService
     end
 
     def common_table_rows
-        @common_table_rows ||= [
+        return @common_table_rows if @common_table_rows
+        @common_table_rows = [
             [
                 "Nombre:".upcase,
-                @person_ejes_resumen.nombres
+                @person_ejes_resumen.nombres.upcase
             ],
             [
                 "Cédula de identidad:".upcase,
@@ -44,11 +49,25 @@ class PersonEjeResumenRenderService
                 "Fecha de pérdida de libertad:".upcase,
                 date_to_str(@person_ejes_resumen.fecha_perdida_libertad)
             ]
-        ] + table_rows_delitos_y_penas
+        ]
+
+        if @person_ejes_resumen.fecha_traslado.present?
+            @common_table_rows += [
+                [
+                    "Fecha de traslado a #{@person_ejes_resumen.ubicacion_traslado}:".upcase,
+                    date_to_str(@person_ejes_resumen.fecha_traslado)
+                ]
+            ]
+        end
+
+        @common_table_rows += table_rows_delitos_y_penas
     end
 
     def table_merged_rows_count
         rows = 3 # base
+        if @person_ejes_resumen.fecha_traslado.present?
+            rows += 1
+        end
         if several_delitos?
             # because it includes acumulacion de penas
             rows += 1
@@ -180,5 +199,12 @@ class PersonEjeResumenRenderService
     # 2022-06-02 => "02/06/2022"
     def date_to_str(date)
         date.strftime("%d/%m/%Y")
+    end
+
+    def legacy_person_activities_renderer
+        return if legacy_people_ids.blank?
+        @legacy_person_activities_renderer ||= LegacyPeopleActivitiesRendererService.new(
+                @person_ejes_resumen
+        )
     end
 end

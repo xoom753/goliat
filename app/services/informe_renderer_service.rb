@@ -18,6 +18,7 @@ class InformeRendererService
              :ficha_qualy_summary,
              :template_no_cumple_con_proceso,
              :template_qualy_no_cumple_con,
+             :draft_activities_title,
              to: :specific_renderer
 
     def initialize(person_ejes_resumen_renderer_service)
@@ -87,6 +88,20 @@ class InformeRendererService
 
     def fecha_entrega
         docx.p "Fecha de entrega: #{Date.today.strftime('%d/%m/%Y')}"
+    end
+
+    def draft_activities_list
+        return if @person_ejes_renderer.legacy_people_ids.blank?
+        legacy_person_activities = @person_ejes_renderer.activities_list_for(kind)
+        legacy_person_activities.each do |actividad_str|
+            docx.p actividad_str
+        end
+    end
+
+    def legacy_person_activities_by_date
+        return if @person_ejes_renderer.legacy_people_ids.blank?
+        @legacy_person_activities_by_date ||=
+            @person_ejes_renderer.activities_by_date_for(kind)
     end
 
     private

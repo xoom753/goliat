@@ -1,8 +1,13 @@
 class InformeRendererService::InformeCulturalRenderer < InformeRendererService::GenericRenderer
-
     def ficha_qualy_main_table
         docx.h1 c_t("qualy_main_table_title").upcase, align: :center
         docx.p
+
+        temp_grade = if get_activities_within_period.empty?
+            0
+        else
+            2
+        end
 
         docx.table [
             [
@@ -22,12 +27,12 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
                 "Temporal".upcase,
                 "Charlas, concursos, talleres, capacitaciones, entre otras.",
                 "2",
-                "2"
+                temp_grade.to_s
             ],
             [
                 "Subtotal",
                 "5",
-                "2"
+                temp_grade.to_s
             ]
         ] do
             column_widths  [300, 370, 1400, 110, 110]

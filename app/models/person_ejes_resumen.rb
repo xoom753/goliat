@@ -6,4 +6,11 @@ class PersonEjesResumen < ApplicationRecord
     def sentencias_array
         @sentencias_array ||= sentencias.split("\n")
     end
+
+    def legacy_people
+        # return [] if legacy_people_ids.blank?
+        LegacyPerson.find(
+            legacy_people_ids.split(",")
+        )
+    end
 end

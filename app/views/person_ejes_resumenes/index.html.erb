@@ -76,6 +76,20 @@
                     %>
                 </dd>
             <% end %>
+
+            <% if person_ejes_resumen.legacy_people_ids.present? %>
+                <dt>
+                    Legacy People for report
+                </dt>
+                <dd>
+                    <%=
+                        people_str = person_ejes_resumen.legacy_people.map do |legacy_person|
+                            "#{legacy_person.id} - #{legacy_person.nombres}"
+                        end
+                        people_str.join("<br />").html_safe
+                    %>
+                </dd>
+            <% end %>
         </dl>
 
         <hr />

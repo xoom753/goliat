@@ -3,6 +3,12 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
         docx.h1 c_t("qualy_main_table_title").upcase, align: :center
         docx.p
 
+        temp_grade = if get_activities_within_period.empty?
+            0
+        else
+            2
+        end
+
         docx.table [
             [
                 "Laboral".upcase
@@ -26,12 +32,12 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
                 "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional",
                 "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento",
                 "2",
-                "2"
+                temp_grade.to_s
             ],
             [
                 "Subtotal",
                 "5",
-                "2"
+                temp_grade.to_s
             ]
         ] do
             column_widths  [400, 700, 800, 110, 110]

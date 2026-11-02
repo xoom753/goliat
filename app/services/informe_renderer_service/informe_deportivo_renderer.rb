@@ -3,6 +3,12 @@ class InformeRendererService::InformeDeportivoRenderer < InformeRendererService:
         docx.h1 c_t("qualy_main_table_title").upcase, align: :center
         docx.p
 
+        temp_grade = if get_activities_within_period.empty?
+            0
+        else
+            2
+        end
+
         docx.table [
             [
                 "Parámetros de Evaluación".upcase,
@@ -21,12 +27,12 @@ class InformeRendererService::InformeDeportivoRenderer < InformeRendererService:
                 "Temporal".upcase,
                 "Capacitaciones en materia deportiva y otras que oferte el centro de privación de libertad en coordinación con las entidades públicas y privadas.",
                 "2",
-                "2"
+                temp_grade.to_s
             ],
             [
                 "Subtotal",
                 "5",
-                "2"
+                temp_grade.to_s
             ]
         ] do
             column_widths  [300, 370, 1200, 110, 110]

@@ -5,7 +5,7 @@ class LegacyPersonActivity < ApplicationRecord
                   :activity_detail_str
 
 
-    belongs_to :legacy_person, optional: true
+    belongs_to :legacy_person
     belongs_to :legacy_activity, optional: true
     belongs_to :legacy_activity_group, optional: true
     belongs_to :legacy_activity_detail, optional: true
@@ -16,10 +16,18 @@ class LegacyPersonActivity < ApplicationRecord
     before_save :reference_legacy_activity_detail!
 
     scope :sorted_by_date, -> { order(end_date: :desc) }
+    scope :oldest_first, -> { order(end_date: :asc) }
+
+    ##
+    # "02/06/2022" => 02/06/2022
+    def self.parse_date_str(date)
+        Date.strptime(date, "%d/%m/%Y")
+    end
 
     private
 
     def reference_legacy_person!
+        return if nombres_str.blank?
         self.legacy_person = LegacyPerson.where(
             nombres: nombres_str
         ).first_or_create!

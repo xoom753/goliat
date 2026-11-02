@@ -10,6 +10,12 @@
 @informe_renderer_service.template_no_cumple_con_proceso
 @informe_renderer_service.template_qualy_no_cumple_con
 
+docx.hr
+
+@informe_renderer_service.draft_activities_title
+
+@informe_renderer_service.draft_activities_list
+
 docx.page
 
 @render_service.semestres_detail_hash.each do |semestre, periods|

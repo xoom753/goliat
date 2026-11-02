@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_01_184645) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_140736) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -276,6 +276,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_184645) do
     t.text "periodos_detalle", null: false
     t.datetime "created_at", null: false
     t.string "ubicacion"
+    t.date "fecha_traslado"
+    t.string "ubicacion_traslado"
+    t.string "legacy_people_ids"
   end
 
   create_table "person_pabellon_updates", force: :cascade do |t|

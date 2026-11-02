@@ -4,6 +4,7 @@ class InformeRendererService::GenericRenderer
     delegate :docx,
              :kind,
              :person_ejes_renderer,
+             :legacy_person_activities_by_date,
              to: :@informe_renderer_service
 
     def initialize(informe_renderer_service)
@@ -45,19 +46,11 @@ class InformeRendererService::GenericRenderer
     end
 
     def ficha_info_summary
-        docx.p c_t("informe_kind").upcase, bold: true
-        person_nombres = person_ejes_renderer.nombres
-        se_informa = c_t("se_informa")
-        desde_su_ingreso = c_t("desde_su_ingreso", kind_f: true)
-        cumple_con_proceso = c_t("cumple_con_proceso", kind_f: true)
-        docx.p do
-            text se_informa
-            text person_nombres.upcase, bold: true
-            text desde_su_ingreso
-            text "SÍ", bold: true
-            text cumple_con_proceso
+        if get_activities_within_period.empty?
+            ficha_info_summary_no_cumple
+        else
+            ficha_info_summary_si_cumple
         end
-        docx.p
     end
 
     def ficha_info_actividades
@@ -72,9 +65,18 @@ class InformeRendererService::GenericRenderer
 
         docx.p c_t("act_temporal").upcase, bold: true
 
-        no_registra_temporal = c_t("no_registra_temporal", downcase: true, kind_f: true)
-        docx.ol do
-            li no_registra_temporal
+        activities_within_period = get_activities_within_period
+        if get_activities_within_period.empty?
+            no_registra_temporal = c_t("no_registra_temporal", downcase: true, kind_f: true)
+            docx.ol do
+                li no_registra_temporal
+            end
+        else
+            docx.ol do
+                activities_within_period.each do |activity_str|
+                    li activity_str
+                end
+            end
         end
 
         docx.p
@@ -131,6 +133,43 @@ class InformeRendererService::GenericRenderer
     end
 
     def ficha_qualy_summary
+        if get_activities_within_period.empty?
+            ficha_qualy_summary_no_cumple
+        else
+            ficha_qualy_summary_si_cumple
+        end
+    end
+
+    def template_no_cumple_con_proceso
+        docx.p c_t("templates"), align: :center
+        docx.p
+
+        ficha_info_summary_no_cumple
+    end
+
+    def template_qualy_no_cumple_con
+        ficha_qualy_summary_no_cumple
+    end
+
+    def draft_activities_title
+        docx.p "Borrador de las Actividades Eje #{I18n.t("common.#{kind}")}", align: :center
+    end
+
+    protected
+
+    def ficha_qualy_summary_no_cumple
+        observaciones = c_t("qualy_observaciones")
+        durante_el_tiempo = c_t("qualy_durante_el_tiempo")
+        qualy_no_cumple_con = c_t("qualy_no_cumple_con")
+        docx.p do
+            text observaciones, bold: true
+            text durante_el_tiempo
+            text qualy_no_cumple_con
+        end
+        docx.p
+    end
+
+    def ficha_qualy_summary_si_cumple
         observaciones = c_t("qualy_observaciones")
         durante_el_tiempo = c_t("qualy_durante_el_tiempo")
         cumple_con = c_t("qualy_cumple_con")
@@ -143,10 +182,23 @@ class InformeRendererService::GenericRenderer
         docx.p
     end
 
-    def template_no_cumple_con_proceso
-        docx.p c_t("templates")
+    def ficha_info_summary_si_cumple
+        docx.p c_t("informe_kind").upcase, bold: true
+        person_nombres = person_ejes_renderer.nombres
+        se_informa = c_t("se_informa")
+        desde_su_ingreso = c_t("desde_su_ingreso", kind_f: true)
+        cumple_con_proceso = c_t("cumple_con_proceso", kind_f: true)
+        docx.p do
+            text se_informa
+            text person_nombres.upcase, bold: true
+            text desde_su_ingreso
+            text "SÍ", bold: true
+            text cumple_con_proceso
+        end
         docx.p
+    end
 
+    def ficha_info_summary_no_cumple
         person_nombres = person_ejes_renderer.nombres
         se_informa = c_t("se_informa")
         desde_su_ingreso = c_t("desde_su_ingreso", kind_f: true)
@@ -164,25 +216,32 @@ class InformeRendererService::GenericRenderer
         docx.p
     end
 
-    def template_qualy_no_cumple_con
-        observaciones = c_t("qualy_observaciones")
-        durante_el_tiempo = c_t("qualy_durante_el_tiempo")
-        qualy_no_cumple_con = c_t("qualy_no_cumple_con")
-        docx.p do
-            text observaciones, bold: true
-            text durante_el_tiempo
-            text qualy_no_cumple_con
-        end
-        docx.p
-    end
-
-    protected
-
     def c_t(key, **options)
         kind_str = I18n.t("common.#{kind}")
         if options[:downcase]
             kind_str = kind_str.downcase
         end
         I18n.t("common.#{key}", **options.merge(kind_str:))
+    end
+
+    def get_period_range
+        LegacyPersonActivity.parse_date_str(
+            period[:start_date]
+        )..LegacyPersonActivity.parse_date_str(
+            period[:end_date]
+        )
+    end
+
+    def get_activities_within_period
+        @periods_cache ||= {}
+        return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
+        period_range = get_period_range
+        @periods_cache[period[:end_date]] =
+            legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
+                if period_range.include?(act_date)
+                    memo += activities
+                end
+                memo
+            end
     end
 end
