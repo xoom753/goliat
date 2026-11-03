@@ -83,7 +83,8 @@ class PersonEjesResumenesController < ApplicationController
             :periodos_detalle,
             :ubicacion,
             :fecha_traslado,
-            :ubicacion_traslado
+            :ubicacion_traslado,
+            :tipo_porcentual
         )
     end
 end

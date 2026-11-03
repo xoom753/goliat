@@ -233,6 +233,7 @@ class InformeRendererService::GenericRenderer
     end
 
     def get_activities_within_period
+        return [] if legacy_person_activities_by_date.blank?
         @periods_cache ||= {}
         return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
         period_range = get_period_range

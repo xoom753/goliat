@@ -29,6 +29,12 @@ class PersonEjeResumenRenderService
         "Décimo cuarto semestre",
     ].freeze
 
+    PORCENTAJES = [
+        "20%",
+        "40%",
+        "60%",
+        "80%"
+    ].freeze
 
     def initialize(person_ejes_resumen)
         @person_ejes_resumen = person_ejes_resumen
@@ -54,7 +60,7 @@ class PersonEjeResumenRenderService
         if @person_ejes_resumen.fecha_traslado.present?
             @common_table_rows += [
                 [
-                    "Fecha de traslado a #{@person_ejes_resumen.ubicacion_traslado}:".upcase,
+                    "Fecha de traslado #{@person_ejes_resumen.ubicacion_traslado}:".upcase,
                     date_to_str(@person_ejes_resumen.fecha_traslado)
                 ]
             ]
@@ -95,6 +101,29 @@ class PersonEjeResumenRenderService
             @detail_hash[semestre_porcentual] = semestres_array(index)
         end
         @detail_hash
+    end
+
+    ##
+    # {
+    #     "20%" => [
+    #         {
+    #             start_date: "15/03/2025",
+    #             end_date: "13/09/2025"
+    #         }
+    #     ]
+    # }
+    def periodos_porcentuales
+        return @periodos_porcentuales if @periodos_porcentuales
+        @periodos_porcentuales ||= {}
+        @person_ejes_resumen.periodos_detalle.split("\n").each_with_index do |periodos, index|
+            percentage = PORCENTAJES.fetch(index)
+            start_date, end_date = periodos.split("\t")
+            @periodos_porcentuales[percentage] = [{
+                start_date: start_date,
+                end_date: end_date
+            }]
+        end
+        @periodos_porcentuales
     end
 
     private

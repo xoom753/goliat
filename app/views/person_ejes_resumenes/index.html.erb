@@ -54,27 +54,43 @@
                 </dd>
             <% end %>
 
-            <%
-                renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
-                semestres_detail_hash = begin
-                    renderer.semestres_detail_hash
-                rescue StandardError => e
-                    { "error" => [{ "error" => e }] }
-                end
-            %>
+            <% if person_ejes_resumen.tipo_porcentual? %>
+                <%
+                    renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
+                    periodos_porcentuales = renderer.periodos_porcentuales
+                %>
+                <% periodos_porcentuales.each do |key, periodos| %>
+                    <dt>
+                        <%= key %>
+                    </dt>
+                    <dd>
+                        <%= periodos.first[:start_date] %> -
+                        <%= periodos.first[:end_date] %>
+                    </dd>
+                <% end %>
+            <% else %>
+                <%
+                    renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
+                    semestres_detail_hash = begin
+                        renderer.semestres_detail_hash
+                    rescue StandardError => e
+                        { "error" => [{ "error" => e }] }
+                    end
+                %>
 
-            <% semestres_detail_hash.each do |key, values| %>
-                <dt>
-                    <%= key %>
-                </dt>
-                <dd>
-                    <%=
-                        values_strs = values.map do |val|
-                            "#{val[:percentage]} - #{val[:semestre_str]}: #{val[:start_date]} - #{val[:end_date]}"
-                        end
-                        values_strs.join("<br />").html_safe
-                    %>
-                </dd>
+                <% semestres_detail_hash.each do |key, values| %>
+                    <dt>
+                        <%= key %>
+                    </dt>
+                    <dd>
+                        <%=
+                            values_strs = values.map do |val|
+                                "#{val[:percentage]} - #{val[:semestre_str]}: #{val[:start_date]} - #{val[:end_date]}"
+                            end
+                            values_strs.join("<br />").html_safe
+                        %>
+                    </dd>
+                <% end %>
             <% end %>
 
             <% if person_ejes_resumen.legacy_people_ids.present? %>
@@ -85,6 +101,20 @@
                     <%=
                         people_str = person_ejes_resumen.legacy_people.map do |legacy_person|
                             "#{legacy_person.id} - #{legacy_person.nombres}"
+                        end
+                        people_str.join("<br />").html_safe
+                    %>
+                </dd>
+            <% end %>
+
+            <% if person_ejes_resumen.people_ids.present? %>
+                <dt>
+                    Present people for report
+                </dt>
+                <dd>
+                    <%=
+                        people_str = person_ejes_resumen.people.map do |person|
+                            "#{person.id} - #{person.nombres}"
                         end
                         people_str.join("<br />").html_safe
                     %>

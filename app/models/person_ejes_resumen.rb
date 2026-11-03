@@ -13,4 +13,10 @@ class PersonEjesResumen < ApplicationRecord
             legacy_people_ids.split(",")
         )
     end
+
+    def people
+        Person.find(
+            people_ids.split(",")
+        )
+    end
 end

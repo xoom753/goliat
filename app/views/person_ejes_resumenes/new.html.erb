@@ -2,6 +2,8 @@
 <div class="">
     <h2>Nuevo Resumen de Ejes</h2>
     <%= simple_form_for @person_ejes_resumen do |f| %>
+        <%= f.label :tipo_porcentual %>
+        <%= f.input :tipo_porcentual, as: :select, label: false %>
         <%= f.input :nombres %>
         <%= f.input :dni %>
         <%= f.input :ubicacion %>
