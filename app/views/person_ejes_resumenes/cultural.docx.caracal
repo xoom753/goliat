@@ -14,7 +14,23 @@ docx.hr
 
 @informe_renderer_service.draft_activities_title
 
-@informe_renderer_service.draft_activities_list
+if @person_ejes_resumen.tipo_porcentual?
+    @informe_renderer_service.period = @informe_renderer_service.get_first_period
+    @informe_renderer_service.get_activities_within_period.each do |activity|
+        docx.p activity.cert_string
+    end
+else
+    @render_service.semestres_detail_hash.each do |semestre, periods|
+        docx.p semestre
+
+        periods.each do |period|
+            @informe_renderer_service.period = period
+            @informe_renderer_service.get_activities_within_period.each do |activity|
+                docx.p activity.cert_string
+            end
+        end
+    end
+end
 
 docx.page
 

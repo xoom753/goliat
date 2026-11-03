@@ -184,6 +184,23 @@ class InformeRendererService::GenericRenderer
         docx.p "Borrador de las Actividades Eje #{I18n.t("common.#{kind}")}", align: :center
     end
 
+    def get_activities_within_period
+        # return [] if legacy_person_activities_by_date.blank?
+        @periods_cache ||= {}
+        # return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
+        period_range = get_period_range
+        @periods_cache[period[:end_date]] =
+            legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
+                if period_range.include?(act_date)
+                    memo += activities
+                end
+                memo
+            end
+        ::InformeRendererService::ActivitiesGroupedRenderer.new(
+            @periods_cache[period[:end_date]]
+        ).grouped_activities
+    end
+
     protected
 
     def ficha_qualy_summary_no_cumple
@@ -268,22 +285,5 @@ class InformeRendererService::GenericRenderer
         )..LegacyPersonActivity.parse_date_str(
             end_date
         )
-    end
-
-    def get_activities_within_period
-        # return [] if legacy_person_activities_by_date.blank?
-        @periods_cache ||= {}
-        # return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
-        period_range = get_period_range
-        @periods_cache[period[:end_date]] =
-            legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
-                if period_range.include?(act_date)
-                    memo += activities
-                end
-                memo
-            end
-        ::InformeRendererService::ActivitiesGroupedRenderer.new(
-            @periods_cache[period[:end_date]]
-        ).grouped_activities
     end
 end
