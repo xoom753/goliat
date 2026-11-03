@@ -6,6 +6,9 @@ class LegacyPeopleActivitiesRendererService::PresentPersonActivityCertRenderer <
         @person_activity = person_activity
         @duracion = @person_activity.qty_h || QTY_H_DEFAULT
         @activity_end_date = @person_activity.end_date
+        @year = @person_activity.anio
+        @activity = @person_activity.coursable
+        @month = @person_activity.mes
     end
 
     private

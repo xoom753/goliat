@@ -19,7 +19,9 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
             people_activities.inject({}) do |memo, legacy_person_activity|
                 act_date = legacy_person_activity.end_date
                 memo[act_date] ||= []
-                memo[act_date] << get_cert_string(legacy_person_activity)
+                # memo[act_date] << get_cert_string(legacy_person_activity)
+                # memo[act_date] << legacy_person_activity
+                memo[act_date] << get_cert(legacy_person_activity)
                 memo
             end
     end
@@ -43,11 +45,18 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
         ).oldest_first
     end
 
-    def get_cert_string(legacy_person_activity)
-        binding.pry
+    # def get_cert_string(legacy_person_activity)
+    #     binding.pry
+    #     ::LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer.new(
+    #         legacy_person_activity: legacy_person_activity,
+    #         kind: @kind
+    #     ).cert_string
+    # end
+
+    def get_cert(legacy_person_activity)
         ::LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer.new(
             legacy_person_activity: legacy_person_activity,
             kind: @kind
-        ).cert_string
+        )
     end
 end

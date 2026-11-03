@@ -17,7 +17,9 @@ class LegacyPeopleActivitiesRendererService::PresentPeopleActivityGroupRenderer
             people_activities.inject({}) do |memo, person_activity|
                 act_date = person_activity.end_date
                 memo[act_date] ||= []
-                memo[act_date] << get_cert_string(person_activity)
+                # memo[act_date] << get_cert_string(person_activity)
+                # memo[act_date] << person_activity
+                memo[act_date] << get_cert(person_activity)
                 memo
             end
     end
@@ -25,6 +27,7 @@ class LegacyPeopleActivitiesRendererService::PresentPeopleActivityGroupRenderer
     private
 
     def people_activities
+        return [] if @person_ejes_resumen.people_ids.blank?
         activity_group = ActivityGroup.find_by!(
             nombre: "Eje #{@kind.to_s.capitalize}"
         )
@@ -37,10 +40,17 @@ class LegacyPeopleActivitiesRendererService::PresentPeopleActivityGroupRenderer
         ).oldest_first
     end
 
-    def get_cert_string(person_activity)
+    # def get_cert_string(person_activity)
+    #     ::LegacyPeopleActivitiesRendererService::PresentPersonActivityCertRenderer.new(
+    #         person_activity: person_activity,
+    #         kind: @kind
+    #     ).cert_string
+    # end
+
+    def get_cert(person_activity)
         ::LegacyPeopleActivitiesRendererService::PresentPersonActivityCertRenderer.new(
             person_activity: person_activity,
             kind: @kind
-        ).cert_string
+        )
     end
 end

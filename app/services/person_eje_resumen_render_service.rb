@@ -7,6 +7,7 @@ class PersonEjeResumenRenderService
              :sentencias_array,
              :acumulacion_penas,
              :legacy_people_ids,
+             :tipo_porcentual?,
              to: :@person_ejes_resumen
     delegate :activities_list_for,
              :activities_by_date_for,
@@ -70,7 +71,10 @@ class PersonEjeResumenRenderService
     end
 
     def table_merged_rows_count
-        rows = 3 # base
+        rows = 2 # base
+        if !tipo_porcentual?
+            rows += 1
+        end
         if @person_ejes_resumen.fecha_traslado.present?
             rows += 1
         end

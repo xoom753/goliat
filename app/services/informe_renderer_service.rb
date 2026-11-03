@@ -2,6 +2,10 @@ class InformeRendererService
     attr_accessor :docx, :kind
     attr_reader :person_ejes_renderer
 
+    delegate :tipo_porcentual?,
+             :periodos_porcentuales,
+             to: :@person_ejes_renderer
+
     delegate :period=,
              :semestre=,
              :ficha_info_title,
@@ -93,8 +97,8 @@ class InformeRendererService
     def draft_activities_list
         return if @person_ejes_renderer.legacy_people_ids.blank?
         legacy_person_activities = @person_ejes_renderer.activities_list_for(kind)
-        legacy_person_activities.each do |actividad_str|
-            docx.p actividad_str
+        legacy_person_activities.each do |actividad_renderer|
+            docx.p actividad_renderer.cert_string
         end
     end
 
@@ -102,6 +106,14 @@ class InformeRendererService
         return if @person_ejes_renderer.legacy_people_ids.blank?
         @legacy_person_activities_by_date ||=
             @person_ejes_renderer.activities_by_date_for(kind)
+    end
+
+    def get_first_period
+        periodos_porcentuales.values.first.first
+    end
+
+    def get_first_semestre
+        periodos_porcentuales.keys.first
     end
 
     private

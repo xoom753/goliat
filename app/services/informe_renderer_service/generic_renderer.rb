@@ -5,6 +5,9 @@ class InformeRendererService::GenericRenderer
              :kind,
              :person_ejes_renderer,
              :legacy_person_activities_by_date,
+             :tipo_porcentual?,
+             :periodos_porcentuales,
+             :get_first_period,
              to: :@informe_renderer_service
 
     def initialize(informe_renderer_service)
@@ -24,7 +27,23 @@ class InformeRendererService::GenericRenderer
 
     def ficha_info_table
         info_table_merged_rows_count = person_ejes_renderer.table_merged_rows_count
-        docx.table person_ejes_renderer.common_table_rows + [
+
+        docx.table(
+            person_ejes_renderer.common_table_rows + ficha_info_table_bottom_rows
+        ) do
+            cell_style cols[0], bold: true
+            0.upto(info_table_merged_rows_count).each do |row_n|
+                cell_style rows[row_n][1], colspan: 2
+            end
+            cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
+        end
+        docx.p
+    end
+
+    def ficha_info_table_bottom_rows
+        return [] if tipo_porcentual?
+
+        [
             [
                 "Temporalidad".upcase,
                 semestre
@@ -34,15 +53,7 @@ class InformeRendererService::GenericRenderer
                 period[:start_date],
                 period[:end_date]
             ]
-        ] do
-            cell_style cols[0], bold: true
-            0.upto(info_table_merged_rows_count).each do |row_n|
-                cell_style rows[row_n][1], colspan: 2
-            end
-            cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
-        end
-
-        docx.p
+        ]
     end
 
     def ficha_info_summary
@@ -73,8 +84,8 @@ class InformeRendererService::GenericRenderer
             end
         else
             docx.ol do
-                activities_within_period.each do |activity_str|
-                    li "#{activity_str}."
+                activities_within_period.each do |activity_renderer|
+                    li "#{activity_renderer.cert_string}."
                 end
             end
         end
@@ -114,14 +125,11 @@ class InformeRendererService::GenericRenderer
     end
 
     def ficha_qualy_info_table
-        qualy_table_merged_rows_count = person_ejes_renderer.table_merged_rows_count - 1
-        docx.table person_ejes_renderer.common_table_rows + [
-            [
-                period[:semestre_str].upcase,
-                period[:start_date],
-                period[:end_date]
-            ]
-        ] do
+        qualy_table_merged_rows_count = person_ejes_renderer.table_merged_rows_count
+        qualy_table_merged_rows_count -= 1 unless tipo_porcentual?
+        docx.table(
+            person_ejes_renderer.common_table_rows + ficha_qualy_bottom_rows
+        ) do
             cell_style cols[0], bold: true
             0.upto(qualy_table_merged_rows_count).each do |row_n|
                 cell_style rows[row_n][1], colspan: 2
@@ -130,6 +138,27 @@ class InformeRendererService::GenericRenderer
         end
 
         docx.p
+    end
+
+    def ficha_qualy_bottom_rows
+        if tipo_porcentual?
+            periodos_porcentuales.inject([]) do |memo, (key, periodos)|
+                memo << [
+                        "Periodo #{key}".upcase,
+                        periodos.first[:start_date],
+                        periodos.first[:end_date]
+                    ]
+                memo
+            end
+        else
+            [
+                [
+                    period[:semestre_str].upcase,
+                    period[:start_date],
+                    period[:end_date]
+                ]
+            ]
+        end
     end
 
     def ficha_qualy_summary
@@ -225,17 +254,26 @@ class InformeRendererService::GenericRenderer
     end
 
     def get_period_range
+        if tipo_porcentual?
+            first_periodo = get_first_period
+            last_periodo = periodos_porcentuales.values.last.first
+            start_date = first_periodo[:start_date]
+            end_date = last_periodo[:end_date]
+        else
+            start_date = period[:start_date]
+            end_date = period[:end_date]
+        end
         LegacyPersonActivity.parse_date_str(
-            period[:start_date]
+            start_date
         )..LegacyPersonActivity.parse_date_str(
-            period[:end_date]
+            end_date
         )
     end
 
     def get_activities_within_period
         # return [] if legacy_person_activities_by_date.blank?
         @periods_cache ||= {}
-        return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
+        # return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
         period_range = get_period_range
         @periods_cache[period[:end_date]] =
             legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
@@ -244,5 +282,8 @@ class InformeRendererService::GenericRenderer
                 end
                 memo
             end
+        ::InformeRendererService::ActivitiesGroupedRenderer.new(
+            @periods_cache[period[:end_date]]
+        ).grouped_activities
     end
 end

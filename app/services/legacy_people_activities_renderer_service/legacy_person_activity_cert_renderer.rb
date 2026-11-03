@@ -4,6 +4,9 @@ class LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer < 
         @legacy_person_activity = legacy_person_activity
         @duracion = @legacy_person_activity.duracion.downcase
         @activity_end_date = @legacy_person_activity.end_date
+        @year = @legacy_person_activity.end_date.year
+        @activity = @legacy_person_activity.legacy_activity
+        @month = @legacy_person_activity.end_date.month
     end
 
     private

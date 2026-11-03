@@ -9,7 +9,7 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
             2
         end
 
-        docx.table [
+        table_rows = [
             [
                 "Parámetros de Evaluación".upcase,
                 "Máx".upcase,
@@ -34,23 +34,45 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
                 "5",
                 temp_grade.to_s
             ]
-        ] do
-            column_widths  [300, 370, 1400, 110, 110]
+        ]
+
+        if tipo_porcentual?
+            remaining_periods = periodos_porcentuales.keys.drop(1)
+            zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
+            table_rows.each_with_index do |row, index|
+                if index == 0
+                    row.concat remaining_periods
+                else
+                    row.concat zeroes
+                end
+            end
+        end
+
+        docx.table table_rows do
+            column_widths  [300, 370, 1400, 110, 110, 110, 110]
             border_size 4
             cell_style cols[0], bold: true
             cell_style rows[0][0], colspan: 3, align: :center
             cell_style rows[0][1], align: :center, bold: true
             cell_style rows[0][2], align: :center, bold: true
+            cell_style rows[0][3], align: :center, bold: true
+            cell_style rows[0][4], align: :center, bold: true
             cell_style rows[1][0], rowspan: 2, align: :center, vertical_align: :center
             cell_style rows[1][1], align: :center, bold: true, vertical_align: :center
             cell_style rows[1][3], align: :center, vertical_align: :center
             cell_style rows[1][4], align: :center, vertical_align: :center
+            cell_style rows[1][5], align: :center, vertical_align: :center
+            cell_style rows[1][6], align: :center, vertical_align: :center
             cell_style rows[2][3], align: :center, vertical_align: :center
             cell_style rows[2][4], align: :center, vertical_align: :center
+            cell_style rows[2][5], align: :center, vertical_align: :center
+            cell_style rows[2][6], align: :center, vertical_align: :center
             cell_style rows[2][1], align: :center, bold: true, vertical_align: :center
             cell_style rows[3][0], colspan: 3, align: :right, bold: true
             cell_style rows[3][1], align: :center, bold: true
             cell_style rows[3][2], align: :center, bold: true
+            cell_style rows[3][3], align: :center, bold: true
+            cell_style rows[3][4], align: :center, bold: true
         end
 
         docx.p

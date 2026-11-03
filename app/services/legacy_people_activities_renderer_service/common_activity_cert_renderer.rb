@@ -14,42 +14,52 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
         "diciembre"
     ].freeze
 
+    attr_reader :year, :activity, :month, :kind, :duracion
+
     delegate :fix_ortography,
              to: :ortography_fixer
 
     def cert_string
         t_identifier =  if empty_prefix?
-            "certs.empty_prefix"
+            "empty_prefix"
         elsif actividad_actividades?
-            "certs.actividades"
+            "actividades"
         elsif actividad_talleres?
-            "certs.taller"
+            "taller"
         elsif actividad_cursos?
-            "certs.curso"
+            "curso"
         elsif actividad_programas?
-            "certs.programa"
+            "programa"
         else
             default_cert_string
         end
-        I18n.t(
-            t_identifier,
-            actividad_str: actividad_str,
-            mes_y_anio: get_month_and_year,
-            duracion: @duracion
-        )
+        look_in_dictionary(t_identifier)
     end
 
     protected
 
+    def look_in_dictionary(t_identifier)
+        I18n.t(
+            "#{certs_prefix}.#{t_identifier}",
+            actividad_str: actividad_str,
+            meses_y_anio: get_months_and_year,
+            duracion: duracion
+        )
+    end
+
     def default_cert_string
         if @kind == :laboral
-            "certs.actividades"
+            "actividades"
         else
-            "certs.curso"
+            "curso"
         end
     end
 
-    def get_month_and_year
+    def certs_prefix
+        "certs"
+    end
+
+    def get_months_and_year
         month = @activity_end_date.strftime("%m").to_i - 1 # 0 based
         "#{MESES.fetch(month)} de #{@activity_end_date.strftime("%Y")}"
     end
@@ -72,7 +82,9 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
 
     def actividad_cursos?
         [
-            /panader/i
+            /panader/i,
+            /cabello/i,
+            /origami/i,
         ].any? do |regex|
             actividad_str =~ regex
         end
@@ -91,6 +103,7 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             /programa/i,
             /concurso/i,
             /agasajo/i,
+            /taller/i,
         ].any? do |regex|
             actividad_str =~ regex
         end
