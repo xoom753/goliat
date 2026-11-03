@@ -12,6 +12,8 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
             end
     end
 
+    ##
+    # { date => ["act1", "act2"] }
     def people_activities_by_date
         @people_activities_by_date ||=
             people_activities.inject({}) do |memo, legacy_person_activity|
@@ -42,6 +44,7 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
     end
 
     def get_cert_string(legacy_person_activity)
+        binding.pry
         ::LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer.new(
             legacy_person_activity: legacy_person_activity,
             kind: @kind
