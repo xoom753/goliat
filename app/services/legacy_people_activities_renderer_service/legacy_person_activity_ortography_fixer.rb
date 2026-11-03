@@ -3,6 +3,7 @@ class LegacyPeopleActivitiesRendererService::LegacyPersonActivityOrtographyFixer
         "Lavanderia" => "Lavandería",
         "Panaderia" => "Panadería",
         "Pasteleria" => "Pastelería",
+        "Artesanias" => "Artesanías",
         "Actividadesdeportivas" => "Actividades deportivas"
     }.freeze
 
