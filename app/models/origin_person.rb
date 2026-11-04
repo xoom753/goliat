@@ -25,6 +25,7 @@ class OriginPerson < ApplicationRecord
     end
 
     def set_situacion_actual!
+        return if situacion_actual_str.blank?
         self.situacion_actual = situacion_actual_str.downcase.sub(" ", "_")
     end
 end

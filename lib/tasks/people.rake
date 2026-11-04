@@ -26,21 +26,22 @@ namespace :people do
     task create_new_people: :environment do
         created_count = 0
         PersonPabellonUpdate.find_each do |update|
+            sanitised_nombres = update.nombres.split(" ").join(" ")
             origin_person = OriginPerson.find_by(
-                fullname: update.nombres
+                fullname: sanitised_nombres
             )
             if origin_person.present?
                 Person.create!(
                     estado: :presente,
                     dni: origin_person.dni,
-                    nombres: update.nombres,
+                    nombres: sanitised_nombres,
                     pabellon: update.pabellon
                 )
                 update.destroy
-                puts "Created #{update.nombres}"
+                puts "Created #{sanitised_nombres}"
                 created_count += 1
             else
-                puts "Not found #{update.nombres}"
+                puts "Not found #{sanitised_nombres}"
             end
         end
         puts "created #{created_count} people"
