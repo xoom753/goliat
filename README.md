@@ -28,3 +28,10 @@ Things you may want to cover:
 - [x] when importing presentes por pabellón: mark as inactive the ones who are not present
 - [] associate person#pabellon
 - [] associate LegacyPersonActivity to parseable to track what file is it imported from
+
+### notes
+
+```
+bundle exec erd --generator=graphviz --filetype=pdf
+bundle exec erd --generator=graphviz --filetype=png
+```
