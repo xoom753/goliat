@@ -29,6 +29,7 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
     private
 
     def people_activities
+        return [] if @person_ejes_resumen.legacy_people_ids.blank?
         activity_group = ActivityGroup.find_by!(
             nombre: "Eje #{@kind.to_s.capitalize}"
         )
@@ -44,14 +45,6 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
             :legacy_activity_detail
         ).oldest_first
     end
-
-    # def get_cert_string(legacy_person_activity)
-    #     binding.pry
-    #     ::LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer.new(
-    #         legacy_person_activity: legacy_person_activity,
-    #         kind: @kind
-    #     ).cert_string
-    # end
 
     def get_cert(legacy_person_activity)
         ::LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer.new(

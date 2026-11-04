@@ -36,6 +36,11 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
         )
     end
 
+    def duracion_str
+        return duracion if duracion.include?("horas")
+        "#{duracion} horas"
+    end
+
     protected
 
     def look_in_dictionary
@@ -43,7 +48,7 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             "#{certs_prefix}.#{activity_kind_identifier}",
             actividad_str: actividad_str,
             meses_y_anio: get_months_and_year,
-            duracion: duracion,
+            duracion: duracion_str,
             actividad_kind: activity_kind_str
         )
     end

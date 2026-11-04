@@ -4,7 +4,13 @@ class LegacyPeopleActivitiesRendererService::LegacyPersonActivityOrtographyFixer
         "Panaderia" => "Panadería",
         "Pasteleria" => "Pastelería",
         "Artesanias" => "Artesanías",
-        "Actividadesdeportivas" => "Actividades deportivas"
+        "Actividadesdeportivas" => "Actividades deportivas",
+        "Pabellon" => "Pabellón",
+        "Formacion" => "Formación",
+        "De" => "de",
+        "O" => "o",
+        "Y" => "y",
+        "En" => "en"
     }.freeze
 
     def fix_ortography(word)

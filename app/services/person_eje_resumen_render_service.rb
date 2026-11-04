@@ -59,9 +59,10 @@ class PersonEjeResumenRenderService
         ]
 
         if @person_ejes_resumen.fecha_traslado.present?
+            ubicacion_traslado_str = @person_ejes_resumen.ubicacion_traslado.present? ? " #{@person_ejes_resumen.ubicacion_traslado}" : nil
             @common_table_rows += [
                 [
-                    "Fecha de traslado #{@person_ejes_resumen.ubicacion_traslado}:".upcase,
+                    "Fecha de traslado#{ubicacion_traslado_str}:".upcase,
                     date_to_str(@person_ejes_resumen.fecha_traslado)
                 ]
             ]
@@ -235,7 +236,6 @@ class PersonEjeResumenRenderService
     end
 
     def legacy_person_activities_renderer
-        return if legacy_people_ids.blank?
         @legacy_person_activities_renderer ||= LegacyPeopleActivitiesRendererService.new(
                 @person_ejes_resumen
         )

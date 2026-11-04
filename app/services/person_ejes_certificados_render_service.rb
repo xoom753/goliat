@@ -9,7 +9,6 @@ class PersonEjesCertificadosRenderService
     end
 
     def to_csv
-        # binding.pry
         CSV.generate(headers: true) do |csv|
             csv << ["N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas"]
             activities.each_with_index do |activity, index|
@@ -20,7 +19,7 @@ class PersonEjesCertificadosRenderService
                     activity.actividad_str,
                     I18n.t("common.#{activity.kind}").upcase,
                     activity.get_months_and_year(upcase: true),
-                    activity.duracion
+                    activity.duracion_str
                 ]
             end
         end

@@ -48,8 +48,8 @@ class InformeRendererService
         docx.font name: "Calibri (Cuerpo)"
 
         docx.page_margins do
-        left    1440
-        right   1440
+        left    1000
+        right   1000
         top     360
         bottom  720
         end

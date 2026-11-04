@@ -44,8 +44,8 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
         header_colspan = 5
 
         if tipo_porcentual?
-            header_colspan += 2
             remaining_periods = periodos_porcentuales.keys.drop(1)
+            header_colspan += remaining_periods.length
             zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
             table_rows.each_with_index do |row, index|
                 if index == 0
@@ -59,7 +59,7 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
         end
 
         docx.table table_rows do
-            column_widths  [400, 700, 800, 110, 110, 90, 90]
+            column_widths  [400, 700, 800, 110, 110, 90, 90, 90]
             border_size 4
             cell_style cols[0], bold: true
             cell_style rows[1], bold: true, align: :center
@@ -74,6 +74,7 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
             cell_style rows[2][4], align: :center, vertical_align: :center
             cell_style rows[2][5], align: :center, vertical_align: :center
             cell_style rows[2][6], align: :center, vertical_align: :center
+            cell_style rows[2][7], align: :center, vertical_align: :center
             cell_style rows[3][0], align: :center, bold: true, vertical_align: :center
             cell_style rows[3][1], vertical_align: :top, align: :left
             cell_style rows[3][2], vertical_align: :top, align: :left
@@ -82,6 +83,7 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
             cell_style rows[3][4], align: :center, vertical_align: :center
             cell_style rows[3][5], align: :center, vertical_align: :center
             cell_style rows[3][6], align: :center, vertical_align: :center
+            cell_style rows[3][7], align: :center, vertical_align: :center
             cell_style rows[4][0], colspan: 3, align: :right, bold: true
             cell_style rows[4][1], align: :center, bold: true
             cell_style rows[4][2], align: :center, bold: true
@@ -89,6 +91,7 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
             cell_style rows[4][2], align: :center, bold: true
             cell_style rows[4][3], align: :center, bold: true
             cell_style rows[4][4], align: :center, bold: true
+            cell_style rows[4][5], align: :center, bold: true
         end
 
         docx.p
