@@ -99,10 +99,12 @@
                 </dt>
                 <dd>
                     <%=
-                        people_str = person_ejes_resumen.legacy_people.map do |legacy_person|
-                            "#{legacy_person.id} - #{legacy_person.nombres}"
+                        people_links_str = person_ejes_resumen.legacy_people.map do |legacy_person|
+                            link_to "#{legacy_person.id} - #{legacy_person.nombres}",
+                                    legacy_people_path(legacy_people_ids: person_ejes_resumen.legacy_people_ids),
+                                    target: "_blank"
                         end
-                        people_str.join("<br />").html_safe
+                        people_links_str.join("<br />").html_safe
                     %>
                 </dd>
             <% end %>
@@ -113,10 +115,12 @@
                 </dt>
                 <dd>
                     <%=
-                        people_str = person_ejes_resumen.people.map do |person|
-                            "#{person.id} - #{person.nombres}"
+                        people_links_str = person_ejes_resumen.people.map do |person|
+                            link_to "#{person.id} - #{person.nombres}",
+                                    people_dashboard_path(person_id: person.id),
+                                    target: "_blank"
                         end
-                        people_str.join("<br />").html_safe
+                        people_links_str.join("<br />").html_safe
                     %>
                 </dd>
             <% end %>

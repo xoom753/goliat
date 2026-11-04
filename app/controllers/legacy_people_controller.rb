@@ -1,6 +1,10 @@
 class LegacyPeopleController < ApplicationController
     def index
-        if params[:q].present?
+        if params[:legacy_people_ids].present?
+            @legacy_people = LegacyPerson.where(
+                id: params[:legacy_people_ids].split(",")
+            )
+        elsif params[:q].present?
             @legacy_people = LegacyPerson.where(
                 "nombres LIKE '%#{params[:q]}%'"
             )

@@ -8,3 +8,11 @@ body {
         }
     }
 }
+
+.dashboard-people-table {
+    td {
+        ul {
+            margin-left: 0.5em;
+        }
+    }
+}
