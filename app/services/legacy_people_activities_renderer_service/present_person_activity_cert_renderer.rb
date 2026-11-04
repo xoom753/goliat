@@ -11,8 +11,6 @@ class LegacyPeopleActivitiesRendererService::PresentPersonActivityCertRenderer <
         @month = @person_activity.mes
     end
 
-    private
-
     def actividad_str
         @person_activity.coursable.nombre
     end

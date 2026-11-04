@@ -20,34 +20,35 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
              to: :ortography_fixer
 
     def cert_string
-        t_identifier =  if empty_prefix?
-            "empty_prefix"
-        elsif actividad_actividades?
-            "actividades"
-        elsif actividad_talleres?
-            "taller"
-        elsif actividad_cursos?
-            "curso"
-        elsif actividad_programas?
-            "programa"
-        else
-            default_cert_string
-        end
-        look_in_dictionary(t_identifier)
+        look_in_dictionary
+    end
+
+    def get_months_and_year(upcase: false)
+        month = @activity_end_date.strftime("%m").to_i - 1 # 0 based
+        month_str = MESES.fetch(month)
+        month_str = month_str.upcase if upcase
+        "#{month_str} de #{@activity_end_date.strftime("%Y")}"
+    end
+
+    def activity_kind_str
+        I18n.t(
+            "#{certs_prefix}.activity_kind.#{activity_kind_identifier}"
+        )
     end
 
     protected
 
-    def look_in_dictionary(t_identifier)
+    def look_in_dictionary
         I18n.t(
-            "#{certs_prefix}.#{t_identifier}",
+            "#{certs_prefix}.#{activity_kind_identifier}",
             actividad_str: actividad_str,
             meses_y_anio: get_months_and_year,
-            duracion: duracion
+            duracion: duracion,
+            actividad_kind: activity_kind_str
         )
     end
 
-    def default_cert_string
+    def default_cert_kind_string
         if @kind == :laboral
             "actividades"
         else
@@ -59,14 +60,25 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
         "certs"
     end
 
-    def get_months_and_year
-        month = @activity_end_date.strftime("%m").to_i - 1 # 0 based
-        "#{MESES.fetch(month)} de #{@activity_end_date.strftime("%Y")}"
-    end
-
     def ortography_fixer
         @ortography_fixer ||=
             ::LegacyPeopleActivitiesRendererService::LegacyPersonActivityOrtographyFixer.new
+    end
+
+    def activity_kind_identifier
+        if empty_prefix?
+            "empty_prefix"
+        elsif actividad_actividades?
+            "actividades"
+        elsif actividad_talleres?
+            "taller"
+        elsif actividad_cursos?
+            "curso"
+        elsif actividad_programas?
+            "programa"
+        else
+            default_cert_kind_string
+        end
     end
 
     def actividad_talleres?

@@ -4,6 +4,7 @@ class InformeRendererService
 
     delegate :tipo_porcentual?,
              :periodos_porcentuales,
+             :semestres_detail_hash,
              to: :@person_ejes_renderer
 
     delegate :period=,
@@ -105,9 +106,10 @@ class InformeRendererService
     # end
 
     def legacy_person_activities_by_date
-        return if @person_ejes_renderer.legacy_people_ids.blank?
-        @legacy_person_activities_by_date ||=
-            @person_ejes_renderer.activities_by_date_for(kind)
+        # return if @person_ejes_renderer.legacy_people_ids.blank?
+        # @legacy_person_activities_by_date ||=
+        #     @person_ejes_renderer.activities_by_date_for(kind)
+        @person_ejes_renderer.activities_by_date_for(kind)
     end
 
     def get_first_period

@@ -2,7 +2,8 @@ class PersonEjesResumenesController < ApplicationController
     before_action :person_ejes_resumen_and_render, only: [
         :cultural,
         :deportivo,
-        :laboral
+        :laboral,
+        :certificados
     ]
 
     def index
@@ -57,6 +58,16 @@ class PersonEjesResumenesController < ApplicationController
                 headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
             }
         end
+    end
+
+    def certificados
+        csv_data = PersonEjesCertificadosRenderService.new(
+            @informe_renderer_service
+        ).to_csv
+        csv_name = "#{@person_ejes_resumen.nombres}"
+        send_data csv_data,
+                  filename: "certificados-#{csv_name}.csv",
+                  disposition: :attachment
     end
 
     private

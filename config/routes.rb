@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       get :cultural
       get :deportivo
       get :laboral
+      get :certificados
     end
   end
   resources :import_people, only: [:new, :create]

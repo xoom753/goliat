@@ -14,7 +14,8 @@ class LegacyPeopleActivitiesRendererService
     def activities_by_date_for(kind)
         legacy_acts = legacy_people_activity_group_renderer_for(kind).people_activities_by_date
         present_acts = present_people_activity_group_renderer_for(kind).people_activities_by_date
-        return @merged_acts if @merged_acts
+        # do not cache these
+        # return @merged_acts if @merged_acts
         @merged_acts = {}
         legacy_acts.each do |date, activities|
             @merged_acts[date] ||= []

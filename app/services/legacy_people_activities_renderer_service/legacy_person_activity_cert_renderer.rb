@@ -9,8 +9,6 @@ class LegacyPeopleActivitiesRendererService::LegacyPersonActivityCertRenderer < 
         @month = @legacy_person_activity.end_date.month
     end
 
-    private
-
     def actividad_str
         # remove whitespaces
         @actividad_str ||=
