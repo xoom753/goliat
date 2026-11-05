@@ -1,8 +1,39 @@
 <%= form_tag courses_by_month_path, method: :get do %>
+    <%= hidden_field_tag :activity_group_id, params[:activity_group_id] %>
     <%= select_month @month.to_i %>
     <%= select_year @year.to_i %>
     <%= submit_tag "Filter" %>
 <% end %>
+
+<hr />
+
+<%
+    date_params = {
+        month: params.dig(:date, :month),
+        year: params.dig(:date, :year)
+    }
+%>
+
+<div class="tabs is-centered is-toggle">
+    <ul class="ml-0">
+        <li class="<%= "is-active" if params[:activity_group_id].blank? %>">
+            <%=
+                link_to "Todos",
+                        courses_by_month_path(date: date_params),
+                        class: "is-active"
+            %>
+        </li>
+        <% ActivityGroup.all.each do |activity_group| %>
+            <li class="<%= "is-active" if params[:activity_group_id] == activity_group.id.to_s %>">
+                <%=
+                    link_to activity_group.nombre,
+                            courses_by_month_path(date: date_params, activity_group_id: activity_group.id),
+                            class: "is-active"
+                %>
+            </li>
+        <% end %>
+    </ul>
+</div>
 
 <% @activity_groups.each do |activity_group| %>
     <h3>
@@ -10,9 +41,9 @@
     </h3>
     <% activity_group.activities.each do |activity| %>
         <table class="table is-striped is-hoverable">
-            <tbody>
+            <thead>
                 <tr>
-                    <td colspan="6" align=center>
+                    <th colspan="6" align=center>
                         <h4>
                             <%= activity.nombre %>
                         </h4>
@@ -21,9 +52,32 @@
                         ·
                         <%= link_to "Export",
                                     export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year) %>
-                    </td>
+                    </th>
                 </tr>
-
+                <% if activity.person_activities.where(mes: @month, anio: @year).any? %>
+                    <tr>
+                        <th>
+                            N
+                        </th>
+                        <th>
+                            Nombres
+                        </th>
+                        <th>
+                            DNI
+                        </th>
+                        <th>
+                            Cargo
+                        </th>
+                        <th>
+                            Pabellón
+                        </th>
+                        <th>
+                            uuid
+                        </th>
+                    </tr>
+                <% end %>
+            </thead>
+            <tbody>
                 <% activity.person_activities.where(mes: @month, anio: @year).each_with_index do |person_activity, index| %>
                     <tr>
                         <td>

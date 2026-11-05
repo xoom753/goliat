@@ -4,7 +4,11 @@ class CoursesByMonthsController < ApplicationController
     def show
         @month = params.dig(:date, :month).presence || Date.today.month
         @year = params.dig(:date, :year).presence || Date.today.year
-        @activity_groups = ActivityGroup.all
+        if params[:activity_group_id].present?
+            @activity_groups = ActivityGroup.where(id: params[:activity_group_id])
+        else
+            @activity_groups = ActivityGroup.all
+        end
     end
 
     def export
