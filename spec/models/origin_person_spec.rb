@@ -25,6 +25,27 @@ RSpec.describe OriginPerson, type: :model do
     expect(origin_person.situacion_actual).to eq("presente_beneficio_revocado")
   end
 
+  it "preserves the enum default when the supplied status is blank" do
+    origin_person.situacion_actual_str = ""
+
+    origin_person.save!
+
+    expect(origin_person.situacion_actual).to eq("presente")
+  end
+
+  it "has the supported situacion_actual values" do
+    expect(described_class.situacion_actuals).to include(
+      "presente" => 0,
+      "presente_beneficio_revocado" => 1
+    )
+  end
+
+  it "provides its demographic and legal-process associations" do
+    expect(described_class.reflect_on_association(:origin_person_demographic).macro).to eq(:has_one)
+    expect(described_class.reflect_on_association(:origin_person_legal_processes).macro).to eq(:has_many)
+    expect(described_class.reflect_on_association(:origin_person_legal_penalties).macro).to eq(:has_many)
+  end
+
   it "omits blank name parts when building fullname" do
     origin_person.mother_lastname = nil
     origin_person.middle_name = ""

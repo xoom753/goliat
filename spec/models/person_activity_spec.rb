@@ -18,4 +18,15 @@ RSpec.describe PersonActivity, type: :model do
 
     expect(activity.end_date).to eq(Date.new(2024, 2, 29))
   end
+
+  it "maps cargo values to their integer-backed enum" do
+    expect(described_class.cargos).to include(
+      "estudiante" => 0,
+      "instructor" => 1,
+      "apoyo" => 2,
+      "independiente" => 3,
+      "responsable" => 4,
+      "cuentapropia" => 5
+    )
+  end
 end
