@@ -1,15 +1,22 @@
 <%
-    legacy_person_activities_by_group =
-        legacy_person.legacy_person_activities
+    paged_legacy_person_activities = legacy_person.legacy_person_activities
                      .sorted_by_date
-                     .inject({}) do |memo, legacy_person_activity|
-        activity_group_id = legacy_person_activity.legacy_activity_group.activity_group.id
-        memo[activity_group_id] ||= []
-        memo[activity_group_id] << legacy_person_activity
-        memo
+
+    if @paginate_activitites
+        paged_legacy_person_activities = paged_legacy_person_activities.page(1)
+                     .per(10)
     end
 
-    rows_span = legacy_person_activities_by_group.inject(1) do |memo, (k, values)|
+    legacy_person_activities_by_group =
+        paged_legacy_person_activities
+            .inject({}) do |memo, legacy_person_activity|
+                activity_group_id = legacy_person_activity.legacy_activity_group.activity_group.id
+                memo[activity_group_id] ||= []
+                memo[activity_group_id] << legacy_person_activity
+                memo
+    end
+
+    rows_span = legacy_person_activities_by_group.inject(2) do |memo, (k, values)|
         memo = memo + 1 # for each key
         memo = memo + values.length # activities count
         memo
@@ -31,4 +38,8 @@
     </td>
 </tr>
 
-<%= render "legacy_person_activities", legacy_person_activities_by_group: legacy_person_activities_by_group %>
+<%= render "legacy_person_activities",
+           legacy_person_activities_by_group: legacy_person_activities_by_group,
+           paged_legacy_person_activities: paged_legacy_person_activities,
+           legacy_person: legacy_person
+%>

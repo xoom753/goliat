@@ -1,6 +1,10 @@
+<%
+    colspan = 5
+%>
+
 <% legacy_person_activities_by_group.each do |activity_group_id, legacy_person_activities| %>
     <tr>
-        <td colspan="6" align="center">
+        <td colspan="<%= colspan %>" align="center">
             <strong>
                 <%= ActivityGroup.find(activity_group_id).nombre %>
             </strong>
@@ -29,3 +33,20 @@
         </tr>
     <% end %>
 <% end %>
+<tr>
+    <td class="has-text-centered is-size-7" colspan="<%= colspan %>">
+        <%
+            if @paginate_activitites && paged_legacy_person_activities.total_count > paged_legacy_person_activities.limit_value
+        %>
+            Mostrando <%= paged_legacy_person_activities.limit_value %> de <%= paged_legacy_person_activities.total_count %>.
+            <%=
+                view_all_path = if params[:legacy_people_ids].present?
+                        view_several_legacy_people_path(legacy_people_ids: params[:legacy_people_ids])
+                    else
+                        legacy_person_path(legacy_person)
+                    end
+                link_to "Ver todos", view_all_path
+            %>
+        <% end %>
+    </td>
+</tr>
