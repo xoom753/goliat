@@ -1,3 +1,7 @@
+<div class="has-text-centered">
+    <h2>Legacy Person Activities</h2>
+</div>
+
 <%= simple_form_for :search, method: :get do |f| %>
     <div class="field is-horizontal">
         <div class="field-body">
@@ -11,14 +15,18 @@
                         html5: true,
                         input_html: { name: :date_to, value: params[:date_to] }
             %>
+            <div class="control is-narrow is-align-self-flex-end">
+                <%= f.submit "Search", class: "button" %>
+            </div>
         </div>
     </div>
-    <%= f.submit "Search", class: "button" %>
 <% end %>
 
-<%=
-    pluralize @legacy_person_activities.total_count, "record"
-%>
+<div class="my-2 has-text-right">
+    <%=
+        pluralize @legacy_person_activities.total_count, "record"
+    %>
+</div>
 
 <table class="table is-striped is-hoverable">
     <thead>
