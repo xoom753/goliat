@@ -7,7 +7,11 @@ class PersonEjesResumenesController < ApplicationController
     ]
 
     def index
-        @person_ejes_resumenes = PersonEjesResumen.all
+        @person_ejes_resumenes =
+            PersonEjesResumen.all
+                             .order(last_generated_at: :desc, id: :desc)
+                             .page(params[:page])
+                             .per(6)
     end
 
     def new
@@ -74,6 +78,8 @@ class PersonEjesResumenesController < ApplicationController
 
     def person_ejes_resumen_and_render
         @person_ejes_resumen = PersonEjesResumen.find(params[:id])
+        # update last_generated_at!
+        @person_ejes_resumen.update_last_generated_at!
         @render_service = PersonEjeResumenRenderService.new(
             @person_ejes_resumen
         )

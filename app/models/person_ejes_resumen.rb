@@ -19,4 +19,8 @@ class PersonEjesResumen < ApplicationRecord
             people_ids.split(",")
         )
     end
+
+    def update_last_generated_at!
+        update!(last_generated_at: Time.now)
+    end
 end

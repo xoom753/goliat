@@ -1,8 +1,10 @@
-<div class="content">
-    <h2>Fichas</h2>
+<div class="has-text-centered">
+<h2>Fichas</h2>
+</div>
 
-    <% @person_ejes_resumenes.each do |person_ejes_resumen| %>
-        <div>
+<% @person_ejes_resumenes.each do |person_ejes_resumen| %>
+    <div data-controller="toggable-content">
+        <div class="mb-3">
             <h3><%= person_ejes_resumen.nombres.titleize %></h3>
             <%= link_to "Cultural.docx", cultural_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
             <%= link_to "Deportivo.docx", deportivo_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
@@ -10,103 +12,15 @@
             <%= link_to "Certificados.csv", certificados_person_ejes_resumen_path(person_ejes_resumen, format: :csv) %>
         </div>
 
-        <dl>
-            <dt>
-                DNI
-            </dt>
-            <dd>
-                <%= person_ejes_resumen.dni %>
-            </dd>
-
-            <dt>
-                Tipo
-            </dt>
-            <dd>
-                <%=
-                    if person_ejes_resumen.tipo_porcentual?
-                        "Porcentual"
-                    else
-                        "Semestral"
-                    end
-                %>
-            </dd>
-
-            <dt>
-                Fecha pérdida libertad
-            </dt>
-            <dd>
-                <%= person_ejes_resumen.fecha_perdida_libertad %>
-            </dd>
-
-            <dt>
-                Ubicación
-            </dt>
-            <dd>
-                <%= person_ejes_resumen.ubicacion %>
-            </dd>
-
-            <dt>
-                Delitos
-            </dt>
-            <dd>
-                <%= person_ejes_resumen.delitos_array.join("<br />").html_safe %>
-            </dd>
-
-            <dt>
-                Sentencias
-            </dt>
-            <dd>
-                <%= person_ejes_resumen.sentencias_array.join("<br />").html_safe %>
-            </dd>
-
-            <% if person_ejes_resumen.acumulacion_penas.present? %>
+        <dl class="mb-0">
+            <% if person_ejes_resumen.last_generated_at.present? %>
                 <dt>
-                    Acumulación de penas
+                    Last generated at
                 </dt>
                 <dd>
-                    <%= person_ejes_resumen.acumulacion_penas %>
+                    <%= person_ejes_resumen.last_generated_at %>
                 </dd>
             <% end %>
-
-            <% if person_ejes_resumen.tipo_porcentual? %>
-                <%
-                    renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
-                    periodos_porcentuales = renderer.periodos_porcentuales
-                %>
-                <% periodos_porcentuales.each do |key, periodos| %>
-                    <dt>
-                        <%= key %>
-                    </dt>
-                    <dd>
-                        <%= periodos.first[:start_date] %> -
-                        <%= periodos.first[:end_date] %>
-                    </dd>
-                <% end %>
-            <% else %>
-                <%
-                    renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
-                    semestres_detail_hash = begin
-                        renderer.semestres_detail_hash
-                    rescue StandardError => e
-                        { "error" => [{ "error" => e }] }
-                    end
-                %>
-
-                <% semestres_detail_hash.each do |key, values| %>
-                    <dt>
-                        <%= key %>
-                    </dt>
-                    <dd>
-                        <%=
-                            values_strs = values.map do |val|
-                                "#{val[:percentage]} - #{val[:semestre_str]}: #{val[:start_date]} - #{val[:end_date]}"
-                            end
-                            values_strs.join("<br />").html_safe
-                        %>
-                    </dd>
-                <% end %>
-            <% end %>
-
             <% if person_ejes_resumen.legacy_people_ids.present? %>
                 <dt>
                     Legacy People for report
@@ -140,6 +54,111 @@
             <% end %>
         </dl>
 
-        <hr />
-    <% end %>
-</div>
+        <a href="#" data-toggable-content-target="showDetails" class="mt-3 is-block">
+            Show details
+        </a>
+
+        <dl>
+            <div class="is-hidden" data-toggable-content-target="hiddenContent">
+                <dt>
+                    DNI
+                </dt>
+                <dd>
+                    <%= person_ejes_resumen.dni %>
+                </dd>
+
+                <dt>
+                    Tipo
+                </dt>
+                <dd>
+                    <%=
+                        if person_ejes_resumen.tipo_porcentual?
+                            "Porcentual"
+                        else
+                            "Semestral"
+                        end
+                    %>
+                </dd>
+
+                <dt>
+                    Fecha pérdida libertad
+                </dt>
+                <dd>
+                    <%= person_ejes_resumen.fecha_perdida_libertad %>
+                </dd>
+
+                <dt>
+                    Ubicación
+                </dt>
+                <dd>
+                    <%= person_ejes_resumen.ubicacion %>
+                </dd>
+
+                <dt>
+                    Delitos
+                </dt>
+                <dd>
+                    <%= person_ejes_resumen.delitos_array.join("<br />").html_safe %>
+                </dd>
+
+                <dt>
+                    Sentencias
+                </dt>
+                <dd>
+                    <%= person_ejes_resumen.sentencias_array.join("<br />").html_safe %>
+                </dd>
+
+                <% if person_ejes_resumen.acumulacion_penas.present? %>
+                    <dt>
+                        Acumulación de penas
+                    </dt>
+                    <dd>
+                        <%= person_ejes_resumen.acumulacion_penas %>
+                    </dd>
+                <% end %>
+
+                <% if person_ejes_resumen.tipo_porcentual? %>
+                    <%
+                        renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
+                        periodos_porcentuales = renderer.periodos_porcentuales
+                    %>
+                    <% periodos_porcentuales.each do |key, periodos| %>
+                        <dt>
+                            <%= key %>
+                        </dt>
+                        <dd>
+                            <%= periodos.first[:start_date] %> -
+                            <%= periodos.first[:end_date] %>
+                        </dd>
+                    <% end %>
+                <% else %>
+                    <%
+                        renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
+                        semestres_detail_hash = begin
+                            renderer.semestres_detail_hash
+                        rescue StandardError => e
+                            { "error" => [{ "error" => e }] }
+                        end
+                    %>
+
+                    <% semestres_detail_hash.each do |key, values| %>
+                        <dt>
+                            <%= key %>
+                        </dt>
+                        <dd>
+                            <%=
+                                values_strs = values.map do |val|
+                                    "#{val[:percentage]} - #{val[:semestre_str]}: #{val[:start_date]} - #{val[:end_date]}"
+                                end
+                                values_strs.join("<br />").html_safe
+                            %>
+                        </dd>
+                    <% end %>
+                <% end %>
+            </div>
+        </dl>
+    </div>
+    <hr />
+<% end %>
+
+<%= paginate @person_ejes_resumenes %>
