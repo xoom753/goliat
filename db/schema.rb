@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_153052) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_182705) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -296,6 +296,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_153052) do
   add_foreign_key "origin_person_legal_penalties", "origin_people"
   add_foreign_key "origin_person_legal_penalties", "origin_person_legal_processes"
   add_foreign_key "origin_person_legal_processes", "origin_people"
-  add_foreign_key "person_activities", "activities", column: "coursable_id"
   add_foreign_key "person_activities", "people"
 end
