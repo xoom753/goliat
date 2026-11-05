@@ -6,6 +6,6 @@ class LegacyPersonActivitiesController < ApplicationController
                 end_date: params[:date_from]..params[:date_to]
             )
         end
-        @legacy_person_activities = scope.page(params[:page]).per(20)
+        @legacy_person_activities = scope.page(params[:page]).per(40)
     end
 end

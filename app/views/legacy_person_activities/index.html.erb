@@ -32,6 +32,7 @@
     <thead>
         <tr>
             <th>Nº</th>
+            <th>uuid</th>
             <th>Nombres</th>
             <th>Grupo</th>
             <th>Actividad</th>
@@ -46,6 +47,9 @@
             <tr>
                 <td>
                     <%= legacy_activity.row_number %>
+                </td>
+                <td>
+                    <%= legacy_activity.id %>
                 </td>
                 <td>
                     <%= legacy_activity.legacy_person.nombres %>
