@@ -1,10 +1,36 @@
 <%= form_tag origin_people_path, method: :get do %>
-    <%= text_field_tag :s, params[:s], placeholder: "Nombre o DNI" %>
-    <%= text_field_tag :proceso_num, params[:proceso_num], placeholder: "Núm. Proceso" %>
-    <%= submit_tag "Search" %>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field">
+                <p class="control">
+
+                <%= text_field_tag :s, params[:s], placeholder: "Nombre o DNI", class: "input" %>
+                </p>
+            </div>
+
+            <div class="field">
+                <p class="control">
+
+                <%= text_field_tag :proceso_num, params[:proceso_num], placeholder: "Núm. Proceso", class: "input" %>
+                </p>
+            </div>
+
+            <div class="field is-narrow">
+                <p class="control">
+
+                <%= submit_tag "Search", class: "button input" %>
+                </p>
+            </div>
+        </div>
+    </div>
+
 <% end %>
 
-<%= link_to "Sort by 60%", by_percentage_origin_people_path(sort_by: "sesenta") %>
+<div class="has-text-right mt-2">
+    <%= link_to "Sort by 60%",
+                by_percentage_origin_people_path(sort_by: "sesenta"),
+                class: "button is-text" %>
+</div>
 
 <table class="table is-striped is-hoverable content content-custom">
     <thead>
