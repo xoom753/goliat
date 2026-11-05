@@ -89,7 +89,7 @@ class InformeRendererService
         docx.p
         docx.p
 
-        docx.p "Víctor Hugo Suárez Mejía"
+        docx.p Rails.application.credentials.report_signed_by
     end
 
     def fecha_entrega
