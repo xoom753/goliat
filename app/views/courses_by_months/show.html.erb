@@ -65,10 +65,10 @@
                             <%= activity.nombre %>
                         </h4>
                         <%= link_to "Edit",
-                                    edit_course_path(activity, month: @month, year: @year) %>
+                                    edit_course_path(activity, date: { month: @month, year: @year }) %>
                         ·
                         <%= link_to "Export",
-                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year) %>
+                                    export_courses_by_month_path(activity_id: activity.id, date: { month: @month, year: @year}) %>
                     </th>
                 </tr>
                 <% if activity.person_activities.where(mes: @month, anio: @year).any? %>

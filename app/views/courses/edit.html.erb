@@ -1,12 +1,39 @@
-<h2>
+<h2 class="has-text-centered">
     <%= @activity.nombre %>
-    -
+    ·
     <%= @activity.activity_group.nombre %>
 </h2>
-<h3>
+<h2 class="has-text-centered">
     <%= Date::MONTHNAMES[@month.to_i] %>
     <%= @year %>
-</h3>
+</h2>
+
+<%=
+    form_tag edit_course_path(@activity),
+             method: :get,
+             class: "mb-2",
+             data: { controller: "auto-submit-form" } do
+%>
+    <%= hidden_field_tag :activity_group_id, params[:activity_group_id] %>
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label for="date_month" class="label">Filter Month / Year</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <div class="select">
+                        <%= select_month @month.to_i, {}, {data: {"auto-submit-form-target" => "selectTag"} } %>
+                    </div>
+                    <div class="select">
+                        <%= select_year @year.to_i, {}, {data: {"auto-submit-form-target" => "selectTag"} } %>
+                    </div>
+                    <%= submit_tag "Filter", data: {"auto-submit-form-target" => "submitBtn"} %>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>
 
 <div data-controller="add-person-to-course">
     <%= form_tag course_path,

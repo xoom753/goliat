@@ -4,8 +4,8 @@ class CoursesController < ApplicationController
     # end
 
     def edit
-        @month = params.require(:month)
-        @year = params.require(:year)
+        @month = params.dig(:date, :month)
+        @year = params.dig(:date, :year)
         @activity = Activity.find params[:id]
         @person_activities = @activity.person_activities.where(
             mes: @month,
