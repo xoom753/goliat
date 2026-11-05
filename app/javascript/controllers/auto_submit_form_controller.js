@@ -8,8 +8,11 @@ export default class extends Controller {
 
   connect() {
     this.submitBtnTarget.hidden = true
-    this.selectTagTarget.onchange = (e) => {
+    const submitForm = (e) => {
         this.element.submit()
     }
+    this.selectTagTargets.forEach(tagTarget => {
+      tagTarget.onchange = submitForm
+    })
   }
 }

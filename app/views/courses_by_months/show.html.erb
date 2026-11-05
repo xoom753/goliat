@@ -1,12 +1,3 @@
-<%= form_tag courses_by_month_path, method: :get do %>
-    <%= hidden_field_tag :activity_group_id, params[:activity_group_id] %>
-    <%= select_month @month.to_i %>
-    <%= select_year @year.to_i %>
-    <%= submit_tag "Filter" %>
-<% end %>
-
-<hr />
-
 <%
     date_params = {
         month: params.dig(:date, :month),
@@ -34,6 +25,17 @@
         <% end %>
     </ul>
 </div>
+
+<%=
+    form_tag courses_by_month_path,
+             method: :get,
+             data: { controller: "auto-submit-form" } do
+%>
+    <%= hidden_field_tag :activity_group_id, params[:activity_group_id] %>
+    <%= select_month @month.to_i, {}, {data: {"auto-submit-form-target" => "selectTag"} } %>
+    <%= select_year @year.to_i, {}, {data: {"auto-submit-form-target" => "selectTag"} } %>
+    <%= submit_tag "Filter", data: {"auto-submit-form-target" => "submitBtn"} %>
+<% end %>
 
 <% @activity_groups.each do |activity_group| %>
     <h3>
