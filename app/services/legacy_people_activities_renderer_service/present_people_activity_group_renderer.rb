@@ -17,8 +17,6 @@ class LegacyPeopleActivitiesRendererService::PresentPeopleActivityGroupRenderer
             people_activities.inject({}) do |memo, person_activity|
                 act_date = person_activity.end_date
                 memo[act_date] ||= []
-                # memo[act_date] << get_cert_string(person_activity)
-                # memo[act_date] << person_activity
                 memo[act_date] << get_cert(person_activity)
                 memo
             end
@@ -39,13 +37,6 @@ class LegacyPeopleActivitiesRendererService::PresentPeopleActivityGroupRenderer
             :coursable
         ).oldest_first
     end
-
-    # def get_cert_string(person_activity)
-    #     ::LegacyPeopleActivitiesRendererService::PresentPersonActivityCertRenderer.new(
-    #         person_activity: person_activity,
-    #         kind: @kind
-    #     ).cert_string
-    # end
 
     def get_cert(person_activity)
         ::LegacyPeopleActivitiesRendererService::PresentPersonActivityCertRenderer.new(

@@ -19,8 +19,6 @@ class LegacyPeopleActivitiesRendererService::LegacyPeopleActivityGroupRenderer
             people_activities.inject({}) do |memo, legacy_person_activity|
                 act_date = legacy_person_activity.end_date
                 memo[act_date] ||= []
-                # memo[act_date] << get_cert_string(legacy_person_activity)
-                # memo[act_date] << legacy_person_activity
                 memo[act_date] << get_cert(legacy_person_activity)
                 memo
             end
