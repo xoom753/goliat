@@ -9,56 +9,9 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
             2
         end
 
-        table_rows = [
-            [
-                "Laboral".upcase
-            ],
-            [
-                "Actividades".upcase,
-                "Detalles de actividades".upcase,
-                "Parámetros de calificación".upcase,
-                "Máx".upcase,
-                semestre
-            ],
-            [
-                "Permanente".upcase,
-                "Proyectos institucionales y/o producción en talleres",
-                "Cumplimiento a los horarios, convivencia, protocolos de seguridad y conocimientos",
-                "3",
-                "0"
-            ],
-            [
-                "Temporal".upcase,
-                "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional",
-                "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento",
-                "2",
-                temp_grade.to_s
-            ],
-            [
-                "Subtotal",
-                "5",
-                temp_grade.to_s
-            ]
-        ]
+        header_colspan = get_header_colspan
 
-        header_colspan = 5
-
-        if tipo_porcentual?
-            remaining_periods = periodos_porcentuales.keys.drop(1)
-            header_colspan += remaining_periods.length
-            zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
-            table_rows.each_with_index do |row, index|
-                if index == 0
-                    # nothing
-                elsif index == 1
-                    row.concat remaining_periods
-                else
-                    row.concat zeroes
-                end
-            end
-        end
-
-        docx.table table_rows do
+        docx.table qualy_table_rows do
             column_widths  [400, 700, 800, 110, 110, 90, 90, 90]
             border_size 4
             cell_style cols[0], bold: true
@@ -95,5 +48,64 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
         end
 
         docx.p
+    end
+
+    private
+
+    def get_header_colspan
+        header_colspan = 5
+        if tipo_porcentual?
+            remaining_periods = periodos_porcentuales.keys.drop(1)
+            header_colspan += remaining_periods.length
+        end
+        header_colspan
+    end
+
+    def qualy_table_rows
+        @qualy_table_rows = [
+            [
+                "Laboral".upcase
+            ],
+            [
+                "Actividades".upcase,
+                "Detalles de actividades".upcase,
+                "Parámetros de calificación".upcase,
+                "Máx".upcase,
+                semestre
+            ],
+            [
+                "Permanente".upcase,
+                "Proyectos institucionales y/o producción en talleres",
+                "Cumplimiento a los horarios, convivencia, protocolos de seguridad y conocimientos",
+                "3",
+                "0"
+            ],
+            [
+                "Temporal".upcase,
+                "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional",
+                "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento",
+                "2",
+                temp_grade.to_s
+            ],
+            [
+                "Subtotal",
+                "5",
+                temp_grade.to_s
+            ]
+        ]
+
+        if tipo_porcentual?
+            remaining_periods = periodos_porcentuales.keys.drop(1)
+            zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
+            @qualy_table_rows.each_with_index do |row, index|
+                if index == 0
+                    # nothing
+                elsif index == 1
+                    row.concat remaining_periods
+                else
+                    row.concat zeroes
+                end
+            end
+        end
     end
 end

@@ -9,46 +9,7 @@ class InformeRendererService::InformeDeportivoRenderer < InformeRendererService:
             2
         end
 
-        table_rows = [
-            [
-                "Parámetros de Evaluación".upcase,
-                "Máx".upcase,
-                semestre
-            ],
-            [
-                "Deportivo".upcase,
-                "Permanente".upcase,
-                "Actividades deportivas, recreativas y de educación física, como: fútbol en sus diferentes modalidades, baloncesto, ecuavóley, halterofilia, caminatas, trote, tenis de mesa, ajedrez, juegos lúdicos, bailoterapia, yoga, entre otras.",
-                "3",
-                "0"
-            ],
-            [
-                "",
-                "Temporal".upcase,
-                "Capacitaciones en materia deportiva y otras que oferte el centro de privación de libertad en coordinación con las entidades públicas y privadas.",
-                "2",
-                temp_grade.to_s
-            ],
-            [
-                "Subtotal",
-                "5",
-                temp_grade.to_s
-            ]
-        ]
-
-        if tipo_porcentual?
-            remaining_periods = periodos_porcentuales.keys.drop(1)
-            zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
-            table_rows.each_with_index do |row, index|
-                if index == 0
-                    row.concat remaining_periods
-                else
-                    row.concat zeroes
-                end
-            end
-        end
-
-        docx.table table_rows do
+        docx.table qualy_table_rows do
             column_widths  [300, 370, 1200, 110, 110, 110, 110]
             border_size 4
             cell_style cols[0], bold: true
@@ -79,6 +40,48 @@ class InformeRendererService::InformeDeportivoRenderer < InformeRendererService:
     end
 
     private
+
+    def qualy_table_rows
+        @qualy_table_rows = [
+            [
+                "Parámetros de Evaluación".upcase,
+                "Máx".upcase,
+                semestre
+            ],
+            [
+                "Deportivo".upcase,
+                "Permanente".upcase,
+                "Actividades deportivas, recreativas y de educación física, como: fútbol en sus diferentes modalidades, baloncesto, ecuavóley, halterofilia, caminatas, trote, tenis de mesa, ajedrez, juegos lúdicos, bailoterapia, yoga, entre otras.",
+                "3",
+                "0"
+            ],
+            [
+                "",
+                "Temporal".upcase,
+                "Capacitaciones en materia deportiva y otras que oferte el centro de privación de libertad en coordinación con las entidades públicas y privadas.",
+                "2",
+                temp_grade.to_s
+            ],
+            [
+                "Subtotal",
+                "5",
+                temp_grade.to_s
+            ]
+        ]
+
+        if tipo_porcentual?
+            remaining_periods = periodos_porcentuales.keys.drop(1)
+            zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
+            @qualy_table_rows.each_with_index do |row, index|
+                if index == 0
+                    row.concat remaining_periods
+                else
+                    row.concat zeroes
+                end
+            end
+        end
+        @qualy_table_rows
+    end
 
     def c_t(key, **options)
         if options[:kind_f]

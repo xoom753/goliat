@@ -42,7 +42,17 @@ RSpec.describe "InformeRendererService report table renderers" do
         renderer.ficha_qualy_main_table
       end
 
-      describe "#table_rows" do
+      describe "#qualy_table_rows" do
+        describe "tipo_porcentual? true" do
+
+        end
+
+        describe "tipo_porcentual? false" do
+
+        end
+      end
+
+      describe "#get_header_colspan" do
         describe "tipo_porcentual? true" do
 
         end

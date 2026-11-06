@@ -3,7 +3,13 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
         docx.h1 c_t("qualy_main_table_title").upcase, align: :center
         docx.p
 
-        docx.table table_rows do
+        temp_grade = if get_activities_within_period.empty?
+            0
+        else
+            2
+        end
+
+        docx.table qualy_table_rows do
             column_widths  [300, 370, 1400, 110, 110, 110, 110]
             border_size 4
             cell_style cols[0], bold: true
@@ -35,14 +41,8 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
 
     private
 
-    def table_rows
-        temp_grade = if get_activities_within_period.empty?
-            0
-        else
-            2
-        end
-
-        table_rows = [
+    def qualy_table_rows
+        @qualy_table_rows = [
             [
                 "Parámetros de Evaluación".upcase,
                 "Máx".upcase,
@@ -72,7 +72,7 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
         if tipo_porcentual?
             remaining_periods = periodos_porcentuales.keys.drop(1)
             zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
-            table_rows.each_with_index do |row, index|
+            @qualy_table_rows.each_with_index do |row, index|
                 if index == 0
                     row.concat remaining_periods
                 else
@@ -80,5 +80,6 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
                 end
             end
         end
+        @qualy_table_rows
     end
 end
