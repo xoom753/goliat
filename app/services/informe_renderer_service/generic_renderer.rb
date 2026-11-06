@@ -185,9 +185,6 @@ class InformeRendererService::GenericRenderer
     end
 
     def get_activities_within_period
-        # return [] if legacy_person_activities_by_date.blank?
-        # @periods_cache ||= {}
-        # return @periods_cache[period[:end_date]] if @periods_cache[period[:end_date]]
         period_range = get_period_range
         # @periods_cache[period[:end_date]] =
         #     legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
@@ -209,6 +206,10 @@ class InformeRendererService::GenericRenderer
     end
 
     protected
+
+    def temp_grade
+        get_activities_within_period.empty? ? 0 : 2
+    end
 
     def ficha_qualy_summary_no_cumple
         observaciones = c_t("qualy_observaciones")
@@ -287,10 +288,6 @@ class InformeRendererService::GenericRenderer
             start_date = period[:start_date]
             end_date = period[:end_date]
         end
-        LegacyPersonActivity.parse_date_str(
-            start_date
-        )..LegacyPersonActivity.parse_date_str(
-            end_date
-        )
+        LegacyPersonActivity.parse_date_str(start_date)..LegacyPersonActivity.parse_date_str(end_date)
     end
 end

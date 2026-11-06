@@ -3,12 +3,6 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
         docx.h1 c_t("qualy_main_table_title").upcase, align: :center
         docx.p
 
-        temp_grade = if get_activities_within_period.empty?
-            0
-        else
-            2
-        end
-
         header_colspan = get_header_colspan
 
         docx.table qualy_table_rows do
@@ -96,16 +90,16 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
 
         if tipo_porcentual?
             remaining_periods = periodos_porcentuales.keys.drop(1)
-            zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
+            zeroes = 1.upto(remaining_periods.length).map { "0" }
             @qualy_table_rows.each_with_index do |row, index|
-                if index == 0
-                    # nothing
-                elsif index == 1
-                    row.concat remaining_periods
-                else
-                    row.concat zeroes
+                if index == 1
+                    row.concat(remaining_periods)
+                elsif index > 1
+                    row.concat(zeroes)
                 end
             end
         end
+
+        @qualy_table_rows
     end
 end

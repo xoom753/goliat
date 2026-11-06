@@ -96,6 +96,51 @@ RSpec.describe PersonEjesCertificadosRenderService do
   end
 
   context "when tipo_porcentual? is false" do
+    let(:semester_periods) do
+      {
+        "Primer semestre" => [
+          { start_date: "01/01/2024", end_date: "30/06/2024" },
+          { start_date: "01/07/2024", end_date: "31/12/2024" }
+        ],
+        "Segundo semestre" => [
+          { start_date: "01/01/2025", end_date: "30/06/2025" }
+        ]
+      }
+    end
 
+    before do
+      allow(informe_renderer_service).to receive(:tipo_porcentual?).and_return(false)
+      allow(informe_renderer_service).to receive(:semestres_detail_hash).and_return(semester_periods)
+
+      expect(informe_renderer_service).to receive(:kind=).with(:cultural)
+
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][0]).ordered
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][1]).ordered
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Segundo semestre"][0]).ordered
+
+      expect(informe_renderer_service).to receive(:kind=).with(:deportivo)
+
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][0]).ordered
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][1]).ordered
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Segundo semestre"][0]).ordered
+
+      expect(informe_renderer_service).to receive(:kind=).with(:laboral)
+
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][0]).ordered
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][1]).ordered
+      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Segundo semestre"][0]).ordered
+    end
+
+    it "sets the selected kind and period for every semester period" do
+      expect(informe_renderer_service).to receive(:get_activities_within_period).exactly(9).times.and_return([cultural_activity], [], [], [], [], [], [], [], [])
+
+      expect(service.send(:activities)).to eq([cultural_activity])
+    end
+
+    it "returns no activities when every semester lookup is empty" do
+      allow(informe_renderer_service).to receive(:get_activities_within_period).and_return([])
+
+      expect(service.send(:activities)).to eq([])
+    end
   end
 end

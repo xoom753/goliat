@@ -3,12 +3,6 @@ class InformeRendererService::InformeCulturalRenderer < InformeRendererService::
         docx.h1 c_t("qualy_main_table_title").upcase, align: :center
         docx.p
 
-        temp_grade = if get_activities_within_period.empty?
-            0
-        else
-            2
-        end
-
         docx.table qualy_table_rows do
             column_widths  [300, 370, 1400, 110, 110, 110, 110]
             border_size 4

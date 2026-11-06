@@ -62,5 +62,15 @@ RSpec.describe InformeRendererService do
   end
 
   describe "#signature" do
+    it "adds the sign-off, spacing paragraphs, and configured signer" do
+      docx = double
+      service.docx = docx
+      allow(Rails.application.credentials).to receive(:report_signed_by).and_return("Report Signer")
+      expect(docx).to receive(:p).with("Atentamente. _").ordered
+      5.times { expect(docx).to receive(:p).with(no_args).ordered }
+      expect(docx).to receive(:p).with("Report Signer").ordered
+
+      service.signature
+    end
   end
 end
