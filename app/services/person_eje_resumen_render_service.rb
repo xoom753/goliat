@@ -83,7 +83,7 @@ class PersonEjeResumenRenderService
             # because it includes acumulacion de penas
             rows += 1
         end
-        rows + ( delitos_array.length * 2)
+        rows + ( delitos_array.length * 2 )
     end
 
     ##
@@ -120,7 +120,7 @@ class PersonEjeResumenRenderService
     def periodos_porcentuales
         return @periodos_porcentuales if @periodos_porcentuales
         @periodos_porcentuales ||= {}
-        @person_ejes_resumen.periodos_detalle.split("\n").each_with_index do |periodos, index|
+        periodos_detalle.split("\n").each_with_index do |periodos, index|
             percentage = PORCENTAJES.fetch(index)
             start_date, end_date = periodos.split("\t")
             @periodos_porcentuales[percentage] = [{

@@ -1,10 +1,7 @@
 class PlanDeVidaImporter
-    ##
-    # cultural (see headers)
     def initialize(file_name)
         @xlsx = Roo::Spreadsheet.open(file_name, extension: :xlsx)
         @sheet = @xlsx.sheet('REPORTE INDIVIDUAL')
-        
     end
 
     def rows_hash

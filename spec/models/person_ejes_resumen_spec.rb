@@ -44,7 +44,7 @@ RSpec.describe PersonEjesResumen, type: :model do
   end
 
   it "memoizes parsed text arrays" do
-    expect(resumen.delitos_array).to equal(resumen.delitos_array)
-    expect(resumen.sentencias_array).to equal(resumen.sentencias_array)
+    expect(resumen.delitos_array.object_id).to equal(resumen.delitos_array.object_id)
+    expect(resumen.sentencias_array.object_id).to equal(resumen.sentencias_array.object_id)
   end
 end
