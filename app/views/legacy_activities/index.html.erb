@@ -2,6 +2,32 @@
     <h2>Legacy Activities</h2>
 </div>
 
+<%=
+    simple_form_for :legacy_activities_path,
+                    url: legacy_activities_path,
+                    method: :get do |f|
+%>
+  <div class="field has-addons">
+    <div class="control is-expanded">
+        <%=
+            f.input :s,
+                    label: false,
+                    placeholder: "Buscar",
+                    input_html: { name: :s, value: params[:s] },
+                    wrapper: false
+        %>
+    </div>
+    <div class="control">
+        <%= f.submit "Buscar", class: "button" %>
+    </div>
+  </div>
+<% end %>
+
+<div class="has-text-right">
+    <%= pluralize @legacy_activities.total_count, "actividad", "actividades" %>
+    en total
+</div>
+
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>
@@ -18,5 +44,10 @@
         <% end %>
     </tbody>
 </table>
+
+<div class="has-text-right">
+    <%= @legacy_activities.limit_value %>
+    por página
+</div>
 
 <%= paginate @legacy_activities %>
