@@ -27,6 +27,11 @@
     max_activities_count = @activity_groups.map{|ag|
         ag.activities.count
     }.max
+
+    ##
+    # rows:
+    #   eje title, activities row, person_activities row
+    person_name_rowspan = 1 + (@activity_groups.count * 3)
 %>
 
 <table class="table is-striped is-hoverable is-narrow dashboard-people-table mt-2">
@@ -49,7 +54,7 @@
     <tbody>
         <% @people.each do |person| %>
             <tr>
-                <td rowspan=10 class="">
+                <td rowspan="<%= person_name_rowspan %>" class="">
                     <div>
                         <%= person.nombres %>
                     </div>
@@ -63,7 +68,7 @@
                         ID: <%= person.id %>
                     </div>
                 </td>
-                <td rowspan=10 class="">
+                <td rowspan="<%= person_name_rowspan %>" class="">
                     <div>
                         <%= person.dni %>
                     </div>
@@ -74,7 +79,7 @@
                         %>
                     </div>
                 </td>
-                <td rowspan=10 class="">
+                <td rowspan="<%= person_name_rowspan %>" class="">
                     <%= person.pabellon %>
                 </td>
             </tr>

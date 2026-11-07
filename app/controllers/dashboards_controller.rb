@@ -6,7 +6,14 @@ class DashboardsController < ApplicationController
             @people = Person.all
         end
 
-        @activity_groups = ActivityGroup.all
+        @activity_groups = ActivityGroup.where(
+            nombre: [
+                "Eje Cultural",
+                "Eje Deportivo",
+                "Eje Laboral",
+            ]
+        )
+
         if params[:s].present? && params[:s].length > 2
             search = "'%#{params[:s]}%'"
             @people = @people.where("nombres LIKE #{search} OR dni LIKE #{search}")

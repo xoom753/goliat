@@ -92,6 +92,12 @@
                             uuid
                         </th>
                     </tr>
+                <% else %>
+                    <tr>
+                        <td>
+                            (<%= activity.nombre %> sin participantes)
+                        </td>
+                    </tr>
                 <% end %>
             </thead>
             <tbody>
