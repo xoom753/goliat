@@ -25,13 +25,9 @@ RSpec.describe "InformeRendererService report table renderers" do
         renderer.semestre = "20%"
         allow(renderer).to receive(:get_activities_within_period).and_return([:activity])
         expect(docx).to receive(:table) do |rows, &block|
-          if renderer_class == InformeRendererService::InformeLaboralRenderer
-            # get rid of the title
-            title_row = rows.shift
-            expect( title_row ).to include(expected_axis)
-          else
-            expect(rows[1]).to include(expected_axis)
-          end
+          # get rid of the title
+          title_row = rows.shift
+          expect( title_row ).to include(expected_axis)
 
           expect(rows[0]).to include("20%")
           expect(rows[1]).to include("PERMANENTE", "3", "0")
@@ -65,15 +61,16 @@ RSpec.describe "InformeRendererService report table renderers" do
           rows = renderer.send(:qualy_table_rows)
 
           if renderer_class == InformeRendererService::InformeLaboralRenderer
-            # get rid of the title
-            rows.shift
-            expect( rows.first[4,2] ).to include("20%", "40%")
+            expect( rows[1][4,2] ).to eq(["20%", "40%"])
+            expect( rows[2][3,3] ).to eq(["3", "0", "0"])
+            expect( rows[3][3,3] ).to eq(["2", "2", "0"])
           else
-            expect( rows.first[2,2] ).to include("20%", "40%")
+            expect( rows[1][2,2] ).to eq(["20%", "40%"])
+            expect( rows[2][2,3] ).to eq(["3", "0", "0"])
+            expect( rows[3][2,3] ).to eq(["2", "2", "0"])
           end
-          expect( rows[1][3,3] ).to include("3", "0", "0")
-          expect( rows[2][3,3] ).to include("2", "2", "0")
-          expect( rows[3][1,3] ).to include("5", "2", "0")
+
+          expect( rows[4][1,3] ).to eq(["5", "2", "0"])
         end
 
         it "includes the configured semester and temporal score for semester reports" do
@@ -83,21 +80,17 @@ RSpec.describe "InformeRendererService report table renderers" do
 
           rows = renderer.send(:qualy_table_rows)
 
+          expect(rows[1].last).to eq("20%")
+
           if renderer_class == InformeRendererService::InformeLaboralRenderer
-            # get rid of the title
-            rows.shift
+            expect(rows[2][3,2]).to eq(["3", "0"])
+            expect(rows[3][3,2]).to eq(["2", "0"])
+          else
+            expect(rows[2][2,2]).to eq(["3", "0"])
+            expect(rows[3][2,2]).to eq(["2", "0"])
           end
 
-          expect(rows.first.last).to eq("20%")
-          expect(
-            rows[1].last
-          ).to include("0")
-          expect(
-            rows[2].last
-          ).to include("0")
-          expect(
-            rows[3].last
-          ).to eq("0")
+          expect(rows[4][1,2]).to eq(["5", "0"])
         end
       end
 
