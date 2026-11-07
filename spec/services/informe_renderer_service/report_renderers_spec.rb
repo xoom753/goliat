@@ -4,7 +4,8 @@ RSpec.describe "InformeRendererService report table renderers" do
   {
     InformeRendererService::InformeCulturalRenderer => "CULTURAL",
     InformeRendererService::InformeDeportivoRenderer => "DEPORTIVO",
-    InformeRendererService::InformeLaboralRenderer => "LABORAL"
+    InformeRendererService::InformeLaboralRenderer => "LABORAL",
+    InformeRendererService::InformeEducativoRenderer => "EDUCATIVO"
   }.each do |renderer_class, expected_axis|
     describe renderer_class.name do
       let(:docx) { double(h1: nil, p: nil) }
@@ -60,7 +61,7 @@ RSpec.describe "InformeRendererService report table renderers" do
 
           rows = renderer.send(:qualy_table_rows)
 
-          if renderer_class == InformeRendererService::InformeLaboralRenderer
+          if renderer_class == InformeRendererService::InformeLaboralRenderer || renderer_class == InformeRendererService::InformeEducativoRenderer
             expect( rows[1][4,2] ).to eq(["20%", "40%"])
             expect( rows[2][3,3] ).to eq(["3", "0", "0"])
             expect( rows[3][3,3] ).to eq(["2", "2", "0"])
@@ -82,7 +83,7 @@ RSpec.describe "InformeRendererService report table renderers" do
 
           expect(rows[1].last).to eq("20%")
 
-          if renderer_class == InformeRendererService::InformeLaboralRenderer
+          if renderer_class == InformeRendererService::InformeLaboralRenderer  || renderer_class == InformeRendererService::InformeEducativoRenderer
             expect(rows[2][3,2]).to eq(["3", "0"])
             expect(rows[3][3,2]).to eq(["2", "0"])
           else
