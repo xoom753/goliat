@@ -26,6 +26,9 @@
             </td>
             <td>
                 <%= legacy_person_activity.end_date %>
+                <div class="is-size-7">
+                    (<%= legacy_person_activity.end_date.strftime "%B %Y" %>)
+                </div>
             </td>
             <td>
                 <%= legacy_person_activity.duracion %>

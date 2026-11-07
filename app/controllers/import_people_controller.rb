@@ -9,6 +9,6 @@ class ImportPeopleController < ApplicationController
                 dni: dni
             )
         end
-        redirect_to action: :new, notice: "Imported #{people.count} people!"
+        redirect_to new_import_person_path, notice: "Imported #{people.count} people!"
     end
 end

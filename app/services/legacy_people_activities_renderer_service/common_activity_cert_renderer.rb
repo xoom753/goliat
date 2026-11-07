@@ -81,6 +81,8 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             "curso"
         elsif actividad_programas?
             "programa"
+        elsif actividad_campeonato?
+            "campeonato"
         else
             default_cert_kind_string
         end
@@ -121,6 +123,8 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             /concurso/i,
             /agasajo/i,
             /taller/i,
+            /coro/i,
+            /cine/i,
         ].any? do |regex|
             actividad_str =~ regex
         end
@@ -129,6 +133,14 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
     def actividad_actividades?
         [
             /adecentamiento/i,
+        ].any? do |regex|
+            actividad_str =~ regex
+        end
+    end
+
+    def actividad_campeonato?
+        [
+            /copa/i,
         ].any? do |regex|
             actividad_str =~ regex
         end

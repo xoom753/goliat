@@ -32,17 +32,17 @@ class ImportPeopleActivitiesController < ApplicationController
                 activity_record.save!
             else
                 ImportError.create!(
-                    details: {
+                    details_object: {
                         nombres: nombres,
                         dni: dni,
                         cargo: cargo,
                         mes: params[:date][:month],
                         anio: params[:date][:year],
                         activity: activity.nombre
-                    }.to_json
+                    }
                 )
             end
         end
-        redirect_to action: :new, notice: "#{people_activities.count} imported!"
+        redirect_to new_import_people_activity_path, notice: "#{people_activities.count} imported!"
     end
 end
