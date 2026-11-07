@@ -16,7 +16,7 @@ RSpec.describe "Dashboard people", type: :feature do
 
       expect(page).to have_content("Jane Example")
       expect(page).to have_content("1234567890")
-      expect(page).to have_content("A-1")
+      expect(page).to have_content("A 1")
       expect(page).to have_content("ID: #{person.id}")
       expect(page).to have_link("Ver procesos", href: origin_people_path(s: "Jane Example"))
       expect(page).to have_link("Ver procesos", href: origin_people_path(s: "1234567890"))
@@ -28,7 +28,7 @@ RSpec.describe "Dashboard people", type: :feature do
       # for now only showing Cultural, Deportivo & Laboral
       # expect(page).to have_content("Football")
       expect(page).to_not have_content("Football")
-      expect(page).to have_content("NO")
+      expect(page).to have_content("-")
     end
 
     describe "for now only showing Cultural, Deportivo & Laboral" do

@@ -5,20 +5,18 @@
     %>
 
     <%
-        coursed_group_status = person.person_activities.where(coursable: activity_group.activities).exists? ? "is-primary" : "is-warning"
+        coursed_group_status = person.person_activities.where(coursable: activity_group.activities).exists? ? "has-background-success-light" : "has-background-warning-light"
     %>
     <tr>
-        <td align=center colspan="<%= max_activities_count %>" class="<%= coursed_group_status %>">
-            <strong>
-                <%= activity_group.nombre %>
-            </strong>
+        <td align=center colspan="<%= max_activities_count %>" class="has-text-weight-semibold <%= coursed_group_status %>">
+            <%= activity_group.nombre %>
         </td>
     </tr>
 
     <tr>
         <% activity_group.activities.each do |activity| %>
             <%
-                coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning"
+                coursed_status = activity.person_activities.where(person: person).exists? ? "has-background-success-light" : "has-background-warning-light"
             %>
             <td align=center class="<%= coursed_status %>">
                 <%= activity.nombre %>
@@ -32,10 +30,10 @@
     <tr>
         <% activity_group.activities.each do |activity| %>
             <% person_activities = activity.person_activities.where(person: person) %>
-            <% coursed_status = activity.person_activities.where(person: person).exists? ? "is-primary" : "is-warning" %>
+            <% coursed_status = activity.person_activities.where(person: person).exists? ? "has-background-success-light" : "has-background-warning-light" %>
             <td class="<%= coursed_status %>">
                 <% if person_activities.empty? %>
-                    NO
+                    -
                 <% end %>
                 <ul>
                     <% person_activities.each do |person_activity| %>
