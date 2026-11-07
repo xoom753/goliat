@@ -88,17 +88,7 @@ class InformeRendererService::InformeLaboralRenderer < InformeRendererService::G
             ]
         ]
 
-        if tipo_porcentual?
-            remaining_periods = periodos_porcentuales.keys.drop(1)
-            zeroes = 1.upto(remaining_periods.length).map { "0" }
-            @qualy_table_rows.each_with_index do |row, index|
-                if index == 1
-                    row.concat(remaining_periods)
-                elsif index > 1
-                    row.concat(zeroes)
-                end
-            end
-        end
+        concat_tipo_porcentual_rows!(@qualy_table_rows) if tipo_porcentual?
 
         @qualy_table_rows
     end

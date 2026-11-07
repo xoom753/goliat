@@ -27,6 +27,9 @@ puts "Seeding groups & activities"
         "Mantenimiento y limpieza",
         "Origami",
         "Sastrería"
+    ],
+    "Eje Educativo" => [
+
     ]
 }.each do |group_name, activities|
     puts "= " + group_name

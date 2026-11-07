@@ -3,6 +3,7 @@ class PersonEjesResumenesController < ApplicationController
         :cultural,
         :deportivo,
         :laboral,
+        :educativo,
         :certificados
     ]
 
@@ -57,6 +58,15 @@ class PersonEjesResumenesController < ApplicationController
 
     def laboral
         filename = "Laboral-#{@person_ejes_resumen.nombres}.docx"
+        respond_to do |format|
+            format.docx {
+                headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+            }
+        end
+    end
+
+    def educativo
+        filename = "Educativo-#{@person_ejes_resumen.nombres}.docx"
         respond_to do |format|
             format.docx {
                 headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""

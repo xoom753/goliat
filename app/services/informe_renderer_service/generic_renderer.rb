@@ -207,6 +207,27 @@ class InformeRendererService::GenericRenderer
 
     protected
 
+    def concat_tipo_porcentual_rows!(qualy_table_rows)
+        remaining_periods = periodos_porcentuales.keys.drop(1)
+        zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
+        @qualy_table_rows.each_with_index do |row, index|
+            if index == 1
+                row.concat remaining_periods
+            elsif index > 1
+                row.concat zeroes
+            end
+        end
+    end
+
+    def get_header_colspan
+        header_colspan = 4
+        if tipo_porcentual?
+            remaining_periods = periodos_porcentuales.keys.drop(1)
+            header_colspan += remaining_periods.length
+        end
+        header_colspan
+    end
+
     def temp_grade
         get_activities_within_period.empty? ? 0 : 2
     end
