@@ -1,6 +1,9 @@
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
+require "simplecov"
+
+SimpleCov.start "rails"
 
 Dir["#{Rails.root}/spec/support/**/*.rb"].sort.each { |file| require file }
 
