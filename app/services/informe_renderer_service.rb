@@ -96,19 +96,7 @@ class InformeRendererService
         docx.p "Fecha de entrega: #{Date.today.strftime('%d/%m/%Y')}"
     end
 
-    # def draft_activities_list
-    #     # toDO fixme
-    #     return if @person_ejes_renderer.legacy_people_ids.blank?
-    #     legacy_person_activities = @person_ejes_renderer.activities_list_for(kind)
-    #     legacy_person_activities.each do |actividad_renderer|
-    #         docx.p actividad_renderer.cert_string
-    #     end
-    # end
-
     def legacy_person_activities_by_date
-        # return if @person_ejes_renderer.legacy_people_ids.blank?
-        # @legacy_person_activities_by_date ||=
-        #     @person_ejes_renderer.activities_by_date_for(kind)
         @person_ejes_renderer.activities_by_date_for(kind)
     end
 
