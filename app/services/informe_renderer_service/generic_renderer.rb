@@ -186,13 +186,6 @@ class InformeRendererService::GenericRenderer
 
     def get_activities_within_period
         period_range = get_period_range
-        # @periods_cache[period[:end_date]] =
-        #     legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
-        #         if period_range.include?(act_date)
-        #             memo += activities
-        #         end
-        #         memo
-        #     end
         activities_for_period =
             legacy_person_activities_by_date.inject([]) do |memo, (act_date, activities)|
                 if period_range.include?(act_date)

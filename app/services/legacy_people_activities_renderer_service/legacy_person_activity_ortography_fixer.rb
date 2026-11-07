@@ -1,16 +1,17 @@
 class LegacyPeopleActivitiesRendererService::LegacyPersonActivityOrtographyFixer
     KNOWN_WORDS = {
-        "Lavanderia" => "Lavandería",
+        "O" => "o",
+        "Y" => "y",
+        "De" => "de",
+        "En" => "en",
+        "Area" => "Área",
+        "Pabellon" => "Pabellón",
+        "Formacion" => "Formación",
         "Panaderia" => "Panadería",
+        "Lavanderia" => "Lavandería",
         "Pasteleria" => "Pastelería",
         "Artesanias" => "Artesanías",
         "Actividadesdeportivas" => "Actividades deportivas",
-        "Pabellon" => "Pabellón",
-        "Formacion" => "Formación",
-        "De" => "de",
-        "O" => "o",
-        "Y" => "y",
-        "En" => "en"
     }.freeze
 
     def fix_ortography(word)

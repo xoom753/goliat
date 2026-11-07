@@ -6,7 +6,7 @@ class LegacyPeopleController < ApplicationController
             )
         elsif params[:q].present?
             @legacy_people = LegacyPerson.where(
-                "nombres LIKE '%#{params[:q]}%'"
+                "nombres LIKE '%#{params[:q].strip}%'"
             )
         else
             @legacy_people = LegacyPerson.all

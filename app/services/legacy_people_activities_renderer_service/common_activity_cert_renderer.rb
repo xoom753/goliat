@@ -71,21 +71,15 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
     end
 
     def activity_kind_identifier
-        if empty_prefix?
-            "empty_prefix"
-        elsif actividad_actividades?
-            "actividades"
-        elsif actividad_talleres?
-            "taller"
-        elsif actividad_cursos?
-            "curso"
-        elsif actividad_programas?
-            "programa"
-        elsif actividad_campeonato?
-            "campeonato"
-        else
-            default_cert_kind_string
-        end
+        identifier_str = "actividades" if actividad_actividades?
+        identifier_str = "actividades_apoyo" if actividad_actividades_apoyo?
+        identifier_str = "taller" if actividad_talleres?
+        identifier_str = "curso" if actividad_cursos?
+        identifier_str = "programa" if actividad_programas?
+        identifier_str = "campeonato" if actividad_campeonato?
+        identifier_str = "empty_prefix" if empty_prefix?
+        identifier_str = default_cert_kind_string if identifier_str.blank?
+        identifier_str
     end
 
     def actividad_talleres?
@@ -93,7 +87,8 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             /manualidades/i,
             /artesan/i,
             /panificaci/i,
-            /tejido/i
+            /tejido/i,
+            /tapizado/i
         ].any? do |regex|
             actividad_str =~ regex
         end
@@ -104,6 +99,7 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             /panader/i,
             /cabello/i,
             /origami/i,
+            /electricidad b/i,
         ].any? do |regex|
             actividad_str =~ regex
         end
@@ -123,7 +119,6 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
             /concurso/i,
             /agasajo/i,
             /taller/i,
-            /coro/i,
             /cine/i,
         ].any? do |regex|
             actividad_str =~ regex
@@ -133,6 +128,15 @@ class LegacyPeopleActivitiesRendererService::CommonActivityCertRenderer
     def actividad_actividades?
         [
             /adecentamiento/i,
+            /coros/i,
+        ].any? do |regex|
+            actividad_str =~ regex
+        end
+    end
+
+    def actividad_actividades_apoyo?
+        [
+            /área laboral/i,
         ].any? do |regex|
             actividad_str =~ regex
         end

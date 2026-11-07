@@ -47,11 +47,17 @@ class InformeRendererService
     def generic_styles
         docx.font name: "Calibri (Cuerpo)"
 
+        docx.page_size do
+            # A4
+            width   11900
+            height  16840
+        end
+
         docx.page_margins do
-        left    1000
-        right   1000
-        top     360
-        bottom  720
+            left    720
+            right   720
+            top     720
+            bottom  720
         end
 
         docx.style do
