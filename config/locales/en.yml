@@ -51,7 +51,7 @@ en:
     educativo: "Educativo"
     main_title: "Informe %{kind_str} CPL Loja 1"
     main_subtitle: "Proceso %{kind_str}"
-    main_intro: "Por medio de la presente me permito informar el cumplimiento del Proceso %{kind_str} de la Persona Privada de la Libertad:"
+    main_intro: "Por medio de la presente me permito informar el cumplimiento del Proceso “%{kind_str}” de la Persona Privada de la Libertad:"
     informe_kind: "Informe %{kind_str}"
     se_informa: "Se informa que la PPL. "
     desde_su_ingreso: ", desde el momento de su ingreso hasta la presente fecha y de acuerdo al expediente digital que reposa en el Área %{kind_str} del CPL Loja 1, "
