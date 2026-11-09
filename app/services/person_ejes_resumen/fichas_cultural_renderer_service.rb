@@ -7,9 +7,11 @@ class PersonEjesResumen::FichasCulturalRendererService
     def initialize(
         docx:,
         person_ejes_resumen:,
-        periodos_renderer_service:
+        periodos_renderer_service:,
+        current_periodo:
     )
         @docx = docx
+        @current_periodo = current_periodo
         @person_ejes_resumen = person_ejes_resumen
         @periodos_renderer_service = periodos_renderer_service
     end
@@ -49,14 +51,17 @@ class PersonEjesResumen::FichasCulturalRendererService
     private
 
     def temp_grade
-        # TODO
-        "2"
+        if @current_periodo.activities.empty?
+            "0"
+        else
+            "2"
+        end
     end
 
     def get_header_colspan
         header_colspan = 4
         if @person_ejes_resumen.tipo_porcentual?
-            remaining_periods = periodos.keys.drop(1)
+            remaining_periods = periodos.drop(1)
             header_colspan += remaining_periods.length
         end
         header_colspan
@@ -66,7 +71,9 @@ class PersonEjesResumen::FichasCulturalRendererService
         return @grades_table_rows if @grades_table_rows
 
         if @person_ejes_resumen.tipo_porcentual?
-            semestre = periodos.keys.first
+            semestre = periodos.first.period_percentage
+        else
+            semestre = @current_periodo.period_percentage
         end
 
         @grades_table_rows = [
@@ -103,11 +110,11 @@ class PersonEjesResumen::FichasCulturalRendererService
     end
 
     def concat_tipo_porcentual_rows!(table_rows)
-        remaining_periods = periodos.keys.drop(1)
+        remaining_periods = periodos.drop(1)
         zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
         table_rows.each_with_index do |row, index|
             if index == 1
-                row.concat remaining_periods
+                row.concat remaining_periods.map(&:period_percentage)
             elsif index > 1
                 row.concat zeroes
             end

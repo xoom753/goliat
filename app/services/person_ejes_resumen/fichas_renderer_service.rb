@@ -1,19 +1,24 @@
 class PersonEjesResumen::FichasRendererService
+    delegate :tipo_porcentual?, to: :@person_ejes_resumen
     def initialize(
         docx:,
         kind:,
         person_ejes_resumen:,
         informes_translator_service:,
-        periodos_renderer_service:
+        periodos_renderer_service:,
+        activities_by_periods_renderer_service:
     )
         @docx = docx
         @kind = kind
         @person_ejes_resumen = person_ejes_resumen
         @informes_translator_service = informes_translator_service
         @periodos_renderer_service = periodos_renderer_service
+        @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
     def get_activities_ficha(index)
+        # @periodos_renderer_service.periodos.values.flatten.fetch(index)
+        # binding.pry
         activities_fichas.fetch(index)
     end
 
@@ -22,36 +27,48 @@ class PersonEjesResumen::FichasRendererService
     end
 
     def get_fichas_indexes
-        # tipo_porcentual? true
-        [
-            0
-        ]
+        if tipo_porcentual?
+            [ 0 ]
+        else
+            0.upto(@periodos_renderer_service.periodos.length-1)
+        end
     end
 
     private
 
     def activities_fichas
-        # tipo_porcentual? true
-        @activities_fichas ||= [
-            ::PersonEjesResumen::ActivitiesFichaRendererService.new(
+        return @activities_fichas if @activities_fichas
+
+        @activities_fichas = []
+        @periodos_renderer_service.periodos.each_with_index do |periodo, index|
+            @activities_fichas << ::PersonEjesResumen::ActivitiesFichaRendererService.new(
                 docx: @docx,
                 kind: @kind,
                 person_ejes_resumen: @person_ejes_resumen,
                 informes_translator_service: @informes_translator_service,
-                periodos_renderer_service: @periodos_renderer_service
+                periodos_renderer_service: @periodos_renderer_service,
+                activities_by_periods_renderer_service: @activities_by_periods_renderer_service,
+                index: index
             )
-        ]
+        end
+        @activities_fichas
     end
 
     def grades_fichas
-        @grades_fichas ||= [
-            ::PersonEjesResumen::GradesFichaRendererService.new(
+        return @grades_fichas if @grades_fichas
+
+        @grades_fichas = []
+        @periodos_renderer_service.periodos.each_with_index do |periodo, index|
+        @grades_fichas << ::PersonEjesResumen::GradesFichaRendererService.new(
                 docx: @docx,
                 kind: @kind,
                 person_ejes_resumen: @person_ejes_resumen,
                 informes_translator_service: @informes_translator_service,
-                periodos_renderer_service: @periodos_renderer_service
+                periodos_renderer_service: @periodos_renderer_service,
+                activities_by_periods_renderer_service: @activities_by_periods_renderer_service,
+                index: index
             )
-        ]
+        end
+        @grades_fichas
     end
 end

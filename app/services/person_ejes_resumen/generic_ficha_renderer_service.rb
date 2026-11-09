@@ -21,13 +21,17 @@ class PersonEjesResumen::GenericFichaRendererService
         kind:,
         person_ejes_resumen:,
         informes_translator_service:,
-        periodos_renderer_service:
+        periodos_renderer_service:,
+        activities_by_periods_renderer_service:,
+        index:
     )
         @docx = docx
         @kind = kind
+        @index = index
         @person_ejes_resumen = person_ejes_resumen
         @informes_translator_service = informes_translator_service
         @periodos_renderer_service = periodos_renderer_service
+        @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
     def encargado_title
@@ -36,11 +40,16 @@ class PersonEjesResumen::GenericFichaRendererService
 
     protected
 
+    def current_periodo
+        @periodos_renderer_service.periodos.fetch(@index)
+    end
+
     def specific_renderer
         @specific_renderer ||= "::PersonEjesResumen::Fichas#{@kind.to_s.titleize}RendererService".constantize.new(
             person_ejes_resumen: @person_ejes_resumen,
             periodos_renderer_service: @periodos_renderer_service,
-            docx: @docx
+            docx: @docx,
+            current_periodo: current_periodo
         )
     end
 

@@ -29,7 +29,7 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
         # if get_activities_within_period.empty?
         # TODO
         docx.p t("common.informe_kind").upcase, bold: true
-        if false
+        if current_periodo.activities.empty?
             info_summary_no_cumple
         else
             info_summary_si_cumple
@@ -48,13 +48,35 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
         docx.p t("common.act_temporal").upcase, bold: true
 
         #todo
-        if true
+        # group_similar_activities
+        # @periodos_renderer_service.grouped_activities
+        # binding.pry
+        # activities = @activities_by_periods_renderer_service.grouped_activities.map do |percentage, activities|
+        #     activities.map(&:group_similar_activities)
+        # end.flatten
+        # activities = activities.map do |activity|
+        #     activity.values
+        # end.flatten.compact
+
+        # activities = @activities_by_periods_renderer_service.grouped_activities_for_period(
+        #     current_periodo
+        # )
+        # activities.group_similar_activities
+        # binding.pry
+
+        activities = current_periodo.activities
+
+        if activities.empty?
             no_registra_temporal = t("common.no_registra_temporal", downcase: true, kind_f: true)
             docx.ol do
                 li no_registra_temporal
             end
         else
-
+            docx.ol do
+                activities.each do |activity|
+                    li activity.render_string
+                end
+            end
         end
         docx.p
     end
@@ -81,12 +103,12 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
         [
             [
                 "Temporalidad".upcase,
-                semestre
+                current_periodo.period_percentage
             ],
             [
                 "Semestre".upcase,
-                period[:start_date],
-                period[:end_date]
+                current_periodo.start_date,
+                current_periodo.end_date
             ]
         ]
     end

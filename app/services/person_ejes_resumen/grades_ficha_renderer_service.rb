@@ -34,8 +34,7 @@ class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::Generic
     end
 
     def grades_summary
-        # if get_activities_within_period.empty?
-        if false
+        if current_periodo.activities.empty?
             grades_summary_no_cumple
         else
             grades_summary_si_cumple
@@ -71,20 +70,20 @@ class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::Generic
 
     def ficha_qualy_bottom_rows
         if tipo_porcentual?
-            periodos.inject([]) do |memo, (key, periodos)|
+            periodos.inject([]) do |memo, periodo|
                 memo << [
-                        "Periodo #{key}".upcase,
-                        periodos.first[:start_date],
-                        periodos.first[:end_date]
+                        "Periodo #{periodo.period_percentage}".upcase,
+                        periodo.start_date_str,
+                        periodo.end_date_str
                     ]
                 memo
             end
         else
             [
                 [
-                    period[:semestre_str].upcase,
-                    period[:start_date],
-                    period[:end_date]
+                    current_periodo.period_percentage,
+                    current_periodo.start_date,
+                    current_periodo.end_date
                 ]
             ]
         end

@@ -9,6 +9,7 @@ class PersonEjesResumen::InformeRendererService
              :signature,
              :fecha_entrega,
              :generic_styles,
+             :draft_activities_list,
              to: :generic_informe_renderer
 
     delegate :get_grades_ficha,
@@ -30,7 +31,8 @@ class PersonEjesResumen::InformeRendererService
 
     def generic_informe_renderer
         @generic_informe_renderer ||= PersonEjesResumen::GenericInformeRendererService.new(
-            docx: docx
+            docx: docx,
+            activities_by_periods_renderer_service: activities_by_periods_renderer_service
         )
     end
 
@@ -40,13 +42,22 @@ class PersonEjesResumen::InformeRendererService
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen,
             informes_translator_service: @informes_translator_service,
-            periodos_renderer_service: periodos_renderer_service
+            periodos_renderer_service: periodos_renderer_service,
+            activities_by_periods_renderer_service: activities_by_periods_renderer_service
         )
     end
 
     def periodos_renderer_service
         @periodos_renderer ||= PersonEjesResumen::PeriodosRendererService.new(
             person_ejes_resumen: @person_ejes_resumen
+        )
+    end
+
+    def activities_by_periods_renderer_service
+        @activities_by_periods_renderer_service ||= PersonEjesResumen::ActivitiesByPeriodsRendererService.new(
+            kind: @kind,
+            person_ejes_resumen: @person_ejes_resumen,
+            periodos_renderer_service: periodos_renderer_service
         )
     end
 end

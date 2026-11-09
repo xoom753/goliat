@@ -8,6 +8,8 @@
 #@informe_renderer_service.template_no_cumple_con_proceso
 #@informe_renderer_service.template_qualy_no_cumple_con
 
+@informe_renderer_service.draft_activities_list
+
 docx.hr
 
 docx.page
@@ -44,4 +46,6 @@ docx.page
     grades_ficha.encargado_title
 
     @informe_renderer_service.fecha_entrega
+
+    docx.page
 end
