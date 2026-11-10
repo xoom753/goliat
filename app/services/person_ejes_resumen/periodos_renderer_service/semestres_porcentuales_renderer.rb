@@ -1,4 +1,4 @@
-class PersonEjesResumen::SemestresPorcentualesRendererService
+class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
     SEMESTRE_NAMES = [
         "Primer semestre",
         "Segundo semestre",

@@ -1,4 +1,4 @@
-class PersonEjesResumen::GroupedActivitiesByPeriodRendererService
+class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPeriodRenderer
     def initialize(
             activities:,
             periodos_renderer_service:

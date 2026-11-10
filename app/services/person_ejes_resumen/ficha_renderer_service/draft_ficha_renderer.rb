@@ -1,4 +1,4 @@
-class PersonEjesResumen::DraftFichaRendererService
+class PersonEjesResumen::FichaRendererService::DraftFichaRenderer
     delegate :info_si_cumple,
              :info_no_cumple,
              :grades_si_cumple,

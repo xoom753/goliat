@@ -10,7 +10,7 @@ class PersonEjesResumen::ActivitiesByPeriodsRendererService
     end
 
     def grouped_activities
-        @grouped_activities ||= PersonEjesResumen::GroupedActivitiesRendererService.new(
+        @grouped_activities ||= PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer.new(
             periodos_renderer_service: @periodos_renderer_service,
             legacy_activities: legacy_activities,
             present_activities: present_activities
@@ -20,14 +20,14 @@ class PersonEjesResumen::ActivitiesByPeriodsRendererService
     private
 
     def legacy_activities
-        PersonEjesResumen::LegacyActivitiesFetcherService.new(
+        PersonEjesResumen::ActivitiesFetcherService::LegacyActivitiesFetcher.new(
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         ).activities
     end
 
     def present_activities
-        PersonEjesResumen::PresentActivitiesFetcherService.new(
+        PersonEjesResumen::ActivitiesFetcherService::PresentActivitiesFetcher.new(
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         ).activities

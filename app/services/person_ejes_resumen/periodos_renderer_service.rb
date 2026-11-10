@@ -15,10 +15,6 @@ class PersonEjesResumen::PeriodosRendererService
     def grouped_activities
         periodos.map do |percentage, periods|
             periods.map do |period|
-                # ::PersonEjesResumen::GroupedActivitiesRendererService.new(
-                #     period: period,
-                #     person_ejes_resumen: @person_ejes_resumen
-                # )
                 period
             end
         end
@@ -36,7 +32,7 @@ class PersonEjesResumen::PeriodosRendererService
     #     ]
     # }
     def periodos_porcentuales
-        @periodos_porcentuales ||= ::PersonEjesResumen::PeriodosPorcentualesRendererService.new(
+        @periodos_porcentuales ||= ::PersonEjesResumen::PeriodosRendererService::PeriodosPorcentualesRenderer.new(
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         ).periodos_porcentuales
@@ -56,7 +52,7 @@ class PersonEjesResumen::PeriodosRendererService
     #    {start_date: "01/08/25", end_date: "28/01/26", percentage: "54,52%"},
     #    {start_date: "29/01/26", end_date: "03/06/26", percentage: "60,00%"}]}
     def semestres_porcentuales
-        @semestres_porcentuales ||= ::PersonEjesResumen::SemestresPorcentualesRendererService.new(
+        @semestres_porcentuales ||= ::PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer.new(
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         ).semestres_porcentuales

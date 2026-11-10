@@ -1,4 +1,4 @@
-class PersonEjesResumen::SummariseActivityForPeriodService
+class PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPeriodService
     attr_reader :kind
 
     delegate :actividad_kind,

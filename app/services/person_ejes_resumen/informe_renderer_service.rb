@@ -24,7 +24,7 @@ class PersonEjesResumen::InformeRendererService
     def initialize(person_ejes_resumen:, kind:)
         @kind = kind
         @person_ejes_resumen = person_ejes_resumen
-        @informes_translator_service = PersonEjesResumen::InformesTranslatorService.new(
+        @informes_translator_service = PersonEjesResumen::ActivityToHumanRendererService::InformesTranslator.new(
             kind: @kind
         )
     end
@@ -36,7 +36,7 @@ class PersonEjesResumen::InformeRendererService
     private
 
     def generic_informe_renderer
-        @generic_informe_renderer ||= PersonEjesResumen::GenericInformeRendererService.new(
+        @generic_informe_renderer ||= PersonEjesResumen::InformeRendererService::GenericInformeRenderer.new(
             docx: docx,
             activities_by_periods_renderer_service: activities_by_periods_renderer_service
         )
@@ -69,7 +69,7 @@ class PersonEjesResumen::InformeRendererService
     end
 
     def draft_ficha_renderer_service
-        @draft_ficha_renderer_service ||= ::PersonEjesResumen::DraftFichaRendererService.new(
+        @draft_ficha_renderer_service ||= ::PersonEjesResumen::FichaRendererService::DraftFichaRenderer.new(
             docx: @docx,
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen,

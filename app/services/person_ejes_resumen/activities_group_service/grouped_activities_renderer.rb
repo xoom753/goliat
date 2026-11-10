@@ -1,4 +1,4 @@
-class PersonEjesResumen::GroupedActivitiesRendererService
+class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer
     def initialize(
             legacy_activities:,
             present_activities:,
@@ -16,7 +16,7 @@ class PersonEjesResumen::GroupedActivitiesRendererService
     private
 
     def by_period_grouped
-        @by_period_grouped ||= ::PersonEjesResumen::GroupedActivitiesByPeriodRendererService.new(
+        @by_period_grouped ||= ::PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPeriodRenderer.new(
             activities: all_activities,
             periodos_renderer_service: @periodos_renderer_service
         ).by_periods

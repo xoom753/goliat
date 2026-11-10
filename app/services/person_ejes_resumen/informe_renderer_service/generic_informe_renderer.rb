@@ -1,4 +1,4 @@
-class PersonEjesResumen::GenericInformeRendererService
+class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
     attr_reader :docx
 
     delegate :date_to_str,

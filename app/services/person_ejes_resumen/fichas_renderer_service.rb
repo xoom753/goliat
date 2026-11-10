@@ -17,8 +17,6 @@ class PersonEjesResumen::FichasRendererService
     end
 
     def get_activities_ficha(index)
-        # @periodos_renderer_service.periodos.values.flatten.fetch(index)
-        # binding.pry
         activities_fichas.fetch(index)
     end
 

@@ -1,4 +1,4 @@
-class PersonEjesResumen::LegacyActivitiesFetcherService
+class PersonEjesResumen::ActivitiesFetcherService::LegacyActivitiesFetcher
     def initialize(kind:, person_ejes_resumen:)
         @kind = kind
         @person_ejes_resumen = person_ejes_resumen

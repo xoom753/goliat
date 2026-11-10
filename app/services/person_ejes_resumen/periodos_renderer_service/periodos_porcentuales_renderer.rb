@@ -1,4 +1,4 @@
-class PersonEjesResumen::PeriodosPorcentualesRendererService
+class PersonEjesResumen::PeriodosRendererService::PeriodosPorcentualesRenderer
     PORCENTAJES = [
         "20%",
         "40%",

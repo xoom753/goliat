@@ -1,4 +1,4 @@
-class PersonEjesResumen::GroupSimilarActivitiesService
+class PersonEjesResumen::ActivitiesGroupService::GroupSimilarActivities
     def initialize(kind:, activities:)
         @kind = kind
         @activities = activities
@@ -22,7 +22,7 @@ class PersonEjesResumen::GroupSimilarActivitiesService
 
     def summarised_activities_for_period
         by_activities.inject({}) do |memo, (key, activities)|
-            memo[key] = PersonEjesResumen::SummariseActivityForPeriodService.new(
+            memo[key] = PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPeriod.new(
                 kind: @kind,
                 activities: activities
             )

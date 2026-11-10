@@ -1,4 +1,4 @@
-class PersonEjesResumen::InformesTranslatorService
+class PersonEjesResumen::ActivityToHumanRendererService::InformesTranslator
     def initialize(kind:)
         @kind = kind
         @kind_str = I18n.t("common.#{@kind}")

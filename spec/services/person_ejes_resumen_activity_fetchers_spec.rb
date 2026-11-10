@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PersonEjesResumen::LegacyActivitiesFetcherService do
+RSpec.describe PersonEjesResumen::ActivitiesFetcherService::LegacyActivitiesFetcher do
   describe "#activities" do
     it "fetches legacy activities for selected legacy people in the requested eje group" do
       cultural_group = ActivityGroup.create!(nombre: "Eje Cultural")
@@ -70,7 +70,7 @@ RSpec.describe PersonEjesResumen::LegacyActivitiesFetcherService do
   end
 end
 
-RSpec.describe PersonEjesResumen::PresentActivitiesFetcherService do
+RSpec.describe PersonEjesResumen::ActivitiesFetcherService::PresentActivitiesFetcher do
   describe "#activities" do
     it "fetches present activities for selected people and the requested eje group" do
       cultural_group = ActivityGroup.create!(nombre: "Eje Cultural")
