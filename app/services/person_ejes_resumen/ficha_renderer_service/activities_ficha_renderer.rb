@@ -1,4 +1,4 @@
-class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::GenericFichaRendererService
+class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     delegate :info_si_cumple,
              :info_no_cumple,
              to: :summary_renderer

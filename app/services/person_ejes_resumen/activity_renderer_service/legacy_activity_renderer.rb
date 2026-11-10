@@ -1,4 +1,4 @@
-class PersonEjesResumen::LegacyActivityRendererService < PersonEjesResumen::GenericActivityRendererService
+class PersonEjesResumen::ActivityRendererService::LegacyActivityRenderer < PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
     def activity_nombre
         @current_activity.legacy_activity.nombre
     end

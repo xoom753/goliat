@@ -41,7 +41,7 @@ class PersonEjesResumen::FichasRendererService
 
         @activities_fichas = []
         @periodos_renderer_service.periodos.each_with_index do |periodo, index|
-            @activities_fichas << ::PersonEjesResumen::ActivitiesFichaRendererService.new(
+            @activities_fichas << ::PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer.new(
                 docx: @docx,
                 kind: @kind,
                 person_ejes_resumen: @person_ejes_resumen,
@@ -59,7 +59,7 @@ class PersonEjesResumen::FichasRendererService
 
         @grades_fichas = []
         @periodos_renderer_service.periodos.each_with_index do |periodo, index|
-        @grades_fichas << ::PersonEjesResumen::GradesFichaRendererService.new(
+        @grades_fichas << ::PersonEjesResumen::FichaRendererService::GradesFichaRenderer.new(
                 docx: @docx,
                 kind: @kind,
                 person_ejes_resumen: @person_ejes_resumen,

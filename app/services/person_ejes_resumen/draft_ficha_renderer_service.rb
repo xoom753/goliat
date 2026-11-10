@@ -60,7 +60,7 @@ class PersonEjesResumen::DraftFichaRendererService
     private
 
     def summary_renderer
-        @summary_renderer ||= ::PersonEjesResumen::ActivitiesFichaRendererService::SummaryRenderer.new(
+        @summary_renderer ||= ::PersonEjesResumen::FichaRendererService::SummaryRenderer.new(
             docx: @docx,
             person_ejes_resumen: @person_ejes_resumen,
             informes_translator_service: @informes_translator_service

@@ -50,7 +50,7 @@ class PersonEjesResumen::SemestresPorcentualesRendererService
     def semestres_array(index)
         periodos_detalles_by_semestres[index].split("\n").map do |periodo|
             start_date, end_date, _, percentage = periodo.split("\t")
-            PersonEjesResumen::PeriodoSemestralWrapper.new(
+            PersonEjesResumen::PeriodosWrapper::SemestralWrapper.new(
                 kind: @kind,
                 start_date:,
                 end_date:,

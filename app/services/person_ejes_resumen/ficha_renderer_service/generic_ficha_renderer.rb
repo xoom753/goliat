@@ -1,4 +1,4 @@
-class PersonEjesResumen::GenericFichaRendererService
+class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     attr_reader :docx
 
     delegate :date_to_str,
@@ -45,7 +45,7 @@ class PersonEjesResumen::GenericFichaRendererService
     end
 
     def specific_renderer
-        @specific_renderer ||= "::PersonEjesResumen::Fichas#{@kind.to_s.titleize}RendererService".constantize.new(
+        @specific_renderer ||= "::PersonEjesResumen::SpecificFichaRendererService::Fichas#{@kind.to_s.titleize}Renderer".constantize.new(
             person_ejes_resumen: @person_ejes_resumen,
             periodos_renderer_service: @periodos_renderer_service,
             docx: @docx,
@@ -123,7 +123,7 @@ class PersonEjesResumen::GenericFichaRendererService
     end
 
     def summary_renderer
-        @summary_renderer ||= ::PersonEjesResumen::ActivitiesFichaRendererService::SummaryRenderer.new(
+        @summary_renderer ||= ::PersonEjesResumen::FichaRendererService::SummaryRenderer.new(
             docx: docx,
             person_ejes_resumen: @person_ejes_resumen,
             informes_translator_service: @informes_translator_service

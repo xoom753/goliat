@@ -12,22 +12,11 @@ class PersonEjesResumen::PeriodosPorcentualesRendererService
     end
 
     def periodos_porcentuales
-        # @periodos_porcentuales = {}
-        # @person_ejes_resumen.periodos_detalle.split("\n").each_with_index do |periodos, index|
-        #     percentage = PORCENTAJES.fetch(index)
-        #     start_date, end_date = periodos.split("\t")
-        #     @periodos_porcentuales[percentage] = [
-        #         PersonEjesResumen::PeriodoPorcentualWrapper.new(
-        #             start_date: start_date,
-        #             end_date: end_date
-        #         )
-        #     ]
-        # end
         @periodos_porcentuales = []
         @person_ejes_resumen.periodos_detalle.split("\n").each_with_index do |periodos, index|
             percentage = PORCENTAJES.fetch(index)
             start_date, end_date = periodos.split("\t")
-            @periodos_porcentuales << PersonEjesResumen::PeriodoPorcentualWrapper.new(
+            @periodos_porcentuales << PersonEjesResumen::PeriodosWrapper::PorcentualWrapper.new(
                 kind: @kind,
                 start_date: start_date,
                 end_date: end_date,

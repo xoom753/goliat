@@ -2,155 +2,131 @@ require "rails_helper"
 require "csv"
 
 RSpec.describe PersonEjesCertificadosRenderService do
-  let(:first_period) { { start_date: "01/01/2024", end_date: "30/06/2024" } }
-  let(:informe_renderer_service) {
-    double(
-      "informe_renderer_service"
-    )
-  }
-  let(:person_ejes_renderer) { double("person_ejes_renderer") }
-  let(:person_ejes_resumen) do
-    double(
-      "person_ejes_resumen",
-      person_ejes_renderer: person_ejes_renderer,
-      tipo_porcentual?: true,
-      get_first_period: first_period,
-      nombres: "Casey Example",
-      legacy_people_ids: "",
-      people_ids: "",
-      periodos_detalle: ""
-    )
-  end
-  let(:cultural_activity) do
-    double(
-      "cultural_activity",
-      activity_str: "Tejido",
-      kind: :cultural,
-      meses_y_anios_str: "ENERO DE 2024",
-      duracion_str: "8 horas",
-      actividad_kind: "Curso"
-    )
-  end
+  let(:person_ejes_resumen) { double("person_ejes_resumen", nombres: "Casey Example") }
   subject(:service) { described_class.new(person_ejes_resumen) }
 
+  def rendered_activity(kind:, name:, actividad_kind:, months:, duration:)
+    double(
+      "#{kind}_#{name}",
+      actividad_kind: actividad_kind,
+      activity_str: name,
+      kind: kind,
+      meses_y_anios_str: months,
+      duracion_str: duration
+    )
+  end
+
+  def stub_kind_activities(kind, activities)
+    grouped_activities = double("grouped activities", activities: activities)
+    period_renderer = double("period renderer", grouped_activities: [grouped_activities])
+    informe_renderer = double("report renderer")
+    allow(informe_renderer).to receive(:send)
+      .with(:activities_by_periods_renderer_service)
+      .and_return(period_renderer)
+    allow(service).to receive(:get_informe_renderer_service)
+      .with(kind)
+      .and_return(informe_renderer)
+  end
+
   describe "#to_csv" do
-    it "exports the headers and activity details" do
-      allow(service).to receive(:activities).and_return([cultural_activity])
+    it "writes the header and serializes certificate activity columns" do
+      activity = rendered_activity(
+        kind: :cultural,
+        name: "Tejido",
+        actividad_kind: "curso",
+        months: "ENERO DE 2024",
+        duration: "8 horas"
+      )
+      stub_kind_activities(:cultural, [activity])
+      stub_kind_activities(:deportivo, [])
+      stub_kind_activities(:laboral, [])
 
       rows = CSV.parse(service.to_csv, headers: true)
 
-      expect(rows.headers).to eq(["N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas"])
-      expect(rows.first.fields).to eq(["1", "Casey Example", "Curso", "Tejido", "CULTURAL", "ENERO DE 2024", "8 horas"])
+      expect(rows.headers).to eq([
+        "N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas"
+      ])
+      expect(rows.length).to eq(1)
+      expect(rows.first.fields).to eq([
+        "1", "Casey Example", "Curso", "Tejido", "CULTURAL", "ENERO DE 2024", "8 horas"
+      ])
     end
 
-    it "numbers multiple activity rows sequentially" do
-      second_activity = double(
-        "second_activity",
+    it "numbers rows sequentially across treatment axes in axis order" do
+      cultural = rendered_activity(
+        kind: :cultural,
+        name: "Painting",
         actividad_kind: "taller",
-        activity_str: "Cerámica",
+        months: "MARZO DE 2024",
+        duration: "4 horas"
+      )
+      deportivo = rendered_activity(
         kind: :deportivo,
-        meses_y_anios_str: "FEBRERO DE 2024",
-        duracion_str: "4 horas"
+        name: "Football",
+        actividad_kind: "actividad",
+        months: "ABRIL DE 2024",
+        duration: "6 horas"
       )
-      allow(service).to receive(:activities).and_return([cultural_activity, second_activity])
+      laboral = rendered_activity(
+        kind: :laboral,
+        name: "Carpentry",
+        actividad_kind: "actividad",
+        months: "MAYO DE 2024",
+        duration: "10 horas"
+      )
+      stub_kind_activities(:cultural, [cultural])
+      stub_kind_activities(:deportivo, [deportivo])
+      stub_kind_activities(:laboral, [laboral])
 
       rows = CSV.parse(service.to_csv, headers: true)
 
-      expect(rows.map { |row| row["N"] }).to eq(["1", "2"])
-      expect(rows.map { |row| row["Eje tratamiento"] }).to eq(["CULTURAL", "DEPORTIVO"])
+      expect(rows.map { |row| row["N"] }).to eq(["1", "2", "3"])
+      expect(rows.map { |row| row["Eje tratamiento"] }).to eq(["CULTURAL", "DEPORTIVO", "LABORAL"])
+      expect(rows.map { |row| row["Nombre curso"] }).to eq(["Painting", "Football", "Carpentry"])
     end
 
-    it "emits only headers when no activities qualify" do
-      allow(service).to receive(:activities).and_return([])
+    it "returns a header-only CSV when there are no activities" do
+      stub_kind_activities(:cultural, [])
+      stub_kind_activities(:deportivo, [])
+      stub_kind_activities(:laboral, [])
 
       rows = CSV.parse(service.to_csv, headers: true)
 
+      expect(rows.headers).to eq([
+        "N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas"
+      ])
       expect(rows.length).to eq(0)
-      expect(rows.headers.last).to eq("Horas")
     end
   end
 
-  describe "activity selection" do
-    it "uses the first period once for each axis in percentage mode" do
-      allow(informe_renderer_service).to receive(:get_activities_within_period).and_return([cultural_activity], [], [])
-      expect(informe_renderer_service).to receive(:kind=).with(:cultural).ordered
-      expect(informe_renderer_service).to receive(:kind=).with(:deportivo).ordered
-      expect(informe_renderer_service).to receive(:kind=).with(:laboral).ordered
-      expect(informe_renderer_service).to receive(:period=).with(first_period).exactly(3).times
+  describe "#activities" do
+    it "collects the flattened activities in cultural, deportivo, laboral order" do
+      cultural_one = rendered_activity(kind: :cultural, name: "A", actividad_kind: "curso", months: "ENERO", duration: "1")
+      cultural_two = rendered_activity(kind: :cultural, name: "B", actividad_kind: "curso", months: "FEBRERO", duration: "2")
+      deportivo = rendered_activity(kind: :deportivo, name: "C", actividad_kind: "curso", months: "MARZO", duration: "3")
+      laboral = rendered_activity(kind: :laboral, name: "D", actividad_kind: "curso", months: "ABRIL", duration: "4")
+      stub_kind_activities(:cultural, [cultural_one, cultural_two])
+      stub_kind_activities(:deportivo, [deportivo])
+      stub_kind_activities(:laboral, [laboral])
 
-      expect(service.send(:activities)).to eq([cultural_activity])
+      expect(service.send(:activities)).to eq([cultural_one, cultural_two, deportivo, laboral])
     end
 
-    it "collects activities from every semester period for each axis in non-percentage mode" do
-      periods = {
-        "Primer semestre" => [
-          { start_date: "01/01/2024", end_date: "30/06/2024" },
-          { start_date: "01/07/2024", end_date: "31/12/2024" }
-        ]
-      }
-      allow(informe_renderer_service).to receive(:tipo_porcentual?).and_return(false)
-      allow(informe_renderer_service).to receive(:semestres_detail_hash).and_return(periods)
-      allow(informe_renderer_service).to receive(:get_activities_within_period).and_return(
-        [cultural_activity], [cultural_activity], [], [], [], []
-      )
-      expect(informe_renderer_service).to receive(:kind=).with(:cultural)
-      expect(informe_renderer_service).to receive(:kind=).with(:deportivo)
-      expect(informe_renderer_service).to receive(:kind=).with(:laboral)
-      expect(informe_renderer_service).to receive(:period=).with(periods.values.first.first).ordered
-      expect(informe_renderer_service).to receive(:period=).with(periods.values.first.last).ordered
-      expect(informe_renderer_service).to receive(:period=).with(periods.values.first.first).ordered
-      expect(informe_renderer_service).to receive(:period=).with(periods.values.first.last).ordered
-      expect(informe_renderer_service).to receive(:period=).with(periods.values.first.first).ordered
-      expect(informe_renderer_service).to receive(:period=).with(periods.values.first.last).ordered
-
-      expect(service.send(:activities)).to eq([cultural_activity, cultural_activity])
-    end
-  end
-
-  context "when tipo_porcentual? is false" do
-    let(:semester_periods) do
-      {
-        "Primer semestre" => [
-          { start_date: "01/01/2024", end_date: "30/06/2024" },
-          { start_date: "01/07/2024", end_date: "31/12/2024" }
-        ],
-        "Segundo semestre" => [
-          { start_date: "01/01/2025", end_date: "30/06/2025" }
-        ]
-      }
-    end
-
-    before do
-      allow(informe_renderer_service).to receive(:tipo_porcentual?).and_return(false)
-      allow(informe_renderer_service).to receive(:semestres_detail_hash).and_return(semester_periods)
-
-      expect(informe_renderer_service).to receive(:kind=).with(:cultural)
-
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][0]).ordered
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][1]).ordered
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Segundo semestre"][0]).ordered
-
-      expect(informe_renderer_service).to receive(:kind=).with(:deportivo)
-
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][0]).ordered
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][1]).ordered
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Segundo semestre"][0]).ordered
-
-      expect(informe_renderer_service).to receive(:kind=).with(:laboral)
-
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][0]).ordered
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Primer semestre"][1]).ordered
-      expect(informe_renderer_service).to receive(:period=).with(semester_periods["Segundo semestre"][0]).ordered
-    end
-
-    it "sets the selected kind and period for every semester period" do
-      expect(informe_renderer_service).to receive(:get_activities_within_period).exactly(9).times.and_return([cultural_activity], [], [], [], [], [], [], [], [])
-
-      expect(service.send(:activities)).to eq([cultural_activity])
-    end
-
-    it "returns no activities when every semester lookup is empty" do
-      allow(informe_renderer_service).to receive(:get_activities_within_period).and_return([])
+    it "requests one report renderer for each treatment axis in order" do
+      period_renderer = double("period renderer", grouped_activities: [])
+      report_renderer = double("report renderer")
+      allow(report_renderer).to receive(:send)
+        .with(:activities_by_periods_renderer_service)
+        .and_return(period_renderer)
+      expect(PersonEjesResumen::InformeRendererService).to receive(:new)
+        .with(kind: :cultural, person_ejes_resumen: person_ejes_resumen).ordered
+        .and_return(report_renderer)
+      expect(PersonEjesResumen::InformeRendererService).to receive(:new)
+        .with(kind: :deportivo, person_ejes_resumen: person_ejes_resumen).ordered
+        .and_return(report_renderer)
+      expect(PersonEjesResumen::InformeRendererService).to receive(:new)
+        .with(kind: :laboral, person_ejes_resumen: person_ejes_resumen).ordered
+        .and_return(report_renderer)
 
       expect(service.send(:activities)).to eq([])
     end

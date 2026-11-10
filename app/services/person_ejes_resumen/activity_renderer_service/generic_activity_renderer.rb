@@ -1,4 +1,4 @@
-class PersonEjesResumen::GenericActivityRendererService
+class PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
     delegate :end_date, to: :@current_activity
 
     attr_reader :duracion_i

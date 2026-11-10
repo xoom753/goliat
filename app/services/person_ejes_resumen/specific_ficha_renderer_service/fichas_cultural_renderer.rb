@@ -1,4 +1,4 @@
-class PersonEjesResumen::FichasCulturalRendererService < PersonEjesResumen::FichasCommonRendererService
+class PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     def grades_table
         header_colspan = get_header_colspan
         docx.table grades_table_rows do

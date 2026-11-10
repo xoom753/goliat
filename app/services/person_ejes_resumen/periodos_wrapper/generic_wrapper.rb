@@ -1,4 +1,4 @@
-class PersonEjesResumen::PeriodoGenericWrapper
+class PersonEjesResumen::PeriodosWrapper::GenericWrapper
     attr_reader :period_percentage, :start_date, :end_date
 
     delegate :date_to_str, to: PersonEjesResumen

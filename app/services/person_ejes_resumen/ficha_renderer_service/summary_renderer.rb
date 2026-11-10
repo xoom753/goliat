@@ -1,4 +1,4 @@
-class PersonEjesResumen::ActivitiesFichaRendererService::SummaryRenderer
+class PersonEjesResumen::FichaRendererService::SummaryRenderer
     delegate :t,
              to: :@informes_translator_service
 

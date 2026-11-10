@@ -1,4 +1,4 @@
-class PersonEjesResumen::FichasCommonRendererService
+class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     attr_reader :docx
 
     delegate :periodos,

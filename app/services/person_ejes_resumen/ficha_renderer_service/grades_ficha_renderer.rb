@@ -1,4 +1,4 @@
-class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::GenericFichaRendererService
+class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     delegate :grades_si_cumple,
              :grades_no_cumple,
              to: :summary_renderer

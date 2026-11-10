@@ -28,7 +28,7 @@ class PersonEjesResumen::GroupedActivitiesRendererService
 
     def legacy_activities
         @legacy_activities.map do |legacy_activity|
-            ::PersonEjesResumen::LegacyActivityRendererService.new(
+            ::PersonEjesResumen::ActivityRendererService::LegacyActivityRenderer.new(
                 current_activity: legacy_activity
             )
         end
@@ -36,7 +36,7 @@ class PersonEjesResumen::GroupedActivitiesRendererService
 
     def present_activities
         @present_activities.map do |present_activity|
-            ::PersonEjesResumen::PresentActivityRendererService.new(
+            ::PersonEjesResumen::ActivityRendererService::PresentActivityRenderer.new(
                 current_activity: present_activity
             )
         end

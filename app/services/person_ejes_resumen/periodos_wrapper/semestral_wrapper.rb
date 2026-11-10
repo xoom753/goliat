@@ -1,4 +1,4 @@
-class PersonEjesResumen::PeriodoSemestralWrapper < PersonEjesResumen::PeriodoGenericWrapper
+class PersonEjesResumen::PeriodosWrapper::SemestralWrapper < PersonEjesResumen::PeriodosWrapper::GenericWrapper
     attr_reader :semestre_str, :percentage
 
     def initialize(

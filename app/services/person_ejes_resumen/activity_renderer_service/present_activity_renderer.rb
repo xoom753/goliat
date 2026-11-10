@@ -1,4 +1,4 @@
-class PersonEjesResumen::PresentActivityRendererService < PersonEjesResumen::GenericActivityRendererService
+class PersonEjesResumen::ActivityRendererService::PresentActivityRenderer < PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
     def activity_nombre
         @current_activity.coursable.nombre
     end

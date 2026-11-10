@@ -65,7 +65,6 @@ class PersonEjesResumen::GenericInformeRendererService
     end
 
     def signature
-        # todo extract?
         docx.p "Atentamente. _"
 
         docx.p

@@ -1,4 +1,4 @@
-class PersonEjesResumen::PeriodoPorcentualWrapper < PersonEjesResumen::PeriodoGenericWrapper
+class PersonEjesResumen::PeriodosWrapper::PorcentualWrapper < PersonEjesResumen::PeriodosWrapper::GenericWrapper
     def initialize(kind:, start_date:, end_date:, period_percentage:)
         @kind = kind
         @start_date = parse_date_str(start_date)
