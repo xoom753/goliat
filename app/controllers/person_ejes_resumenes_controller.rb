@@ -39,10 +39,6 @@ class PersonEjesResumenesController < ApplicationController
     end
 
     def cultural
-        @informe_renderer_service = ::PersonEjesResumen::InformeCulturalRendererService.new(
-            kind: :cultural,
-            person_ejes_resumen: @person_ejes_resumen
-        )
         filename = "Cultural-#{@person_ejes_resumen.nombres}.docx"
         respond_to do |format|
             format.docx {
@@ -100,6 +96,10 @@ class PersonEjesResumenesController < ApplicationController
         # @informe_renderer_service = InformeRendererService.new(
         #     @render_service
         # )
+        @informe_renderer_service = ::PersonEjesResumen::InformeRendererService.new(
+            kind: action_name.to_sym,
+            person_ejes_resumen: @person_ejes_resumen
+        )
     end
 
     def person_ejes_resumen_params

@@ -1,0 +1,124 @@
+@informe_renderer_service.docx = docx
+@informe_renderer_service.kind = :deportivo
+
+@informe_renderer_service.generic_styles
+
+@informe_renderer_service.header
+
+@informe_renderer_service.footer
+
+@informe_renderer_service.template_no_cumple_con_proceso
+@informe_renderer_service.template_qualy_no_cumple_con
+
+docx.hr
+
+@informe_renderer_service.draft_activities_title
+
+if @person_ejes_resumen.tipo_porcentual?
+    @informe_renderer_service.period = @informe_renderer_service.get_first_period
+    @informe_renderer_service.get_activities_within_period.each do |activity|
+        docx.p activity.cert_string
+    end
+else
+    @render_service.semestres_detail_hash.each do |semestre, periods|
+        docx.p semestre
+
+        periods.each do |period|
+            @informe_renderer_service.period = period
+            @informe_renderer_service.get_activities_within_period.each do |activity|
+                docx.p activity.cert_string
+            end
+        end
+    end
+end
+
+docx.page
+
+if @person_ejes_resumen.tipo_porcentual?
+    @informe_renderer_service.period = @informe_renderer_service.get_first_period
+    @informe_renderer_service.semestre = @informe_renderer_service.get_first_semestre
+
+    @informe_renderer_service.ficha_info_title
+
+    @informe_renderer_service.ficha_info_intro
+
+    @informe_renderer_service.ficha_info_table
+
+    @informe_renderer_service.ficha_info_summary
+
+    @informe_renderer_service.ficha_info_actividades
+
+    @informe_renderer_service.ficha_info_outro
+
+    @informe_renderer_service.signature
+
+    @informe_renderer_service.encargado_title
+
+    @informe_renderer_service.fecha_entrega
+
+    docx.page
+
+    @informe_renderer_service.ficha_qualy_title
+
+    @informe_renderer_service.ficha_qualy_intro
+
+    @informe_renderer_service.ficha_qualy_info_table
+
+    @informe_renderer_service.ficha_qualy_main_table
+
+    @informe_renderer_service.ficha_qualy_summary
+
+    @informe_renderer_service.signature
+
+    @informe_renderer_service.encargado_title
+
+    @informe_renderer_service.fecha_entrega
+
+    docx.page
+else
+    @render_service.semestres_detail_hash.each do |semestre, periods|
+        periods.each do |period|
+            @informe_renderer_service.period = period
+            @informe_renderer_service.semestre = semestre
+
+            @informe_renderer_service.ficha_info_title
+
+            @informe_renderer_service.ficha_info_intro
+
+            @informe_renderer_service.ficha_info_table
+
+            @informe_renderer_service.ficha_info_summary
+
+            @informe_renderer_service.ficha_info_actividades
+
+            @informe_renderer_service.ficha_info_outro
+
+            @informe_renderer_service.signature
+
+            @informe_renderer_service.encargado_title
+
+            @informe_renderer_service.fecha_entrega
+
+            docx.page
+
+            @informe_renderer_service.ficha_qualy_title
+
+            @informe_renderer_service.ficha_qualy_intro
+
+            @informe_renderer_service.ficha_qualy_info_table
+
+            @informe_renderer_service.ficha_qualy_main_table
+
+            @informe_renderer_service.ficha_qualy_summary
+
+            @informe_renderer_service.signature
+
+            @informe_renderer_service.encargado_title
+
+            @informe_renderer_service.fecha_entrega
+
+            docx.page
+        end
+    end
+end
+
