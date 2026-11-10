@@ -17,13 +17,6 @@ class PersonEjesResumen::ActivitiesByPeriodsRendererService
         ).grouped_activities
     end
 
-    # def grouped_activities_for_period(periodo)
-    #     # grouped_activities[periodo]
-    #     # periodo.instance_variable_get :@activities
-    #     periodo_index = grouped_activities.index(periodo)
-    #     grouped_activities.fetch(periodo_index)
-    # end
-
     private
 
     def legacy_activities
