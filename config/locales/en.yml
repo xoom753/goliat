@@ -76,12 +76,19 @@ en:
   certs:
     activity_kind:
       empty_prefix: ""
-      programa: "programa"
-      actividades: "actividades de"
-      actividades_apoyo: "actividades de apoyo en"
-      taller: "taller de"
-      curso: "curso de"
-      campeonato: "campeonato"
+      programa: "programa "
+      actividades: "actividades de "
+      actividades_apoyo: "actividades de apoyo en "
+      taller: "taller de "
+      curso: "curso de "
+      campeonato: "campeonato "
+    to_h:
+      one_month:
+        masculine: "Por participar en el %{actividad_kind}“%{actividad_str}”, realizado durante el mes de %{meses_y_anios_str} con una duración de %{duracion_str}"
+        feminine: "Por participar en las %{actividad_kind}“%{actividad_str}”, realizadas durante el mes de %{meses_y_anios_str} con una duración de %{duracion_str}"
+      several_months:
+        masculine: "Por participar en el %{actividad_kind}“%{actividad_str}”, realizado durante los meses de %{meses_y_anios_str} con una duración de %{duracion_str}"
+        feminine: "Por participar en las %{actividad_kind}“%{actividad_str}”, realizadas durante los meses de %{meses_y_anios_str} con una duración de %{duracion_str}"
     empty_prefix: "Por participar en el “%{actividad_str}”, realizado durante el mes de %{meses_y_anio} con una duración de %{duracion}"
     programa: "Por participar en el %{actividad_kind} “%{actividad_str}”, realizado durante el mes de %{meses_y_anio} con una duración de %{duracion}"
     actividades: "Por participar en las %{actividad_kind} “%{actividad_str}”, realizadas durante el mes de %{meses_y_anio} con una duración de %{duracion}"

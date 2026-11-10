@@ -17,6 +17,7 @@ class PersonEjesResumen::PeriodoGenericWrapper
 
     def group_similar_activities
         PersonEjesResumen::GroupSimilarActivitiesService.new(
+            kind: @kind,
             activities: @activities
         ).grouped
     end

@@ -49,6 +49,7 @@ class PersonEjesResumen::InformeRendererService
 
     def periodos_renderer_service
         @periodos_renderer ||= PersonEjesResumen::PeriodosRendererService.new(
+            kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         )
     end

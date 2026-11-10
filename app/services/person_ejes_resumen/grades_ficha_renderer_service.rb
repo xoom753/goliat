@@ -81,7 +81,7 @@ class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::Generic
         else
             [
                 [
-                    current_periodo.period_percentage,
+                    current_periodo.semestre_str.upcase,
                     current_periodo.start_date,
                     current_periodo.end_date
                 ]

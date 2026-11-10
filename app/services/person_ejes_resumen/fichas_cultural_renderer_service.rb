@@ -111,12 +111,18 @@ class PersonEjesResumen::FichasCulturalRendererService
 
     def concat_tipo_porcentual_rows!(table_rows)
         remaining_periods = periodos.drop(1)
-        zeroes = 1.upto(remaining_periods.length).map{ "0" } # TODO
+        grades = remaining_periods.map do |remaining_period|
+            if remaining_period.activities.length > 0
+                "2"
+            else
+                "0"
+            end
+        end
         table_rows.each_with_index do |row, index|
             if index == 1
                 row.concat remaining_periods.map(&:period_percentage)
             elsif index > 1
-                row.concat zeroes
+                row.concat grades
             end
         end
     end

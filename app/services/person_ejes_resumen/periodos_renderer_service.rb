@@ -1,5 +1,6 @@
 class PersonEjesResumen::PeriodosRendererService
-    def initialize(person_ejes_resumen:)
+    def initialize(person_ejes_resumen:, kind:)
+        @kind = kind
         @person_ejes_resumen = person_ejes_resumen
     end
 
@@ -36,6 +37,7 @@ class PersonEjesResumen::PeriodosRendererService
     # }
     def periodos_porcentuales
         @periodos_porcentuales ||= ::PersonEjesResumen::PeriodosPorcentualesRendererService.new(
+            kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         ).periodos_porcentuales
     end
@@ -55,6 +57,7 @@ class PersonEjesResumen::PeriodosRendererService
     #    {start_date: "29/01/26", end_date: "03/06/26", percentage: "60,00%"}]}
     def semestres_porcentuales
         @semestres_porcentuales ||= ::PersonEjesResumen::SemestresPorcentualesRendererService.new(
+            kind: @kind,
             person_ejes_resumen: @person_ejes_resumen
         ).semestres_porcentuales
     end

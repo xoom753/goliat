@@ -1,5 +1,6 @@
 class PersonEjesResumen::PeriodoPorcentualWrapper < PersonEjesResumen::PeriodoGenericWrapper
-    def initialize(start_date:, end_date:, period_percentage:)
+    def initialize(kind:, start_date:, end_date:, period_percentage:)
+        @kind = kind
         @start_date = parse_date_str(start_date)
         @end_date = parse_date_str(end_date)
         @date_range = @start_date..@end_date

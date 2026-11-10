@@ -64,7 +64,14 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
         # activities.group_similar_activities
         # binding.pry
 
-        activities = current_periodo.activities
+        if tipo_porcentual?
+            # all activities
+            activities = @activities_by_periods_renderer_service.grouped_activities.map do |grouped_activities|
+                grouped_activities.activities
+            end.flatten
+        else
+            activities = current_periodo.activities
+        end
 
         if activities.empty?
             no_registra_temporal = t("common.no_registra_temporal", downcase: true, kind_f: true)

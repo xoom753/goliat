@@ -18,7 +18,8 @@ class PersonEjesResumen::SemestresPorcentualesRendererService
 
     delegate :date_to_str, to: PersonEjesResumen
 
-    def initialize(person_ejes_resumen:)
+    def initialize(kind:, person_ejes_resumen:)
+        @kind = kind
         @person_ejes_resumen = person_ejes_resumen
     end
 
@@ -50,10 +51,11 @@ class PersonEjesResumen::SemestresPorcentualesRendererService
         periodos_detalles_by_semestres[index].split("\n").map do |periodo|
             start_date, end_date, _, percentage = periodo.split("\t")
             PersonEjesResumen::PeriodoSemestralWrapper.new(
+                kind: @kind,
                 start_date:,
                 end_date:,
                 percentage:,
-                semestre_str: semestres_percentages[percentage],
+                semestre_str: semestres_percentages.fetch(percentage),
                 period_percentage: percentages[index]
             )
         end

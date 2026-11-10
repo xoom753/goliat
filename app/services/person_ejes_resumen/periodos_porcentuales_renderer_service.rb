@@ -6,7 +6,8 @@ class PersonEjesResumen::PeriodosPorcentualesRendererService
         "80%"
     ].freeze
 
-    def initialize(person_ejes_resumen:)
+    def initialize(kind:, person_ejes_resumen:)
+        @kind = kind
         @person_ejes_resumen = person_ejes_resumen
     end
 
@@ -27,6 +28,7 @@ class PersonEjesResumen::PeriodosPorcentualesRendererService
             percentage = PORCENTAJES.fetch(index)
             start_date, end_date = periodos.split("\t")
             @periodos_porcentuales << PersonEjesResumen::PeriodoPorcentualWrapper.new(
+                kind: @kind,
                 start_date: start_date,
                 end_date: end_date,
                 period_percentage: percentage
