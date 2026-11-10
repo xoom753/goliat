@@ -29,6 +29,10 @@ class PersonEjesResumen::InformeRendererService
         )
     end
 
+    def periodos
+        periodos_renderer_service.periodos
+    end
+
     private
 
     def generic_informe_renderer

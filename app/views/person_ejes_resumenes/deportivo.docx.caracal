@@ -10,9 +10,9 @@
 @informe_renderer_service.draft_grades_si_cumple
 @informe_renderer_service.draft_grades_no_cumple
 
-@informe_renderer_service.draft_activities_list
-
 docx.hr
+
+@informe_renderer_service.draft_activities_list
 
 docx.page
 

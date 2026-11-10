@@ -119,41 +119,29 @@
                 <% end %>
 
                 <% if person_ejes_resumen.tipo_porcentual? %>
-                    <%
-                        renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
-                        periodos_porcentuales = renderer.periodos_porcentuales
-                    %>
-                    <% periodos_porcentuales.each do |key, periodos| %>
-                        <dt>
-                            <%= key %>
-                        </dt>
-                        <dd>
-                            <%= periodos.first[:start_date] %> -
-                            <%= periodos.first[:end_date] %>
-                        </dd>
+                    <% periodos = ::PersonEjesResumen::PeriodosRendererService.new(kind: :cultural, person_ejes_resumen: person_ejes_resumen).periodos %>
+                    <% periodos.each do |periodo| %>
+                        <dt><%= periodo.period_percentage %></dt>
+                        <dd><%= periodo.start_date_str %> - <%= periodo.end_date_str %></dd>
                     <% end %>
                 <% else %>
-                    <%
-                        renderer = PersonEjeResumenRenderService.new(person_ejes_resumen)
-                        semestres_detail_hash = begin
-                            renderer.semestres_detail_hash
-                        rescue StandardError => e
-                            { "error" => [{ "error" => e }] }
-                        end
-                    %>
-
-                    <% semestres_detail_hash.each do |key, values| %>
-                        <dt>
-                            <%= key %>
-                        </dt>
-                        <dd>
-                            <%=
-                                values_strs = values.map do |val|
-                                    "#{val[:percentage]} - #{val[:semestre_str]}: #{val[:start_date]} - #{val[:end_date]}"
-                                end
-                                values_strs.join("<br />").html_safe
-                            %>
-                        </dd>
+                <%
+                    periodos = ::PersonEjesResumen::PeriodosRendererService.new(kind: :cultural, person_ejes_resumen: person_ejes_resumen).periodos
+                    periodos_semestrales = periodos.inject({}) do |memo, periodo|
+                        memo[periodo.period_percentage] ||= []
+                        memo[periodo.period_percentage] << periodo
+                        memo
+                    end
+                %>
+                    <% periodos_semestrales.each do |percentage, periodos| %>
+                        <dt><%= percentage %></dt>
+                        <% periodos.each do |periodo| %>
+                            <dd>
+                                <%= "#{periodo.percentage} => " %>
+                                <%= periodo.start_date_str %> - <%= periodo.end_date_str %> ·
+                                <%= "#{periodo.semestre_str}"%>
+                            </dd>
+                        <% end %>
                     <% end %>
                 <% end %>
             </div>

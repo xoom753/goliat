@@ -25,7 +25,7 @@ RSpec.describe "Person Ejes Resumen certificados CSV", type: :request do
     it "sends the rendered CSV as a named attachment and updates report generation time" do
       rendered_csv = instance_double(PersonEjesCertificadosRenderService, to_csv: csv_data)
       expect(PersonEjesCertificadosRenderService).to receive(:new)
-        .with(instance_of(InformeRendererService))
+        .with(report)
         .and_return(rendered_csv)
 
       expect do

@@ -96,9 +96,6 @@ class PersonEjesResumenesController < ApplicationController
     def person_ejes_resumen_and_render
         @person_ejes_resumen = PersonEjesResumen.find(params[:id])
         @person_ejes_resumen.update_last_generated_at!
-        @render_service = PersonEjeResumenRenderService.new(
-            @person_ejes_resumen
-        )
     end
 
     def set_informe_renderer_service!
