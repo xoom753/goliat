@@ -18,7 +18,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityMonthsAndYearsR
         @by_months = by_months
     end
 
-    def meses_y_anios_str(upcase:)
+    def meses_y_anios_str(upcase: false)
         if @by_months.keys.length > 1
             several_months_str(upcase:)
         else
