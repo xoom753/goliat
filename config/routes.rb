@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "dashboards#hello"
   resource :import_legacy_files, only: [:show, :create] do
     member do
       get :parse
@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: [] do
     collection do
       get :people
+      get :hello
     end
   end
   namespace :api do

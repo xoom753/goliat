@@ -43,7 +43,7 @@ RSpec.describe "Origin people", type: :feature do
 
       visit origin_people_path
 
-      expect(page).to have_content("Origin People")
+      expect(page).to have_content("Información jurídica")
       expect(page).to have_content("Casey Example")
       expect(page).to have_content("1234567890")
       expect(page).to have_content("presente_beneficio_revocado")
@@ -100,7 +100,7 @@ RSpec.describe "Origin people", type: :feature do
 
       visit origin_people_path(s: "Nobody")
 
-      expect(page).to have_content("Origin People")
+      expect(page).to have_content("Información jurídica")
       expect(page).not_to have_content("Casey Example")
     end
   end

@@ -1,28 +1,28 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-menu">
         <div class="navbar-start">
-            <%= link_to "People", people_dashboard_path, class: "navbar-item" %>
-            <%= link_to "Courses", courses_by_month_path, class: "navbar-item" %>
-            <%= link_to "Extra Activities", extra_activities_path, class: "navbar-item" %>
+            <%= link_to "PPL Presentes", people_dashboard_path, class: "navbar-item" %>
+            <%= link_to "Cursos", courses_by_month_path, class: "navbar-item" %>
+            <%= link_to "Actividades extra", extra_activities_path, class: "navbar-item" %>
 
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
-                    Legacy data
+                    Información histórica
                 </a>
 
                 <div class="navbar-dropdown">
-                    <%= link_to "Legacy People", legacy_people_path, class: "navbar-item" %>
-                    <%= link_to "Legacy Person activities", legacy_person_activities_path, class: "navbar-item" %>
-                    <%= link_to "Legacy files parsers", legacy_files_parsers_path, class: "navbar-item" %>
-                    <%= link_to "Legacy course files parsers", legacy_course_file_parsers_path, class: "navbar-item" %>
-                    <%= link_to "Import Legacy files", import_legacy_files_path, class: "navbar-item" %>
-                    <%= link_to "Legacy Activity groups", legacy_activity_groups_path, class: "navbar-item" %>
-                    <%= link_to "Legacy Activities", legacy_activities_path, class: "navbar-item" %>
+                    <%= link_to "Lista PPLs", legacy_people_path, class: "navbar-item" %>
+                    <%= link_to "Actividades históricas PPLs", legacy_person_activities_path, class: "navbar-item" %>
+                    <%= link_to "Importadores de archivos históricos", legacy_files_parsers_path, class: "navbar-item" %>
+                    <%= link_to "Importadores de cursos históricos", legacy_course_file_parsers_path, class: "navbar-item" %>
+                    <%= link_to "Importar archivos históricos", import_legacy_files_path, class: "navbar-item" %>
+                    <%= link_to "Grupos de actividades", legacy_activity_groups_path, class: "navbar-item" %>
+                    <%= link_to "Actividades históricas", legacy_activities_path, class: "navbar-item" %>
                 </div>
             </div>
 
-            <%= link_to "Origin People", origin_people_path, class: "navbar-item" %>
-            <%= link_to "Fichas Ejes", person_ejes_resumenes_path, class: "navbar-item" %>
+            <%= link_to "Información jurídica", origin_people_path, class: "navbar-item" %>
+            <%= link_to "Fichas ejes", person_ejes_resumenes_path, class: "navbar-item" %>
         </div>
     </div>
 </nav>

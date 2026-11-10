@@ -1,5 +1,5 @@
 <div class="has-text-centered">
-    <h2>Origin People</h2>
+    <h2>Información jurídica</h2>
 </div>
 
 <%= form_tag origin_people_path, method: :get do %>
@@ -22,7 +22,7 @@
             <div class="field is-narrow">
                 <p class="control">
 
-                <%= submit_tag "Search", class: "button input" %>
+                <%= submit_tag "Buscar", class: "button input" %>
                 </p>
             </div>
         </div>
@@ -31,7 +31,7 @@
 <% end %>
 
 <div class="has-text-right mt-2">
-    <%= link_to "Sort by 60%",
+    <%= link_to "Ordenar por 60%",
                 by_percentage_origin_people_path(sort_by: "sesenta"),
                 class: "button is-text" %>
 </div>

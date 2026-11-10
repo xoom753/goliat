@@ -77,12 +77,18 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
         docx.p t("common.info_outro_indico")
         docx.p
 
-        ubicacion = @person_ejes_resumen.ubicacion
-        observacion = t("common.info_outro_observacion")
-        reside_en = t("common.info_outro_reside_en")
-        docx.p do
-            text observacion, bold: true
-            text " #{reside_en} #{ubicacion}"
+        if @person_ejes_resumen.ubicacion.present?
+            ubicacion = @person_ejes_resumen.ubicacion
+            observacion = t("common.info_outro_observacion")
+            reside_en = t("common.info_outro_reside_en")
+            docx.p do
+                text observacion, bold: true
+                text " #{reside_en} #{ubicacion}"
+            end
+        else
+            # whitespace
+            docx.p
+            docx.p
         end
         docx.p
     end

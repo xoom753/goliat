@@ -1,9 +1,9 @@
 <div class="has-text-centered">
-    <h2>Extra activities</h2>
+    <h2>Actividades extra</h2>
 </div>
 
 <div class="has-text-right">
-    <%= link_to "New Extra Activity",
+    <%= link_to "Nueva actividad extra",
                 new_extra_activity_path,
                 class: "button is-ghost" %>
 </div>
@@ -19,10 +19,10 @@
                     <%= activity.created_at %>
                 </td>
                 <td>
-                    <%= link_to "Edit",
+                    <%= link_to "Editar",
                                 edit_extra_activity_path(activity) %>
                     ·
-                    <%= link_to "Export",
+                    <%= link_to "Exportar",
                                 export_extra_activity_path(activity) %>
                 </td>
             </tr>

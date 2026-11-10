@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Legacy people", type: :feature do
+RSpec.describe "Lista PPL (histórica)", type: :feature do
   let!(:activity_group) { ActivityGroup.create!(nombre: "Cultural") }
   let!(:legacy_group) do
     LegacyActivityGroup.create!(nombre: "Workshops", activity_group: activity_group)
@@ -31,7 +31,7 @@ RSpec.describe "Legacy people", type: :feature do
 
       visit legacy_people_path
 
-      expect(page).to have_content("Legacy People")
+      expect(page).to have_content("Lista PPL (histórica)")
       expect(page).to have_content("Jane Example")
       expect(page).to have_content("111")
       expect(page).to have_content("Weaving")
@@ -39,7 +39,7 @@ RSpec.describe "Legacy people", type: :feature do
       expect(page).to have_content("Attendance")
       expect(page).to have_content("2024-03-31")
       expect(page).to have_content("12 horas")
-      expect(page).to have_link("new ejes resumen", href: new_person_ejes_resumen_path(legacy_person_id: person.id))
+      expect(page).to have_link("Nueva Ficha Ejes", href: new_person_ejes_resumen_path(legacy_person_id: person.id))
     end
 
     it "filters people by a partial name query" do
@@ -57,7 +57,7 @@ RSpec.describe "Legacy people", type: :feature do
 
       visit legacy_people_path(q: "Missing")
 
-      expect(page).to have_content("Legacy People")
+      expect(page).to have_content("Lista PPL (histórica)")
       expect(page).not_to have_content("Jane Example")
     end
   end
@@ -98,7 +98,7 @@ RSpec.describe "Legacy people", type: :feature do
 
       visit view_several_legacy_people_path(legacy_people_ids: "")
 
-      expect(page).to have_content("Legacy People")
+      expect(page).to have_content("Lista PPL (histórica)")
       expect(page).not_to have_content("Jane Example")
     end
   end

@@ -89,3 +89,9 @@ en:
       several_months:
         masculine: "Por participar en el %{actividad_kind}“%{actividad_str}”, realizado durante los meses de %{meses_y_anios_str} con una duración de %{duracion_str}"
         feminine: "Por participar en las %{actividad_kind}“%{actividad_str}”, realizadas durante los meses de %{meses_y_anios_str} con una duración de %{duracion_str}"
+  views:
+    pagination:
+      first: "« Primero"
+      last: "Último »"
+      next: "Siguiente ›"
+      previous: "‹ Anterior"

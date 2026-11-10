@@ -1,5 +1,5 @@
 <div class="has-text-centered">
-    <h2>Legacy Activities</h2>
+    <h2>Actividades (históricas)</h2>
 </div>
 
 <%=
@@ -31,12 +31,25 @@
 <table class="table is-striped is-hoverable">
     <thead>
         <tr>
-            <th>Nombre</th>
+            <th>uid</th>
+            <th>Nombre (revisado)</th>
+            <th>Nombre (original)</th>
         </tr>
     </thead>
     <tbody>
         <% @legacy_activities.each do |legacy_activity| %>
             <tr>
+                <td>
+                    <%= legacy_activity.id %>
+                </td>
+                <td>
+                    <%=
+                        ortography_fixer = PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer.new(
+                            actividad_str: legacy_activity.nombre
+                        )
+                        ortography_fixer.activity_str
+                    %>
+                </td>
                 <td>
                     <%= legacy_activity.nombre %>
                 </td>

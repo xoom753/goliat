@@ -30,7 +30,7 @@ RSpec.describe "Courses by month", type: :feature do
       expect(page).to have_content("Jane Example")
       expect(page).to have_content("1234567890")
       expect(page).to have_content("instructor")
-      expect(page).to have_content("A-1")
+      expect(page).to have_content("A 1")
       expect(page).to have_content("Football sin participantes")
     end
 
