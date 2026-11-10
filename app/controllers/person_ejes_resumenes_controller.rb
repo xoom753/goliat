@@ -7,6 +7,13 @@ class PersonEjesResumenesController < ApplicationController
         :certificados
     ]
 
+    before_action :set_informe_renderer_service!, only: [
+        :cultural,
+        :deportivo,
+        :laboral,
+        :educativo,
+    ]
+
     def index
         @person_ejes_resumenes =
             PersonEjesResumen.all
@@ -76,7 +83,7 @@ class PersonEjesResumenesController < ApplicationController
 
     def certificados
         csv_data = PersonEjesCertificadosRenderService.new(
-            @informe_renderer_service
+            @person_ejes_resumen
         ).to_csv
         csv_name = "#{@person_ejes_resumen.nombres}"
         send_data csv_data,
@@ -88,14 +95,13 @@ class PersonEjesResumenesController < ApplicationController
 
     def person_ejes_resumen_and_render
         @person_ejes_resumen = PersonEjesResumen.find(params[:id])
-        # update last_generated_at!
         @person_ejes_resumen.update_last_generated_at!
         @render_service = PersonEjeResumenRenderService.new(
             @person_ejes_resumen
         )
-        # @informe_renderer_service = InformeRendererService.new(
-        #     @render_service
-        # )
+    end
+
+    def set_informe_renderer_service!
         @informe_renderer_service = ::PersonEjesResumen::InformeRendererService.new(
             kind: action_name.to_sym,
             person_ejes_resumen: @person_ejes_resumen

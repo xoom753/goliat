@@ -26,8 +26,6 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
     end
 
     def info_summary
-        # if get_activities_within_period.empty?
-        # TODO
         docx.p t("common.informe_kind").upcase, bold: true
         if current_periodo.activities.empty?
             info_summary_no_cumple
@@ -46,23 +44,6 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
         docx.p
 
         docx.p t("common.act_temporal").upcase, bold: true
-
-        #todo
-        # group_similar_activities
-        # @periodos_renderer_service.grouped_activities
-        # binding.pry
-        # activities = @activities_by_periods_renderer_service.grouped_activities.map do |percentage, activities|
-        #     activities.map(&:group_similar_activities)
-        # end.flatten
-        # activities = activities.map do |activity|
-        #     activity.values
-        # end.flatten.compact
-
-        # activities = @activities_by_periods_renderer_service.grouped_activities_for_period(
-        #     current_periodo
-        # )
-        # activities.group_similar_activities
-        # binding.pry
 
         if tipo_porcentual?
             # all activities
@@ -114,8 +95,8 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
             ],
             [
                 "Semestre".upcase,
-                current_periodo.start_date,
-                current_periodo.end_date
+                date_to_str(current_periodo.start_date),
+                date_to_str(current_periodo.end_date)
             ]
         ]
     end

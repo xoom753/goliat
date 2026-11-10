@@ -82,8 +82,8 @@ class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::Generic
             [
                 [
                     current_periodo.semestre_str.upcase,
-                    current_periodo.start_date,
-                    current_periodo.end_date
+                    date_to_str(current_periodo.start_date),
+                    date_to_str(current_periodo.end_date)
                 ]
             ]
         end

@@ -1,4 +1,12 @@
 class PersonEjesResumen::SummariseActivityForPeriodService
+    attr_reader :kind
+
+    delegate :actividad_kind,
+             :activity_str,
+             :meses_y_anios_str,
+             :duracion_str,
+             to: :@activity_to_human_render_service
+
     def initialize(kind:, activities:)
         @kind = kind
         @activities = activities
@@ -11,21 +19,8 @@ class PersonEjesResumen::SummariseActivityForPeriodService
     end
 
     def render_string
-        # "#{months.join(", ")} #{activity_str} #{duracion_i} horas"
         @activity_to_human_render_service.to_string
     end
-
-    # def activity_str
-    #     by_month.values.first.activity_nombre
-    # end
-
-
-
-    # def months
-    #     by_month.values.map do |activity_renderer_service|
-    #         activity_renderer_service.month
-    #     end
-    # end
 
     private
 

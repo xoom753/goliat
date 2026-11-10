@@ -21,17 +21,29 @@ class PersonEjesResumen::ActivityToHumanRendererService
         )
     end
 
-    private
-
     def actividad_kind
         I18n.t(
             "certs.activity_kind.#{activity_kind_identifier.identifier_str}"
         )
     end
 
+    def activity_str
+        @activity_str ||= PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer.new(
+            actividad_str: @by_months.values.first.activity_nombre
+        ).activity_str
+    end
+
+    def meses_y_anios_str(upcase: false)
+        PersonEjesResumen::ActivityToHumanRendererService::ActivityMonthsAndYearsRenderer.new(
+            by_months: @by_months
+        ).meses_y_anios_str(upcase: upcase)
+    end
+
     def duracion_str
         "#{@duracion_i} horas"
     end
+
+    private
 
     def by_months_identifier
         if @by_months.keys.length > 1
@@ -46,17 +58,5 @@ class PersonEjesResumen::ActivityToHumanRendererService
             activity_str: activity_str,
             kind: @kind
         )
-    end
-
-    def meses_y_anios_str
-        PersonEjesResumen::ActivityToHumanRendererService::ActivityMonthsAndYearsRenderer.new(
-            by_months: @by_months
-        ).meses_y_anios_str
-    end
-
-    def activity_str
-        @activity_str ||= PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer.new(
-            actividad_str: @by_months.values.first.activity_nombre
-        ).activity_str
     end
 end

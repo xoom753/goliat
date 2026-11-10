@@ -1,9 +1,4 @@
-##
-# is parent for:
-# InformeCulturalRendererService
 class PersonEjesResumen::InformeRendererService
-    # cattr_accessor :kind
-
     delegate :header,
              :footer,
              :signature,
