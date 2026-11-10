@@ -1,4 +1,8 @@
 class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::GenericFichaRendererService
+    delegate :info_si_cumple,
+             :info_no_cumple,
+             to: :summary_renderer
+
     def title
         docx.h1 t("common.main_title").upcase, align: :center
         docx.h1 t("common.main_subtitle").upcase, align: :center
@@ -28,9 +32,9 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
     def info_summary
         docx.p t("common.informe_kind").upcase, bold: true
         if current_periodo.activities.empty?
-            info_summary_no_cumple
+            info_no_cumple
         else
-            info_summary_si_cumple
+            info_si_cumple
         end
         docx.p
     end
@@ -62,7 +66,7 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
         else
             docx.ol do
                 activities.each do |activity|
-                    li activity.render_string
+                    li "#{activity.render_string}."
                 end
             end
         end
@@ -99,36 +103,5 @@ class PersonEjesResumen::ActivitiesFichaRendererService < PersonEjesResumen::Gen
                 date_to_str(current_periodo.end_date)
             ]
         ]
-    end
-
-    def info_summary_no_cumple
-        person_nombres = @person_ejes_resumen.nombres
-        se_informa = t("common.se_informa")
-        desde_su_ingreso = t("common.desde_su_ingreso", kind_f: true)
-        no_cumple_con_proceso = t(
-            "common.no_cumple_con_proceso",
-            kind_f: true,
-            downcase: true
-        )
-        docx.p do
-            text se_informa
-            text person_nombres.upcase, bold: true
-            text desde_su_ingreso
-            text no_cumple_con_proceso
-        end
-    end
-
-    def info_summary_si_cumple
-        person_nombres = @person_ejes_resumen.nombres
-        se_informa = t("common.se_informa")
-        desde_su_ingreso = t("common.desde_su_ingreso", kind_f: true)
-        cumple_con_proceso = t("common.cumple_con_proceso", kind_f: true)
-        docx.p do
-            text se_informa
-            text person_nombres.upcase, bold: true
-            text desde_su_ingreso
-            text "SÍ", bold: true
-            text cumple_con_proceso
-        end
     end
 end

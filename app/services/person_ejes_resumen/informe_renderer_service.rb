@@ -4,13 +4,20 @@ class PersonEjesResumen::InformeRendererService
              :signature,
              :fecha_entrega,
              :generic_styles,
-             :draft_activities_list,
              to: :generic_informe_renderer
 
     delegate :get_grades_ficha,
              :get_activities_ficha,
              :get_fichas_indexes,
              to: :fichas_renderer
+
+    delegate :draft_activities_list,
+             :draft_info_si_cumple,
+             :draft_info_no_cumple,
+             :draft_grades_si_cumple,
+             :draft_grades_no_cumple,
+             :draft_template_title,
+             to: :draft_ficha_renderer_service
 
     attr_accessor :docx
 
@@ -54,6 +61,16 @@ class PersonEjesResumen::InformeRendererService
             kind: @kind,
             person_ejes_resumen: @person_ejes_resumen,
             periodos_renderer_service: periodos_renderer_service
+        )
+    end
+
+    def draft_ficha_renderer_service
+        @draft_ficha_renderer_service ||= ::PersonEjesResumen::DraftFichaRendererService.new(
+            docx: @docx,
+            kind: @kind,
+            person_ejes_resumen: @person_ejes_resumen,
+            activities_by_periods_renderer_service: activities_by_periods_renderer_service,
+            informes_translator_service: @informes_translator_service
         )
     end
 end

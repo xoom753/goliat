@@ -1,5 +1,3 @@
-##
-# generic methods
 class PersonEjesResumen::GenericInformeRendererService
     attr_reader :docx
 
@@ -81,13 +79,5 @@ class PersonEjesResumen::GenericInformeRendererService
 
     def fecha_entrega
         docx.p "Fecha de entrega: #{date_to_str(Date.today)}"
-    end
-
-    def draft_activities_list
-        @activities_by_periods_renderer_service.grouped_activities.each do |grouped_activities|
-            grouped_activities.activities.each do |act|
-                docx.p act.render_string
-            end
-        end
     end
 end

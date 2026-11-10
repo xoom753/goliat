@@ -1,4 +1,8 @@
 class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::GenericFichaRendererService
+    delegate :grades_si_cumple,
+             :grades_no_cumple,
+             to: :summary_renderer
+
     def title
         docx.h1 t("common.qualy_main_title").upcase, align: :center
         docx.h1 t("common.qualy_main_subtitle", kind_f: true).upcase, align: :center
@@ -35,38 +39,14 @@ class PersonEjesResumen::GradesFichaRendererService < PersonEjesResumen::Generic
 
     def grades_summary
         if current_periodo.activities.empty?
-            grades_summary_no_cumple
+            grades_no_cumple
         else
-            grades_summary_si_cumple
+            grades_si_cumple
         end
+        docx.p
     end
 
     private
-
-    def grades_summary_no_cumple
-        observaciones = t("common.qualy_observaciones")
-        durante_el_tiempo = t("common.qualy_durante_el_tiempo")
-        qualy_no_cumple_con = t("common.qualy_no_cumple_con")
-        docx.p do
-            text observaciones, bold: true
-            text durante_el_tiempo
-            text qualy_no_cumple_con
-        end
-        docx.p
-    end
-
-    def grades_summary_si_cumple
-        observaciones = t("common.qualy_observaciones")
-        durante_el_tiempo = t("common.qualy_durante_el_tiempo")
-        cumple_con = t("common.qualy_cumple_con")
-        docx.p do
-            text observaciones, bold: true
-            text durante_el_tiempo
-            text "SÍ", bold: true
-            text cumple_con
-        end
-        docx.p
-    end
 
     def ficha_qualy_bottom_rows
         if tipo_porcentual?

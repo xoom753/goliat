@@ -4,9 +4,11 @@
 @informe_renderer_service.header
 @informe_renderer_service.footer
 
-# toDo these
-#@informe_renderer_service.template_no_cumple_con_proceso
-#@informe_renderer_service.template_qualy_no_cumple_con
+@informe_renderer_service.draft_template_title
+@informe_renderer_service.draft_info_si_cumple
+@informe_renderer_service.draft_info_no_cumple
+@informe_renderer_service.draft_grades_si_cumple
+@informe_renderer_service.draft_grades_no_cumple
 
 @informe_renderer_service.draft_activities_list
 

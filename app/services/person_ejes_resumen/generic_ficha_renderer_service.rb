@@ -121,4 +121,12 @@ class PersonEjesResumen::GenericFichaRendererService
         end
         @table_rows_delitos_y_penas
     end
+
+    def summary_renderer
+        @summary_renderer ||= ::PersonEjesResumen::ActivitiesFichaRendererService::SummaryRenderer.new(
+            docx: docx,
+            person_ejes_resumen: @person_ejes_resumen,
+            informes_translator_service: @informes_translator_service
+        )
+    end
 end
