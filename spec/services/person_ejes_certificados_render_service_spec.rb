@@ -3,24 +3,35 @@ require "csv"
 
 RSpec.describe PersonEjesCertificadosRenderService do
   let(:first_period) { { start_date: "01/01/2024", end_date: "30/06/2024" } }
-  let(:person_ejes_renderer) { double(nombres: "Casey Example") }
-  let(:informe_renderer_service) do
+  let(:informe_renderer_service) {
     double(
+      "informe_renderer_service"
+    )
+  }
+  let(:person_ejes_renderer) { double("person_ejes_renderer") }
+  let(:person_ejes_resumen) do
+    double(
+      "person_ejes_resumen",
       person_ejes_renderer: person_ejes_renderer,
       tipo_porcentual?: true,
-      get_first_period: first_period
+      get_first_period: first_period,
+      nombres: "Casey Example",
+      legacy_people_ids: "",
+      people_ids: "",
+      periodos_detalle: ""
     )
   end
   let(:cultural_activity) do
     double(
-      activity_kind_str: "curso",
-      actividad_str: "Tejido",
+      "cultural_activity",
+      activity_str: "Tejido",
       kind: :cultural,
-      get_months_and_year: "ENERO DE 2024",
-      duracion_str: "8 horas"
+      meses_y_anios_str: "ENERO DE 2024",
+      duracion_str: "8 horas",
+      actividad_kind: "Curso"
     )
   end
-  subject(:service) { described_class.new(informe_renderer_service) }
+  subject(:service) { described_class.new(person_ejes_resumen) }
 
   describe "#to_csv" do
     it "exports the headers and activity details" do
@@ -34,10 +45,11 @@ RSpec.describe PersonEjesCertificadosRenderService do
 
     it "numbers multiple activity rows sequentially" do
       second_activity = double(
-        activity_kind_str: "taller",
-        actividad_str: "Cerámica",
+        "second_activity",
+        actividad_kind: "taller",
+        activity_str: "Cerámica",
         kind: :deportivo,
-        get_months_and_year: "FEBRERO DE 2024",
+        meses_y_anios_str: "FEBRERO DE 2024",
         duracion_str: "4 horas"
       )
       allow(service).to receive(:activities).and_return([cultural_activity, second_activity])

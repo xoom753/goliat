@@ -5,6 +5,7 @@ class PersonEjesResumen::LegacyActivitiesFetcherService
     end
 
     def activities
+        return [] if @person_ejes_resumen.legacy_people_ids.blank?
         activity_group = ActivityGroup.find_by!(
             nombre: "Eje #{@kind.to_s.titleize}"
         )

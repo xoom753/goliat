@@ -9,7 +9,7 @@ RSpec.describe "Educativo report DOCX", type: :request do
       delitos: "Robo",
       sentencias: "Sentencia A",
       semestres_porcentuales: "20%\n40%",
-      periodos_detalle: "02/01/20\t30/06/20\t180\t20%\n\n01/07/20\t31/12/20\t184\t40%",
+      periodos_detalle: "02/01/20\t30/06/20\t180\t20%\n01/07/20\t31/12/20\t184\t40%",
       tipo_porcentual: false
     )
   end
