@@ -4,6 +4,7 @@ docx.page_size do
     # A4
     height   11900
     width    16840
+    orientation :landscape
 end
 
 docx.page_margins do

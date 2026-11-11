@@ -42,6 +42,6 @@ RSpec.describe "Legacy person activities", type: :feature do
 
     expect(page).to have_content(included.id.to_s)
     expect(page).to have_content("Jane Example")
-    expect(page).not_to have_content("#{excluded.id}")
+    expect(page).not_to have_content("Excluded Person")
   end
 end

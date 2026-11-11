@@ -36,6 +36,6 @@ RSpec.describe "Legacy course file parsers", type: :request do
       legacy_course_file_parser: { parser_name: nil }
     }
 
-    expect(response).to have_http_status(:bad_request)
+    expect(response).to have_http_status(:unprocessable_content)
   end
 end

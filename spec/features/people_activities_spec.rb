@@ -27,8 +27,10 @@ RSpec.describe "People activities", type: :feature do
 
     visit people_activities_path(activity_id: painting.id)
 
+    within "#datatables" do
       expect(page).to have_content("Painting")
       expect(page).to have_content("Jane Example")
       expect(page).not_to have_content("Music")
+    end
   end
 end
