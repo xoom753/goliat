@@ -1,21 +1,6 @@
 <div class="">
-<div class="">
     <h2>Nuevo Resumen de Ejes</h2>
-    <%= simple_form_for @person_ejes_resumen do |f| %>
-        <%= f.label :tipo_porcentual %>
-        <%= f.input :tipo_porcentual, as: :select, label: false %>
-        <%= f.input :nombres %>
-        <%= f.input :dni %>
-        <%= f.input :ubicacion %>
-        <%= f.input :fecha_perdida_libertad, as: :date, html5: true %>
-        <%= f.input :fecha_traslado, as: :date, html5: true %>
-        <%= f.input :ubicacion_traslado %>
-        <%= f.input :delitos %>
-        <%= f.input :sentencias %>
-        <%= f.input :acumulacion_penas %>
-        <%= f.input :semestres_porcentuales %>
-        <%= f.input :periodos_detalle %>
-        <%= f.submit class: "button" %>
-    <% end %>
-</div>
+
+    <%= render "form" %>
+
 </div>

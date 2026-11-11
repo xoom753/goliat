@@ -1,0 +1,47 @@
+<%= simple_form_for @person_ejes_resumen do |f| %>
+    <%= f.label :tipo_porcentual %>
+    <%= f.input :tipo_porcentual, as: :select, label: false %>
+    <%= f.input :nombres %>
+    <%= f.input :dni %>
+    <%= f.input :ubicacion %>
+    <%= f.input :fecha_perdida_libertad, as: :date, html5: true %>
+    <%= f.input :fecha_traslado, as: :date, html5: true %>
+    <%= f.input :ubicacion_traslado %>
+    <%= f.input :delitos %>
+    <%= f.input :sentencias %>
+    <%= f.input :acumulacion_penas %>
+    <%= f.input :semestres_porcentuales %>
+    <%= f.input :periodos_detalle %>
+
+    <div class="mb-2">
+        <%= f.label :people_ids, "PPLs presentes asociados", class: "label" %>
+        <div class="">
+            <select multiple data-controller="select-assign-people-ids" name="person_ejes_resumen[people_ids][]">
+                <% if f.object.people_ids.present? %>
+                    <% f.object.people.each do |person| %>
+                        <option selected value="<%= person.id %>">
+                            <%= person.nombres %>
+                        </option>
+                    <% end %>
+                <% end %>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <%= f.label :legacy_people_ids, "PPLs históricos asociados", class: "label" %>
+        <div class="">
+            <select multiple data-controller="select-assign-legacy-people-ids" name="person_ejes_resumen[legacy_people_ids][]">
+                <% if f.object.legacy_people_ids.present? %>
+                    <% f.object.legacy_people.each do |legacy_person| %>
+                        <option selected value="<%= legacy_person.id %>">
+                            <%= legacy_person.nombres %>
+                        </option>
+                    <% end %>
+                <% end %>
+            </select>
+        </div>
+    </div>
+
+    <%= f.submit class: "button" %>
+<% end %>

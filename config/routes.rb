@@ -28,7 +28,13 @@ Rails.application.routes.draw do
       get :by_percentage
     end
   end
-  resources :person_ejes_resumenes, only: [:index, :new, :create] do
+  resources :person_ejes_resumenes, only: [
+      :index,
+      :new,
+      :create,
+      :edit,
+      :update
+    ] do
     member do
       get :cultural
       get :deportivo
@@ -71,5 +77,6 @@ Rails.application.routes.draw do
   end
   namespace :api do
     get :people
+    get :legacy_people
   end
 end

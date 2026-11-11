@@ -31,8 +31,8 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
 
   it "uses the first report period percentage for percentage mode" do
     allow(person_summary).to receive(:tipo_porcentual?).and_return(true)
-    first_period = double(period_percentage: "20%")
-    second_period = double(period_percentage: "40%")
+    first_period = double(period_percentage: "20%", activities: [])
+    second_period = double(period_percentage: "40%", activities: [])
     allow(renderer).to receive(:periodos).and_return([first_period, second_period])
 
     rows = renderer.send(:grades_table_rows)

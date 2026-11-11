@@ -45,6 +45,19 @@ class PersonEjesResumenesController < ApplicationController
         end
     end
 
+    def edit
+        @person_ejes_resumen = PersonEjesResumen.find(params[:id])
+    end
+
+    def update
+        @person_ejes_resumen = PersonEjesResumen.find(params[:id])
+        if @person_ejes_resumen.update(person_ejes_resumen_params)
+            redirect_to action: :index
+        else
+            render :new
+        end
+    end
+
     def cultural
         filename = "Cultural-#{@person_ejes_resumen.nombres}.docx"
         respond_to do |format|
@@ -118,7 +131,9 @@ class PersonEjesResumenesController < ApplicationController
             :ubicacion,
             :fecha_traslado,
             :ubicacion_traslado,
-            :tipo_porcentual
+            :tipo_porcentual,
+            people_ids: [],
+            legacy_people_ids: []
         )
     end
 end

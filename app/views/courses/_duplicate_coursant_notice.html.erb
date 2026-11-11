@@ -5,8 +5,12 @@
 %>
 <% if courses_coursed.exists? %>
     <tr>
-        <td colspan="6" class="is-warning is-size-7">
-            WARN: Already courses course
+        <td class="has-background-danger-light">
+            <i class="fa-solid fa-bomb"></i>
+        </td>
+        <td colspan="5" class="has-background-danger-light is-size-7">
+            <%= person.nombres %>
+            ya está en un curso:
             <% courses_coursed.each do |coursed| %>
                 <div>
                     <%= coursed.coursable.nombre %>

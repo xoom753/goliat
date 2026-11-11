@@ -8,8 +8,8 @@ export default class extends Controller {
     this.select = new SlimSelect({
       select: this.selectTarget,
       settings: {
-        placeholderText: 'Add person…',
-        searchPlaceholder: 'Name or DNI…'
+        placeholderText: 'Agregar persona…',
+        searchPlaceholder: 'Nombre o DNI…'
       },
       events: {
         search: (searchValue, selected, catalog) => {
@@ -21,7 +21,7 @@ export default class extends Controller {
             // Otherwise fetch remote results
             return fetch(`/api/people?q=${encodeURIComponent(searchValue)}`).then((r) => r.json())
         },
-        afterChange: (newVal) => { 
+        afterChange: (newVal) => {
           this.personInputTarget.value = newVal[0].value;
           this.formTarget.submit()
         }

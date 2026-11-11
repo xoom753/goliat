@@ -5,8 +5,12 @@
 %>
 <% if courses_coursed.exists? %>
     <tr>
-        <td colspan="6" class="is-warning is-size-7">
-            WARN: Already coursed course in
+        <td class="has-background-warning-light">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </td>
+        <td colspan="5" class="has-background-warning-light is-size-7">
+            <%= person.nombres %>
+            ya ha estado en este curso:
             <% courses_coursed.each do |coursed| %>
                 <div>
                     <%= Date::MONTHNAMES[coursed.mes] %>

@@ -18,6 +18,6 @@ class DashboardsController < ApplicationController
             search = "'%#{params[:s]}%'"
             @people = @people.where("nombres LIKE #{search} OR dni LIKE #{search}")
         end
-        @people = @people.page(params[:page]).per(10)
+        @people = @people.page(params[:page]).per(8)
     end
 end

@@ -2,40 +2,18 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    // console.log(this.element)
-    // this.element.addEventListener("drop", function(event) {
-    //   event.preventDefault();
-
-    //   var items = event.dataTransfer.items;
-    //     for (var i=0; i<items.length; i++) {
-    //         // webkitGetAsEntry is where the magic happens
-    //         var item = items[i].webkitGetAsEntry();
-    //         if (item) {
-    //             traverseFileTree(item);
-    //         }
-    //     }
-    // }, false);
-
     this.element.addEventListener('drop', async function (event) {
         event.preventDefault();
-        // console.log(event)
-        // console.log(event.dataTransfer.items[0])
-        // console.log("pre")
         let items = await getAllFileEntries(event.dataTransfer.items);
-        // console.log(items)
+
         items.forEach((item) => {
           const originFullPath = item.fullPath
 
           item.file(function(file) {
-            // const lastModifiedDate = new Date(file.lastModified);
-
-            // console.log(`Last Modified Date: ${lastModifiedDate}`);
 
 
             uploadFile(file, originFullPath)
           })
-          //   console.log(item.fullPath)
-          // uploadFile(item)
         })
     });
 
@@ -45,39 +23,8 @@ export default class extends Controller {
             event.preventDefault();
         },
     false);
-
-    // this.element.ondrop = function(e) {
-    //     var length = e.dataTransfer.items.length;
-    //     for (var i = 0; i < length; i++) {
-    //         var entry = e.dataTransfer.items[i].webkitGetAsEntry();
-    //         if (entry.isFile) {
-    //         console.log(entry)
-    //         } else if (entry.isDirectory) {
-    //         console.log(entry)
-    //         }
-    //     }
-    //     };
   }
 }
-
-// function traverseFileTree(item, path) {
-//   path = path || "";
-//   if (item.isFile) {
-//     // Get file
-//     item.file(function(file) {
-//       console.log("File:", path + file.name);
-//     });
-//   } else if (item.isDirectory) {
-//     // Get folder contents
-//     var dirReader = item.createReader();
-//     dirReader.readEntries(function(entries) {
-//       for (var i=0; i<entries.length; i++) {
-//         traverseFileTree(entries[i], path + item.name + "/");
-//       }
-//     });
-//   }
-// }
-
 
 // Drop handler function to get all files
 async function getAllFileEntries(dataTransferItemList) {

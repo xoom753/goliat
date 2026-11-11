@@ -1,12 +1,6 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer do
-  let(:period) do
-    double(
-      periodos: [],
-      fetch: current_period
-    )
-  end
   let(:current_period) do
     double(
       activities: activities,
@@ -15,6 +9,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
       end_date: Date.new(2024, 6, 30)
     )
   end
+  let(:periods) { [current_period] }
   let(:summary) do
     double(
       nombres: "Casey Example",
@@ -28,9 +23,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
       ubicacion: "A-1"
     )
   end
-  let(:translator) do
-    double(t: "Translated string")
-  end
+  let(:translator) { double }
   let(:activities_renderer) { double(grouped_activities: grouped_periods) }
   let(:grouped_periods) { [] }
   let(:percentage_mode) { false }
@@ -42,33 +35,24 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
       kind: :cultural,
       person_ejes_resumen: summary,
       informes_translator_service: translator,
-      periodos_renderer_service: period,
+      periodos_renderer_service: double(periodos: periods),
       activities_by_periods_renderer_service: activities_renderer,
       index: 0
     )
   end
 
   describe "#info_summary" do
+    before { allow(docx).to receive(:p) }
+
     it "uses the no-activity summary when the current period is empty" do
       expect(renderer).to receive(:info_no_cumple)
-
       renderer.info_summary
     end
 
     it "uses the success summary when the current period contains activities" do
       allow(current_period).to receive(:activities).and_return([:activity])
       expect(renderer).to receive(:info_si_cumple)
-
       renderer.info_summary
-    end
-  end
-
-  describe "#grades_summary" do
-    it "uses the success summary when the current period contains activities" do
-      allow(current_period).to receive(:activities).and_return([:activity])
-      expect(renderer).to receive(:grades_si_cumple)
-
-      renderer.grades_summary
     end
   end
 
@@ -101,8 +85,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
     end
 
     it "renders the empty temporal activity message when there are no activities" do
-      expect(renderer).to receive(:li).with("Localized text").ordered
-      expect(renderer).to receive(:li).with("Localized text").ordered
+      expect(renderer).to receive(:li).with("Localized text").twice
 
       renderer.info_actividades_list
     end

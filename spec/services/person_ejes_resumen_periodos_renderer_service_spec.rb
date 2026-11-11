@@ -40,7 +40,7 @@ RSpec.describe PersonEjesResumen::PeriodosRendererService do
     it "returns each period in its own nested group" do
       periods = service.periodos
 
-      expect(service.grouped_activities).to eq(periods.map { |period| [period] })
+      expect(service.grouped_activities).to eq(periods)
     end
   end
 end

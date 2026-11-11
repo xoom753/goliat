@@ -80,7 +80,13 @@
                     </div>
                 </td>
                 <td rowspan="<%= person_name_rowspan %>" class="">
-                    <%= person.pabellon.titleize %>
+                    <%
+                        pabellon_parser = Person::PabellonParserService.new(
+                            person
+                        )
+                    %>
+                    <%= pabellon_parser.pabellon %> -
+                    <%= pabellon_parser.celda %>
                 </td>
             </tr>
 
