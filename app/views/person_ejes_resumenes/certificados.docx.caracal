@@ -78,7 +78,7 @@ end
 
     activity_months = activity.by_months.keys
     activity_duracion = activity.duracion_str
-    activity_meses_str = activity.meses_y_anios_str
+    activity_meses_str = activity.meses_y_anios_str(upcase: true)
 
     docx.p do
         text "Asistió a esta actividad dentro del CENTRO DE PRIVACIÓN DE LIBERTAD LOJA No. 1, "
@@ -99,7 +99,7 @@ end
 
     name_cell = Caracal::Core::Models::TableCellModel.new margins: { top: 0, bottom: 0, left: 3500, right: 3500 } do
         table [
-            [ "Víctor Hugo Suárez Mejía" ]
+            [ Rails.application.credentials.report_signed_by ]
         ] do
             cell_style cells, align: :center
             border_top do
