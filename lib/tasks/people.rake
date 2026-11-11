@@ -1,5 +1,5 @@
-require "update_people_pabellones_service"
-require "create_new_people_service"
+# require "update_people_pabellones_service"
+# require "create_new_people_service"
 
 namespace :people do
   desc "Update pavilion assignments for existing people"

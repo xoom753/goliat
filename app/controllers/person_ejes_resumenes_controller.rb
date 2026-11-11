@@ -51,10 +51,18 @@ class PersonEjesResumenesController < ApplicationController
 
     def update
         @person_ejes_resumen = PersonEjesResumen.find(params[:id])
-        if @person_ejes_resumen.update(person_ejes_resumen_params)
-            redirect_to action: :index
+        @person_ejes_resumen.assign_attributes(person_ejes_resumen_params)
+        if person_ejes_resumen_params[:people_ids].blank?
+            @person_ejes_resumen.people_ids = []
+        end
+        if person_ejes_resumen_params[:legacy_people_ids].blank?
+            @person_ejes_resumen.legacy_people_ids = []
+        end
+        if @person_ejes_resumen.save
+            redirect_to person_ejes_resumenes_path, notice: "Actualizado"
         else
-            render :new
+            flash.now[:error] = "Algo salió mal"
+            render :edit
         end
     end
 
