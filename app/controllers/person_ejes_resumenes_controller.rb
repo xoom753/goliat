@@ -29,6 +29,7 @@ class PersonEjesResumenesController < ApplicationController
             @person_data_service = PersonDataService.new(
                 @legacy_person
             )
+            @person_ejes_resumen.legacy_people_ids = [ params[:legacy_person_id] ]
             @person_ejes_resumen.nombres = @legacy_person.nombres
             @person_ejes_resumen.dni = @person_data_service.dni
             @person_ejes_resumen.ubicacion = @person_data_service.ubicacion

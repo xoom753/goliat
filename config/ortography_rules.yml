@@ -1,15 +1,18 @@
 # replace full activity text. takes precedence over words
 known_activities:
+  "ELECTRICISTA": "Electricista"
   "Area Laboral Del Cpl L 1": "Área Laboral Del CPL-L 1"
   "Artesplástica Sy Visuales": "Artes plásticas y Visuales"
-  "Adultos Mayores \"Caminando, Con Grandes Amigos\"": "Adultos Mayores \"Caminando Con Grandes Amigos\""
-  "Curso De Manualidades Liberados Por Amor": "Curso De Manualidades \"Liberados Por Amor\""
-  "ELECTRICISTA": "Electricista"
-  "Mantenimiento Y Limpieza De Pabellon A": "Mantenimiento y Limpieza de Pabellón A"
-  "Mantenimiento Y Limpieza De Pabellón A": "Mantenimiento y Limpieza de Pabellón A"
-  "Mantenimiento Y Limpieza Del Pabellón A": "Mantenimiento y Limpieza del Pabellón A"
   "Manualidades Dia De Madre": "Manualidades día de la Madre"
+  "Mantenimiento De Pabellon A": "Mantenimiento de Pabellón A"
+  "Manualidades En Celda Pabellón A": "Manualidades en celda Pabellón A"
+  "Manualidades En Celdas   Pabellón A": "Manualidades en celdas Pabellón A"
+  "Mantenimiento Y Limpieza De Pabellon A": "Mantenimiento y Limpieza de Pabellón A"
+  "Mantenimiento Y Limpieza De Pabellón   A": "Mantenimiento y Limpieza de Pabellón A"
+  "Mantenimiento Y Limpieza Del Pabellón A": "Mantenimiento y Limpieza del Pabellón A"
+  "Curso De Manualidades Liberados Por Amor": "Curso De Manualidades \"Liberados Por Amor\""
   "Prácticas O Aprendizaje De Instrumentos Musicales": "Aprendizaje De Instrumentos Musicales"
+  "Adultos Mayores \"Caminando, Con Grandes Amigos\"": "Adultos Mayores \"Caminando Con Grandes Amigos\""
   "Redes De Ecuavoley, Atarrayas Hamacas Y Esferos Bordados": "Redes de ecuavóley, atarrayas, hamacas y esferos bordados"
 
 # replace word by word
@@ -28,6 +31,7 @@ known_words:
   Fomix: "Fómix"
   Hurto: "Huerto"
   Basica: "Básica"
+  Mestro: "Maestro"
   Organico: "Orgánico"
   Ceramica: "Cerámica"
   Pabellon: "Pabellón"
