@@ -22,20 +22,20 @@ class PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPeriod
         @activity_to_human_render_service.to_string
     end
 
-    private
-
-    def duracion_i
-        by_months.values.inject(0) do |memo, value|
-            memo += value.duracion_i
-            memo
-        end
-    end
-
     ##
     # { date => act }
     def by_months
         @activities.inject({}) do |memo, activity|
             memo[activity.end_date] = activity
+            memo
+        end
+    end
+
+    private
+
+    def duracion_i
+        by_months.values.inject(0) do |memo, value|
+            memo += value.duracion_i
             memo
         end
     end

@@ -22,8 +22,6 @@ class PersonEjesCertificadosRenderService
         end
     end
 
-    private
-
     def activities
         kinds = [
             :cultural,
@@ -38,6 +36,8 @@ class PersonEjesCertificadosRenderService
             end.flatten
         end.flatten
     end
+
+    private
 
     def get_informe_renderer_service(kind)
         ::PersonEjesResumen::InformeRendererService.new(

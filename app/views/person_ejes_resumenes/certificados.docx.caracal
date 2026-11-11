@@ -1,0 +1,126 @@
+docx.font name: "Berlin Sans FB"
+
+docx.page_size do
+    # A4
+    height   11900
+    width    16840
+end
+
+docx.page_margins do
+    left    1400
+    right   1400
+    top     1
+    bottom  1
+end
+
+docx.header do
+    img "vendor/images/gdec.png", width: 120, height: 50, align: :left
+    img "vendor/images/snai.png", width: 310, height: 85, align: :right
+end
+
+docx.footer do
+    img "vendor/images/snaifoot.png", width: 218, height: 69
+end
+
+docx.style do
+    id "Heading1"
+    name "Heading1"
+    size 40
+    bold false
+    font "Berlin Sans FB"
+end
+
+docx.style do
+    id "Heading2"
+    name "Heading2"
+    size 32
+    bold false
+    font "Berlin Sans FB"
+end
+
+docx.style do
+    id "Heading3"
+    name "Heading3"
+    size 52
+    bold true
+    italic true
+    font "Berlin Sans FB"
+end
+
+docx.style do
+    id "Normal"
+    name "Normal"
+    size 24
+    align :both
+    font "Berlin Sans FB"
+end
+
+docx.style do
+    id "TableNormal"
+    name "TableNormal"
+    size 28
+    font "Berlin Sans FB"
+end
+
+@csv_renderer.activities.each do |activity|
+    docx.h1 "Centro de Privación de Libertad Loja 1".upcase, align: :center
+
+    docx.h2 "Eje de tratamiento #{activity.kind}".upcase, align: :center
+    docx.h2 "Otorga el siguiente certificado a la PPL:", align: :center
+
+    docx.h3 "", align: :center # whitespace
+    docx.h3 @person_ejes_resumen.nombres.titleize, align: :center # whitespace
+
+    docx.p # whitespace
+    docx.p "Por haber participado en la actividad del Eje de Tratamiento: #{activity.kind.to_s.upcase}"
+    docx.p "Curso de Pintura", bold: true
+
+    activity_months = activity.by_months.keys
+    activity_duracion = activity.duracion_str
+    activity_meses_str = activity.meses_y_anios_str
+
+    docx.p do
+        text "Asistió a esta actividad dentro del CENTRO DE PRIVACIÓN DE LIBERTAD LOJA No. 1, "
+        if activity_months.length > 1
+            text "durante los meses de "
+        else
+            text "durante el mes de "
+        end
+        text activity_meses_str
+        text ", sumando un total de "
+        text activity_duracion
+    end
+
+    docx.p # whitespace
+    docx.p # whitespace
+    docx.p # whitespace
+    docx.p # whitespace
+
+    name_cell = Caracal::Core::Models::TableCellModel.new margins: { top: 0, bottom: 0, left: 3500, right: 3500 } do
+        table [
+            [ "Víctor Hugo Suárez Mejía" ]
+        ] do
+            cell_style cells, align: :center
+            border_top do
+                color   '000000'
+                size    4
+                spacing 100
+            end
+        end
+    end
+
+    cargo_cell = Caracal::Core::Models::TableCellModel.new margins: { top: 0, bottom: 0, left: 0, right: 0 } do
+        p "Responsable Eje de Tratamiento CPL Loja 1".upcase
+    end
+
+    docx.table [
+        [ name_cell ],
+        [ cargo_cell ],
+    ] do
+        column_widths [ 100, 4210, 100 ]
+        cell_style cells, align: :center
+        cell_style rows[1], bold: true
+    end
+
+    docx.page
+end

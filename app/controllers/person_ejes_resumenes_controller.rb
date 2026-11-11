@@ -104,13 +104,21 @@ class PersonEjesResumenesController < ApplicationController
     end
 
     def certificados
-        csv_data = PersonEjesCertificadosRenderService.new(
+        @csv_renderer = PersonEjesCertificadosRenderService.new(
             @person_ejes_resumen
-        ).to_csv
-        csv_name = "#{@person_ejes_resumen.nombres}"
-        send_data csv_data,
-                  filename: "certificados-#{csv_name}.csv",
-                  disposition: :attachment
+        )
+        respond_to do |format|
+            format.docx {
+                filename = "Certificados-#{@person_ejes_resumen.nombres}.docx"
+                headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+            }
+            format.csv {
+                csv_name = "#{@person_ejes_resumen.nombres}"
+                send_data @csv_renderer.to_csv,
+                          filename: "certificados-#{csv_name}.csv",
+                          disposition: :attachment
+            }
+        end
     end
 
     private
