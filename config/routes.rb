@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   resources :import_legacy_people_activities, only: [:new, :create]
   resources :people_activities, only: :index
   resources :courses, only: [:edit, :update, :destroy]
+  resources :extranjeros_presentes
   resources :legacy_people, only: [:index, :show] do
     collection do
       get :view_several

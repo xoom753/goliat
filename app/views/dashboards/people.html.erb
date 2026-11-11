@@ -56,7 +56,7 @@
             <tr>
                 <td rowspan="<%= person_name_rowspan %>" class="">
                     <div>
-                        <%= person.nombres %>
+                        <%= person.nombres.titleize %>
                     </div>
                     <div>
                         <%=
@@ -64,8 +64,8 @@
                             origin_people_path(s: person.nombres)
                         %>
                     </div>
-                    <div>
-                        ID: <%= person.id %>
+                    <div class="is-size-7">
+                        uid: <%= person.id %>
                     </div>
                 </td>
                 <td rowspan="<%= person_name_rowspan %>" class="">

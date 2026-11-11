@@ -11,7 +11,6 @@ class PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer
     ##
     # if replacing full activity, skip word by word
     def activity_str
-        puts @actividad_str
         if KNOWN_ACTIVITIES.has_key?(@actividad_str)
             return KNOWN_ACTIVITIES.fetch(@actividad_str)
         end
