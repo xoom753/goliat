@@ -4,7 +4,12 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
     delegate :date_to_str,
              to: PersonEjesResumen
 
-    def initialize(docx:, activities_by_periods_renderer_service:)
+    def initialize(
+            kind:,
+            docx:,
+            activities_by_periods_renderer_service:
+        )
+        @kind = kind
         @docx = docx
         @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
@@ -73,7 +78,14 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
         docx.p
         docx.p
 
-        docx.p Rails.application.credentials.report_signed_by
+        ##
+        # todo
+        # should this go to its own class?
+        if @kind == :educativo
+            docx.p Rails.application.credentials.report_signed_by_educativo
+        else
+            docx.p Rails.application.credentials.report_signed_by_cultural
+        end
     end
 
     def fecha_entrega

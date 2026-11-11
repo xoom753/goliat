@@ -52,4 +52,12 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
             end
         end
     end
+
+    def get_semestre
+        if @person_ejes_resumen.tipo_porcentual?
+            periodos.first.period_percentage
+        else
+            @current_periodo.period_percentage
+        end
+    end
 end

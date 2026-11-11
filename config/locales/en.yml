@@ -49,6 +49,7 @@ en:
     deportivo_f: "Deportiva"
     laboral: "Laboral"
     educativo: "Educativo"
+    educativo_f: "Educativa"
     main_title: "Informe %{kind_str} CPL Loja 1"
     main_subtitle: "Proceso %{kind_str}"
     main_intro: "Por medio de la presente me permito informar el cumplimiento del Proceso “%{kind_str}” de la Persona Privada de la Libertad:"

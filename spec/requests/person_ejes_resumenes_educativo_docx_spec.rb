@@ -31,7 +31,7 @@ RSpec.describe "Educativo report DOCX", type: :request do
       "02/01/20\t30/06/20\t180\t20%\n01/07/20\t31/12/20\t184\t40%"
     end
 
-    pending "renders a DOCX attachment for a percentage report" do
+    it "renders a DOCX attachment for a percentage report" do
       expect_educativo_docx(report)
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe "Educativo report DOCX", type: :request do
       "02/01/20\t30/06/20\t180\t20%\n\n01/07/20\t31/12/20\t184\t40%"
     end
 
-    pending "renders a DOCX attachment for each semester period" do
+    it "renders a DOCX attachment for each semester period" do
       expect_educativo_docx(report)
     end
   end

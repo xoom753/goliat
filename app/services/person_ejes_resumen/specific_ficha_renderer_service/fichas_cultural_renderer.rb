@@ -36,12 +36,6 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRenderer < 
     def grades_table_rows
         return @grades_table_rows if @grades_table_rows
 
-        if @person_ejes_resumen.tipo_porcentual?
-            semestre = periodos.first.period_percentage
-        else
-            semestre = @current_periodo.period_percentage
-        end
-
         @grades_table_rows = [
             [
                 "Cultural".upcase
@@ -49,7 +43,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRenderer < 
             [
                 "Parámetros de Evaluación".upcase,
                 "Máx".upcase,
-                semestre
+                get_semestre
             ],
             [
                 "Permanente".upcase,

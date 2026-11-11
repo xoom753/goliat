@@ -39,12 +39,6 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer <
     def grades_table_rows
         return @grades_table_rows if @grades_table_rows
 
-        if @person_ejes_resumen.tipo_porcentual?
-            semestre = periodos.first.period_percentage
-        else
-            semestre = @current_periodo.period_percentage
-        end
-
         @grades_table_rows = [
             [
                 "Deportivo".upcase
@@ -52,7 +46,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer <
             [
                 "Parámetros de Evaluación".upcase,
                 "Máx".upcase,
-                semestre
+                get_semestre
             ],
             [
                 "Permanente".upcase,

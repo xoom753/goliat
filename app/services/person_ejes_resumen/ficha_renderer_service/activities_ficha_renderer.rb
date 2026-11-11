@@ -40,12 +40,17 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
     end
 
     def info_actividades_list
-        docx.p t("common.act_permanente").upcase, bold: true
-        no_registra_permanente = t("common.no_registra_permanente", downcase: true, kind_f: true)
-        docx.ol do
-            li no_registra_permanente
+        ##
+        # todo
+        # should this go to its own class?
+        if @kind != :educativo
+            docx.p t("common.act_permanente").upcase, bold: true
+            no_registra_permanente = t("common.no_registra_permanente", downcase: true, kind_f: true)
+            docx.ol do
+                li no_registra_permanente
+            end
+            docx.p
         end
-        docx.p
 
         docx.p t("common.act_temporal").upcase, bold: true
 

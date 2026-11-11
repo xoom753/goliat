@@ -54,12 +54,6 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < P
     def grades_table_rows
         return @grades_table_rows if @grades_table_rows
 
-        if @person_ejes_resumen.tipo_porcentual?
-            semestre = periodos.first.period_percentage
-        else
-            semestre = @current_periodo.period_percentage
-        end
-
         @grades_table_rows = [
             [
                 "Laboral".upcase
@@ -69,7 +63,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < P
                 "Detalles de actividades".upcase,
                 "Parámetros de calificación".upcase,
                 "Máx".upcase,
-                semestre
+                get_semestre
             ],
             [
                 "Permanente".upcase,

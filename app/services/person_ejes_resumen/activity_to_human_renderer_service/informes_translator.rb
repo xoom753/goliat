@@ -19,7 +19,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::InformesTranslator
     private
 
     def apply_kind_f?
-        @kind == :deportivo
+        @kind == :deportivo || @kind == :educativo
     end
 
     def get_kind_str(kind_f:)
