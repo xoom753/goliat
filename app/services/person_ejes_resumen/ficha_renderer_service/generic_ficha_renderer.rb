@@ -11,6 +11,7 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
              :sentencias_array,
              :tipo_porcentual?,
              :several_delitos?,
+             :acumulacion_penas,
              to: :@person_ejes_resumen
 
     delegate :periodos,
@@ -86,17 +87,14 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
 
     def get_info_table_merged_rows_count
         rows = 2 # base
-        if !tipo_porcentual?
-            rows += 1
-        end
-        if @person_ejes_resumen.fecha_traslado.present?
-            rows += 1
-        end
-        if several_delitos?
-            # because it includes acumulacion de penas
-            rows += 1
-        end
-        rows + ( @person_ejes_resumen.delitos_array.length * 2 )
+        rows += 1 unless tipo_porcentual?
+        rows += 1 if @person_ejes_resumen.fecha_traslado.present?
+        rows += 1 if several_delitos?
+        rows + (@person_ejes_resumen.delitos_array.length * 2)
+    end
+
+    def last_delito?(index)
+        delitos_array.length <= index + 1
     end
 
     def table_rows_delitos_y_penas

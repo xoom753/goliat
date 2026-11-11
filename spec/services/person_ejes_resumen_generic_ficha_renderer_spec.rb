@@ -10,16 +10,17 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
       sentencias: sentencias,
       acumulacion_penas: "12 años",
       fecha_traslado: Date.new(2022, 4, 5),
-      ubicacion_traslado: "Pabellón B",
+      ubicacion_traslado: ubicacion_traslado,
       tipo_porcentual: percentage_mode
     )
   end
   let(:delitos) { "Robo\nHurto" }
   let(:sentencias) { "Sentencia A\nSentencia B" }
+  let(:ubicacion_traslado) { "Pabellón B" }
   let(:percentage_mode) { false }
-  let(:period) { double(periodos: []) }
   let(:docx) { double }
-  let(:translator) { double(t: "translated") }
+  let(:translator) { double }
+  let(:periodos_renderer) { double(periodos: []) }
   let(:activities_renderer) { double }
   subject(:renderer) do
     described_class.new(
@@ -27,7 +28,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
       kind: :cultural,
       person_ejes_resumen: summary,
       informes_translator_service: translator,
-      periodos_renderer_service: period,
+      periodos_renderer_service: periodos_renderer,
       activities_by_periods_renderer_service: activities_renderer,
       index: 0
     )
@@ -51,7 +52,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
       expect(renderer.send(:common_table_rows)).to equal(rows)
     end
 
-    it "uses a generic transfer date label when the location is blank" do
+    it "uses a generic transfer row label when transfer location is absent" do
       allow(summary).to receive(:ubicacion_traslado).and_return(nil)
 
       expect(renderer.send(:common_table_rows)).to include(["FECHA DE TRASLADO:", "05/04/2022"])
@@ -59,11 +60,11 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
   end
 
   describe "#get_info_table_merged_rows_count" do
-    it "counts transfer, multiple-offense, and semester rows" do
+    it "counts transfer, multiple offenses, accumulated penalties, and semester rows" do
       expect(renderer.send(:get_info_table_merged_rows_count)).to eq(9)
     end
 
-    it "omits transfer and multiple-offense adjustments for percentage reports with one offense" do
+    it "omits transfer and multiple-offense rows for a percentage report with one offense" do
       allow(summary).to receive(:tipo_porcentual?).and_return(true)
       allow(summary).to receive(:fecha_traslado).and_return(nil)
       allow(summary).to receive(:delitos_array).and_return(["Robo"])

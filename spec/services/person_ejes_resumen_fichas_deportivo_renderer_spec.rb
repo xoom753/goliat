@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer do
-  let(:person_summary) { double(tipo_porcentual?: percentage_mode) }
+  let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:period) do
     double(
       period_percentage: "20%",
@@ -10,43 +10,41 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
       end_date: Date.new(2024, 6, 30)
     )
   end
-  let(:periods) { [period] }
+  let(:periods) { [period, double(period_percentage: "40%", activities: [])] }
   let(:docx) { double }
   let(:percentage_mode) { false }
   let(:activities) { [] }
   subject(:renderer) do
     described_class.new(
       docx: docx,
-      person_ejes_resumen: person_summary,
+      person_ejes_resumen: summary,
       periodos_renderer_service: double(periodos: periods),
       current_periodo: period
     )
   end
 
-  it "uses the current semester period percentage for semester mode" do
-    rows = renderer.send(:grades_table_rows)
+  it "builds the deportivo grades table for semester mode" do
+    allow(summary).to receive(:tipo_porcentual?).and_return(false)
+    expect(docx).to receive(:table) do |rows, &block|
+      expect(rows[0]).to eq(["DEPORTIVO"])
+      expect(rows[1].last).to eq("20%")
+      expect(rows[3]).to include("TEMPORAL", "0")
+      expect(rows.last).to include("Subtotal", "5", "0")
+    end
+    allow(docx).to receive(:p)
 
-    expect(rows[1].last).to eq("20%")
+    renderer.grades_table
   end
 
-  it "uses the first report period percentage for percentage mode" do
-    allow(person_summary).to receive(:tipo_porcentual?).and_return(true)
-    first_period = double(period_percentage: "20%", activities: [])
-    second_period = double(period_percentage: "40%", activities: [])
-    allow(renderer).to receive(:periodos).and_return([first_period, second_period])
+  it "builds extra percentage columns and reflects later-period activity scores" do
+    allow(summary).to receive(:tipo_porcentual?).and_return(true)
+    allow(periods.last).to receive(:activities).and_return([:activity])
+    expect(docx).to receive(:table) do |rows, &block|
+      expect(rows[1][2, 2]).to eq(["20%", "40%"])
+      expect(rows[3][-1]).to eq("2")
+    end
+    allow(docx).to receive(:p)
 
-    rows = renderer.send(:grades_table_rows)
-
-    expect(rows[1].last).to eq("20%")
-  end
-
-  it "assigns zero temporal points to an empty period" do
-    expect(renderer.send(:grades_table_rows)[3].last).to eq("0")
-  end
-
-  it "assigns two temporal points when the period contains activities" do
-    allow(period).to receive(:activities).and_return([:activity])
-
-    expect(renderer.send(:grades_table_rows)[3].last).to eq("2")
+    renderer.grades_table
   end
 end

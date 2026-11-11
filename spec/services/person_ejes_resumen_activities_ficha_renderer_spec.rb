@@ -42,15 +42,21 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
   end
 
   describe "#info_summary" do
-    before { allow(docx).to receive(:p) }
+    before do
+      allow(docx).to receive(:p)
+      allow(translator).to receive(:t).with(any_args).and_return("Localized text")
+      allow(renderer).to receive(:li)
+    end
 
     it "uses the no-activity summary when the current period is empty" do
+      expect(docx).to receive(:p).with("LOCALIZED TEXT", bold: true).and_return(nil)
       expect(renderer).to receive(:info_no_cumple)
       renderer.info_summary
     end
 
     it "uses the success summary when the current period contains activities" do
       allow(current_period).to receive(:activities).and_return([:activity])
+      expect(docx).to receive(:p).with("LOCALIZED TEXT", bold: true).and_return(nil)
       expect(renderer).to receive(:info_si_cumple)
       renderer.info_summary
     end

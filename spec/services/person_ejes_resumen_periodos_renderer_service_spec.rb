@@ -37,10 +37,17 @@ RSpec.describe PersonEjesResumen::PeriodosRendererService do
   end
 
   describe "#grouped_activities" do
-    it "returns each period in its own nested group" do
+    it "returns each percentage group containing its period wrappers" do
+      allow(summary).to receive(:tipo_porcentual?).and_return(false)
+      allow(summary).to receive(:periodos_detalle).and_return(
+        "02/01/24\t30/06/24\t180\t20%\n\n01/07/24\t31/12/24\t184\t40%"
+      )
       periods = service.periodos
 
-      expect(service.grouped_activities).to eq(periods)
+      expect(service.grouped_activities).to eq({
+        "20%" => [periods.first],
+        "40%" => [periods.last]
+      })
     end
   end
 end

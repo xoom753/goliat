@@ -46,6 +46,7 @@ gem "roo"
 gem "roo-xls"
 gem "caracal-rails"
 gem "simple_form"
+gem "slim-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

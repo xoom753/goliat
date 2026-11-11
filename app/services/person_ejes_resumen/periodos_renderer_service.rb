@@ -13,11 +13,7 @@ class PersonEjesResumen::PeriodosRendererService
     end
 
     def grouped_activities
-        periodos.map do |percentage, periods|
-            periods.map do |period|
-                period
-            end
-        end
+        periodos.group_by(&:period_percentage)
     end
 
     private

@@ -24,7 +24,7 @@ RSpec.describe PersonEjesResumen, type: :model do
   it "finds associated legacy people from their comma-separated ids" do
     first = LegacyPerson.create!(nombres: "First")
     second = LegacyPerson.create!(nombres: "Second")
-    resumen.legacy_people_ids = "#{first.id},#{second.id}"
+    resumen.legacy_people_ids = [first.id, second.id]
 
     expect(resumen.legacy_people).to eq([first, second])
   end
@@ -32,7 +32,7 @@ RSpec.describe PersonEjesResumen, type: :model do
   it "finds associated people from their comma-separated ids" do
     first = Person.create!(nombres: "First")
     second = Person.create!(nombres: "Second")
-    resumen.people_ids = "#{first.id},#{second.id}"
+    resumen.people_ids = [first.id, second.id]
 
     expect(resumen.people).to eq([first, second])
   end

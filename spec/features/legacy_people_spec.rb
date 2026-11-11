@@ -31,7 +31,7 @@ RSpec.describe "Lista PPL (histórica)", type: :feature do
 
       visit legacy_people_path
 
-      expect(page).to have_content("Lista PPL (histórica)")
+      expect(page).to have_content("Lista PPL (archivo)")
       expect(page).to have_content("Jane Example")
       expect(page).to have_content("111")
       expect(page).to have_content("Weaving")
@@ -57,7 +57,7 @@ RSpec.describe "Lista PPL (histórica)", type: :feature do
 
       visit legacy_people_path(q: "Missing")
 
-      expect(page).to have_content("Lista PPL (histórica)")
+      expect(page).to have_content("Lista PPL (archivo)")
       expect(page).not_to have_content("Jane Example")
     end
   end
@@ -98,7 +98,7 @@ RSpec.describe "Lista PPL (histórica)", type: :feature do
 
       visit view_several_legacy_people_path(legacy_people_ids: "")
 
-      expect(page).to have_content("Lista PPL (histórica)")
+      expect(page).to have_content("Lista PPL (archivo)")
       expect(page).not_to have_content("Jane Example")
     end
   end

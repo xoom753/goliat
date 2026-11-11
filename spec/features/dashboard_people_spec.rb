@@ -16,8 +16,8 @@ RSpec.describe "Dashboard people", type: :feature do
 
       expect(page).to have_content("Jane Example")
       expect(page).to have_content("1234567890")
-      expect(page).to have_content("A 1")
-      expect(page).to have_content("ID: #{person.id}")
+      expect(page).to have_content("A-1")
+      expect(page).to have_content("uid: #{person.id}")
       expect(page).to have_link("Ver procesos", href: origin_people_path(s: "Jane Example"))
       expect(page).to have_link("Ver procesos", href: origin_people_path(s: "1234567890"))
       expect(page).to have_content("Cultural")
