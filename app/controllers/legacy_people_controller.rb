@@ -1,12 +1,13 @@
 class LegacyPeopleController < ApplicationController
     def index
+        @search_query = params[:q]
         if params[:legacy_people_ids].present?
             @legacy_people = LegacyPerson.where(
                 id: params[:legacy_people_ids].split(",")
             )
-        elsif params[:q].present?
+        elsif @search_query.present?
             @legacy_people = LegacyPerson.where(
-                "nombres LIKE '%#{params[:q].strip}%'"
+                "nombres LIKE '%#{@search_query.strip}%'"
             )
         else
             @legacy_people = LegacyPerson.all
@@ -20,6 +21,10 @@ class LegacyPeopleController < ApplicationController
                         ])
                         .page(params[:page])
                         .per(8)
+        # ui tweak for search input
+        if params[:legacy_people_ids].present?
+            @search_query = @legacy_people.first.try :nombres
+        end
     end
 
     def show

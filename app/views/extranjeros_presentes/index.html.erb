@@ -35,7 +35,7 @@
                 <td>
                     <% extranjero_presente.legacy_people.each do |legacy_person| %>
                         <%= link_to legacy_person.nombres.titleize,
-                                    legacy_people_path(legacy_people_ids: extranjero_presente.legacy_people_ids) %>
+                                    legacy_people_path(q: extranjero_presente.nombres) %>
                     <% end %>
                 </td>
             </tr>
