@@ -37,6 +37,7 @@ class PersonEjesResumen::InformeRendererService
 
     def generic_informe_renderer
         @generic_informe_renderer ||= PersonEjesResumen::InformeRendererService::GenericInformeRenderer.new(
+            kind: @kind,
             docx: docx,
             activities_by_periods_renderer_service: activities_by_periods_renderer_service
         )

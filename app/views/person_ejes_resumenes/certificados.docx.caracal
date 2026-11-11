@@ -97,9 +97,15 @@ end
     docx.p # whitespace
     docx.p # whitespace
 
+    signature = if activity.kind == :laboral
+        Rails.application.credentials.report_signed_by_educativo
+    else
+        Rails.application.credentials.report_signed_by_cultural
+    end
+
     name_cell = Caracal::Core::Models::TableCellModel.new margins: { top: 0, bottom: 0, left: 3500, right: 3500 } do
         table [
-            [ Rails.application.credentials.report_signed_by ]
+            [ signature ]
         ] do
             cell_style cells, align: :center
             border_top do
