@@ -3,7 +3,8 @@ class PeopleActivitiesController < ApplicationController
         scoped = PersonActivity.all.includes(:person, coursable: :activity_group)
         # todo group
         if params[:activity_id].present?
-            scoped = scoped.where(activity_id: params[:activity_id])
+            activity = Activity.find(params[:activity_id])
+            scoped = scoped.where(coursable: activity)
         end
         # if params[:date][:month].present?
         #     scoped = scoped.where(mes: params[:date][:month])
