@@ -7,16 +7,18 @@
     </h1>
 </div>
 
-<div>
-    <%= link_to_unless_current "Cultural", import_legacy_files_path(q: "cultural", year: params[:year]) %>
-    <%= link_to_unless_current "Deportivo", import_legacy_files_path(q: "deportivo", year: params[:year]) %>
-    <%= link_to_unless_current "Laboral", import_legacy_files_path(q: "laboral", year: params[:year]) %>
+<div class="">
+    <%= link_to_unless_current "Cultural", import_legacy_files_path(q: "cultural", year: params[:year]), class: "button is-ghost" %>
+    <%= link_to_unless_current "Deportivo", import_legacy_files_path(q: "deportivo", year: params[:year]), class: "button is-ghost" %>
+    <%= link_to_unless_current "Laboral", import_legacy_files_path(q: "laboral", year: params[:year]), class: "button is-ghost" %>
+    <%= link_to_unless_current "Educativo", import_legacy_files_path(q: "educativo", year: params[:year]), class: "button is-ghost" %>
 </div>
 
 <div>
-    <%= link_to_unless_current "2025", import_legacy_files_path(q: params[:q], year: 2025) %>
-    <%= link_to_unless_current "2024", import_legacy_files_path(q: params[:q], year: 2024) %>
-    <%= link_to_unless_current "2023", import_legacy_files_path(q: params[:q], year: 2023) %>
+    <%= link_to_unless_current "2026", import_legacy_files_path(q: params[:q], year: 2026), class: "button is-ghost" %>
+    <%= link_to_unless_current "2025", import_legacy_files_path(q: params[:q], year: 2025), class: "button is-ghost" %>
+    <%= link_to_unless_current "2024", import_legacy_files_path(q: params[:q], year: 2024), class: "button is-ghost" %>
+    <%= link_to_unless_current "2023", import_legacy_files_path(q: params[:q], year: 2023), class: "button is-ghost" %>
 </div>
 
 <table class="table is-striped is-hoverable">
