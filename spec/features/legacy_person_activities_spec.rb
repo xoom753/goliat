@@ -26,7 +26,7 @@ RSpec.describe "Legacy person activities", type: :feature do
 
     visit legacy_person_activities_path
 
-    expect(page).to have_content("Legacy Person Activities")
+    expect(page).to have_content("Actividades PPL archivos")
     expect(page).to have_content("Jane Example")
     expect(page.body.index(newer.id.to_s)).to be < page.body.index(older.id.to_s)
   end
