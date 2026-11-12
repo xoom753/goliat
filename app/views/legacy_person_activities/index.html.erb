@@ -47,9 +47,19 @@
                     </div>
                 </div>
             <% end %>
-
+        </div>
+    </div>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="control is-flex-grow-1 mr-2">
+                    <%= f.input :nombres_str,
+                                include_blank: true,
+                                label: "Nombres y apellidos",
+                                input_html: { name: :nombres_str, value: params[:nombres_str] }
+                    %>
+            </div>
             <div class="control is-narrow is-align-self-flex-end">
-                <%= f.submit "Search", class: "button" %>
+                <%= f.submit "Buscar", class: "button" %>
             </div>
         </div>
     </div>

@@ -6,8 +6,8 @@ class LegacyPeopleController < ApplicationController
                 id: params[:legacy_people_ids].split(",")
             )
         elsif @search_query.present?
-            @legacy_people = LegacyPerson.where(
-                "nombres LIKE '%#{@search_query.strip}%'"
+            @legacy_people = LegacyPerson.where_nombres_like(
+                @search_query.strip
             )
         else
             @legacy_people = LegacyPerson.all

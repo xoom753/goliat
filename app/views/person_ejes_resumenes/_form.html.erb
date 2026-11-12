@@ -35,7 +35,7 @@
                 <% if f.object.legacy_people_ids.present? %>
                     <% f.object.legacy_people.each do |legacy_person| %>
                         <option selected value="<%= legacy_person.id %>">
-                            <%= legacy_person.nombres %>
+                            <%= legacy_person.nombres %>  - (uuid <%= legacy_person.id %>)
                         </option>
                     <% end %>
                 <% end %>

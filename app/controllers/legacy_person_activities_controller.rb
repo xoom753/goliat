@@ -24,6 +24,14 @@ class LegacyPersonActivitiesController < ApplicationController
                 legacy_activity_id: params[:legacy_activity_id]
             )
         end
+        if params[:nombres_str].present?
+            legacy_people = LegacyPerson.where_nombres_like(
+                params[:nombres_str]
+            )
+            scope = scope.where(
+                legacy_person: legacy_people
+            )
+        end
         @legacy_person_activities = scope.page(params[:page]).per(100)
     end
 end
