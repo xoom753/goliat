@@ -15,6 +15,39 @@
                         html5: true,
                         input_html: { name: :date_to, value: params[:date_to] }
             %>
+
+            <div class="control mr-2">
+                <%= f.label :activity_group_id, "Grupo", class: "label" %>
+
+                <div class="select">
+                    <%= f.input :activity_group_id,
+                                as: :select,
+                                label: false,
+                                collection: ActivityGroup.all.map{|l| [l.nombre, l.id]},
+                                selected: params[:activity_group_id],
+                                include_blank: true,
+                                input_html: { name: :activity_group_id }
+                    %>
+                </div>
+            </div>
+
+            <% if params[:activity_group_id].present? %>
+                <div class="control mr-2">
+                    <%= f.label :activity_group_id, "Actividad", class: "label" %>
+
+                    <div class="select">
+                        <%= f.input :legacy_activity_id,
+                                    as: :select,
+                                    label: false,
+                                    collection: @activities.all.map{|l| [l.nombre, l.id]},
+                                    selected: params[:legacy_activity_id],
+                                    include_blank: true,
+                                    input_html: { name: :legacy_activity_id }
+                        %>
+                    </div>
+                </div>
+            <% end %>
+
             <div class="control is-narrow is-align-self-flex-end">
                 <%= f.submit "Search", class: "button" %>
             </div>
@@ -24,7 +57,7 @@
 
 <div class="my-2 has-text-right">
     <%=
-        pluralize @legacy_person_activities.total_count, "record"
+        pluralize @legacy_person_activities.total_count, "registro", "registros"
     %>
 </div>
 
@@ -36,6 +69,7 @@
             <th>Nombres</th>
             <th>Grupo</th>
             <th>Actividad</th>
+            <th>Detalle</th>
             <th>Rango</th>
             <th>Desde</th>
             <th>Hasta</th>
@@ -61,6 +95,9 @@
                     <%= legacy_activity.legacy_activity.try(:nombre) %>
                 </td>
                 <td>
+                    <%= legacy_activity.legacy_activity_detail.try(:nombre) %>
+                </td>
+                <td>
                     <%= legacy_activity.activity_dates %>
                 </td>
                 <td>
@@ -76,5 +113,10 @@
         <% end %>
     </tbody>
 </table>
+
+<div class="has-text-right">
+    <%= @legacy_person_activities.limit_value %>
+    por página
+</div>
 
 <%= paginate @legacy_person_activities %>

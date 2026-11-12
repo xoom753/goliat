@@ -11,7 +11,7 @@ RSpec.describe "Import legacy people activities", type: :request do
       get new_import_legacy_people_activity_path
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Import Legacy People Activities")
+      expect(response.body).to include("Importar actividades (archivo)")
       expect(response.body.index("Alpha")).to be < response.body.index("Zulu")
       expect(response.body.index("First")).to be < response.body.index("Second")
     end
@@ -44,7 +44,15 @@ RSpec.describe "Import legacy people activities", type: :request do
              params: { legacy_person_activities: import_attributes }
       end.to change(LegacyPersonActivity, :count).by(2)
 
-      expect(response).to redirect_to(action: :new)
+      expect(response).to redirect_to(new_import_legacy_people_activity_path(
+        legacy_activity_id: activity.id,
+        legacy_activity_group_id: activity_group.id,
+        duracion: "12 horas",
+        end_date: "2024-01-31",
+        start_date: "2024-01-01",
+        activity_dates: "01/01/2024-31/01/2024",
+        activity_detail_str: "Course attendance"
+      ))
       expect(flash[:notice]).to eq("2 imported")
       expect(LegacyPersonActivity.order(:row_number).map(&:row_number)).to eq([1, 3])
       expect(LegacyPersonActivity.order(:row_number).map { |record| record.legacy_person.nombres }).to eq(["Jane Doe Smith", "Alex Rivera"])
@@ -67,7 +75,15 @@ RSpec.describe "Import legacy people activities", type: :request do
              }
       end.not_to change(LegacyPersonActivity, :count)
 
-      expect(response).to redirect_to(action: :new)
+      expect(response).to redirect_to(new_import_legacy_people_activity_path(
+        legacy_activity_id: activity.id,
+        legacy_activity_group_id: activity_group.id,
+        duracion: "12 horas",
+        end_date: "2024-01-31",
+        start_date: "2024-01-01",
+        activity_dates: "01/01/2024-31/01/2024",
+        activity_detail_str: "Course attendance"
+      ))
       expect(flash[:notice]).to eq("0 imported")
     end
   end

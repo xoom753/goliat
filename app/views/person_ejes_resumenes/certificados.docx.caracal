@@ -98,9 +98,9 @@ end
     docx.p # whitespace
 
     signature = if activity.kind == :laboral
-        Rails.application.credentials.report_signed_by_educativo
-    else
         Rails.application.credentials.report_signed_by_cultural
+    else
+        Rails.application.credentials.report_signed_by_educativo
     end
 
     name_cell = Caracal::Core::Models::TableCellModel.new margins: { top: 0, bottom: 0, left: 3500, right: 3500 } do

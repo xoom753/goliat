@@ -16,6 +16,9 @@ class ImportLegacyPeopleActivitiesController < ApplicationController
         activities = []
         parameters[:people].split("\n").each_with_index do |person, index|
             nombres_str = person.strip.titleize.split(" ").join(" ")
+            ##
+            # TODO check if there's duplicate nombres
+            ##
             if nombres_str.blank?
                 # skip empty rows
             else
@@ -35,6 +38,19 @@ class ImportLegacyPeopleActivitiesController < ApplicationController
         LegacyPersonActivity.transaction do
             activities.each &:save!
         end
-        redirect_to new_import_legacy_people_activity_path, notice: "#{activities.count} imported"
+        redirect_to(
+            new_import_legacy_people_activity_path(
+                parameters.to_hash.slice(
+                    "legacy_activity_id",
+                    "legacy_activity_group_id",
+                    "duracion",
+                    "end_date",
+                    "start_date",
+                    "activity_dates",
+                    "activity_detail_str"
+                )
+            ),
+            notice: "#{activities.count} imported"
+        )
     end
 end

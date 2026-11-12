@@ -1,7 +1,10 @@
 <%
-    date_params = {
-        month: params.dig(:date, :month),
-        year: params.dig(:date, :year)
+    filter_params = {
+        date: {
+            month: params.dig(:date, :month),
+            year: params.dig(:date, :year),
+        },
+        pabellon: params[:pabellon]
     }
 %>
 
@@ -10,7 +13,7 @@
         <li class="<%= "is-active" if params[:activity_group_id].blank? %>">
             <%=
                 link_to "Todos",
-                        courses_by_month_path(date: date_params),
+                        courses_by_month_path(filter_params),
                         class: "is-active"
             %>
         </li>
@@ -18,7 +21,7 @@
             <li class="<%= "is-active" if params[:activity_group_id] == activity_group.id.to_s %>">
                 <%=
                     link_to activity_group.nombre,
-                            courses_by_month_path(date: date_params, activity_group_id: activity_group.id),
+                            courses_by_month_path(filter_params.merge(activity_group_id: activity_group.id)),
                             class: "is-active"
                 %>
             </li>
@@ -34,7 +37,7 @@
     <%= hidden_field_tag :activity_group_id, params[:activity_group_id] %>
     <div class="field is-horizontal">
         <div class="field-label is-normal">
-            <label for="date_month" class="label">Filtrar por mes / año</label>
+            <label for="date_month" class="label">Filtrar:</label>
         </div>
         <div class="field-body">
             <div class="field">
@@ -44,6 +47,15 @@
                     </div>
                     <div class="select">
                         <%= select_year @year.to_i, {}, {data: {"auto-submit-form-target" => "selectTag"} } %>
+                    </div>
+                    <div class="select">
+                        <%= select_tag :pabellon,
+                                       options_from_collection_for_select([
+                                            ["San_Jose", "Prioritario San José"],
+                                            ["others", "Otros"],
+                                        ], :first, :last, @pabellon),
+                                       include_blank: true,
+                                       data: {"auto-submit-form-target" => "selectTag"} %>
                     </div>
                     <%= submit_tag "Filter", data: {"auto-submit-form-target" => "submitBtn"} %>
                 </div>
@@ -101,7 +113,22 @@
                 <% end %>
             </thead>
             <tbody>
-                <% activity.person_activities.where(mes: @month, anio: @year).each_with_index do |person_activity, index| %>
+                <%
+                    activities = activity.person_activities
+                                         .where(mes: @month, anio: @year)
+
+                    if @pabellon == "San_Jose"
+                        activities = activities.where(
+                            person: Person.from_san_jose
+                        )
+                    elsif @pabellon == "others"
+                        activities = activities.where(
+                            person: Person.not_from_san_jose
+                        )
+                    end
+
+                    activities.each_with_index do |person_activity, index|
+                %>
                     <tr>
                         <td>
                             <%= index + 1 %>
@@ -116,7 +143,7 @@
                             <%= person_activity.cargo %>
                         </td>
                         <td>
-                            <%= person_activity.person.pabellon.titleize %>
+                            <%= person_activity.person.pabellon.titleize if person_activity.person.pabellon.present? %>
                         </td>
                         <td>
                             <%= person_activity.id %>

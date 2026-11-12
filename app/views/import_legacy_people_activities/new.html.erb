@@ -1,36 +1,60 @@
-<h2>Import Legacy People Activities</h2>
+<h2>Importar actividades (archivo)</h2>
 
 <%= simple_form_for :legacy_person_activities,
                     url: import_legacy_people_activities_path do |f| %>
 
     <div class="field">
-        <%= f.label :legacy_activity_id %>
+        <%= f.label :legacy_activity_id, "Actividad (archivo)", class: "label" %>
         <%=
             f.input :legacy_activity_id,
                     collection: LegacyActivity.ordered.map{|l| [l.nombre, l.id]} ,
                     label: false,
+                    selected: params[:legacy_activity_id],
                     wrapper_html: { class: "control" }
         %>
     </div>
 
     <div class="field">
-        <%= f.label :legacy_activity_group_id %>
+        <%= f.label :legacy_activity_group_id, "Grupo (archivo)", class: "label" %>
         <%=
             f.input :legacy_activity_group_id,
                     collection: LegacyActivityGroup.ordered.map{|l| [l.nombre, l.id]} ,
                     label: false,
+                    selected: params[:legacy_activity_group_id],
                     wrapper_html: { class: "control" }
         %>
     </div>
 
-    <%= f.input :activity_detail_str, hint: "<pre>Ej:\nElaboración de granola\nContrato de trabajo\nCurso</pre>".html_safe %>
+    <%= f.input :activity_detail_str,
+                label: "Detalle",
+                input_html: { value: params[:activity_detail_str] },
+                hint: "<pre>Ej:\nElaboración de granola\nContrato de trabajo\nCurso</pre>".html_safe
+    %>
 
-    <%= f.input :activity_dates, hint: "<pre>Ej:\n01/05/2025-31/05/2025\nEnero-Febrero 2025</pre>".html_safe %>
-    <%= f.input :duracion, hint: "Ej: 30 horas" %>
-    <%= f.input :start_date, as: :date, html5: true %>
-    <%= f.input :end_date, as: :date, html5: true %>
+    <%= f.input :activity_dates,
+                label: "Fechas",
+                input_html: { value: params[:activity_dates] },
+                hint: "<pre>Ej:\n01/05/2025-31/05/2025\nEnero-Febrero 2025</pre>".html_safe
+    %>
+    <%= f.input :duracion,
+                label: "Duración",
+                input_html: { value: params[:duracion] },
+                hint: "Ej: 30 horas"
+    %>
+    <%= f.input :start_date,
+                label: "Fecha inicio",
+                as: :date,
+                html5: true,
+                input_html: { value: params[:start_date] }
+    %>
+    <%= f.input :end_date,
+                label: "Fecha final",
+                as: :date,
+                html5: true,
+                input_html: { value: params[:end_date] }
+    %>
 
-    <%= f.input :people, as: :text, hint: "<pre>Lastname1 Lastname2 Firstname1 Firstname2\nLastname1 Lastname2 Firstname1 Firstname2</pre>".html_safe %>
+    <%= f.input :people, label: "Personas", as: :text, hint: "<pre>Ej:\nApellido1 Apellido2 Nombre1 Nombre2\nApellido1 Apellido2 Nombre1 Nombre2</pre>".html_safe %>
 
     <%= f.submit class: "button" %>
 <% end %>

@@ -9,6 +9,7 @@ class CoursesByMonthsController < ApplicationController
         else
             @activity_groups = ActivityGroup.all
         end
+        @pabellon = params[:pabellon]
     end
 
     def export
