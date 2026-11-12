@@ -1,6 +1,18 @@
-<table>
+<div class="has-text-centered">
+    <h2>Actualizaciones de pabellones pendientes</h2>
+</div>
+
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>uuid</th>
+            <th>Nombres</th>
+            <th>Pabellón</th>
+            <th>Fecha registro</th>
+        </tr>
+    </thead>
     <tbody class="table is-striped is-hoverable is-narrow">
-        <% PersonPabellonUpdate.all.each_with_index do |update, index| %>
+        <% PersonPabellonUpdate.all.each do |update| %>
             <tr>
                 <td>
                     <%= update.id %>
@@ -9,7 +21,12 @@
                     <%= update.nombres %>
                 </td>
                 <td>
-                    <%= update.pabellon %>
+                    <% pabellon_service = Person::PabellonParserService.new(
+                            update
+                        )
+                    %>
+                    <%= pabellon_service.pabellon.titleize %>
+                    <%= pabellon_service.celda.titleize %>
                 </td>
                 <td>
                     <%= update.created_at %>

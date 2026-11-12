@@ -1,5 +1,14 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu">
+<nav class="navbar" role="navigation" aria-label="main navigation" data-controller="main-navbar">
+    <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="main-navbar#toggleMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu" data-main-navbar-target="menu">
         <div class="navbar-start">
             <%= link_to "PPL Presentes", people_dashboard_path, class: "navbar-item" %>
             <%= link_to "Cursos", courses_by_month_path, class: "navbar-item" %>
@@ -12,7 +21,7 @@
 
                 <div class="navbar-dropdown">
                     <%= link_to "Lista PPLs archivo", legacy_people_path, class: "navbar-item" %>
-                    <%= link_to "Actividades archivos PPLs", legacy_person_activities_path, class: "navbar-item" %>
+                    <%= link_to "Actividades PPL archivos", legacy_person_activities_path, class: "navbar-item" %>
                     <%= link_to "Importadores de archivos históricos", legacy_files_parsers_path, class: "navbar-item" %>
                     <%= link_to "Importadores de cursos (archivo)", legacy_course_file_parsers_path, class: "navbar-item" %>
                     <%= link_to "Importar archivos históricos", import_legacy_files_path, class: "navbar-item" %>
@@ -25,6 +34,7 @@
             <%= link_to "Información jurídica", origin_people_path, class: "navbar-item" %>
             <%= link_to "Fichas ejes", person_ejes_resumenes_path, class: "navbar-item" %>
             <%= link_to "Extranjeros", extranjeros_presentes_path, class: "navbar-item" %>
+            <%= link_to "Pabellones", person_pabellon_updates_path, class: "navbar-item" %>
         </div>
     </div>
 </nav>

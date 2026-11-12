@@ -1,5 +1,5 @@
 <div class="has-text-centered">
-    <h2>Legacy Person Activities</h2>
+    <h2>Actividades PPL archivos</h2>
 </div>
 
 <%= simple_form_for :search, method: :get do |f| %>
@@ -8,16 +8,18 @@
             <%= f.input :date_from,
                         as: :date,
                         html5: true,
+                        label: "Desde",
                         input_html: { name: :date_from, value: params[:date_from] }
             %>
             <%= f.input :date_to,
                         as: :date,
                         html5: true,
+                        label: "Hasta",
                         input_html: { name: :date_to, value: params[:date_to] }
             %>
 
             <div class="control mr-2">
-                <%= f.label :activity_group_id, "Grupo", class: "label" %>
+                <%= f.label :activity_group_id, "Eje", class: "label" %>
 
                 <div class="select">
                     <%= f.input :activity_group_id,

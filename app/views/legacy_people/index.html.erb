@@ -13,6 +13,17 @@
     </div>
 <% end %>
 
+<div class="my-2 has-text-right">
+    <%=
+        pluralize @legacy_people.total_count, "registro", "registros"
+    %>
+</div>
+
 <%= render "legacy_people_table" %>
+
+<div class="has-text-right">
+    <%= @legacy_people.limit_value %>
+    por página
+</div>
 
 <%= paginate @legacy_people %>
