@@ -1,4 +1,6 @@
 class PersonEjesResumen::PeriodosWrapper::GenericWrapper
+    FORMATO_ANTIGUO_DATE = Date.new(2020,12,20)
+
     attr_reader :period_percentage, :start_date, :end_date
 
     delegate :date_to_str, to: PersonEjesResumen
@@ -28,5 +30,9 @@ class PersonEjesResumen::PeriodosWrapper::GenericWrapper
 
     def end_date_str
         date_to_str(@end_date)
+    end
+
+    def is_formato_antiguo?
+        @start_date <= FORMATO_ANTIGUO_DATE
     end
 end

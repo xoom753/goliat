@@ -6,13 +6,28 @@
     <div data-controller="toggable-content">
         <div class="mb-3">
             <h3><%= person_ejes_resumen.nombres.titleize %></h3>
-            <%= link_to "Cultural.docx", cultural_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
-            <%= link_to "Deportivo.docx", deportivo_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
-            <%= link_to "Laboral.docx", laboral_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
-            <%= link_to "Educativo.docx", educativo_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
-            <%= link_to "Certificados.csv", certificados_person_ejes_resumen_path(person_ejes_resumen, format: :csv) %> ·
-            <%= link_to "Certificados.docx", certificados_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
         </div>
+
+        <dl>
+            <dt>
+                Cultural, Deportivo y Laboral
+            </dt>
+            <dd>
+                <%= link_to "Cultural.docx", cultural_export_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
+                <%= link_to "Deportivo.docx", deportivo_export_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
+                <%= link_to "Laboral.docx", laboral_export_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
+                <%= link_to "Certificados.csv", certificados_export_person_ejes_resumen_path(person_ejes_resumen, format: :csv) %> ·
+                <%= link_to "Certificados.docx", certificados_export_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
+            </dd>
+            <dt>
+                Educativo
+            </dt>
+            <dd>
+                <%= link_to "Educativo.docx", educativo_export_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %> ·
+                <%= link_to "Certificados educativos.csv", certificados_educativo_export_person_ejes_resumen_path(person_ejes_resumen, format: :csv) %> ·
+                <%= link_to "Certificados educativos.docx", certificados_educativo_export_person_ejes_resumen_path(person_ejes_resumen, format: :docx) %>
+            </dd>
+        </dl>
 
         <dl class="mb-0">
             <% if person_ejes_resumen.last_generated_at.present? %>

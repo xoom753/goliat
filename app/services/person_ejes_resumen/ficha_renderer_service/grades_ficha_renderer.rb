@@ -3,6 +3,14 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
              :grades_no_cumple,
              to: :summary_renderer
 
+    delegate :grades_ficha_bottom_rows,
+             :get_grades_table_merged_rows_count,
+             to: :by_tipo_periodo_renderer
+
+    def should_render_grades_ficha?
+        !current_periodo.is_formato_antiguo?
+    end
+
     def title
         docx.h1 t("common.qualy_main_title").upcase, align: :center
         docx.h1 t("common.qualy_main_subtitle", kind_f: true).upcase, align: :center
@@ -15,13 +23,12 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
     end
 
     def info_table
-        qualy_table_merged_rows_count = get_info_table_merged_rows_count
-        qualy_table_merged_rows_count -= 1 unless tipo_porcentual?
+        grades_table_merged_rows_count = get_grades_table_merged_rows_count
         docx.table(
-            common_table_rows + ficha_qualy_bottom_rows
+            common_table_rows + grades_ficha_bottom_rows
         ) do
             cell_style cols[0], bold: true
-            0.upto(qualy_table_merged_rows_count).each do |row_n|
+            0.upto(grades_table_merged_rows_count).each do |row_n|
                 cell_style rows[row_n][1], colspan: 2
             end
             cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
@@ -44,28 +51,5 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
             grades_si_cumple
         end
         docx.p
-    end
-
-    private
-
-    def ficha_qualy_bottom_rows
-        if tipo_porcentual?
-            periodos.inject([]) do |memo, periodo|
-                memo << [
-                        "Periodo #{periodo.period_percentage}".upcase,
-                        periodo.start_date_str,
-                        periodo.end_date_str
-                    ]
-                memo
-            end
-        else
-            [
-                [
-                    current_periodo.semestre_str.upcase,
-                    date_to_str(current_periodo.start_date),
-                    date_to_str(current_periodo.end_date)
-                ]
-            ]
-        end
     end
 end

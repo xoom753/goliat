@@ -1,8 +1,15 @@
 class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     def grades_table
-        header_colspan = get_header_colspan
+        header_colspan = get_kind_specific_table_header_colspan
+        column_widths = [400, 700, 800, 110, 110, 90, 90, 90]
+
+        permanente_row = 2
+        temporal_row = tipo_porcentual? ? 2 : 3
+
+        tipo_porcentual = tipo_porcentual?
+
         docx.table grades_table_rows do
-            column_widths  [400, 700, 800, 110, 110, 90, 90, 90]
+            column_widths column_widths
             border_size 4
             cell_style cols[0], bold: true
             cell_style rows[1], bold: true, align: :center
@@ -10,31 +17,36 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < P
             cell_style rows[1][0], align: :center
             cell_style rows[1][1], vertical_align: :center
             cell_style rows[1][2], align: :center, bold: true
-            cell_style rows[2][0], align: :center, vertical_align: :center
-            cell_style rows[2][1], vertical_align: :top, align: :left
-            cell_style rows[2][2], vertical_align: :top, align: :left
-            cell_style rows[2][3], align: :center, vertical_align: :center
-            cell_style rows[2][4], align: :center, vertical_align: :center
-            cell_style rows[2][5], align: :center, vertical_align: :center
-            cell_style rows[2][6], align: :center, vertical_align: :center
-            cell_style rows[2][7], align: :center, vertical_align: :center
-            cell_style rows[3][0], align: :center, bold: true, vertical_align: :center
-            cell_style rows[3][1], vertical_align: :top, align: :left
-            cell_style rows[3][2], vertical_align: :top, align: :left
-            cell_style rows[3][3], align: :center, vertical_align: :center
-            cell_style rows[3][3], align: :center, vertical_align: :center
-            cell_style rows[3][4], align: :center, vertical_align: :center
-            cell_style rows[3][5], align: :center, vertical_align: :center
-            cell_style rows[3][6], align: :center, vertical_align: :center
-            cell_style rows[3][7], align: :center, vertical_align: :center
-            cell_style rows[4][0], colspan: 3, align: :right, bold: true
-            cell_style rows[4][1], align: :center, bold: true
-            cell_style rows[4][2], align: :center, bold: true
-            cell_style rows[4][1], align: :center, bold: true
-            cell_style rows[4][2], align: :center, bold: true
-            cell_style rows[4][3], align: :center, bold: true
-            cell_style rows[4][4], align: :center, bold: true
-            cell_style rows[4][5], align: :center, bold: true
+
+            unless tipo_porcentual
+                cell_style rows[permanente_row][0], align: :center, vertical_align: :center
+                cell_style rows[permanente_row][1], vertical_align: :top
+                cell_style rows[permanente_row][2], vertical_align: :top
+                cell_style rows[permanente_row][3], align: :center, vertical_align: :center
+                cell_style rows[permanente_row][4], align: :center, vertical_align: :center
+                cell_style rows[permanente_row][5], align: :center, vertical_align: :center
+                cell_style rows[permanente_row][6], align: :center, vertical_align: :center
+                cell_style rows[permanente_row][7], align: :center, vertical_align: :center
+            end
+
+            cell_style rows[temporal_row][0], align: :center, bold: true, vertical_align: :center
+            cell_style rows[temporal_row][1], vertical_align: :top
+            cell_style rows[temporal_row][2], vertical_align: :top
+            cell_style rows[temporal_row][3], align: :center, vertical_align: :center
+            cell_style rows[temporal_row][3], align: :center, vertical_align: :center
+            cell_style rows[temporal_row][4], align: :center, vertical_align: :center
+            cell_style rows[temporal_row][5], align: :center, vertical_align: :center
+            cell_style rows[temporal_row][6], align: :center, vertical_align: :center
+            cell_style rows[temporal_row][7], align: :center, vertical_align: :center
+
+            cell_style rows[temporal_row + 1][0], colspan: 3, align: :right, bold: true
+            cell_style rows[temporal_row + 1][1], align: :center, bold: true
+            cell_style rows[temporal_row + 1][2], align: :center, bold: true
+            cell_style rows[temporal_row + 1][1], align: :center, bold: true
+            cell_style rows[temporal_row + 1][2], align: :center, bold: true
+            cell_style rows[temporal_row + 1][3], align: :center, bold: true
+            cell_style rows[temporal_row + 1][4], align: :center, bold: true
+            cell_style rows[temporal_row + 1][5], align: :center, bold: true
         end
 
         docx.p
@@ -42,19 +54,13 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < P
 
     private
 
-    def get_header_colspan
-        header_colspan = 5
-        if @person_ejes_resumen.tipo_porcentual?
-            remaining_periods = periodos.drop(1)
-            header_colspan += remaining_periods.length
-        end
-        header_colspan
+    def get_kind_specific_table_header_colspan
+        # laboral has an additional column
+        @by_tipo_periodo_renderer.get_kind_specific_table_header_colspan + 1
     end
 
-    def grades_table_rows
-        return @grades_table_rows if @grades_table_rows
-
-        @grades_table_rows = [
+    def grades_table_rows_first_part
+        [
             [
                 "Laboral".upcase
             ],
@@ -64,14 +70,24 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < P
                 "Parámetros de calificación".upcase,
                 "Máx".upcase,
                 get_semestre
-            ],
+            ]
+        ]
+    end
+
+    def grades_table_permanente_rows
+        [
             [
                 "Permanente".upcase,
                 "Proyectos institucionales y/o producción en talleres",
                 "Cumplimiento a los horarios, convivencia, protocolos de seguridad y conocimientos",
                 "3",
                 "0"
-            ],
+            ]
+        ]
+    end
+
+    def grades_table_rows_last_part
+        [
             [
                 "Temporal".upcase,
                 "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional",
@@ -81,13 +97,9 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < P
             ],
             [
                 "Subtotal",
-                "5",
+                get_subtotal_max_grade.to_s,
                 temp_grade.to_s
             ]
         ]
-
-        concat_tipo_porcentual_rows!(@grades_table_rows) if @person_ejes_resumen.tipo_porcentual?
-
-        @grades_table_rows
     end
 end

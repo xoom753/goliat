@@ -1,6 +1,8 @@
 require "csv"
 
 class PersonEjesCertificadosRenderService
+    attr_accessor :kinds
+
     def initialize(person_ejes_resumen)
         @person_ejes_resumen = person_ejes_resumen
     end
@@ -23,11 +25,6 @@ class PersonEjesCertificadosRenderService
     end
 
     def activities
-        kinds = [
-            :cultural,
-            :deportivo,
-            :laboral
-        ]
         kinds.map do |kind|
             informe_renderer_service = get_informe_renderer_service(kind)
             activities_by_periods_renderer_service = informe_renderer_service.send(:activities_by_periods_renderer_service)

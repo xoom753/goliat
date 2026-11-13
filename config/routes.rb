@@ -36,11 +36,17 @@ Rails.application.routes.draw do
       :update
     ] do
     member do
+
+    end
+  end
+  resources :export_person_ejes_resumenes, only: [] do
+    member do
       get :cultural
       get :deportivo
       get :laboral
       get :educativo
       get :certificados
+      get :certificados_educativo
     end
   end
   resources :import_people, only: [:new, :create]

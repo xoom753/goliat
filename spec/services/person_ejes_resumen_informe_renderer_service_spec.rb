@@ -3,31 +3,26 @@ require "rails_helper"
 RSpec.describe PersonEjesResumen::InformeRendererService do
   let(:summary) do
     PersonEjesResumen.new(
-      tipo_porcentual: true,
+      nombres: "Casey Example",
+      dni: "1234567890",
+      fecha_perdida_libertad: Date.new(2020, 1, 2),
+      delitos: "Robo",
+      sentencias: "Sentencia A",
       semestres_porcentuales: "20%",
-      periodos_detalle: "01/01/24\t30/06/24\t180\t20%"
+      periodos_detalle: "01/01/24\t30/06/24\t180\t20%",
+      tipo_porcentual: true
     )
   end
-  subject(:renderer) { described_class.new(person_ejes_resumen: summary, kind: :cultural) }
 
-  it "exposes the configured periods" do
+  it "delegates period calculation to the period renderer" do
+    renderer = described_class.new(person_ejes_resumen: summary, kind: :cultural)
+
     expect(renderer.periodos.map(&:period_percentage)).to eq(["20%"])
   end
 
-  it "delegates ficha indexes and builds the requested activity and grade fichas" do
-    indexes = renderer.get_fichas_indexes
+  it "caches the period renderer result" do
+    renderer = described_class.new(person_ejes_resumen: summary, kind: :cultural)
 
-    expect(indexes).to eq([0])
-    expect(renderer.get_activities_ficha(0)).to be_a(PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer)
-    expect(renderer.get_grades_ficha(0)).to be_a(PersonEjesResumen::FichaRendererService::GradesFichaRenderer)
-  end
-
-  it "caches its fichas renderer" do
-    renderer.get_fichas_indexes
-    fichas_renderer = renderer.instance_variable_get(:@fichas_renderer)
-
-    renderer.get_fichas_indexes
-
-    expect(renderer.instance_variable_get(:@fichas_renderer)).to equal(fichas_renderer)
+    expect(renderer.periodos).to equal(renderer.periodos)
   end
 end

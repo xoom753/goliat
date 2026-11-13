@@ -86,9 +86,12 @@ RSpec.describe PersonEjesCertificadosRenderService do
     end
 
     it "returns a header-only CSV when there are no activities" do
-      stub_kind_activities(:cultural, [])
-      stub_kind_activities(:deportivo, [])
-      stub_kind_activities(:laboral, [])
+      period_renderer = double("period renderer", grouped_activities: [])
+      report_renderer = double("report renderer")
+      allow(report_renderer).to receive(:send)
+        .with(:activities_by_periods_renderer_service)
+        .and_return(period_renderer)
+      allow(PersonEjesResumen::InformeRendererService).to receive(:new).and_return(report_renderer)
 
       rows = CSV.parse(service.to_csv, headers: true)
 

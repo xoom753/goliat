@@ -36,18 +36,20 @@ docx.page
 
     grades_ficha = @informe_renderer_service.get_grades_ficha(index)
 
-    grades_ficha.title
-    grades_ficha.intro
-    grades_ficha.info_table
+    if grades_ficha.should_render_grades_ficha?
+        grades_ficha.title
+        grades_ficha.intro
+        grades_ficha.info_table
 
-    grades_ficha.grades_table
-    grades_ficha.grades_summary
+        grades_ficha.grades_table
+        grades_ficha.grades_summary
 
-    @informe_renderer_service.signature
+        @informe_renderer_service.signature
 
-    grades_ficha.encargado_title
+        grades_ficha.encargado_title
 
-    @informe_renderer_service.fecha_entrega
+        @informe_renderer_service.fecha_entrega
 
-    docx.page
+        docx.page
+    end
 end

@@ -3,6 +3,12 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
              :info_no_cumple,
              to: :summary_renderer
 
+    delegate :ficha_info_table_bottom_rows,
+             :get_info_table_merged_rows_count,
+             :info_actividades_temporales_list,
+             :info_actividades_permanentes_list,
+             to: :by_tipo_periodo_renderer
+
     def title
         docx.h1 t("common.main_title").upcase, align: :center
         docx.h1 t("common.main_subtitle").upcase, align: :center
@@ -40,42 +46,8 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
     end
 
     def info_actividades_list
-        ##
-        # todo
-        # should this go to its own class?
-        if @kind != :educativo
-            docx.p t("common.act_permanente").upcase, bold: true
-            no_registra_permanente = t("common.no_registra_permanente", downcase: true, kind_f: true)
-            docx.ol do
-                li no_registra_permanente
-            end
-            docx.p
-        end
-
-        docx.p t("common.act_temporal").upcase, bold: true
-
-        if tipo_porcentual?
-            # all activities
-            activities = @activities_by_periods_renderer_service.grouped_activities.map do |grouped_activities|
-                grouped_activities.activities
-            end.flatten
-        else
-            activities = current_periodo.activities
-        end
-
-        if activities.empty?
-            no_registra_temporal = t("common.no_registra_temporal", downcase: true, kind_f: true)
-            docx.ol do
-                li no_registra_temporal
-            end
-        else
-            docx.ol do
-                activities.each do |activity|
-                    li "#{activity.render_string}."
-                end
-            end
-        end
-        docx.p
+        info_actividades_permanentes_list
+        info_actividades_temporales_list
     end
 
     def info_outro
@@ -96,23 +68,5 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
             docx.p
         end
         docx.p
-    end
-
-    private
-
-    def ficha_info_table_bottom_rows
-        return [] if tipo_porcentual?
-
-        [
-            [
-                "Temporalidad".upcase,
-                current_periodo.period_percentage
-            ],
-            [
-                "Semestre".upcase,
-                date_to_str(current_periodo.start_date),
-                date_to_str(current_periodo.end_date)
-            ]
-        ]
     end
 end

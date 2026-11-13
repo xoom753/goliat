@@ -1,45 +1,8 @@
 class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
-    def grades_table
-        header_colspan = get_header_colspan
-        docx.table grades_table_rows do
-            column_widths  [370, 1200, 110, 110, 110, 110]
-            border_size 4
-            cell_style cols[0], bold: true
-            cell_style rows[0][0], colspan: header_colspan, align: :center
-            cell_style rows[1][0], colspan: 2, align: :center
-            cell_style rows[1][1], align: :center, bold: true
-            cell_style rows[1][2], align: :center, bold: true
-            cell_style rows[1][3], align: :center, bold: true
-            cell_style rows[1][4], align: :center, bold: true
-            cell_style rows[2][0], align: :center, vertical_align: :center
-            cell_style rows[2][2], align: :center, vertical_align: :center
-            cell_style rows[2][3], align: :center, vertical_align: :center
-            cell_style rows[2][4], align: :center, vertical_align: :center
-            cell_style rows[2][5], align: :center, vertical_align: :center
-            cell_style rows[2][6], align: :center, vertical_align: :center
-            cell_style rows[3][0], align: :center, vertical_align: :center
-            cell_style rows[3][1], vertical_align: :center
-            cell_style rows[3][2], align: :center, vertical_align: :center
-            cell_style rows[3][3], align: :center, vertical_align: :center
-            cell_style rows[3][4], align: :center, vertical_align: :center
-            cell_style rows[3][5], align: :center, vertical_align: :center
-            cell_style rows[3][6], align: :center, vertical_align: :center
-            cell_style rows[4][0], colspan: 2, align: :right, bold: true
-            cell_style rows[4][1], align: :center, bold: true
-            cell_style rows[4][2], align: :center, bold: true
-            cell_style rows[4][3], align: :center, bold: true
-            cell_style rows[4][4], align: :center, bold: true
-        end
-
-        docx.p
-    end
-
     private
 
-    def grades_table_rows
-        return @grades_table_rows if @grades_table_rows
-
-        @grades_table_rows = [
+    def grades_table_rows_first_part
+        [
             [
                 "Deportivo".upcase
             ],
@@ -48,12 +11,22 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer <
                 "Máx".upcase,
                 get_semestre
             ],
+        ]
+    end
+
+    def grades_table_permanente_rows
+        [
             [
                 "Permanente".upcase,
                 "Actividades deportivas, recreativas y de educación física, como: fútbol en sus diferentes modalidades, baloncesto, ecuavóley, halterofilia, caminatas, trote, tenis de mesa, ajedrez, juegos lúdicos, bailoterapia, yoga, entre otras.",
                 "3",
                 "0"
             ],
+        ]
+    end
+
+    def grades_table_rows_last_part
+        [
             [
                 "Temporal".upcase,
                 "Capacitaciones en materia deportiva y otras que oferte el centro de privación de libertad en coordinación con las entidades públicas y privadas.",
@@ -62,13 +35,9 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer <
             ],
             [
                 "Subtotal",
-                "5",
+                get_subtotal_max_grade,
                 temp_grade.to_s
             ]
         ]
-
-        concat_tipo_porcentual_rows!(@grades_table_rows) if @person_ejes_resumen.tipo_porcentual?
-
-        @grades_table_rows
     end
 end
