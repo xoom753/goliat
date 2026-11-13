@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer do
   let(:current_period) { double(period_percentage: "20%", activities: current_activities) }
   let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
-  let(:periods) { [current_period, later_period] }
-  let(:current_activities) { [:activity] }
+  let(:periods) { [ current_period, later_period ] }
+  let(:current_activities) { [ :activity ] }
   let(:later_activities) { [] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:period_type_renderer) do

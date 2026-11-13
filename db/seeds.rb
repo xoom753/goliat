@@ -28,9 +28,7 @@ puts "Seeding groups & activities"
         "Origami",
         "Sastrería"
     ],
-    "Eje Educativo" => [
-
-    ]
+    "Eje Educativo" => []
 }.each do |group_name, activities|
     puts "= " + group_name
     group = ActivityGroup.where(
@@ -46,4 +44,3 @@ puts "Seeding groups & activities"
         activity.save!
     end
 end
-

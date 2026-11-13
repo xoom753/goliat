@@ -14,27 +14,27 @@ RSpec.describe PersonEjesResumen, type: :model do
   end
 
   it "splits delitos into lines" do
-    expect(resumen.delitos_array).to eq(["Robo", "Hurto"])
+    expect(resumen.delitos_array).to eq([ "Robo", "Hurto" ])
   end
 
   it "splits sentencias into lines" do
-    expect(resumen.sentencias_array).to eq(["Sentencia A", "Sentencia B"])
+    expect(resumen.sentencias_array).to eq([ "Sentencia A", "Sentencia B" ])
   end
 
   it "finds associated legacy people from their comma-separated ids" do
     first = LegacyPerson.create!(nombres: "First")
     second = LegacyPerson.create!(nombres: "Second")
-    resumen.legacy_people_ids = [first.id, second.id]
+    resumen.legacy_people_ids = [ first.id, second.id ]
 
-    expect(resumen.legacy_people).to eq([first, second])
+    expect(resumen.legacy_people).to eq([ first, second ])
   end
 
   it "finds associated people from their comma-separated ids" do
     first = Person.create!(nombres: "First")
     second = Person.create!(nombres: "Second")
-    resumen.people_ids = [first.id, second.id]
+    resumen.people_ids = [ first.id, second.id ]
 
-    expect(resumen.people).to eq([first, second])
+    expect(resumen.people).to eq([ first, second ])
   end
 
   it "updates last_generated_at" do
@@ -44,8 +44,8 @@ RSpec.describe PersonEjesResumen, type: :model do
   end
 
   it "serializes association ID arrays as comma-separated strings" do
-    resumen.people_ids = [12, 34]
-    resumen.legacy_people_ids = [56, 78]
+    resumen.people_ids = [ 12, 34 ]
+    resumen.legacy_people_ids = [ 56, 78 ]
 
     expect(resumen.people_ids).to eq("12,34")
     expect(resumen.legacy_people_ids).to eq("56,78")

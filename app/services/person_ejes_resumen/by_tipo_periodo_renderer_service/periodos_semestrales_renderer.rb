@@ -46,7 +46,7 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRender
     end
 
     def concat_tipo_porcentual_rows!(rows)
-        # doing nothing for semestrales
+      # doing nothing for semestrales
     end
 
     def get_subtotal_max_grade

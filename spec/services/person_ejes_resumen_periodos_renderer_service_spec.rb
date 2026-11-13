@@ -16,8 +16,8 @@ RSpec.describe PersonEjesResumen::PeriodosRendererService do
     it "returns porcentual wrappers when the report is percentage-based" do
       periods = service.periodos
 
-      expect(periods.map(&:period_percentage)).to eq(["20%", "40%"])
-      expect(periods.map(&:start_date_str)).to eq(["02/01/2024", "01/07/2024"])
+      expect(periods.map(&:period_percentage)).to eq([ "20%", "40%" ])
+      expect(periods.map(&:start_date_str)).to eq([ "02/01/2024", "01/07/2024" ])
     end
 
     it "returns semester wrappers when the report is semester-based" do
@@ -28,7 +28,7 @@ RSpec.describe PersonEjesResumen::PeriodosRendererService do
 
       periods = service.periodos
 
-      expect(periods.map(&:period_percentage)).to eq(["20%", "40%"])
+      expect(periods.map(&:period_percentage)).to eq([ "20%", "40%" ])
       expect(periods.map(&:semestre_str)).to eq([
         "Primer semestre 0,00% al 20%",
         "Primer semestre 20,01% al 40%"
@@ -45,8 +45,8 @@ RSpec.describe PersonEjesResumen::PeriodosRendererService do
       periods = service.periodos
 
       expect(service.grouped_activities).to eq({
-        "20%" => [periods.first],
-        "40%" => [periods.last]
+        "20%" => [ periods.first ],
+        "40%" => [ periods.last ]
       })
     end
   end

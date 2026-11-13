@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe PersonEjesResumen::FichaRendererService::GradesFichaRenderer do
   let(:period) { double(activities: activities, semestre_str: "Primer semestre", start_date: Date.new(2024, 1, 1), end_date: Date.new(2024, 6, 30)) }
-  let(:period_renderer) { double(periodos: [period]) }
+  let(:period_renderer) { double(periodos: [ period ]) }
   let(:docx) { double }
   let(:summary) { double(tipo_porcentual?: false) }
   let(:translator) { double }
   let(:activities_renderer) { double }
-  let(:activities) { [:activity] }
+  let(:activities) { [ :activity ] }
   subject(:renderer) do
     described_class.new(
       docx: docx,

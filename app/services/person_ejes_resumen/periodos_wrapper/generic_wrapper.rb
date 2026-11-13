@@ -1,5 +1,5 @@
 class PersonEjesResumen::PeriodosWrapper::GenericWrapper
-    FORMATO_ANTIGUO_DATE = Date.new(2020,12,20)
+    FORMATO_ANTIGUO_DATE = Date.new(2020, 12, 20)
 
     attr_reader :period_percentage, :start_date, :end_date
 

@@ -104,7 +104,7 @@ RSpec.describe LegacyFileParseService do
     it "saves parsed records and updates the import file summary" do
       first = double
       second = double
-      allow(service).to receive(:records).and_return([first, second])
+      allow(service).to receive(:records).and_return([ first, second ])
       expect(first).to receive(:save!)
       expect(second).to receive(:save!)
       expect(import_file).to receive(:update!).with(

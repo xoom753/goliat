@@ -10,7 +10,7 @@ RSpec.describe PersonActivity, type: :model do
     earlier = described_class.create!(person: Person.create!(nombres: "Earlier"), coursable: ExtraActivity.create!(nombre: "Course"), anio: 2023, mes: 12)
     later = described_class.create!(person: Person.create!(nombres: "Later"), coursable: ExtraActivity.create!(nombre: "Course"), anio: 2024, mes: 1)
 
-    expect(described_class.oldest_first).to eq([earlier, later])
+    expect(described_class.oldest_first).to eq([ earlier, later ])
   end
 
   it "returns the last day of its month as the end date" do

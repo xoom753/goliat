@@ -18,7 +18,7 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPe
   it "uses the last activity for duplicate end dates when summing by month" do
     first = double(activity_nombre: "Lectura", end_date: Date.new(2024, 1, 31), duracion_i: 2)
     last = double(activity_nombre: "Lectura", end_date: Date.new(2024, 1, 31), duracion_i: 7)
-    summary = described_class.new(kind: :cultural, activities: [first, last])
+    summary = described_class.new(kind: :cultural, activities: [ first, last ])
 
     expect(summary.duracion_str).to eq("7 horas")
   end

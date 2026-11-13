@@ -17,7 +17,7 @@ class LegacyPeopleController < ApplicationController
             @legacy_people.includes(legacy_person_activities: [
                             :legacy_activity,
                             :legacy_activity_group,
-                            :legacy_activity_detail,
+                            :legacy_activity_detail
                         ])
                         .page(params[:page])
                         .per(8)

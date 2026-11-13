@@ -39,5 +39,4 @@ RSpec.describe "Cultural report DOCX", type: :request do
       expect(response.body).to start_with("PK")
     end
   end
-
 end

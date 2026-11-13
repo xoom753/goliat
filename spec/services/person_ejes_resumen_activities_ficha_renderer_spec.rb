@@ -5,7 +5,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
   let(:summary) { double(nombres: "Casey Example", ubicacion: nil, tipo_porcentual?: percentage_mode) }
   let(:translator) { double(t: "translated") }
   let(:period) { double(activities: activities, period_percentage: "20%", start_date: Date.new(2024, 1, 1), end_date: Date.new(2024, 6, 30)) }
-  let(:period_renderer) { double(periodos: [period]) }
+  let(:period_renderer) { double(periodos: [ period ]) }
   let(:activities_by_periods_renderer) { double(grouped_activities: []) }
   let(:period_type_renderer) do
     double(
@@ -48,7 +48,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
     end
 
     it "uses the success summary when the current period has activities" do
-      allow(period).to receive(:activities).and_return([:activity])
+      allow(period).to receive(:activities).and_return([ :activity ])
       expect(docx).to receive(:p).with("TRANSLATED", bold: true)
       expect(renderer).to receive(:info_si_cumple)
 

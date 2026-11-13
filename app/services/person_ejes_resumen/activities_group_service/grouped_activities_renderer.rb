@@ -42,4 +42,3 @@ class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer
         end
     end
 end
-

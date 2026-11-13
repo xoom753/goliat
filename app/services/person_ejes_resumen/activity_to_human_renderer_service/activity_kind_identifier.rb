@@ -51,7 +51,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
             /panader/i,
             /cabello/i,
             /origami/i,
-            /electricidad b/i,
+            /electricidad b/i
         ].any? do |regex|
             @activity_str =~ regex
         end
@@ -59,7 +59,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
 
     def actividad_programas?
         [
-            /teatral/i,
+            /teatral/i
         ].any? do |regex|
             @activity_str =~ regex
         end
@@ -71,7 +71,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
             /concurso/i,
             /agasajo/i,
             /taller/i,
-            /cine/i,
+            /cine/i
         ].any? do |regex|
             @activity_str =~ regex
         end
@@ -80,7 +80,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
     def actividad_actividades?
         [
             /adecentamiento/i,
-            /coros/i,
+            /coros/i
         ].any? do |regex|
             @activity_str =~ regex
         end
@@ -88,7 +88,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
 
     def actividad_actividades_apoyo?
         [
-            /área laboral/i,
+            /área laboral/i
         ].any? do |regex|
             @activity_str =~ regex
         end
@@ -96,7 +96,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
 
     def actividad_campeonato?
         [
-            /copa/i,
+            /copa/i
         ].any? do |regex|
             @activity_str =~ regex
         end

@@ -10,7 +10,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer <
                 "Parámetros de Evaluación".upcase,
                 "Máx".upcase,
                 get_semestre
-            ],
+            ]
         ]
     end
 
@@ -21,7 +21,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer <
                 "Actividades deportivas, recreativas y de educación física, como: fútbol en sus diferentes modalidades, baloncesto, ecuavóley, halterofilia, caminatas, trote, tenis de mesa, ajedrez, juegos lúdicos, bailoterapia, yoga, entre otras.",
                 "3",
                 "0"
-            ],
+            ]
         ]
     end
 

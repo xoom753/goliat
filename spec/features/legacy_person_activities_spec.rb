@@ -68,7 +68,7 @@ RSpec.describe "Legacy person activities", type: :feature do
     rows = all("table tbody tr").map(&:text).join(" ")
     expect(rows).to include("Jane Example", "Cultural workshops", "Weaving")
     expect(rows).not_to include("Deportivo workshops", "Football")
-    expect(page).to have_select("legacy_activity_id", options: ["", "Weaving"])
+    expect(page).to have_select("legacy_activity_id", options: [ "", "Weaving" ])
   end
 
   it "filters the selected group by legacy activity id" do

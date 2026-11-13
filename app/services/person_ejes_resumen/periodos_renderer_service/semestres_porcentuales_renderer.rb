@@ -13,7 +13,7 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
         "Undécimo semestre",
         "Duodécimo semestre",
         "Décimo tercer semestre",
-        "Décimo cuarto semestre",
+        "Décimo cuarto semestre"
     ].freeze
 
     delegate :date_to_str, to: PersonEjesResumen
@@ -31,7 +31,7 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
         # @semestres_porcentuales
         @semestres_porcentuales = []
         percentages.each_with_index do |semestre_porcentual, index|
-            @semestres_porcentuales.concat( semestres_array(index) )
+            @semestres_porcentuales.concat(semestres_array(index))
         end
         @semestres_porcentuales
     end
@@ -84,7 +84,7 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
     def add_point_one_to_p(number)
         parsed_number = number.sub(",", ".").to_f
         parsed_number += 0.01
-        parsed_number = '%.2f' % parsed_number
+        parsed_number = "%.2f" % parsed_number
         "#{parsed_number.sub(".", ",")}%"
     end
 
@@ -92,7 +92,7 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
     # 7,39%
     def percentage_str(number)
         parsed_number = number.sub(",", ".").to_f
-        parsed_number = '%.2f' % parsed_number
+        parsed_number = "%.2f" % parsed_number
         "#{parsed_number.sub(".", ",")}%"
     end
 end

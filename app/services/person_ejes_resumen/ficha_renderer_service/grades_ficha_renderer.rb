@@ -31,7 +31,7 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
             0.upto(grades_table_merged_rows_count).each do |row_n|
                 cell_style rows[row_n][1], colspan: 2
             end
-            cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5}
+            cell_style cells, margins: { top: 10, bottom: 5, left: 100, right: 5 }
         end
 
         docx.p

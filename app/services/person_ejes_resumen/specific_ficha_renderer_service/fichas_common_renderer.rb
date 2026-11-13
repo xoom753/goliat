@@ -28,7 +28,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
 
     def grades_table
         header_colspan = get_kind_specific_table_header_colspan
-        column_widths = [370, 1400, 110, 90, 90, 90]
+        column_widths = [ 370, 1400, 110, 90, 90, 90 ]
 
         permanente_row = 2
         temporal_row = tipo_porcentual? ? 2 : 3

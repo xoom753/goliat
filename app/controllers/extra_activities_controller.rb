@@ -28,11 +28,11 @@ class ExtraActivitiesController < ApplicationController
                 anio: Date.today.year
             )
             dni = nil # clean input
-        # else
-        #     redirect_to action: :edit,
-        #                 dni: params[:dni],
-        #                 month: params[:month],
-        #                 year: params[:year]
+          # else
+          #     redirect_to action: :edit,
+          #                 dni: params[:dni],
+          #                 month: params[:month],
+          #                 year: params[:year]
         end
         redirect_to action: :edit,
                         dni: dni,
@@ -73,11 +73,11 @@ class ExtraActivitiesController < ApplicationController
                 csv << [
                     activity.person.nombres,
                     activity.person.dni,
-                    activity.person.pabellon,
+                    activity.person.pabellon
                 ]
             end
         end
-        csv_name = "#{@extra_activity.nombre}-#{Date.today.to_s}"
+        csv_name = "#{@extra_activity.nombre}-#{Date.today}"
         send_data csv_data,
                   filename: "#{csv_name}.csv",
                   disposition: :attachment

@@ -24,11 +24,11 @@ class PersonEjesResumen < ApplicationRecord
     end
 
     def people_ids=(ary)
-        super( ary.join(",") )
+        super(ary.join(","))
     end
 
     def legacy_people_ids=(ary)
-        super( ary.join(",") )
+        super(ary.join(","))
     end
 
     def update_last_generated_at!

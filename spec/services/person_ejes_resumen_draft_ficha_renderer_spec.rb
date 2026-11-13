@@ -17,9 +17,9 @@ RSpec.describe PersonEjesResumen::FichaRendererService::DraftFichaRenderer do
   end
 
   it "writes the title and each grouped activity string" do
-    first = double(activities: [double(render_string: "Certificate A"), double(render_string: "Certificate B")])
-    second = double(activities: [double(render_string: "Certificate C")])
-    allow(activities_renderer).to receive(:grouped_activities).and_return([first, second])
+    first = double(activities: [ double(render_string: "Certificate A"), double(render_string: "Certificate B") ])
+    second = double(activities: [ double(render_string: "Certificate C") ])
+    allow(activities_renderer).to receive(:grouped_activities).and_return([ first, second ])
     expect(docx).to receive(:h1).with("Todas las actividades")
     expect(docx).to receive(:p).with("Certificate A")
     expect(docx).to receive(:p).with("Certificate B")

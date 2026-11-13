@@ -117,7 +117,7 @@ RSpec.describe "Extra activities", type: :request do
       ])
       expect(csv.headers.length).to eq(6)
       expect(csv.headers.last).to be_present
-      expect(csv.first.fields.first(3)).to eq(["Jane Example", "123", "A-1"])
+      expect(csv.first.fields.first(3)).to eq([ "Jane Example", "123", "A-1" ])
     end
   end
 end

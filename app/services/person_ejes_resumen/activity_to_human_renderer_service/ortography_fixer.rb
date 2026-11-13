@@ -26,6 +26,6 @@ class PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer
 
     def fix_ortography(word)
         return KNOWN_WORDS[word] if KNOWN_WORDS[word]
-        return word
+        word
     end
 end

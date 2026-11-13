@@ -33,7 +33,7 @@ class LegacyImportFile < ApplicationRecord
   end
 
   def parseable_id_and_type
-    [parseable_id, parseable_type].join("_")
+    [ parseable_id, parseable_type ].join("_")
   end
 
   private

@@ -14,13 +14,13 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRende
       .to receive(:new).with(current_activity: present_record).and_return(present_renderer)
     expect(PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPeriodRenderer)
       .to receive(:new).with(
-        activities: [legacy_renderer, present_renderer],
+        activities: [ legacy_renderer, present_renderer ],
         periodos_renderer_service: :periods_service
       ).and_return(period_renderer)
 
     service = described_class.new(
-      legacy_activities: [legacy_record],
-      present_activities: [present_record],
+      legacy_activities: [ legacy_record ],
+      present_activities: [ present_record ],
       periodos_renderer_service: :periods_service
     )
 
@@ -29,7 +29,7 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRende
   end
 
   it "returns grouped periods when no legacy or present activities exist" do
-    period_renderer = double(by_periods: [:empty_period])
+    period_renderer = double(by_periods: [ :empty_period ])
     allow(PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPeriodRenderer)
       .to receive(:new).and_return(period_renderer)
 
@@ -39,6 +39,6 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRende
       periodos_renderer_service: double
     ).grouped_activities
 
-    expect(result).to eq([:empty_period])
+    expect(result).to eq([ :empty_period ])
   end
 end

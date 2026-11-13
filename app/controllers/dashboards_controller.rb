@@ -12,7 +12,7 @@ class DashboardsController < ApplicationController
             nombre: [
                 "Eje Cultural",
                 "Eje Deportivo",
-                "Eje Laboral",
+                "Eje Laboral"
             ]
         )
 

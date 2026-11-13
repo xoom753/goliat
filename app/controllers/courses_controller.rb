@@ -25,11 +25,11 @@ class CoursesController < ApplicationController
                 anio: params[:year]
             )
             dni = nil # clean input
-        # else
-        #     redirect_to action: :edit,
-        #                 dni: params[:dni],
-        #                 month: params[:month],
-        #                 year: params[:year]
+          # else
+          #     redirect_to action: :edit,
+          #                 dni: params[:dni],
+          #                 month: params[:month],
+          #                 year: params[:year]
         end
         redirect_to action: :edit,
                         dni: dni,

@@ -8,7 +8,7 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentualesRende
     end
 
     def info_actividades_permanentes_list
-        # no permanentes para porcentuales
+      # no permanentes para porcentuales
     end
 
     def grades_ficha_bottom_rows

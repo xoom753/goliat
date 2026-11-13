@@ -17,10 +17,10 @@ class ImportLegacyPeopleActivitiesController < ApplicationController
         parameters[:people].split("\n").each_with_index do |person, index|
             nombres_str = person.strip.titleize.split(" ").join(" ")
             ##
-            # TODO check if there's duplicate nombres
+            #  TODO check if there's duplicate nombres
             ##
             if nombres_str.blank?
-                # skip empty rows
+            # skip empty rows
             else
                 activities << LegacyPersonActivity.new(
                     row_number: index + 1,

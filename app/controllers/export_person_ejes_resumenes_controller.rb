@@ -12,7 +12,7 @@ class ExportPersonEjesResumenesController < ApplicationController
         :cultural,
         :deportivo,
         :laboral,
-        :educativo,
+        :educativo
     ]
 
     before_action :set_person_ejes_certificados_renderer!, only: [

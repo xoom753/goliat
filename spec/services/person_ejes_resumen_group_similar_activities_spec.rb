@@ -19,7 +19,7 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupSimilarActivities
       end_date: "end_date",
       duracion_i: 4
     )
-    grouped = described_class.new(kind: :cultural, activities: [first, repeated, another]).grouped
+    grouped = described_class.new(kind: :cultural, activities: [ first, repeated, another ]).grouped
 
     expect(grouped.keys).to contain_exactly("Weaving", "Painting")
     expect(grouped["Weaving"]).to be_a(PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPeriod)

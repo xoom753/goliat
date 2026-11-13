@@ -9,7 +9,7 @@ RSpec.describe LegacyActivityGroup, type: :model do
     zulu = described_class.create!(nombre: "Zulu")
     alpha = described_class.create!(nombre: "Alpha")
 
-    expect(described_class.ordered).to eq([alpha, zulu])
+    expect(described_class.ordered).to eq([ alpha, zulu ])
   end
 
   it "belongs to an optional activity group" do

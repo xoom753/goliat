@@ -54,8 +54,8 @@ RSpec.describe "Import legacy people activities", type: :request do
         activity_detail_str: "Course attendance"
       ))
       expect(flash[:notice]).to eq("2 imported")
-      expect(LegacyPersonActivity.order(:row_number).map(&:row_number)).to eq([1, 3])
-      expect(LegacyPersonActivity.order(:row_number).map { |record| record.legacy_person.nombres }).to eq(["Jane Doe Smith", "Alex Rivera"])
+      expect(LegacyPersonActivity.order(:row_number).map(&:row_number)).to eq([ 1, 3 ])
+      expect(LegacyPersonActivity.order(:row_number).map { |record| record.legacy_person.nombres }).to eq([ "Jane Doe Smith", "Alex Rivera" ])
       expect(LegacyPersonActivity.first).to have_attributes(
         duracion: "12 horas",
         start_date: Date.new(2024, 1, 1),

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "dashboards#hello"
-  resource :import_legacy_files, only: [:show, :create] do
+  resource :import_legacy_files, only: [ :show, :create ] do
     member do
       get :parse
       put :update_parser
@@ -45,33 +45,33 @@ Rails.application.routes.draw do
       get :certificados_educativo
     end
   end
-  resources :import_people, only: [:new, :create]
-  resources :import_people_activities, only: [:new, :create]
-  resources :import_legacy_people_activities, only: [:new, :create]
+  resources :import_people, only: [ :new, :create ]
+  resources :import_people_activities, only: [ :new, :create ]
+  resources :import_legacy_people_activities, only: [ :new, :create ]
   resources :people_activities, only: :index
-  resources :courses, only: [:edit, :update, :destroy]
+  resources :courses, only: [ :edit, :update, :destroy ]
   resources :extranjeros_presentes
-  resources :legacy_people, only: [:index, :show] do
+  resources :legacy_people, only: [ :index, :show ] do
     collection do
       get :view_several
     end
   end
   resources :import_errors, only: :index
   resources :legacy_activities, only: :index
-  resources :legacy_activity_groups, only: [:index, :update]
+  resources :legacy_activity_groups, only: [ :index, :update ]
   resources :legacy_person_activities, only: :index
-  resources :extra_activities, only: [:index, :new, :edit, :update, :destroy] do
+  resources :extra_activities, only: [ :index, :new, :edit, :update, :destroy ] do
     member do
       put :update_name
       get :export
     end
   end
-  resource :courses_by_month, only: [:show] do
+  resource :courses_by_month, only: [ :show ] do
     collection do
       get :export
     end
   end
-  resources :person_pabellon_updates, only: [:index, :new, :create]
+  resources :person_pabellon_updates, only: [ :index, :new, :create ]
   resource :dashboard, only: [] do
     collection do
       get :people

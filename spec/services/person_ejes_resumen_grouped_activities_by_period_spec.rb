@@ -12,11 +12,11 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPer
     allow(march_period).to receive(:include?).with(Date.new(2024, 3, 31)).and_return(true)
     expect(january_period).to receive(:append).with(january_activity)
     expect(march_period).to receive(:append).with(march_activity)
-    periods = [january_period, march_period]
+    periods = [ january_period, march_period ]
     period_renderer = double(periodos: periods)
 
     result = described_class.new(
-      activities: [january_activity, march_activity],
+      activities: [ january_activity, march_activity ],
       periodos_renderer_service: period_renderer
     ).by_periods
 
@@ -24,7 +24,7 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPer
   end
 
   it "returns periods unchanged when there are no activities" do
-    periods = [double("period")]
+    periods = [ double("period") ]
     period_renderer = double(periodos: periods)
 
     expect(described_class.new(activities: [], periodos_renderer_service: period_renderer).by_periods).to eq(periods)

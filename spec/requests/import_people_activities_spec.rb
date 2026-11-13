@@ -29,8 +29,8 @@ RSpec.describe "Import people activities", type: :request do
       expect(PersonActivity.order(:id).map(&:cargo)).to eq([
         "instructor", "apoyo", "independiente", "responsable", "cuentapropia"
       ])
-      expect(PersonActivity.pluck(:mes, :anio).uniq).to eq([[3, 2024]])
-      expect(PersonActivity.pluck(:coursable_type, :coursable_id).uniq).to eq([["Activity", activity.id]])
+      expect(PersonActivity.pluck(:mes, :anio).uniq).to eq([ [ 3, 2024 ] ])
+      expect(PersonActivity.pluck(:coursable_type, :coursable_id).uniq).to eq([ [ "Activity", activity.id ] ])
     end
 
     it "records an import error for an unknown DNI and reports the input row count" do

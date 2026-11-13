@@ -5,7 +5,7 @@ RSpec.describe LegacyActivity, type: :model do
     zulu = described_class.create!(nombre: "Zulu")
     alpha = described_class.create!(nombre: "Alpha")
 
-    expect(described_class.ordered).to eq([alpha, zulu])
+    expect(described_class.ordered).to eq([ alpha, zulu ])
   end
 
   it "has many legacy person activities" do

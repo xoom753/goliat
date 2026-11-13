@@ -1,5 +1,5 @@
 class ImportLegacyFilesController < ApplicationController
-    skip_before_action :verify_authenticity_token, :only => [:create]
+    skip_before_action :verify_authenticity_token, only: [ :create ]
 
     def show
         scope = LegacyImportFile.sorted_by_date

@@ -16,7 +16,7 @@ RSpec.describe "Courses by month export", type: :request do
     expect(response.media_type).to eq("text/csv")
     expect(response.headers["Content-Disposition"]).to include("Painting-March-#{Date.today}.csv")
     rows = CSV.parse(response.body, headers: true)
-    expect(rows.headers).to eq(["Nombres", "Cédula", "Cargo", "Pabellón"])
-    expect(rows.map(&:fields)).to eq([["Jane Example", "111", "instructor", "A-1"]])
+    expect(rows.headers).to eq([ "Nombres", "Cédula", "Cargo", "Pabellón" ])
+    expect(rows.map(&:fields)).to eq([ [ "Jane Example", "111", "instructor", "A-1" ] ])
   end
 end

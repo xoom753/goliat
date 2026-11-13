@@ -18,13 +18,13 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
       activities: later_activities
     )
   end
-  let(:periods) { [first_period, second_period] }
+  let(:periods) { [ first_period, second_period ] }
   let(:later_activities) { [] }
   let(:summary) do
     double(
       several_delitos?: false,
       fecha_traslado: nil,
-      delitos_array: ["Robo"]
+      delitos_array: [ "Robo" ]
     )
   end
   let(:translator) { double(t: "Texto traducido") }
@@ -45,8 +45,8 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
   it "builds percentage bottom rows and merges information rows without semester temporalidad" do
     expect(renderer.ficha_info_table_bottom_rows).to eq([])
     expect(renderer.grades_ficha_bottom_rows).to eq([
-      ["PERIODO 20%", "01/01/2024", "30/06/2024"],
-      ["PERIODO 40%", "01/07/2024", "31/12/2024"]
+      [ "PERIODO 20%", "01/01/2024", "30/06/2024" ],
+      [ "PERIODO 40%", "01/07/2024", "31/12/2024" ]
     ])
     expect(renderer.get_info_table_merged_rows_count).to eq(4)
     expect(renderer.get_grades_table_merged_rows_count).to eq(4)
@@ -56,12 +56,12 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
   end
 
   it "appends later percentage headings and scores based on later-period activities" do
-    allow(second_period).to receive(:activities).and_return([:activity])
-    rows = [["Axis"], ["Header", "20%"], ["Permanent", "0"], ["Temporal", "2"], ["Subtotal", "2"]]
+    allow(second_period).to receive(:activities).and_return([ :activity ])
+    rows = [ [ "Axis" ], [ "Header", "20%" ], [ "Permanent", "0" ], [ "Temporal", "2" ], [ "Subtotal", "2" ] ]
 
     renderer.concat_tipo_porcentual_rows!(rows)
 
-    expect(rows[1]).to eq(["Header", "20%", "40%"])
+    expect(rows[1]).to eq([ "Header", "20%", "40%" ])
     expect(rows[2].last).to eq("2")
     expect(rows[3].last).to eq("2")
     expect(rows[4].last).to eq("2")
@@ -77,7 +77,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
 
   it "renders certificates for grouped activities" do
     allow(activities_renderer).to receive(:grouped_activities).and_return(
-      [double(activities: [activity_renderer])]
+      [ double(activities: [ activity_renderer ]) ]
     )
     allow(docx).to receive(:p)
     allow(docx).to receive(:ol) { |&block| renderer.instance_exec(&block) }

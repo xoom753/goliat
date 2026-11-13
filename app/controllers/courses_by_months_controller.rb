@@ -23,17 +23,17 @@ class CoursesByMonthsController < ApplicationController
         )
 
         csv_data = CSV.generate(headers: true) do |csv|
-            csv << ["Nombres", "Cédula", "Cargo", "Pabellón"]
+            csv << [ "Nombres", "Cédula", "Cargo", "Pabellón" ]
             activities.each do |activity|
                 csv << [
                     activity.person.nombres,
                     activity.person.dni,
                     activity.cargo,
-                    activity.person.pabellon,
+                    activity.person.pabellon
                 ]
             end
         end
-        csv_name = "#{activity.nombre}-#{Date::MONTHNAMES[month.to_i]}-#{Date.today.to_s}"
+        csv_name = "#{activity.nombre}-#{Date::MONTHNAMES[month.to_i]}-#{Date.today}"
         send_data csv_data,
                   filename: "#{csv_name}.csv",
                   disposition: :attachment

@@ -4,7 +4,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRe
   let(:current_period) { double(period_percentage: "20%", activities: []) }
   let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
   let(:later_activities) { [] }
-  let(:periods) { [current_period, later_period] }
+  let(:periods) { [ current_period, later_period ] }
   let(:person_summary) { double(tipo_porcentual?: percentage_mode) }
   let(:period_type_renderer) do
     double(
@@ -29,7 +29,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRe
   it "builds cultural grade rows and renders their table for semester reports" do
     allow(docx).to receive(:p)
     expect(docx).to receive(:table) do |rows, &_block|
-      expect(rows[0]).to eq(["CULTURAL"])
+      expect(rows[0]).to eq([ "CULTURAL" ])
       expect(rows[1].last).to eq("20%")
       expect(rows[2]).to include("PERMANENTE", "3", "0")
       expect(rows[3]).to include("TEMPORAL", "2", "0")
@@ -46,11 +46,11 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRe
       rows[2] << "0"
       rows[3] << "2"
     end
-    allow(later_period).to receive(:activities).and_return([:activity])
+    allow(later_period).to receive(:activities).and_return([ :activity ])
     allow(docx).to receive(:p)
     expect(docx).to receive(:table) do |rows, &_block|
       expect(rows.map(&:first)).not_to include("PERMANENTE")
-      expect(rows[1][2, 2]).to eq(["20%", "40%"])
+      expect(rows[1][2, 2]).to eq([ "20%", "40%" ])
       expect(rows[3].last).to eq("2")
     end
 

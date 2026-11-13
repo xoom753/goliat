@@ -29,13 +29,13 @@ RSpec.describe LegacyPersonActivity, type: :model do
     recent = described_class.create!(end_date: Date.new(2024, 2, 1))
     earlier = described_class.create!(end_date: Date.new(2023, 2, 1))
 
-    expect(described_class.oldest_first).to eq([earlier, recent])
+    expect(described_class.oldest_first).to eq([ earlier, recent ])
   end
 
   it "orders activities newest first by end date" do
     earlier = described_class.create!(end_date: Date.new(2023, 2, 1))
     recent = described_class.create!(end_date: Date.new(2024, 2, 1))
 
-    expect(described_class.sorted_by_date).to eq([recent, earlier])
+    expect(described_class.sorted_by_date).to eq([ recent, earlier ])
   end
 end

@@ -488,6 +488,7 @@ DEPENDENCIES
   roo
   roo-xls
   rspec-rails (~> 7.1)
+  rubocop-performance
   rubocop-rails-omakase
   ruby-graphviz
   selenium-webdriver

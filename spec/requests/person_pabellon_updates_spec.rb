@@ -18,9 +18,9 @@ RSpec.describe "Person pavilion updates", type: :request do
         }
       end.to change(PersonPabellonUpdate, :count).by(2)
 
-      expect(PersonPabellonUpdate.order(:id).map { |row| [row.nombres, row.pabellon] }).to eq([
-        ["Jane Example", "A-1"],
-        ["Alex Rivera", "B-2"]
+      expect(PersonPabellonUpdate.order(:id).map { |row| [ row.nombres, row.pabellon ] }).to eq([
+        [ "Jane Example", "A-1" ],
+        [ "Alex Rivera", "B-2" ]
       ])
       expect(response).to redirect_to(new_person_pabellon_update_path(notice: "Imported 2 updates!"))
     end

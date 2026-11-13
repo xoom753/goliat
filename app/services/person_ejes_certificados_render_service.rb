@@ -9,7 +9,7 @@ class PersonEjesCertificadosRenderService
 
     def to_csv
         CSV.generate(headers: true) do |csv|
-            csv << ["N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas"]
+            csv << [ "N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas" ]
             activities.each_with_index do |activity, index|
                 csv << [
                     index + 1,

@@ -17,7 +17,7 @@ RSpec.describe PersonEjesResumen::InformeRendererService do
   it "delegates period calculation to the period renderer" do
     renderer = described_class.new(person_ejes_resumen: summary, kind: :cultural)
 
-    expect(renderer.periodos.map(&:period_percentage)).to eq(["20%"])
+    expect(renderer.periodos.map(&:period_percentage)).to eq([ "20%" ])
   end
 
   it "caches the period renderer result" do

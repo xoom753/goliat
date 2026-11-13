@@ -4,9 +4,9 @@ RSpec.describe PersonEjesResumen::ActivitiesByPeriodsRendererService do
   it "fetches both activity sources and groups them into periods" do
     summary = double("summary")
     period_service = double("periods")
-    legacy = [:legacy]
-    present = [:present]
-    grouped_result = [:period]
+    legacy = [ :legacy ]
+    present = [ :present ]
+    grouped_result = [ :period ]
     legacy_fetcher = double(activities: legacy)
     present_fetcher = double(activities: present)
     grouped_renderer = double(grouped_activities: grouped_result)

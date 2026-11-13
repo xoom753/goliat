@@ -14,6 +14,6 @@ class CreateOriginPeople < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :origin_people, [:fullname, :dni]
+    add_index :origin_people, [ :fullname, :dni ]
   end
 end

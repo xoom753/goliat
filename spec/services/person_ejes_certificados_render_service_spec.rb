@@ -5,10 +5,10 @@ RSpec.describe PersonEjesCertificadosRenderService do
   let(:person_ejes_resumen) { double("person_ejes_resumen", nombres: "Casey Example") }
   subject(:service) { described_class.new(person_ejes_resumen) }
 
-  before { service.kinds = [:cultural, :deportivo, :laboral] }
+  before { service.kinds = [ :cultural, :deportivo, :laboral ] }
 
   before do
-    service.kinds = [:cultural, :deportivo, :laboral]
+    service.kinds = [ :cultural, :deportivo, :laboral ]
   end
 
   def rendered_activity(kind:, name:, actividad_kind:, months:, duration:)
@@ -24,7 +24,7 @@ RSpec.describe PersonEjesCertificadosRenderService do
 
   def stub_kind_activities(kind, activities)
     grouped_activities = double("grouped activities", activities: activities)
-    period_renderer = double("period renderer", grouped_activities: [grouped_activities])
+    period_renderer = double("period renderer", grouped_activities: [ grouped_activities ])
     informe_renderer = double("report renderer")
     allow(informe_renderer).to receive(:send)
       .with(:activities_by_periods_renderer_service)
@@ -43,7 +43,7 @@ RSpec.describe PersonEjesCertificadosRenderService do
         months: "ENERO DE 2024",
         duration: "8 horas"
       )
-      stub_kind_activities(:cultural, [activity])
+      stub_kind_activities(:cultural, [ activity ])
       stub_kind_activities(:deportivo, [])
       stub_kind_activities(:laboral, [])
 
@@ -80,15 +80,15 @@ RSpec.describe PersonEjesCertificadosRenderService do
         months: "MAYO DE 2024",
         duration: "10 horas"
       )
-      stub_kind_activities(:cultural, [cultural])
-      stub_kind_activities(:deportivo, [deportivo])
-      stub_kind_activities(:laboral, [laboral])
+      stub_kind_activities(:cultural, [ cultural ])
+      stub_kind_activities(:deportivo, [ deportivo ])
+      stub_kind_activities(:laboral, [ laboral ])
 
       rows = CSV.parse(service.to_csv, headers: true)
 
-      expect(rows.map { |row| row["N"] }).to eq(["1", "2", "3"])
-      expect(rows.map { |row| row["Eje tratamiento"] }).to eq(["CULTURAL", "DEPORTIVO", "LABORAL"])
-      expect(rows.map { |row| row["Nombre curso"] }).to eq(["Painting", "Football", "Carpentry"])
+      expect(rows.map { |row| row["N"] }).to eq([ "1", "2", "3" ])
+      expect(rows.map { |row| row["Eje tratamiento"] }).to eq([ "CULTURAL", "DEPORTIVO", "LABORAL" ])
+      expect(rows.map { |row| row["Nombre curso"] }).to eq([ "Painting", "Football", "Carpentry" ])
     end
 
     it "returns a header-only CSV when there are no activities" do
@@ -114,11 +114,11 @@ RSpec.describe PersonEjesCertificadosRenderService do
       cultural_two = rendered_activity(kind: :cultural, name: "B", actividad_kind: "curso", months: "FEBRERO", duration: "2")
       deportivo = rendered_activity(kind: :deportivo, name: "C", actividad_kind: "curso", months: "MARZO", duration: "3")
       laboral = rendered_activity(kind: :laboral, name: "D", actividad_kind: "curso", months: "ABRIL", duration: "4")
-      stub_kind_activities(:cultural, [cultural_one, cultural_two])
-      stub_kind_activities(:deportivo, [deportivo])
-      stub_kind_activities(:laboral, [laboral])
+      stub_kind_activities(:cultural, [ cultural_one, cultural_two ])
+      stub_kind_activities(:deportivo, [ deportivo ])
+      stub_kind_activities(:laboral, [ laboral ])
 
-      expect(service.send(:activities)).to eq([cultural_one, cultural_two, deportivo, laboral])
+      expect(service.send(:activities)).to eq([ cultural_one, cultural_two, deportivo, laboral ])
     end
 
     it "requests one report renderer for each treatment axis in order" do

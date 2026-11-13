@@ -4,7 +4,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
   let(:current_period) { double(period_percentage: "20%", activities: []) }
   let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
   let(:later_activities) { [] }
-  let(:periods) { [current_period, later_period] }
+  let(:periods) { [ current_period, later_period ] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:period_type_renderer) do
     double(
@@ -29,7 +29,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
   it "renders semester table rows and zero temporal score" do
     allow(docx).to receive(:p)
     expect(docx).to receive(:table) do |rows, &_block|
-      expect(rows[0]).to eq(["DEPORTIVO"])
+      expect(rows[0]).to eq([ "DEPORTIVO" ])
       expect(rows[1].last).to eq("20%")
       expect(rows[3]).to include("TEMPORAL", "0")
     end
@@ -44,10 +44,10 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
       rows[2] << "0"
       rows[3] << "2"
     end
-    allow(later_period).to receive(:activities).and_return([:activity])
+    allow(later_period).to receive(:activities).and_return([ :activity ])
     allow(docx).to receive(:p)
     expect(docx).to receive(:table) do |rows, &_block|
-      expect(rows[1][2, 2]).to eq(["20%", "40%"])
+      expect(rows[1][2, 2]).to eq([ "20%", "40%" ])
       expect(rows[3].last).to eq("2")
     end
 

@@ -7,7 +7,7 @@ namespace :extranjeros_presentes do
         row_number = 0
         sheet.each do |row|
             if row_number < 1
-                # skipping first row
+            # skipping first row
             else
                 nombres = row[0]
                 pasaporte = row[2]
