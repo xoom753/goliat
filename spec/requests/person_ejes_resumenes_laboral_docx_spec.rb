@@ -16,7 +16,7 @@ RSpec.describe "Laboral report DOCX", type: :request do
   let(:percentage_mode) { true }
 
   def expect_laboral_docx(report)
-    get laboral_person_ejes_resumen_path(report, format: :docx)
+    get laboral_export_person_ejes_resumen_path(report, format: :docx)
 
     expect(response).to have_http_status(:ok)
     expect(response.headers["Content-Disposition"]).to include(

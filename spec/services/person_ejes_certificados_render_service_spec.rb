@@ -5,6 +5,12 @@ RSpec.describe PersonEjesCertificadosRenderService do
   let(:person_ejes_resumen) { double("person_ejes_resumen", nombres: "Casey Example") }
   subject(:service) { described_class.new(person_ejes_resumen) }
 
+  before { service.kinds = [:cultural, :deportivo, :laboral] }
+
+  before do
+    service.kinds = [:cultural, :deportivo, :laboral]
+  end
+
   def rendered_activity(kind:, name:, actividad_kind:, months:, duration:)
     double(
       "#{kind}_#{name}",

@@ -22,6 +22,12 @@ RSpec.describe OriginPersonLegalProcess, type: :model do
     expect(process.estado).to eq("con_sentencia")
   end
 
+  it "preserves the default state when estado_str is blank" do
+    process = described_class.create!(origin_person: origin_person, estado_str: "")
+
+    expect(process.estado).to eq("en_proceso")
+  end
+
   it "has one legal penalty" do
     expect(described_class.reflect_on_association(:origin_person_legal_penalty).macro).to eq(:has_one)
   end

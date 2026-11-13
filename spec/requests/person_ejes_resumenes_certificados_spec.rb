@@ -24,12 +24,11 @@ RSpec.describe "Person Ejes Resumen certificados CSV", type: :request do
   describe "GET /person_ejes_resumenes/:id/certificados" do
     it "sends the rendered CSV as a named attachment and updates report generation time" do
       rendered_csv = instance_double(PersonEjesCertificadosRenderService, to_csv: csv_data)
-      expect(PersonEjesCertificadosRenderService).to receive(:new)
-        .with(report)
-        .and_return(rendered_csv)
+      allow(rendered_csv).to receive(:kinds=)
+      allow(PersonEjesCertificadosRenderService).to receive(:new).with(report).and_return(rendered_csv)
 
       expect do
-        get certificados_person_ejes_resumen_path(report, format: :csv)
+        get certificados_export_person_ejes_resumen_path(report, format: :csv)
       end.to change { report.reload.last_generated_at }
 
       expect(response).to have_http_status(:ok)
@@ -47,9 +46,10 @@ RSpec.describe "Person Ejes Resumen certificados CSV", type: :request do
     it "returns a CSV attachment with headers when there are no certificates" do
       empty_csv = "N,Apellidos y nombres,Tipo curso,Nombre curso,Eje tratamiento,Mes,Horas\n"
       rendered_csv = instance_double(PersonEjesCertificadosRenderService, to_csv: empty_csv)
-      allow(PersonEjesCertificadosRenderService).to receive(:new).and_return(rendered_csv)
+      allow(rendered_csv).to receive(:kinds=)
+      allow(PersonEjesCertificadosRenderService).to receive(:new).with(report).and_return(rendered_csv)
 
-      get certificados_person_ejes_resumen_path(report, format: :csv)
+      get certificados_export_person_ejes_resumen_path(report, format: :csv)
 
       expect(response).to have_http_status(:ok)
       expect(response.headers["Content-Disposition"]).to include("certificados-Casey Example.csv")

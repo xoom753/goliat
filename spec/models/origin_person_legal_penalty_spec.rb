@@ -24,6 +24,19 @@ RSpec.describe OriginPersonLegalPenalty, type: :model do
     expect(penalty.veinte_porciento_at).to eq(Date.new(2026, 1, 1))
   end
 
+  it "converts each supplied percentage date before saving" do
+    penalty = described_class.new(origin_person: origin_person, origin_person_legal_process: legal_process)
+    penalty.cuarenta_porciento_at_str = "2025-01-15"
+    penalty.sesenta_porciento_at_str = "2026-01-15"
+    penalty.ochenta_porciento_at_str = "2027-01-15"
+
+    penalty.save!
+
+    expect(penalty.cuarenta_porciento_at).to eq(Date.new(2025, 1, 15))
+    expect(penalty.sesenta_porciento_at).to eq(Date.new(2026, 1, 15))
+    expect(penalty.ochenta_porciento_at).to eq(Date.new(2027, 1, 15))
+  end
+
   it "leaves values unchanged when their input is EN PROCESO" do
     penalty = described_class.new(origin_person: origin_person, origin_person_legal_process: legal_process)
     penalty.cantidad_total_sentencia = 90

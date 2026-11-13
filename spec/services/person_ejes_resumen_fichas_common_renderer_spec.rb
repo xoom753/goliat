@@ -1,44 +1,46 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer do
+  let(:current_period) { double(period_percentage: "20%", activities: current_activities) }
+  let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
+  let(:periods) { [current_period, later_period] }
+  let(:current_activities) { [:activity] }
+  let(:later_activities) { [] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
-  let(:first_period) do
-    double(period_percentage: "20%", activities: [double(:activity)])
-  end
-  let(:second_period) { double(period_percentage: "40%", activities: []) }
-  let(:periods) { [first_period, second_period] }
-  let(:current_period) { first_period }
-  let(:docx) { double }
-  let(:renderer) do
-    described_class.new(
-      docx: docx,
-      person_ejes_resumen: summary,
-      periodos_renderer_service: double(periodos: periods),
-      current_periodo: current_period
+  let(:period_type_renderer) do
+    double(
+      get_kind_specific_table_header_colspan: 5,
+      get_semestre: "20%",
+      get_subtotal_max_grade: "2",
+      concat_tipo_porcentual_rows!: nil
     )
   end
+  let(:docx) { double }
   let(:percentage_mode) { true }
+  subject(:renderer) do
+    described_class.new(
+      docx: docx,
+      current_periodo: current_period,
+      person_ejes_resumen: summary,
+      periodos_renderer_service: double(periodos: periods),
+      by_tipo_periodo_renderer: period_type_renderer
+    )
+  end
 
-  it "uses the temporal grade based on current period activity" do
+  it "returns temporal grades based on the current period activity list" do
     expect(renderer.send(:temp_grade)).to eq("2")
     allow(current_period).to receive(:activities).and_return([])
     expect(renderer.send(:temp_grade)).to eq("0")
   end
 
-  it "computes percentage table columns and their activity scores" do
-    expect(renderer.send(:get_header_colspan)).to eq(5)
-    rows = [["Axis"], ["Headers", "20%"], ["Permanent", "0"], ["Temporary", "0"]]
-
-    renderer.send(:concat_tipo_porcentual_rows!, rows)
-
-    expect(rows[1]).to eq(["Headers", "20%", "40%"])
-    expect(rows[2].last).to eq("0")
-    expect(rows[3].last).to eq("0")
+  it "delegates the specific header span" do
+    expect(renderer.send(:get_kind_specific_table_header_colspan)).to eq(5)
   end
 
-  it "keeps the base column span for semester mode" do
+  it "uses the period-type renderer span in semester mode" do
     allow(summary).to receive(:tipo_porcentual?).and_return(false)
+    allow(period_type_renderer).to receive(:get_kind_specific_table_header_colspan).and_return(4)
 
-    expect(renderer.send(:get_header_colspan)).to eq(4)
+    expect(renderer.send(:get_kind_specific_table_header_colspan)).to eq(4)
   end
 end

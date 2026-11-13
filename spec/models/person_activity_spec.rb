@@ -19,6 +19,12 @@ RSpec.describe PersonActivity, type: :model do
     expect(activity.end_date).to eq(Date.new(2024, 2, 29))
   end
 
+  it "returns the last day for a non-leap February" do
+    activity = described_class.new(anio: 2023, mes: 2)
+
+    expect(activity.end_date).to eq(Date.new(2023, 2, 28))
+  end
+
   it "maps cargo values to their integer-backed enum" do
     expect(described_class.cargos).to include(
       "estudiante" => 0,

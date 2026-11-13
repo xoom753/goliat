@@ -25,6 +25,14 @@ RSpec.describe OriginPerson, type: :model do
     expect(origin_person.situacion_actual).to eq("presente_beneficio_revocado")
   end
 
+  it "keeps the enum default when situacion_actual_str is nil" do
+    origin_person.situacion_actual_str = nil
+
+    origin_person.save!
+
+    expect(origin_person.situacion_actual).to eq("presente")
+  end
+
   it "preserves the enum default when the supplied status is blank" do
     origin_person.situacion_actual_str = ""
 

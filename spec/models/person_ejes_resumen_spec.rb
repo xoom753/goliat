@@ -43,6 +43,14 @@ RSpec.describe PersonEjesResumen, type: :model do
     expect { resumen.update_last_generated_at! }.to change(resumen, :last_generated_at)
   end
 
+  it "serializes association ID arrays as comma-separated strings" do
+    resumen.people_ids = [12, 34]
+    resumen.legacy_people_ids = [56, 78]
+
+    expect(resumen.people_ids).to eq("12,34")
+    expect(resumen.legacy_people_ids).to eq("56,78")
+  end
+
   it "memoizes parsed text arrays" do
     expect(resumen.delitos_array.object_id).to equal(resumen.delitos_array.object_id)
     expect(resumen.sentencias_array.object_id).to equal(resumen.sentencias_array.object_id)

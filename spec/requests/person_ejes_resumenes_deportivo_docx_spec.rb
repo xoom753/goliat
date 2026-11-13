@@ -18,7 +18,7 @@ RSpec.describe "Deportivo report DOCX", type: :request do
     expect(PersonEjesResumen::InformeRendererService).to receive(:new)
       .with(kind: :deportivo, person_ejes_resumen: report).and_call_original
 
-    get deportivo_person_ejes_resumen_path(report, format: :docx)
+    get deportivo_export_person_ejes_resumen_path(report, format: :docx)
 
     expect(response).to have_http_status(:ok)
     expect(response.headers["Content-Disposition"]).to include("Deportivo-Casey Example.docx")

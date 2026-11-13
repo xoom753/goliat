@@ -16,7 +16,7 @@ RSpec.describe "Educativo report DOCX", type: :request do
   let(:percentage_mode) { true }
 
   def expect_educativo_docx(report)
-    get educativo_person_ejes_resumen_path(report, format: :docx)
+    get educativo_export_person_ejes_resumen_path(report, format: :docx)
 
     expect(response).to have_http_status(:ok)
     expect(response.headers["Content-Disposition"]).to include(

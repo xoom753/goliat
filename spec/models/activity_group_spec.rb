@@ -4,4 +4,8 @@ RSpec.describe ActivityGroup, type: :model do
   it "has many activities" do
     expect(described_class.reflect_on_association(:activities).macro).to eq(:has_many)
   end
+
+  it "has many legacy activity groups" do
+    expect(described_class.reflect_on_association(:legacy_activity_groups).macro).to eq(:has_many)
+  end
 end

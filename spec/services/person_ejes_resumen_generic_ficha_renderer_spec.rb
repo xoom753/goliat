@@ -20,7 +20,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
   let(:percentage_mode) { false }
   let(:docx) { double }
   let(:translator) { double }
-  let(:periodos_renderer) { double(periodos: []) }
+  let(:period) { double(periodos: [double]) }
   let(:activities_renderer) { double }
   subject(:renderer) do
     described_class.new(
@@ -28,14 +28,14 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
       kind: :cultural,
       person_ejes_resumen: summary,
       informes_translator_service: translator,
-      periodos_renderer_service: periodos_renderer,
+      periodos_renderer_service: period,
       activities_by_periods_renderer_service: activities_renderer,
       index: 0
     )
   end
 
   describe "#common_table_rows" do
-    it "builds identity, transfer, offense, sentence, and accumulated penalty rows" do
+    it "builds identity, transfer, offenses, sentences, and accumulated penalty rows" do
       rows = renderer.send(:common_table_rows)
 
       expect(rows).to include(
@@ -52,25 +52,27 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
       expect(renderer.send(:common_table_rows)).to equal(rows)
     end
 
-    it "uses a generic transfer row label when transfer location is absent" do
+    it "omits transfer details when the transfer location is blank" do
       allow(summary).to receive(:ubicacion_traslado).and_return(nil)
 
       expect(renderer.send(:common_table_rows)).to include(["FECHA DE TRASLADO:", "05/04/2022"])
     end
   end
 
-  describe "#get_info_table_merged_rows_count" do
-    it "counts transfer, multiple offenses, accumulated penalties, and semester rows" do
-      expect(renderer.send(:get_info_table_merged_rows_count)).to eq(9)
+  describe "period-type renderer delegation" do
+    it "builds and memoizes a semester renderer" do
+      allow(summary).to receive(:tipo_porcentual?).and_return(false)
+      renderer.send(:by_tipo_periodo_renderer)
+      period_type_renderer = renderer.instance_variable_get(:@by_tipo_periodo_renderer)
+
+      expect(period_type_renderer).to be_a(PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRenderer)
+      expect(renderer.send(:by_tipo_periodo_renderer)).to equal(period_type_renderer)
     end
 
-    it "omits transfer and multiple-offense rows for a percentage report with one offense" do
+    it "builds a percentage renderer for percentage-based summaries" do
       allow(summary).to receive(:tipo_porcentual?).and_return(true)
-      allow(summary).to receive(:fecha_traslado).and_return(nil)
-      allow(summary).to receive(:delitos_array).and_return(["Robo"])
-      allow(summary).to receive(:several_delitos?).and_return(false)
 
-      expect(renderer.send(:get_info_table_merged_rows_count)).to eq(4)
+      expect(renderer.send(:by_tipo_periodo_renderer)).to be_a(PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentualesRenderer)
     end
   end
 end

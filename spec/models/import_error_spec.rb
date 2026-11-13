@@ -23,6 +23,13 @@ RSpec.describe ImportError, type: :model do
     expect(record.details_object).to eq(details)
   end
 
+  it "memoizes deserialized details_object values" do
+    record = described_class.create!(details: details.to_yaml)
+    first_result = record.details_object
+
+    expect(record.details_object).to equal(first_result)
+  end
+
   it "preserves nested details when serializing and loading" do
     nested_details = {
       "person" => { "nombres" => "Casey Example", "dni" => "1234567890" },

@@ -34,11 +34,7 @@ Rails.application.routes.draw do
       :create,
       :edit,
       :update
-    ] do
-    member do
-
-    end
-  end
+    ]
   resources :export_person_ejes_resumenes, only: [] do
     member do
       get :cultural
