@@ -14,7 +14,7 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRende
       .to receive(:new).with(current_activity: present_record).and_return(present_renderer)
     expect(PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPeriodRenderer)
       .to receive(:new).with(
-        activities: [ legacy_renderer, present_renderer ],
+        activities: [ present_renderer, legacy_renderer ],
         periodos_renderer_service: :periods_service
       ).and_return(period_renderer)
 

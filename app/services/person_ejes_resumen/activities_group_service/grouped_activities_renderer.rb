@@ -23,7 +23,7 @@ class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer
     end
 
     def all_activities
-        legacy_activities + present_activities
+        present_activities + legacy_activities
     end
 
     def legacy_activities
