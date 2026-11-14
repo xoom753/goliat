@@ -6,7 +6,7 @@ RSpec.describe "Person pavilion updates", type: :request do
       get new_person_pabellon_update_path
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Update people and their cells", "updates")
+      expect(response.body).to include("Actualizar celdas y pabellones")
     end
   end
 

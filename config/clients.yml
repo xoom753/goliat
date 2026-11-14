@@ -1,3 +1,7 @@
 shared:
   permitted_clients:
     - "192.168.65.1"
+
+test:
+  permitted_clients:
+    - "127.0.0.1"
