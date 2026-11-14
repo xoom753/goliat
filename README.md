@@ -42,3 +42,9 @@ bundle exec erd --generator=graphviz --filetype=png
 bundle exec rspec --format json --out spec_results.json spec
 bundle exec rspec --format h --out spec_results.html spec
 ```
+
+### backup db
+
+```
+pg_dump postgres://postgres:password@db/goliat_db -Fc -f backup.dump
+```
