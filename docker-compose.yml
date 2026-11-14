@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web:
+    image: ruby
+    volumes:
+      - ./app:/app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    tty: true
+    working_dir: /app
+    #rerun used in below command
+    command:  bash -c "bundle config set path /app/local_gems && bundle exec rerun ruby --dir src /app/src/hello.rb"
+    environment:
+      - RAILS_ENV=development
+      # - DATABASE_URL=postgres://postgres:password@db/goliat_db
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: goliat_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
