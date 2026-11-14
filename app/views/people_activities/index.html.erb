@@ -1,16 +1,39 @@
+<h2 class="has-text-centered">
+    Actividades presentes
+</h2>
+
 <div>
-    <%= form_tag people_activities_path, method: :get do %>
-        <%= select_tag :activity_group_id,
+    <%= form_tag people_activities_path,
+                 method: :get,
+                 data: { controller: "auto-submit-form" } do %>
+        <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <div class="select">
+                                    <%= select_tag :activity_group_id,
                        options_from_collection_for_select(ActivityGroup.all, :id, :nombre, params[:activity_group_id]),
-                      include_blank: true %>
+                      { include_blank: "Todos los ejes", data: {"auto-submit-form-target" => "selectTag"} } %>
+                                </div>
+                                <div class="select">
         <%= select_tag :activity_id,
-                       options_from_collection_for_select(Activity.all, :id, :nombre, params[:activity_id]), include_blank: true %>
-        <%= select_month Date.today, include_blank: true %>
-        <%= submit_tag "search" %>
+                        options_from_collection_for_select(@activities, :id, :nombre, params[:activity_id]),
+                        { include_blank: "Todas las actividades", data: {"auto-submit-form-target" => "selectTag"} } %>
+                                </div>
+                                <div class="select">
+        <%= select_month @month.to_i, { include_blank: true }, {data: {"auto-submit-form-target" => "selectTag"} } %>
+                                </div>
+        <%= submit_tag "Buscar", data: {"auto-submit-form-target" => "submitBtn"} %>
     <% end %>
 </div>
 
-<table id=datatables border=1>
+<div class="my-2 has-text-right">
+    <%=
+        pluralize @people_activities.total_count, "registro", "registros"
+    %>
+</div>
+
+<table id=datatables class="table is-striped is-hoverable">
     <thead>
         <tr>
             <th>Eje</th>
@@ -51,8 +74,9 @@
     </tbody>
 </table>
 
-<%= javascript_tag do %>
-    const table = new DataTable('#datatables', {
-    // Options
-});
-<% end %>
+<div class="has-text-right">
+    <%= @people_activities.limit_value %>
+    por página
+</div>
+
+<%= paginate @people_activities %>

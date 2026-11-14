@@ -1,5 +1,12 @@
 # README
 
+## boot the app
+```
+RAILS_ENV=production bin/rails assets:precompile
+
+RAILS_ENV=production bin/rails server
+```
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
@@ -47,4 +54,6 @@ bundle exec rspec --format h --out spec_results.html spec
 
 ```
 pg_dump postgres://postgres:password@db/goliat_db -Fc -f backup.dump
+
+pg_restore --dbname="postgres://postgres:password@db/goliat_prod_db" backup.dump
 ```
