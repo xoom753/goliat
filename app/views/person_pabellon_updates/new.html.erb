@@ -1,13 +1,17 @@
-<h1>Update people and their cells</h1>
+<div class="has-text-centered">
+    <h2>Actualizar celdas y pabellones</h2>
+</div>
 
 <code>
 example:
 <br>
 ENCALADA SANCHEZ JHON PAUL"\t"CELDA_E_002"\n"<br>
-ESTRADA FALCON OSWALDO JOSE"\t"CELDA_E_002	
+ESTRADA FALCON OSWALDO JOSE"\t"CELDA_E_002
 </code>
 
 <%= form_tag person_pabellon_updates_path do %>
-    <%= textarea_tag :updates %>
-    <%= submit_tag %>
+    <div class="field">
+        <%= textarea_tag :updates, "", class: "textarea" %>
+    </div>
+    <%= submit_tag "Actualizar", class: "button" %>
 <% end %>

@@ -10,9 +10,20 @@
 
     <div class="navbar-menu" data-main-navbar-target="menu">
         <div class="navbar-start">
-            <%= link_to "PPL Presentes", people_dashboard_path, class: "navbar-item" %>
-            <%= link_to "Cursos", courses_by_month_path, class: "navbar-item" %>
-            <%= link_to "Actividades extra", extra_activities_path, class: "navbar-item" %>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    PPL Presentes
+                </a>
+
+                <div class="navbar-dropdown">
+                    <%= link_to "Lista PPL Presentes", people_dashboard_path, class: "navbar-item" %>
+                    <%= link_to "Cursos", courses_by_month_path, class: "navbar-item" %>
+                    <%= link_to "Fichas ejes", person_ejes_resumenes_path, class: "navbar-item" %>
+                    <%= link_to "Actividades extra", extra_activities_path, class: "navbar-item" %>
+                    <%= link_to "Extranjeros", extranjeros_presentes_path, class: "navbar-item" %>
+                    <%= link_to "Pabellones", person_pabellon_updates_path, class: "navbar-item" %>
+                </div>
+            </div>
 
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
@@ -32,9 +43,6 @@
             </div>
 
             <%= link_to "Información jurídica", origin_people_path, class: "navbar-item" %>
-            <%= link_to "Fichas ejes", person_ejes_resumenes_path, class: "navbar-item" %>
-            <%= link_to "Extranjeros", extranjeros_presentes_path, class: "navbar-item" %>
-            <%= link_to "Pabellones", person_pabellon_updates_path, class: "navbar-item" %>
         </div>
     </div>
 </nav>

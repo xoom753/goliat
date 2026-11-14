@@ -2,6 +2,10 @@
     <h2>Fichas</h2>
 </div>
 
+<div class="has-text-right">
+    <%= link_to "Nueva ficha ejes", new_person_ejes_resumen_path, class: "button is-ghost" %>
+</div>
+
 <% @person_ejes_resumenes.each do |person_ejes_resumen| %>
     <div data-controller="toggable-content">
         <div class="mb-3">
