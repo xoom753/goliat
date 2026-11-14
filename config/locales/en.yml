@@ -42,6 +42,15 @@ en:
 03/10/23	31/03/24	180	27,29%\n\
 01/04/24	28/09/24	180	34,67%\n\
 29/09/24	31/01/25	123,6	40,00%</pre>"
+  person_ejes_resumen:
+    social_report:
+      permanente_disciplina: "PERMANENTE: Disciplina, convivencia y/o relaciones interpersonales"
+      permanente_respeto: "Respeto y cooperación de celda y/o nivel de seguridad, cumplimiento de los orarios y los reglamentos establecidos en el Centro de Privación de Libertad."
+      permanente_comportamiento: "Comportamiento de la persona privada de la libertad con las visitas, servidores públicos y otras personas que ingresan al Centro."
+      temporal_capacitaciones: "TEMPORAL: Capacitaciones"
+      temporal_participacion: "Participación en talleres y/o capacitaciones de género, masculinidades, feminismo, equidad, no discriminación, escuela para madres y padres, cuidado y autocuidado, prevención de violencia, entre otras."
+      permanente_apoyo: "PERMANENTE: Grupos de apoyo"
+      permanente_participacion: "Participación en grupos de apoyo (NA-AA), proceso de rehabilitación para adicción o talleres de salud mental, psicoterapia individual y/o grupal, comunidades terapéuticas o cualquier tipo de seguimiento psicológico recomendado por el profesional."
   common:
     templates: "((TEMPLATES))"
     cultural: "Cultural"

@@ -1,7 +1,36 @@
 require "rails_helper"
 
 RSpec.describe "Legacy course file parsers", type: :request do
+  it "renders the HTML collection and editor pages" do
+    parser = LegacyCourseFileParser.create!(parser_name: "Course workbook")
+
+    get legacy_course_file_parsers_path
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Course workbook")
+
+    get new_legacy_course_file_parser_path
+    expect(response).to have_http_status(:ok)
+
+    get legacy_course_file_parser_path(parser)
+    expect(response).to have_http_status(:ok)
+
+    get edit_legacy_course_file_parser_path(parser)
+    expect(response).to have_http_status(:ok)
+  end
+
+  it "renders the edit form when an update is invalid" do
+    parser = LegacyCourseFileParser.create!(parser_name: "Course workbook")
+
+    patch legacy_course_file_parser_path(parser, format: :json), params: {
+      legacy_course_file_parser: { parser_name: nil }
+    }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(parser.reload.parser_name).to eq("Course workbook")
+  end
+
   it "creates, updates, and deletes a parser through the JSON API" do
+
     post legacy_course_file_parsers_path(format: :json), params: {
       legacy_course_file_parser: {
         parser_name: "Course workbook",

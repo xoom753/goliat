@@ -1,0 +1,72 @@
+@informe_renderer_service.docx = docx
+
+@informe_renderer_service.generic_styles
+@informe_renderer_service.header
+@informe_renderer_service.footer
+
+generic_table_rows = [
+    [
+        t("person_ejes_resumen.social_report.permanente_disciplina"),
+        t("person_ejes_resumen.social_report.permanente_respeto"),
+        "0,50 puntos",
+        "0,50",
+        "Sí cumple"
+    ],
+    [
+        t("person_ejes_resumen.social_report.permanente_disciplina"),
+        t("person_ejes_resumen.social_report.permanente_comportamiento"),
+        "0,50 puntos",
+        "0,50",
+        "Sí cumple"
+    ],
+    [
+        t("person_ejes_resumen.social_report.temporal_capacitaciones"),
+        t("person_ejes_resumen.social_report.temporal_participacion"),
+        "2 puntos",
+        "1",
+        "Charlas motivacionales individuales"
+    ],
+    [
+        t("person_ejes_resumen.social_report.permanente_apoyo"),
+        t("person_ejes_resumen.social_report.permanente_participacion"),
+        "2 puntos",
+        "1",
+        "Orientaciones psicológicas grupales"
+    ]
+]
+
+@informe_renderer_service.get_fichas_indexes.each do |index|
+    activities_ficha = @informe_renderer_service.get_activities_ficha(index)
+
+    activities_ficha.info_table
+
+    docx.p "Parámetros de Evaluación".upcase, align: :center, bold: true
+
+
+    table_rows = generic_table_rows.prepend(
+        [
+            "Actividades".upcase,
+            "Detalles de actividades".upcase,
+            "Puntaje".upcase,
+            activities_ficha.get_semestre,
+            "Justificación de la calificación".upcase
+        ]
+    )
+
+    docx.table table_rows do
+        column_widths [600, 1200, 600, 600, 600]
+        border_size 4
+        cell_style rows[0], bold: true, align: :center
+        cell_style cols[2], align: :center
+        cell_style cols[3], align: :center
+    end
+
+    docx.p
+
+    @informe_renderer_service.signature
+    docx.p "Trabajadora Social CPL Loja 1".upcase, bold: true
+
+    @informe_renderer_service.fecha_entrega
+
+    docx.page
+end

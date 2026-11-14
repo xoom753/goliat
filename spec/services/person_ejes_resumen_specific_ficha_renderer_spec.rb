@@ -17,15 +17,15 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
       private
 
       def grades_table_rows_first_part
-        [["Axis"], ["Header", "Max", "20%"]]
+        [["AXIS"], ["HEADER", "MAX", "20%"]]
       end
 
       def grades_table_permanente_rows
-        [["Permanent", "Description", "3", "0", "0", "0", "0", "0"]]
+        [["PERMANENT", "DESCRIPTION", "PARAMETER", "3", "0", "0", "0", "0"]]
       end
 
       def grades_table_rows_last_part
-        [["Temporal", "Description", "2", "0", "0", "0", "0", "0"], ["Subtotal", "5", "0", "0", "0", "0"]]
+        [["TEMPORAL", "DESCRIPTION", "PARAMETER", "2", "0", "0", "0", "0"], ["SUBTOTAL", "5", "0", "0", "0", "0"]]
       end
     end
   end
@@ -39,18 +39,27 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
     )
   end
 
-  it "applies permanent, temporal, and subtotal cell styles in semester mode" do
-    cells = Array.new(8) { |index| "cell-#{index}" }
-    rows = [Array.new(1, "header"), Array.new(5, "header-cell"), cells, cells, cells]
-    allow(renderer).to receive(:rows).and_return(rows)
+  it "styles the permanent, temporal, and subtotal rows in semester mode" do
+    rendered_rows = [
+      ["axis"],
+      Array.new(5, "header"),
+      Array.new(8) { |index| "permanent-#{index}" },
+      Array.new(8) { |index| "temporal-#{index}" },
+      Array.new(8) { |index| "subtotal-#{index}" }
+    ]
+    allow(renderer).to receive(:rows).and_return(rendered_rows)
     allow(renderer).to receive(:cols).and_return([:first_column])
     allow(renderer).to receive(:cells).and_return(:all_cells)
     allow(renderer).to receive(:column_widths)
     allow(renderer).to receive(:border_size)
+    allow(renderer).to receive(:cell_style)
     allow(docx).to receive(:table) { |&block| renderer.instance_exec(&block) }
     allow(docx).to receive(:p)
-    expect(renderer).to receive(:cell_style).with(:cell-0, align: :center, bold: true, vertical_align: :center)
-    expect(renderer).to receive(:cell_style).with(:cell-7, align: :center, vertical_align: :center)
+
+    expect(renderer).to receive(:cell_style).with("permanent-0", align: :center, bold: true, vertical_align: :center)
+    expect(renderer).to receive(:cell_style).with("permanent-7", align: :center, vertical_align: :center)
+    expect(renderer).to receive(:cell_style).with("temporal-0", align: :center, vertical_align: :center)
+    expect(renderer).to receive(:cell_style).with("subtotal-5", align: :center, bold: true)
 
     renderer.grades_table
   end

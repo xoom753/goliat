@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get :educativo
       get :certificados
       get :certificados_educativo
+      get :social
     end
   end
   resources :import_people, only: [ :new, :create ]

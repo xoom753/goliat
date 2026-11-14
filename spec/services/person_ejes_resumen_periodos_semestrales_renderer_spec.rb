@@ -36,7 +36,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestra
   it "returns semester-specific bottom rows and grades-table metadata" do
     expect(renderer.ficha_info_table_bottom_rows).to eq([
       [ "TEMPORALIDAD", "20%" ],
-      [ "SEMESTRE", "01/01/2024", "30/06/2024" ]
+      [ "PRIMER SEMESTRE 0,00% AL 20%", "01/01/2024", "30/06/2024" ]
     ])
     expect(renderer.grades_ficha_bottom_rows).to eq([
       [ "PRIMER SEMESTRE 0,00% AL 20%", "01/01/2024", "30/06/2024" ]

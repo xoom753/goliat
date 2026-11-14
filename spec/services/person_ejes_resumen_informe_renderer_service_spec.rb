@@ -50,6 +50,7 @@ RSpec.describe PersonEjesResumen::InformeRendererService do
 
   it "returns one index per semester period for semester reports" do
     allow(summary).to receive(:tipo_porcentual?).and_return(false)
+    allow(summary).to receive(:semestres_porcentuales).and_return("20%\n40%")
     allow(summary).to receive(:periodos_detalle).and_return(
       "01/01/24\t30/06/24\t180\t20%\n\n01/07/24\t31/12/24\t184\t40%"
     )

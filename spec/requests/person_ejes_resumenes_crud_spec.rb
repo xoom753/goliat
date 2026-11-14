@@ -35,6 +35,26 @@ RSpec.describe "Person ejes resumen management", type: :request do
     expect(response.body).to include("CASEY EXAMPLE", "1234567890", "A-1")
   end
 
+  it "renders the edit form for an existing summary" do
+    summary = PersonEjesResumen.create!(attributes)
+
+    get edit_person_ejes_resumen_path(summary)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Casey Example")
+  end
+
+  it "renders the new form when summary creation fails" do
+    allow_any_instance_of(PersonEjesResumen).to receive(:save).and_return(false)
+
+    post person_ejes_resumenes_path, params: {
+      person_ejes_resumen: attributes
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Nuevo Resumen de Ejes")
+  end
+
   it "creates a valid summary and redirects to index" do
     expect do
       post person_ejes_resumenes_path, params: { person_ejes_resumen: attributes }
@@ -43,7 +63,20 @@ RSpec.describe "Person ejes resumen management", type: :request do
     expect(response).to redirect_to(person_ejes_resumenes_path)
   end
 
+  it "renders the edit form when summary update fails" do
+    summary = PersonEjesResumen.create!(attributes)
+    allow_any_instance_of(PersonEjesResumen).to receive(:save).and_return(false)
+
+    patch person_ejes_resumen_path(summary), params: {
+      person_ejes_resumen: attributes.merge(nombres: "Updated Example")
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Algo salió mal")
+  end
+
   it "updates a summary and clears omitted person associations" do
+
     summary = PersonEjesResumen.create!(attributes.merge(people_ids: [ 1 ], legacy_people_ids: [ 2 ]))
 
     patch person_ejes_resumen_path(summary), params: {

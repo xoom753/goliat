@@ -25,7 +25,7 @@ RSpec.describe LegacyCourseFileParserService do
       allow(xlsx).to receive(:sheet).with(0).and_return(sheet)
     end
 
-    it "parses normalized records, retains header rows, and stops after the footer" do
+    it "parses normalized activity records, stores headers, and stops at the first footer row" do
       allow(sheet).to receive(:each).and_yield(["Nombres"]).and_yield(["ANA PEREZ"]).and_yield([nil]).and_yield(["FOOTER"])
 
       service.parse!
@@ -45,7 +45,7 @@ RSpec.describe LegacyCourseFileParserService do
       )
     end
 
-    it "parses each configured sheet number" do
+    it "uses configured sheet numbers" do
       allow(parser_config).to receive(:sheet_numbers).and_return("1,2")
       first_sheet = double
       second_sheet = double
@@ -59,7 +59,7 @@ RSpec.describe LegacyCourseFileParserService do
       expect(service.headers).to eq([["First header"], ["Second header"]])
     end
 
-    it "omits the detail when no detail parameter is supplied" do
+    it "omits the activity detail when that parameter is blank" do
       allow(params).to receive(:[]).and_call_original
       allow(params).to receive(:[]).with(:detalle).and_return(nil)
       allow(sheet).to receive(:each).and_yield(["Nombres"]).and_yield(["ANA PEREZ"])
@@ -71,7 +71,7 @@ RSpec.describe LegacyCourseFileParserService do
   end
 
   describe "#import_records!" do
-    it "saves parsed records and marks the file imported" do
+    it "saves all parsed records and updates the import-file counts" do
       first = double
       second = double
       allow(service).to receive(:records).and_return([first, second])
@@ -84,19 +84,15 @@ RSpec.describe LegacyCourseFileParserService do
   end
 
   describe "spreadsheet access" do
-    it "opens the attached workbook using the configured format and reads the first sheet" do
-      blob = double(key: "course-blob")
-      allow(import_file).to receive(:file).and_return(double(attachment: double(blob: blob)))
-      allow(ActiveStorage::Blob.service).to receive(:path_for).with("course-blob").and_return("/tmp/course.xlsx")
+    it "resolves the attached blob path and opens the workbook only once" do
+      attachment = double(blob: double(key: "blob-key"))
+      allow(import_file).to receive(:file).and_return(double(attachment: attachment))
+      expect(ActiveStorage::Blob.service).to receive(:path_for).with("blob-key").once.and_return("/tmp/source.xlsx")
       workbook = double
-      first_sheet = double
-      expect(Roo::Spreadsheet).to receive(:open).with("/tmp/course.xlsx", extension: :xlsx).and_return(workbook)
-      expect(workbook).to receive(:sheet).with(0).and_return(first_sheet)
-      allow(first_sheet).to receive(:each).and_yield(["Names"])
+      expect(Roo::Spreadsheet).to receive(:open).with("/tmp/source.xlsx", extension: :xlsx).once.and_return(workbook)
 
-      service.parse!
-
-      expect(service.headers).to eq([["Names"]])
+      expect(service.send(:xlsx)).to equal(workbook)
+      expect(service.send(:xlsx)).to equal(workbook)
     end
   end
 end

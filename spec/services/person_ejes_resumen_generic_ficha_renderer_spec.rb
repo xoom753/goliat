@@ -39,7 +39,7 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
       rows = renderer.send(:common_table_rows)
 
       expect(rows).to include(
-        [ "NOMBRE:", "CASEY EXAMPLE" ],
+        [ "NOMBRES:", "CASEY EXAMPLE" ],
         [ "CÉDULA DE IDENTIDAD:", "1234567890" ],
         [ "FECHA DE PÉRDIDA DE LIBERTAD:", "02/01/2020" ],
         [ "FECHA DE TRASLADO PABELLÓN B:", "05/04/2022" ],

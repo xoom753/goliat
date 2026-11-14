@@ -101,7 +101,21 @@ RSpec.describe "Legacy person activities", type: :feature do
     expect(rows).not_to include("Weaving", "Attendance")
   end
 
+  it "filters activities by a partial person name" do
+    matching = LegacyPerson.create!(nombres: "Jane Example")
+    excluded = LegacyPerson.create!(nombres: "Alex Rivera")
+    create_activity(person: matching, end_date: Date.new(2024, 3, 31), row_number: 1)
+    create_activity(person: excluded, end_date: Date.new(2023, 3, 31), row_number: 2, activity_name: "Football")
+
+    visit legacy_person_activities_path(nombres_str: "Jane")
+
+    rows = all("table tbody tr").map(&:text).join(" ")
+    expect(rows).to include("Jane Example", "Weaving")
+    expect(rows).not_to include("Alex Rivera", "Football")
+  end
+
   it "ignores an incomplete date range and leaves all records visible" do
+
     first_person = LegacyPerson.create!(nombres: "Jane Example")
     second_person = LegacyPerson.create!(nombres: "Alex Rivera")
     create_activity(person: first_person, end_date: Date.new(2024, 3, 31), row_number: 1)

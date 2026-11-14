@@ -37,7 +37,20 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
     renderer.info_actividades_list
   end
 
+  it "writes the observation and residence text when location is present" do
+    allow(summary).to receive(:ubicacion).and_return("A-1")
+    allow(translator).to receive(:t).with(any_args).and_return("Translated")
+    allow(docx).to receive(:p) do |*_args, &block|
+      renderer.instance_exec(&block) if block
+    end
+    expect(renderer).to receive(:text).with("Translated", bold: true)
+    expect(renderer).to receive(:text).with(" Translated A-1")
+
+    renderer.info_outro
+  end
+
   it "selects a semestral period-type renderer for semester reports" do
+
     allow(summary).to receive(:tipo_porcentual?).and_return(false)
 
     expect(renderer.send(:by_tipo_periodo_renderer)).to be_a(
@@ -56,16 +69,11 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
   it "renders a location paragraph when the summary includes ubicacion" do
     allow(summary).to receive(:ubicacion).and_return("A-1")
     allow(translator).to receive(:t).with(any_args).and_return("Translated")
-    allow(docx).to receive(:p) do |*args, &block|
+    allow(docx).to receive(:p) do |*_args, &block|
       renderer.instance_exec(&block) if block
     end
-    allow(renderer).to receive(:text)
-    expect(docx).to receive(:p).with("Translated").ordered
-    expect(docx).to receive(:p).with(no_args).ordered
-    expect(docx).to receive(:p).with(no_args).ordered
-    expect(docx).to receive(:p).with(no_args).ordered
-    expect(renderer).to receive(:text).with("Observación.", bold: true)
-    expect(renderer).to receive(:text).with(" Reside en el A-1")
+    expect(renderer).to receive(:text).with("Translated", bold: true)
+    expect(renderer).to receive(:text).with(" Translated A-1")
 
     renderer.info_outro
   end

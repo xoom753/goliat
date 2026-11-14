@@ -63,7 +63,7 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
 
         @common_table_rows = [
             [
-                "Nombre:".upcase,
+                "Nombres:".upcase,
                 @person_ejes_resumen.nombres.upcase
             ],
             [

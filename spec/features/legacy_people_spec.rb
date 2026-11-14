@@ -52,6 +52,17 @@ RSpec.describe "Lista PPL (histórica)", type: :feature do
       expect(page).not_to have_content("Alex Rivera")
     end
 
+    it "lists only selected legacy people and uses the first name as the search value" do
+      selected = create_legacy_person(name: "Jane Example", dni: "111")
+      create_legacy_person(name: "Alex Rivera", dni: "222")
+
+      visit legacy_people_path(legacy_people_ids: selected.id.to_s)
+
+      expect(page).to have_content("Jane Example")
+      expect(page).not_to have_content("Alex Rivera")
+      expect(page).to have_field("q", with: "Jane Example")
+    end
+
     it "shows an empty table when no people match" do
       create_legacy_person(name: "Jane Example", dni: "111")
 

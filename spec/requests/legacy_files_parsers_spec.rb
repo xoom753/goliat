@@ -1,7 +1,25 @@
 require "rails_helper"
 
 RSpec.describe "Legacy files parsers", type: :request do
+  it "renders the HTML collection and editor pages" do
+    parser = LegacyFilesParser.create!(parser_name: "Legacy workbook")
+
+    get legacy_files_parsers_path
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Legacy workbook")
+
+    get new_legacy_files_parser_path
+    expect(response).to have_http_status(:ok)
+
+    get legacy_files_parser_path(parser)
+    expect(response).to have_http_status(:ok)
+
+    get edit_legacy_files_parser_path(parser)
+    expect(response).to have_http_status(:ok)
+  end
+
   it "creates, updates, and deletes a parser through the JSON API" do
+
     post legacy_files_parsers_path(format: :json), params: {
       legacy_files_parser: {
         parser_name: "Legacy workbook",

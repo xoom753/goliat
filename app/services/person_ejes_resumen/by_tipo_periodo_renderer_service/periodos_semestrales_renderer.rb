@@ -11,7 +11,7 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRender
                 @current_periodo.period_percentage
             ],
             [
-                "Semestre".upcase,
+                @current_periodo.semestre_str.upcase,
                 date_to_str(@current_periodo.start_date),
                 date_to_str(@current_periodo.end_date)
             ]

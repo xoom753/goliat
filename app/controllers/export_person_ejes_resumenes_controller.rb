@@ -4,6 +4,7 @@ class ExportPersonEjesResumenesController < ApplicationController
         :deportivo,
         :laboral,
         :educativo,
+        :social,
         :certificados,
         :certificados_educativo
     ]
@@ -12,7 +13,8 @@ class ExportPersonEjesResumenesController < ApplicationController
         :cultural,
         :deportivo,
         :laboral,
-        :educativo
+        :educativo,
+        :social
     ]
 
     before_action :set_person_ejes_certificados_renderer!, only: [
@@ -49,6 +51,15 @@ class ExportPersonEjesResumenesController < ApplicationController
 
     def educativo
         filename = "Educativo-#{@person_ejes_resumen.nombres}.docx"
+        respond_to do |format|
+            format.docx {
+                headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+            }
+        end
+    end
+
+    def social
+        filename = "Social-#{@person_ejes_resumen.nombres}.docx"
         respond_to do |format|
             format.docx {
                 headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""

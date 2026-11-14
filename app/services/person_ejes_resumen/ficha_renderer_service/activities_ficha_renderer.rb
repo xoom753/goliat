@@ -7,6 +7,7 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
              :get_info_table_merged_rows_count,
              :info_actividades_temporales_list,
              :info_actividades_permanentes_list,
+             :get_semestre,
              to: :by_tipo_periodo_renderer
 
     def title

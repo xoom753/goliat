@@ -70,7 +70,7 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
     end
 
     def signature
-        docx.p "Atentamente. _"
+        docx.p "Atentamente,"
 
         docx.p
         docx.p
@@ -83,6 +83,8 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
         # should this go to its own class?
         if @kind == :educativo
             docx.p Rails.application.credentials.report_signed_by_educativo
+        elsif @kind == :social
+            docx.p Rails.application.credentials.report_signed_by_social
         else
             docx.p Rails.application.credentials.report_signed_by_cultural
         end
