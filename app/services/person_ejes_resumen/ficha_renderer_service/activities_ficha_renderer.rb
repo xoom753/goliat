@@ -14,13 +14,13 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
     #          to: :current_periodo
 
     def title
-        docx.h1 t("common.main_title").upcase, align: :center
-        docx.h1 t("common.main_subtitle").upcase, align: :center
+        docx.h1 stringify("common.main_title").upcase, align: :center
+        docx.h1 stringify("common.main_subtitle").upcase, align: :center
         docx.p
     end
 
     def intro
-        docx.p t("common.main_intro")
+        docx.p stringify("common.main_intro")
         docx.p
     end
 
@@ -40,7 +40,7 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
     end
 
     def info_summary
-        docx.p t("common.informe_kind").upcase, bold: true
+        docx.p stringify("common.informe_kind").upcase, bold: true
         if current_periodo.activities.empty?
             info_no_cumple
         else
@@ -55,13 +55,13 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
     end
 
     def info_outro
-        docx.p t("common.info_outro_indico")
+        docx.p stringify("common.info_outro_indico")
         docx.p
 
         if @person_ejes_resumen.ubicacion.present?
             ubicacion = @person_ejes_resumen.ubicacion
-            observacion = t("common.info_outro_observacion")
-            reside_en = t("common.info_outro_reside_en")
+            observacion = stringify("common.info_outro_observacion")
+            reside_en = stringify("common.info_outro_reside_en")
             docx.p do
                 text observacion, bold: true
                 text " #{reside_en} #{ubicacion}"

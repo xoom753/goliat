@@ -19,8 +19,8 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRender
     end
 
     def info_actividades_permanentes_list
-        @docx.p t("common.act_permanente").upcase, bold: true
-        no_registra_permanente = t("common.no_registra_permanente", downcase: true, kind_f: true)
+        @docx.p stringify("common.act_permanente").upcase, bold: true
+        no_registra_permanente = stringify("common.no_registra_permanente", downcase: true, kind_f: true)
         @docx.ol do
             li no_registra_permanente
         end

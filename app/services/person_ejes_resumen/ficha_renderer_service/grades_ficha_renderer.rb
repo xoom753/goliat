@@ -15,13 +15,13 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
     end
 
     def title
-        docx.h1 t("common.qualy_main_title").upcase, align: :center
-        docx.h1 t("common.qualy_main_subtitle", kind_f: true).upcase, align: :center
+        docx.h1 stringify("common.qualy_main_title").upcase, align: :center
+        docx.h1 stringify("common.qualy_main_subtitle", kind_f: true).upcase, align: :center
         docx.p
     end
 
     def intro
-        docx.p t("common.qualy_datos").upcase, bold: true
+        docx.p stringify("common.qualy_datos").upcase, bold: true
         docx.p
     end
 
@@ -41,7 +41,7 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
     end
 
     def grades_table_title
-        docx.h1 t("common.qualy_main_table_title").upcase, align: :center
+        docx.h1 stringify("common.qualy_main_table_title").upcase, align: :center
         docx.p
     end
 

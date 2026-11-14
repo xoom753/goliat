@@ -18,7 +18,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestra
       delitos_array: [ "Robo" ]
     )
   end
-  let(:translator) { double(t: "Texto traducido") }
+  let(:translator) { double(stringify: "Texto traducido") }
   let(:activity_renderer) { double(render_string: "Certificado") }
   let(:activities_renderer) { double }
   let(:activities) { [] }

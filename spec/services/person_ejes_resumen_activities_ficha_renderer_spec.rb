@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer do
   let(:docx) { double }
   let(:summary) { double(nombres: "Casey Example", ubicacion: nil, tipo_porcentual?: percentage_mode) }
-  let(:translator) { double(t: "translated") }
+  let(:translator) { double(stringify: "Translated") }
   let(:period) { double(activities: activities, period_percentage: "20%", start_date: Date.new(2024, 1, 1), end_date: Date.new(2024, 6, 30)) }
   let(:period_renderer) { double(periodos: [ period ]) }
   let(:activities_by_periods_renderer) { double(grouped_activities: []) }
