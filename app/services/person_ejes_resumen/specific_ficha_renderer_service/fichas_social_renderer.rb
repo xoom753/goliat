@@ -59,7 +59,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer < Pe
         ]
 
         docx.table table_rows do
-            column_widths [700, 1300, 500, 500, 600]
+            column_widths [ 700, 1300, 500, 500, 600 ]
             border_size 4
             cell_style rows[0], bold: true, align: :center
             cell_style cols[0], bold: true, align: :center
@@ -112,7 +112,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer < Pe
         ]
 
         docx.table table_rows do
-            column_widths [700, 1300, 500, 500, 600]
+            column_widths [ 700, 1300, 500, 500, 600 ]
             border_size 4
             cell_style rows[0], bold: true, align: :center
             cell_style cols[2], align: :center

@@ -7,7 +7,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasSocialRend
   let(:period) { double(is_formato_antiguo?: old_format) }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:period_type_renderer) { double(get_semestre: "20%") }
-  let(:periods_renderer) { double(periodos: [period]) }
+  let(:periods_renderer) { double(periodos: [ period ]) }
   subject(:renderer) do
     described_class.new(
       docx: docx,
@@ -52,11 +52,11 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasSocialRend
     render_table_and_run_styles
 
     expect(renderer.grades_table).to eq([
-      ["ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PUNTAJE", "20%", "JUSTIFICACIÓN DE LA CALIFICACIÓN"],
-      ["Permanent discipline", "Permanent respect", "0,50 puntos", "0,50", "Sí cumple"],
-      ["Permanent discipline", "Permanent behavior", "0,50 puntos", "0,50", "Sí cumple"],
-      ["Temporary training", "Temporary participation", "0,50 puntos", "0,50", "Charlas motivacionales individuales"],
-      ["Permanent support", "Permanent participation", "0,50 puntos", "0,50", "Orientaciones psicológicas grupales"]
+      [ "ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PUNTAJE", "20%", "JUSTIFICACIÓN DE LA CALIFICACIÓN" ],
+      [ "Permanent discipline", "Permanent respect", "0,50 puntos", "0,50", "Sí cumple" ],
+      [ "Permanent discipline", "Permanent behavior", "0,50 puntos", "0,50", "Sí cumple" ],
+      [ "Temporary training", "Temporary participation", "0,50 puntos", "0,50", "Charlas motivacionales individuales" ],
+      [ "Permanent support", "Permanent participation", "0,50 puntos", "0,50", "Orientaciones psicológicas grupales" ]
     ])
   end
 
@@ -66,8 +66,8 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasSocialRend
 
     rows = renderer.grades_table
 
-    expect(rows[3][2..3]).to eq(["2 puntos", "1"])
-    expect(rows[4][2..3]).to eq(["2 puntos", "1"])
+    expect(rows[3][2..3]).to eq([ "2 puntos", "1" ])
+    expect(rows[4][2..3]).to eq([ "2 puntos", "1" ])
   end
 
   it "renders and styles the legacy-format table" do
@@ -78,7 +78,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasSocialRend
 
     rows = renderer.grades_table
 
-    expect(rows.first).to eq(["ÁREAS", "PARÁMETROS", "PUNTUACIÓN", "CALIFICACIÓN", "TOTAL POR ÁREA"])
+    expect(rows.first).to eq([ "ÁREAS", "PARÁMETROS", "PUNTUACIÓN", "CALIFICACIÓN", "TOTAL POR ÁREA" ])
     expect(rows.length).to eq(6)
     expect(rows[1]).to eq([
       "RELACIONES INTERPERSONALES - 2,5 PUNTOS",

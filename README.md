@@ -7,6 +7,8 @@ RAILS_ENV=production bin/rails assets:precompile
 RAILS_ENV=production bin/rails server
 ```
 
+## todo
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
@@ -49,6 +51,11 @@ bundle exec erd --generator=graphviz --filetype=png
 RAILS_ENV=test bundle exec rspec spec
 RAILS_ENV=test bundle exec rspec --format json --out spec_results.json spec
 RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
+```
+
+### rubocop
+```
+./bin/rubocop -a
 ```
 
 ### backup db
