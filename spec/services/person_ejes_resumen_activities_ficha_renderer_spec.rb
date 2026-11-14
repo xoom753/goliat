@@ -50,7 +50,6 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
   end
 
   it "selects a semestral period-type renderer for semester reports" do
-
     allow(summary).to receive(:tipo_porcentual?).and_return(false)
 
     expect(renderer.send(:by_tipo_periodo_renderer)).to be_a(

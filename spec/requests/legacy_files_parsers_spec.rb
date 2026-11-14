@@ -19,7 +19,6 @@ RSpec.describe "Legacy files parsers", type: :request do
   end
 
   it "creates, updates, and deletes a parser through the JSON API" do
-
     post legacy_files_parsers_path(format: :json), params: {
       legacy_files_parser: {
         parser_name: "Legacy workbook",

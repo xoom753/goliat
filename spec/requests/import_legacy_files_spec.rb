@@ -57,7 +57,7 @@ RSpec.describe "Import legacy files", type: :request do
     it "parses an assigned course spreadsheet and supplies its headers" do
       parser = LegacyCourseFileParser.create!(parser_name: "Course sheet")
       import_file = LegacyImportFile.create!(**import_file_attributes, parseable: parser)
-      service = instance_double(LegacyCourseFileParserService, headers: [["Names"]], records: [])
+      service = instance_double(LegacyCourseFileParserService, headers: [ [ "Names" ] ], records: [])
       expect(LegacyCourseFileParserService).to receive(:new)
         .with(import_file, params: kind_of(ActionController::Parameters))
         .and_return(service)

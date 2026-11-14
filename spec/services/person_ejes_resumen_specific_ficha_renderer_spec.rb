@@ -17,15 +17,15 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
       private
 
       def grades_table_rows_first_part
-        [["AXIS"], ["HEADER", "MAX", "20%"]]
+        [ [ "AXIS" ], [ "HEADER", "MAX", "20%" ] ]
       end
 
       def grades_table_permanente_rows
-        [["PERMANENT", "DESCRIPTION", "PARAMETER", "3", "0", "0", "0", "0"]]
+        [ [ "PERMANENT", "DESCRIPTION", "PARAMETER", "3", "0", "0", "0", "0" ] ]
       end
 
       def grades_table_rows_last_part
-        [["TEMPORAL", "DESCRIPTION", "PARAMETER", "2", "0", "0", "0", "0"], ["SUBTOTAL", "5", "0", "0", "0", "0"]]
+        [ [ "TEMPORAL", "DESCRIPTION", "PARAMETER", "2", "0", "0", "0", "0" ], [ "SUBTOTAL", "5", "0", "0", "0", "0" ] ]
       end
     end
   end
@@ -34,21 +34,21 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
       docx: docx,
       current_periodo: period,
       person_ejes_resumen: summary,
-      periodos_renderer_service: double(periodos: [period]),
+      periodos_renderer_service: double(periodos: [ period ]),
       by_tipo_periodo_renderer: period_type_renderer
     )
   end
 
   it "styles the permanent, temporal, and subtotal rows in semester mode" do
     rendered_rows = [
-      ["axis"],
+      [ "axis" ],
       Array.new(5, "header"),
       Array.new(8) { |index| "permanent-#{index}" },
       Array.new(8) { |index| "temporal-#{index}" },
       Array.new(8) { |index| "subtotal-#{index}" }
     ]
     allow(renderer).to receive(:rows).and_return(rendered_rows)
-    allow(renderer).to receive(:cols).and_return([:first_column])
+    allow(renderer).to receive(:cols).and_return([ :first_column ])
     allow(renderer).to receive(:cells).and_return(:all_cells)
     allow(renderer).to receive(:column_widths)
     allow(renderer).to receive(:border_size)

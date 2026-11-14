@@ -115,7 +115,6 @@ RSpec.describe "Legacy person activities", type: :feature do
   end
 
   it "ignores an incomplete date range and leaves all records visible" do
-
     first_person = LegacyPerson.create!(nombres: "Jane Example")
     second_person = LegacyPerson.create!(nombres: "Alex Rivera")
     create_activity(person: first_person, end_date: Date.new(2024, 3, 31), row_number: 1)

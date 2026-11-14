@@ -30,7 +30,6 @@ RSpec.describe "Legacy course file parsers", type: :request do
   end
 
   it "creates, updates, and deletes a parser through the JSON API" do
-
     post legacy_course_file_parsers_path(format: :json), params: {
       legacy_course_file_parser: {
         parser_name: "Course workbook",

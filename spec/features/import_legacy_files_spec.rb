@@ -48,7 +48,7 @@ RSpec.describe "Import legacy files", type: :feature do
     import_file = create_import_file(filename: "courses.xlsx", year: 2024, parser: parser)
 
     allow_any_instance_of(LegacyCourseFileParserService).to receive(:parse!).and_return(nil)
-    allow_any_instance_of(LegacyCourseFileParserService).to receive(:headers).and_return([["Names"]])
+    allow_any_instance_of(LegacyCourseFileParserService).to receive(:headers).and_return([ [ "Names" ] ])
     allow_any_instance_of(LegacyCourseFileParserService).to receive(:records).and_return([])
 
     visit parse_import_legacy_files_path(id: import_file.id)

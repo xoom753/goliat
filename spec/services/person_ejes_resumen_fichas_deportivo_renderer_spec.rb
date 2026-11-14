@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer do
   let(:current_period) { double(period_percentage: "20%", activities: []) }
   let(:later_period) { double(period_percentage: "40%", activities: []) }
-  let(:periods) { [current_period, later_period] }
+  let(:periods) { [ current_period, later_period ] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:period_type_renderer) do
     double(
@@ -29,7 +29,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
     it "renders the semester table using current period data" do
       allow(docx).to receive(:p)
       expect(docx).to receive(:table) do |rows, &_block|
-        expect(rows[0]).to eq(["DEPORTIVO"])
+        expect(rows[0]).to eq([ "DEPORTIVO" ])
         expect(rows[1].last).to eq("20%")
         expect(rows[3]).to include("TEMPORAL", "0")
         expect(rows.last).to include("Subtotal", "5", "0")
@@ -48,7 +48,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
       end
       allow(docx).to receive(:p)
       expect(docx).to receive(:table) do |rows, &_block|
-        expect(rows[1][2, 2]).to eq(["20%", "40%"])
+        expect(rows[1][2, 2]).to eq([ "20%", "40%" ])
         expect(rows.last[1]).to eq("2")
       end
 

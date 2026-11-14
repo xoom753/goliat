@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer do
-  let(:current_period) { double(period_percentage: "20%", activities: [:activity]) }
+  let(:current_period) { double(period_percentage: "20%", activities: [ :activity ]) }
   let(:later_period) { double(period_percentage: "40%", activities: []) }
-  let(:periods) { [current_period, later_period] }
+  let(:periods) { [ current_period, later_period ] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:by_tipo_periodo_renderer) do
     double(
@@ -40,15 +40,15 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
       private
 
       def grades_table_rows_first_part
-        [["Axis"], ["Header", "Max", "20%"]]
+        [ [ "Axis" ], [ "Header", "Max", "20%" ] ]
       end
 
       def grades_table_permanente_rows
-        [["Permanent", "Description", "Parameter", "3", "0", "0", "0", "0"]]
+        [ [ "Permanent", "Description", "Parameter", "3", "0", "0", "0", "0" ] ]
       end
 
       def grades_table_rows_last_part
-        [["Temporal", "Description", "Parameter", "2", "0", "0", "0", "0"], ["Subtotal", "5", "0", "0", "0", "0"]]
+        [ [ "Temporal", "Description", "Parameter", "2", "0", "0", "0", "0" ], [ "Subtotal", "5", "0", "0", "0", "0" ] ]
       end
     end
     allow(summary).to receive(:tipo_porcentual?).and_return(false)
@@ -62,7 +62,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
     allow(table_renderer).to receive(:column_widths)
     allow(table_renderer).to receive(:border_size)
     allow(table_renderer).to receive(:cell_style)
-    allow(table_renderer).to receive(:cols).and_return([:first_column])
+    allow(table_renderer).to receive(:cols).and_return([ :first_column ])
     allow(table_renderer).to receive(:rows).and_return(Array.new(6) { Array.new(8) { :cell } })
     allow(table_renderer).to receive(:cells).and_return(:all_cells)
     allow(docx).to receive(:p)

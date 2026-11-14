@@ -21,7 +21,7 @@ RSpec.describe PersonEjesResumen::InformeRendererService do
   it "delegates period calculation to the period renderer" do
     renderer = described_class.new(person_ejes_resumen: summary, kind: :cultural)
 
-    expect(renderer.periodos.map(&:period_percentage)).to eq(["20%"])
+    expect(renderer.periodos.map(&:period_percentage)).to eq([ "20%" ])
   end
 
   it "caches the period renderer result" do
@@ -45,7 +45,7 @@ RSpec.describe PersonEjesResumen::InformeRendererService do
   it "returns only the first ficha index for percentage reports" do
     renderer = described_class.new(person_ejes_resumen: summary, kind: :cultural)
 
-    expect(renderer.get_fichas_indexes).to eq([0])
+    expect(renderer.get_fichas_indexes).to eq([ 0 ])
   end
 
   it "returns one index per semester period for semester reports" do
@@ -56,6 +56,6 @@ RSpec.describe PersonEjesResumen::InformeRendererService do
     )
     renderer = described_class.new(person_ejes_resumen: summary, kind: :cultural)
 
-    expect(renderer.get_fichas_indexes.to_a).to eq([0, 1])
+    expect(renderer.get_fichas_indexes.to_a).to eq([ 0, 1 ])
   end
 end

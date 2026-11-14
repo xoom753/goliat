@@ -40,7 +40,7 @@ RSpec.describe PersonEjesResumen::ActivitiesByPeriodsRendererService do
 
     rendered_activities = service.grouped_activities.first.activities
 
-    expect(rendered_activities.map(&:activity_str)).to eq(["Weaving"])
+    expect(rendered_activities.map(&:activity_str)).to eq([ "Weaving" ])
     expect(rendered_activities.first.duracion_str).to eq("8 horas")
   end
 

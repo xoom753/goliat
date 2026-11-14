@@ -76,7 +76,6 @@ RSpec.describe "Person ejes resumen management", type: :request do
   end
 
   it "updates a summary and clears omitted person associations" do
-
     summary = PersonEjesResumen.create!(attributes.merge(people_ids: [ 1 ], legacy_people_ids: [ 2 ]))
 
     patch person_ejes_resumen_path(summary), params: {

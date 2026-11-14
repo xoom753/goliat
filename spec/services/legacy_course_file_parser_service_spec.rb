@@ -26,11 +26,11 @@ RSpec.describe LegacyCourseFileParserService do
     end
 
     it "parses normalized activity records, stores headers, and stops at the first footer row" do
-      allow(sheet).to receive(:each).and_yield(["Nombres"]).and_yield(["ANA PEREZ"]).and_yield([nil]).and_yield(["FOOTER"])
+      allow(sheet).to receive(:each).and_yield([ "Nombres" ]).and_yield([ "ANA PEREZ" ]).and_yield([ nil ]).and_yield([ "FOOTER" ])
 
       service.parse!
 
-      expect(service.headers).to eq([["Nombres"]])
+      expect(service.headers).to eq([ [ "Nombres" ] ])
       expect(service.records.length).to eq(1)
       expect(service.records.first).to have_attributes(
         row_number: 2,
@@ -51,18 +51,18 @@ RSpec.describe LegacyCourseFileParserService do
       second_sheet = double
       allow(xlsx).to receive(:sheet).with(1).and_return(first_sheet)
       allow(xlsx).to receive(:sheet).with(2).and_return(second_sheet)
-      allow(first_sheet).to receive(:each).and_yield(["First header"])
-      allow(second_sheet).to receive(:each).and_yield(["Second header"])
+      allow(first_sheet).to receive(:each).and_yield([ "First header" ])
+      allow(second_sheet).to receive(:each).and_yield([ "Second header" ])
 
       service.parse!
 
-      expect(service.headers).to eq([["First header"], ["Second header"]])
+      expect(service.headers).to eq([ [ "First header" ], [ "Second header" ] ])
     end
 
     it "omits the activity detail when that parameter is blank" do
       allow(params).to receive(:[]).and_call_original
       allow(params).to receive(:[]).with(:detalle).and_return(nil)
-      allow(sheet).to receive(:each).and_yield(["Nombres"]).and_yield(["ANA PEREZ"])
+      allow(sheet).to receive(:each).and_yield([ "Nombres" ]).and_yield([ "ANA PEREZ" ])
 
       service.parse!
 
@@ -74,7 +74,7 @@ RSpec.describe LegacyCourseFileParserService do
     it "saves all parsed records and updates the import-file counts" do
       first = double
       second = double
-      allow(service).to receive(:records).and_return([first, second])
+      allow(service).to receive(:records).and_return([ first, second ])
       expect(first).to receive(:save!)
       expect(second).to receive(:save!)
       expect(import_file).to receive(:update!).with(status: :imported, records_count: 2, records_list: nil)
