@@ -4,7 +4,7 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     delegate :date_to_str,
              to: PersonEjesResumen
 
-    delegate :t,
+    delegate :stringify,
              to: :@informes_translator_service
 
     delegate :delitos_array,
@@ -39,7 +39,7 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     end
 
     def encargado_title
-        docx.p t("common.encargado").upcase, bold: true
+        docx.p stringify("common.encargado").upcase, bold: true
     end
 
     protected

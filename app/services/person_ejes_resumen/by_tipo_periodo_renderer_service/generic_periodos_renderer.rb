@@ -4,7 +4,7 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
     delegate :several_delitos?,
              to: :@person_ejes_resumen
 
-    delegate :t,
+    delegate :stringify,
              to: :@informes_translator_service
 
     delegate :date_to_str,
@@ -35,7 +35,7 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
     end
 
     def info_actividades_temporales_list
-        @docx.p t("common.act_temporal").upcase, bold: true
+        @docx.p stringify("common.act_temporal").upcase, bold: true
 
         activities = get_activities
 
@@ -54,7 +54,7 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
     protected
 
     def no_registra_actividades_temporales
-        no_registra_temporal = t("common.no_registra_temporal", downcase: true, kind_f: true)
+        no_registra_temporal = stringify("common.no_registra_temporal", downcase: true, kind_f: true)
         @docx.ol do
             li no_registra_temporal
         end

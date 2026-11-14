@@ -10,6 +10,9 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
              :get_semestre,
              to: :by_tipo_periodo_renderer
 
+    # delegate :is_formato_antiguo?,
+    #          to: :current_periodo
+
     def title
         docx.h1 t("common.main_title").upcase, align: :center
         docx.h1 t("common.main_subtitle").upcase, align: :center

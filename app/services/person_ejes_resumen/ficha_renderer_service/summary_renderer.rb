@@ -1,5 +1,5 @@
 class PersonEjesResumen::FichaRendererService::SummaryRenderer
-    delegate :t,
+    delegate :stringify,
              to: :@informes_translator_service
 
     def initialize(
@@ -14,9 +14,9 @@ class PersonEjesResumen::FichaRendererService::SummaryRenderer
 
     def info_si_cumple
         person_nombres = @person_ejes_resumen.nombres
-        se_informa = t("common.se_informa")
-        desde_su_ingreso = t("common.desde_su_ingreso", kind_f: true)
-        cumple_con_proceso = t("common.cumple_con_proceso", kind_f: true)
+        se_informa = stringify("common.se_informa")
+        desde_su_ingreso = stringify("common.desde_su_ingreso", kind_f: true)
+        cumple_con_proceso = stringify("common.cumple_con_proceso", kind_f: true)
         @docx.p do
             text se_informa
             text person_nombres.upcase, bold: true
@@ -28,9 +28,9 @@ class PersonEjesResumen::FichaRendererService::SummaryRenderer
 
     def info_no_cumple
         person_nombres = @person_ejes_resumen.nombres
-        se_informa = t("common.se_informa")
-        desde_su_ingreso = t("common.desde_su_ingreso", kind_f: true)
-        no_cumple_con_proceso = t(
+        se_informa = stringify("common.se_informa")
+        desde_su_ingreso = stringify("common.desde_su_ingreso", kind_f: true)
+        no_cumple_con_proceso = stringify(
             "common.no_cumple_con_proceso",
             kind_f: true,
             downcase: true
@@ -44,9 +44,9 @@ class PersonEjesResumen::FichaRendererService::SummaryRenderer
     end
 
     def grades_si_cumple
-        observaciones = t("common.qualy_observaciones")
-        durante_el_tiempo = t("common.qualy_durante_el_tiempo")
-        cumple_con = t("common.qualy_cumple_con")
+        observaciones = stringify("common.qualy_observaciones")
+        durante_el_tiempo = stringify("common.qualy_durante_el_tiempo")
+        cumple_con = stringify("common.qualy_cumple_con")
         @docx.p do
             text observaciones, bold: true
             text durante_el_tiempo
@@ -56,9 +56,9 @@ class PersonEjesResumen::FichaRendererService::SummaryRenderer
     end
 
     def grades_no_cumple
-        observaciones = t("common.qualy_observaciones")
-        durante_el_tiempo = t("common.qualy_durante_el_tiempo")
-        qualy_no_cumple_con = t("common.qualy_no_cumple_con")
+        observaciones = stringify("common.qualy_observaciones")
+        durante_el_tiempo = stringify("common.qualy_durante_el_tiempo")
+        qualy_no_cumple_con = stringify("common.qualy_no_cumple_con")
         @docx.p do
             text observaciones, bold: true
             text durante_el_tiempo

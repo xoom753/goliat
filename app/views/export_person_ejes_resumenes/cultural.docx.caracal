@@ -41,6 +41,7 @@ docx.page
         grades_ficha.intro
         grades_ficha.info_table
 
+        grades_ficha.grades_table_title
         grades_ficha.grades_table
         grades_ficha.grades_summary
 

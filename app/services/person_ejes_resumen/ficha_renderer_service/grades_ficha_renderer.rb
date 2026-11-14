@@ -7,6 +7,9 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
              :get_grades_table_merged_rows_count,
              to: :by_tipo_periodo_renderer
 
+    delegate :grades_table,
+             to: :specific_renderer
+
     def should_render_grades_ficha?
         !current_periodo.is_formato_antiguo?
     end
@@ -37,11 +40,9 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
         docx.p
     end
 
-    def grades_table
+    def grades_table_title
         docx.h1 t("common.qualy_main_table_title").upcase, align: :center
         docx.p
-
-        specific_renderer.grades_table
     end
 
     def grades_summary

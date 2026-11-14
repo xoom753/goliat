@@ -7,7 +7,7 @@ class PersonEjesResumen::ActivityToHumanRendererService::InformesTranslator
         end
     end
 
-    def t(identifier_key, kind_f: false, downcase: false)
+    def stringify(identifier_key, kind_f: false, downcase: false)
         kind_str = get_kind_str(kind_f: kind_f)
         kind_str = kind_str.downcase if downcase
         I18n.t(
