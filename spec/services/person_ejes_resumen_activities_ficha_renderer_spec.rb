@@ -29,12 +29,45 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
     )
   end
 
-  it "delegates activity-list rendering to its period-type renderer" do
+  it "delegates activity-list rendering to the selected period-type renderer" do
     allow(renderer).to receive(:by_tipo_periodo_renderer).and_return(period_type_renderer)
     expect(period_type_renderer).to receive(:info_actividades_permanentes_list)
     expect(period_type_renderer).to receive(:info_actividades_temporales_list)
 
     renderer.info_actividades_list
+  end
+
+  it "selects a semestral period-type renderer for semester reports" do
+    allow(summary).to receive(:tipo_porcentual?).and_return(false)
+
+    expect(renderer.send(:by_tipo_periodo_renderer)).to be_a(
+      PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRenderer
+    )
+  end
+
+  it "selects a porcentual period-type renderer for percentage reports" do
+    allow(summary).to receive(:tipo_porcentual?).and_return(true)
+
+    expect(renderer.send(:by_tipo_periodo_renderer)).to be_a(
+      PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentualesRenderer
+    )
+  end
+
+  it "renders a location paragraph when the summary includes ubicacion" do
+    allow(summary).to receive(:ubicacion).and_return("A-1")
+    allow(translator).to receive(:t).with(any_args).and_return("Translated")
+    allow(docx).to receive(:p) do |*args, &block|
+      renderer.instance_exec(&block) if block
+    end
+    allow(renderer).to receive(:text)
+    expect(docx).to receive(:p).with("Translated").ordered
+    expect(docx).to receive(:p).with(no_args).ordered
+    expect(docx).to receive(:p).with(no_args).ordered
+    expect(docx).to receive(:p).with(no_args).ordered
+    expect(renderer).to receive(:text).with("Observación.", bold: true)
+    expect(renderer).to receive(:text).with(" Reside en el A-1")
+
+    renderer.info_outro
   end
 
   describe "#info_summary" do

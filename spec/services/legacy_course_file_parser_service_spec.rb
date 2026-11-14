@@ -2,12 +2,7 @@ require "rails_helper"
 
 RSpec.describe LegacyCourseFileParserService do
   let(:parser_config) do
-    double(
-      sheet_numbers: nil,
-      skip_rows: 1,
-      nombres_col: 0,
-      file_format: "xlsx"
-    )
+    double(sheet_numbers: nil, skip_rows: 1, nombres_col: 0, file_format: "xlsx")
   end
   let(:import_file) { double(parseable: parser_config, id: 7) }
   let(:sheet) { double }
@@ -24,18 +19,18 @@ RSpec.describe LegacyCourseFileParserService do
   end
   subject(:service) { described_class.new(import_file, params: params) }
 
-  before do
-    allow(service).to receive(:xlsx).and_return(xlsx)
-    allow(xlsx).to receive(:sheet).with(0).and_return(sheet)
-  end
-
   describe "#parse!" do
-    it "parses names into normalized activity records, saves the header, and stops after a footer" do
-      allow(sheet).to receive(:each).and_yield([ "Nombres" ]).and_yield([ "ANA PEREZ" ]).and_yield([ nil ]).and_yield([ "FOOTER" ])
+    before do
+      allow(service).to receive(:xlsx).and_return(xlsx)
+      allow(xlsx).to receive(:sheet).with(0).and_return(sheet)
+    end
+
+    it "parses normalized records, retains header rows, and stops after the footer" do
+      allow(sheet).to receive(:each).and_yield(["Nombres"]).and_yield(["ANA PEREZ"]).and_yield([nil]).and_yield(["FOOTER"])
 
       service.parse!
 
-      expect(service.headers).to eq([ [ "Nombres" ] ])
+      expect(service.headers).to eq([["Nombres"]])
       expect(service.records.length).to eq(1)
       expect(service.records.first).to have_attributes(
         row_number: 2,
@@ -56,18 +51,18 @@ RSpec.describe LegacyCourseFileParserService do
       second_sheet = double
       allow(xlsx).to receive(:sheet).with(1).and_return(first_sheet)
       allow(xlsx).to receive(:sheet).with(2).and_return(second_sheet)
-      allow(first_sheet).to receive(:each).and_yield([ "First header" ])
-      allow(second_sheet).to receive(:each).and_yield([ "Second header" ])
+      allow(first_sheet).to receive(:each).and_yield(["First header"])
+      allow(second_sheet).to receive(:each).and_yield(["Second header"])
 
       service.parse!
 
-      expect(service.headers).to eq([ [ "First header" ], [ "Second header" ] ])
+      expect(service.headers).to eq([["First header"], ["Second header"]])
     end
 
     it "omits the detail when no detail parameter is supplied" do
       allow(params).to receive(:[]).and_call_original
       allow(params).to receive(:[]).with(:detalle).and_return(nil)
-      allow(sheet).to receive(:each).and_yield([ "Nombres" ]).and_yield([ "ANA PEREZ" ])
+      allow(sheet).to receive(:each).and_yield(["Nombres"]).and_yield(["ANA PEREZ"])
 
       service.parse!
 
@@ -76,19 +71,32 @@ RSpec.describe LegacyCourseFileParserService do
   end
 
   describe "#import_records!" do
-    it "saves all parsed records and marks the import file imported" do
+    it "saves parsed records and marks the file imported" do
       first = double
       second = double
-      allow(service).to receive(:records).and_return([ first, second ])
+      allow(service).to receive(:records).and_return([first, second])
       expect(first).to receive(:save!)
       expect(second).to receive(:save!)
-      expect(import_file).to receive(:update!).with(
-        status: :imported,
-        records_count: 2,
-        records_list: nil
-      )
+      expect(import_file).to receive(:update!).with(status: :imported, records_count: 2, records_list: nil)
 
       service.import_records!
+    end
+  end
+
+  describe "spreadsheet access" do
+    it "opens the attached workbook using the configured format and reads the first sheet" do
+      blob = double(key: "course-blob")
+      allow(import_file).to receive(:file).and_return(double(attachment: double(blob: blob)))
+      allow(ActiveStorage::Blob.service).to receive(:path_for).with("course-blob").and_return("/tmp/course.xlsx")
+      workbook = double
+      first_sheet = double
+      expect(Roo::Spreadsheet).to receive(:open).with("/tmp/course.xlsx", extension: :xlsx).and_return(workbook)
+      expect(workbook).to receive(:sheet).with(0).and_return(first_sheet)
+      allow(first_sheet).to receive(:each).and_yield(["Names"])
+
+      service.parse!
+
+      expect(service.headers).to eq([["Names"]])
     end
   end
 end

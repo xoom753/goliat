@@ -3,7 +3,13 @@ require "csv"
 
 RSpec.describe PersonEjesCertificadosRenderService do
   let(:person_ejes_resumen) { double("person_ejes_resumen", nombres: "Casey Example") }
-  subject(:service) { described_class.new(person_ejes_resumen) }
+  before { service.kinds = [:cultural, :deportivo, :laboral] }
+
+  before { service.kinds = [:cultural, :deportivo, :laboral] }
+
+  before do
+    service.kinds = [:cultural, :deportivo, :laboral]
+  end
 
   before { service.kinds = [ :cultural, :deportivo, :laboral ] }
 

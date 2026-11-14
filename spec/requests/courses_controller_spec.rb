@@ -26,7 +26,7 @@ RSpec.describe "Courses controller", type: :request do
     end.to change(PersonActivity, :count).by(1)
 
     expect(PersonActivity.last).to have_attributes(person: person, coursable: activity, mes: 3, anio: 2024)
-    expect(response).to redirect_to(edit_course_path(activity, month: "3", year: "2024"))
+      expect(response).to redirect_to(edit_course_path(activity, month: "3", year: "2024", dni: nil))
   end
 
   it "removes a participant and redirects with the month and year" do
