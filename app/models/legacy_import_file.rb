@@ -13,12 +13,9 @@ class LegacyImportFile < ApplicationRecord
     file_removed: 5
   }
 
-  # scope :sorted_by_last_modified, -> {
-  #   order(
-  #     last_modified_at: :desc,
-  #     filename: :desc
-  #   )
-  # }
+  scope :por_importar, -> {
+    where(status: :uploaded)
+  }
   scope :sorted_by_date, -> {
     order(
       year: :desc,

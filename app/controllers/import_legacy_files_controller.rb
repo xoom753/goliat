@@ -12,6 +12,9 @@ class ImportLegacyFilesController < ApplicationController
         if params[:year].present?
             scope = scope.where(year: params[:year])
         end
+        if params[:status] == "por_importar"
+            scope = scope.por_importar
+        end
         @legacy_import_files =
             scope.page(params[:page])
                  .per(100)

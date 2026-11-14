@@ -1,3 +1,7 @@
+<div class="has-text-centered">
+    <h2>Importar archivos</h2>
+</div>
+
 <div class="notification is-link is-light" data-controller="drop-folders">
     <h1>
         Arrastrar y soltar aquí archivos o carpetas para importar
@@ -7,18 +11,38 @@
     </h1>
 </div>
 
+<div class="tabs is-centered is-toggle">
+    <ul class="ml-0">
+        <li class="<%= "is-active" if params[:status].blank? %>">
+            <%=
+                link_to "Todos",
+                        import_legacy_files_path(filter_params.merge(status: nil)),
+                        class: "is-active"
+            %>
+        </li>
+        <li class="<%= "is-active" if params[:status] == "por_importar" %>">
+            <%=
+                link_to "Por importar",
+                        import_legacy_files_path(filter_params.merge(status: "por_importar")),
+                        class: "is-active"
+            %>
+        </li>
+    </ul>
+</div>
+
 <div class="">
-    <%= link_to_unless_current "Cultural", import_legacy_files_path(q: "cultural", year: params[:year]), class: "button is-ghost" %>
-    <%= link_to_unless_current "Deportivo", import_legacy_files_path(q: "deportivo", year: params[:year]), class: "button is-ghost" %>
-    <%= link_to_unless_current "Laboral", import_legacy_files_path(q: "laboral", year: params[:year]), class: "button is-ghost" %>
-    <%= link_to_unless_current "Educativo", import_legacy_files_path(q: "educativo", year: params[:year]), class: "button is-ghost" %>
+    <%= q_button_filter "cultural" %>
+    <%= q_button_filter "deportivo" %>
+    <%= q_button_filter "laboral" %>
+    <%= q_button_filter "educativo" %>
 </div>
 
 <div>
-    <%= link_to_unless_current "2026", import_legacy_files_path(q: params[:q], year: 2026), class: "button is-ghost" %>
-    <%= link_to_unless_current "2025", import_legacy_files_path(q: params[:q], year: 2025), class: "button is-ghost" %>
-    <%= link_to_unless_current "2024", import_legacy_files_path(q: params[:q], year: 2024), class: "button is-ghost" %>
-    <%= link_to_unless_current "2023", import_legacy_files_path(q: params[:q], year: 2023), class: "button is-ghost" %>
+    <%= year_button_filter "2026" %>
+    <%= year_button_filter "2025" %>
+    <%= year_button_filter "2024" %>
+    <%= year_button_filter "2023" %>
+    <%= year_button_filter "2022" %>
 </div>
 
 <table class="table is-striped is-hoverable">
