@@ -21,14 +21,15 @@ RSpec.describe "Legacy person activities", type: :feature do
 
   it "lists legacy activities newest first" do
     person = LegacyPerson.create!(nombres: "Jane Example")
-    newer = create_activity(person: person, end_date: Date.new(2024, 3, 31), row_number: 2)
-    older = create_activity(person: person, end_date: Date.new(2023, 3, 31), row_number: 1)
+    newer = create_activity(person: person, end_date: Date.new(2024, 3, 31), row_number: 2, activity_name: "Newer weaving")
+    older = create_activity(person: person, end_date: Date.new(2023, 3, 31), row_number: 1, activity_name: "Older weaving")
 
     visit legacy_person_activities_path
 
     expect(page).to have_content("Actividades PPL archivos")
     expect(page).to have_content("Jane Example")
-    expect(page.body.index(newer.id.to_s)).to be < page.body.index(older.id.to_s)
+    rows = all("table tbody tr").map(&:text).join(" ")
+    expect(rows.index("Newer weaving")).to be < rows.index("Older weaving")
   end
 
   it "filters records within the requested end-date range" do

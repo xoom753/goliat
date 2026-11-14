@@ -46,8 +46,9 @@ bundle exec erd --generator=graphviz --filetype=png
 ### specs
 
 ```
-bundle exec rspec --format json --out spec_results.json spec
-bundle exec rspec --format h --out spec_results.html spec
+RAILS_ENV=test bundle exec rspec spec
+RAILS_ENV=test bundle exec rspec --format json --out spec_results.json spec
+RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 ```
 
 ### backup db

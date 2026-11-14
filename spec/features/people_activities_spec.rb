@@ -7,7 +7,7 @@ RSpec.describe "People activities", type: :feature do
     person = Person.create!(nombres: "Jane Example", dni: "111", pabellon: "A-1")
     PersonActivity.create!(person: person, coursable: activity, mes: 3, anio: 2024, cargo: :instructor)
 
-    visit people_activities_path
+    visit people_activities_path(date: { month: 3 })
 
     expect(page).to have_content("Painting")
     expect(page).to have_content("Cultural")
@@ -25,7 +25,7 @@ RSpec.describe "People activities", type: :feature do
     PersonActivity.create!(person: person, coursable: painting, mes: 3, anio: 2024)
     PersonActivity.create!(person: person, coursable: music, mes: 3, anio: 2024)
 
-    visit people_activities_path(activity_id: painting.id)
+    visit people_activities_path(activity_id: painting.id, date: { month: 3 })
 
     within "#datatables" do
       expect(page).to have_content("Painting")
