@@ -3,7 +3,7 @@ class LegacyPerson < ApplicationRecord
 
     scope :where_nombres_like, ->(search_query) {
         where(
-            "nombres LIKE '%#{search_query.strip}%'"
+            "nombres ILIKE '%#{search_query.strip}%'"
         )
     }
 end

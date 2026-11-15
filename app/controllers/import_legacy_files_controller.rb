@@ -6,7 +6,7 @@ class ImportLegacyFilesController < ApplicationController
         if params[:q].present?
             query = "%#{params[:q]}%"
             scope = scope.where(
-                "filename LIKE '#{query}'"
+                "filename ILIKE '#{query}'"
             )
         end
         if params[:year].present?

@@ -165,7 +165,7 @@
                 </dl>
             <% end %>
             <% if origin_person_legal_penalty.cuarenta_porciento_at.present? %>
-                <dl>
+                <dl class="<%= 'strong' if params[:sort_by] == "cuarenta" %>">
                     <dt>
                         40%
                     </dt>

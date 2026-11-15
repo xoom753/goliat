@@ -2,7 +2,7 @@ class ApiController < ApplicationController
     def people
         query = "'%#{params[:q]}%'"
         results = Person.where(
-            "nombres LIKE #{query} OR dni LIKE #{query}"
+            "nombres ILIKE #{query} OR dni LIKE #{query}"
         ).limit(20)
         json_results = results.map do |result|
             {
@@ -16,7 +16,7 @@ class ApiController < ApplicationController
     def legacy_people
         query = "'%#{params[:q]}%'"
         results = LegacyPerson.where(
-            "nombres LIKE #{query}"
+            "nombres ILIKE #{query}"
         ).limit(20)
         json_results = results.map do |result|
             {

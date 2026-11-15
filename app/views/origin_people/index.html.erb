@@ -31,6 +31,9 @@
 <% end %>
 
 <div class="has-text-right mt-2">
+    <%= link_to "Ordenar por 40%",
+                by_percentage_origin_people_path(sort_by: "cuarenta"),
+                class: "button is-text" %>
     <%= link_to "Ordenar por 60%",
                 by_percentage_origin_people_path(sort_by: "sesenta"),
                 class: "button is-text" %>

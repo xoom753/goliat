@@ -13,6 +13,15 @@ class OriginPersonLegalPenalty < ApplicationRecord
 
   before_save :set_accessors_if_present!
 
+  scope :porcentage_present_and_recent, ->(porcentage_str) {
+    # less than 1 year ago
+    where(
+      "#{porcentage_str} IS NOT NULL AND #{porcentage_str} > now() - '1 year' :: interval"
+    ).order(
+      porcentage_str => :asc
+    )
+  }
+
   private
 
   def set_accessors_if_present!
