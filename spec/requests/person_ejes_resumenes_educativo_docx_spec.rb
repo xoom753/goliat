@@ -43,7 +43,7 @@ RSpec.describe "Educativo report DOCX", type: :request do
         draft_template_title: nil, draft_info_si_cumple: nil,
         draft_info_no_cumple: nil, draft_grades_si_cumple: nil,
         draft_grades_no_cumple: nil, draft_activities_list: nil,
-        get_fichas_indexes: [0], get_activities_ficha: activities_ficha,
+        get_fichas_indexes: [ 0 ], get_activities_ficha: activities_ficha,
         get_grades_ficha: grades_ficha, signature: nil, fecha_entrega: nil
       )
       allow(renderer).to receive(:docx=)

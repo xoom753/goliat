@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Laboral and educativo grade ficha renderers" do
   let(:docx) { double }
-  let(:periods) { [current_period, later_period] }
+  let(:periods) { [ current_period, later_period ] }
   let(:current_period) { double(period_percentage: "20%", activities: []) }
   let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
   let(:later_activities) { [] }
@@ -32,7 +32,7 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
     allow(renderer).to receive(:column_widths)
     allow(renderer).to receive(:border_size)
     allow(renderer).to receive(:cell_style)
-    allow(renderer).to receive(:cols).and_return([:first_column])
+    allow(renderer).to receive(:cols).and_return([ :first_column ])
     allow(renderer).to receive(:rows).and_return(Array.new(expected_rows.length) { Array.new(8, :cell) })
     allow(renderer).to receive(:cells).and_return(:all_cells)
     allow(docx).to receive(:p)
@@ -48,11 +48,11 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
     it "builds semester rows and styles permanent and temporal sections" do
       renderer = build_renderer(:laboral)
       rows = [
-        ["LABORAL"],
-        ["ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%"],
-        ["PERMANENTE", "Proyectos institucionales y/o producción en talleres", "Cumplimiento a los horarios, convivencia, protocolos de seguridad y conocimientos", "3", "0"],
-        ["TEMPORAL", "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional", "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento", "2", "0"],
-        ["Subtotal", "5", "0"]
+        [ "LABORAL" ],
+        [ "ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%" ],
+        [ "PERMANENTE", "Proyectos institucionales y/o producción en talleres", "Cumplimiento a los horarios, convivencia, protocolos de seguridad y conocimientos", "3", "0" ],
+        [ "TEMPORAL", "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional", "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento", "2", "0" ],
+        [ "Subtotal", "5", "0" ]
       ]
 
       render_grades_table(renderer, expected_rows: rows)
@@ -60,7 +60,7 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
 
     it "omits permanent rows and delegates percentage extension" do
       allow(summary).to receive(:tipo_porcentual?).and_return(true)
-      allow(later_period).to receive(:activities).and_return([:activity])
+      allow(later_period).to receive(:activities).and_return([ :activity ])
       renderer = build_renderer(:laboral)
       allow(period_type_renderer).to receive(:get_subtotal_max_grade).and_return("2")
       expect(period_type_renderer).to receive(:concat_tipo_porcentual_rows!) do |rows|
@@ -69,10 +69,10 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
         rows[3] << "2"
       end
       rows = [
-        ["LABORAL"],
-        ["ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%", "40%"],
-        ["TEMPORAL", "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional", "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento", "2", "0", "2"],
-        ["Subtotal", "2", "0", "2"]
+        [ "LABORAL" ],
+        [ "ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%", "40%" ],
+        [ "TEMPORAL", "Actividades ocupacionales, capacitación, servicios auxiliares y terapia ocupacional", "Asistencia, cumplimiento a los horarios, comportamiento, protocolos de seguridad, aprobación y conocimiento", "2", "0", "2" ],
+        [ "Subtotal", "2", "0", "2" ]
       ]
 
       render_grades_table(renderer, expected_rows: rows)
@@ -83,12 +83,12 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
     it "builds semester rows including both permanent education categories" do
       renderer = build_renderer(:educativo)
       rows = [
-        ["EDUCATIVO"],
-        ["PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%"],
-        ["PERMANENTE", "EDUCACIÓN ESCOLARIZADA", "Docentes voluntarios por periodo académico; o estudiantes regulares en alfabetización, post-alfabetización, educación básica superior, bachillerato general unificado y bachillerato técnico.", "5", "0"],
-        ["", "EDUCACIÓN SUPERIOR", "Diferentes carreras universitarias.", "", ""],
-        ["TEMPORAL", "EDUCACIÓN NO ESCOLARIZADA", "Tutorías, cursos, talleres, charlas, biblioteca y otras actividades de capacitación recibidas.", "2", "0"],
-        ["Subtotal", "7", "0"]
+        [ "EDUCATIVO" ],
+        [ "PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%" ],
+        [ "PERMANENTE", "EDUCACIÓN ESCOLARIZADA", "Docentes voluntarios por periodo académico; o estudiantes regulares en alfabetización, post-alfabetización, educación básica superior, bachillerato general unificado y bachillerato técnico.", "5", "0" ],
+        [ "", "EDUCACIÓN SUPERIOR", "Diferentes carreras universitarias.", "", "" ],
+        [ "TEMPORAL", "EDUCACIÓN NO ESCOLARIZADA", "Tutorías, cursos, talleres, charlas, biblioteca y otras actividades de capacitación recibidas.", "2", "0" ],
+        [ "Subtotal", "7", "0" ]
       ]
 
       render_grades_table(renderer, expected_rows: rows)
@@ -103,10 +103,10 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
         rows[3] << "0"
       end
       rows = [
-        ["EDUCATIVO"],
-        ["PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%", "40%"],
-        ["TEMPORAL", "EDUCACIÓN NO ESCOLARIZADA", "Tutorías, cursos, talleres, charlas, biblioteca y otras actividades de capacitación recibidas.", "2", "0", "0"],
-        ["Subtotal", "2", "0", "0"]
+        [ "EDUCATIVO" ],
+        [ "PARÁMETROS DE CALIFICACIÓN", "MÁX", "20%", "40%" ],
+        [ "TEMPORAL", "EDUCACIÓN NO ESCOLARIZADA", "Tutorías, cursos, talleres, charlas, biblioteca y otras actividades de capacitación recibidas.", "2", "0", "0" ],
+        [ "Subtotal", "2", "0", "0" ]
       ]
 
       render_grades_table(renderer, expected_rows: rows)

@@ -49,7 +49,7 @@ RSpec.describe "Cultural report DOCX", type: :request do
         draft_grades_si_cumple: nil,
         draft_grades_no_cumple: nil,
         draft_activities_list: nil,
-        get_fichas_indexes: [0],
+        get_fichas_indexes: [ 0 ],
         get_activities_ficha: activities_ficha,
         get_grades_ficha: grades_ficha,
         signature: nil,
@@ -59,7 +59,7 @@ RSpec.describe "Cultural report DOCX", type: :request do
       allow(PersonEjesResumen::InformeRendererService).to receive(:new)
         .with(kind: :cultural, person_ejes_resumen: report)
         .and_return(renderer)
-      [renderer, grades_ficha]
+      [ renderer, grades_ficha ]
     end
 
     it "does not render the grades ficha for an old-format period" do

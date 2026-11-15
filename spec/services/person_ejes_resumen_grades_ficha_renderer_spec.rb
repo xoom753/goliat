@@ -53,20 +53,20 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GradesFichaRenderer do
 
   it "renders its info table and applies merged-cell styling" do
     allow(translator).to receive(:stringify).and_return("translated")
-    allow(renderer).to receive(:common_table_rows).and_return([["NAME", "CASEY"], ["OFFENSE", "ROBO"]])
-    allow(renderer).to receive(:grades_ficha_bottom_rows).and_return([["PERIOD", "DATE", "DATE"]])
+    allow(renderer).to receive(:common_table_rows).and_return([ [ "NAME", "CASEY" ], [ "OFFENSE", "ROBO" ] ])
+    allow(renderer).to receive(:grades_ficha_bottom_rows).and_return([ [ "PERIOD", "DATE", "DATE" ] ])
     allow(renderer).to receive(:get_grades_table_merged_rows_count).and_return(1)
-    allow(renderer).to receive(:cols).and_return([["first-column"]])
-    allow(renderer).to receive(:rows).and_return([["r0c0", "r0c1"], ["r1c0", "r1c1"]])
+    allow(renderer).to receive(:cols).and_return([ [ "first-column" ] ])
+    allow(renderer).to receive(:rows).and_return([ [ "r0c0", "r0c1" ], [ "r1c0", "r1c1" ] ])
     allow(renderer).to receive(:cells).and_return(:all_cells)
     allow(renderer).to receive(:cell_style)
     allow(renderer).to receive(:column_widths)
     allow(renderer).to receive(:border_size)
     allow(docx).to receive(:p)
-    expect(docx).to receive(:table).with([["NAME", "CASEY"], ["OFFENSE", "ROBO"], ["PERIOD", "DATE", "DATE"]]) do |rows, &block|
+    expect(docx).to receive(:table).with([ [ "NAME", "CASEY" ], [ "OFFENSE", "ROBO" ], [ "PERIOD", "DATE", "DATE" ] ]) do |rows, &block|
       renderer.instance_exec(&block)
     end
-    expect(renderer).to receive(:cell_style).with(["first-column"], bold: true)
+    expect(renderer).to receive(:cell_style).with([ "first-column" ], bold: true)
     expect(renderer).to receive(:cell_style).with("r0c1", colspan: 2)
     expect(renderer).to receive(:cell_style).with("r1c1", colspan: 2)
 
