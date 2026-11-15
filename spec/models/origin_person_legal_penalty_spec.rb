@@ -54,7 +54,6 @@ RSpec.describe OriginPersonLegalPenalty, type: :model do
   end
 
   it "leaves values unchanged when their input is EN PROCESO" do
-
     penalty = described_class.new(origin_person: origin_person, origin_person_legal_process: legal_process)
     penalty.cantidad_total_sentencia = 90
     penalty.cantidad_total_sentencia_str = described_class::EN_PROCESO
