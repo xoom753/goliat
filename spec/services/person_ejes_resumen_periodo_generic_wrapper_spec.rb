@@ -24,9 +24,9 @@ RSpec.describe PersonEjesResumen::PeriodosWrapper::GenericWrapper do
         end_date: "31/03/2024",
         period_percentage: "20%"
       )
-      first = double(activity_nombre: "Weaving", end_date: Date.new(2024, 1, 31), duracion_i: 2)
-      repeated = double(activity_nombre: "Weaving", end_date: Date.new(2024, 2, 29), duracion_i: 3)
-      other = double(activity_nombre: "Painting", end_date: Date.new(2024, 3, 31), duracion_i: 4)
+      first = double(activity_nombre: "Weaving", activity_human_name_d: "weaving", end_date: Date.new(2024, 1, 31), duracion_i: 2)
+      repeated = double(activity_nombre: "Weaving", activity_human_name_d: "weaving", end_date: Date.new(2024, 2, 29), duracion_i: 3)
+      other = double(activity_nombre: "Painting", activity_human_name_d: "painting", end_date: Date.new(2024, 3, 31), duracion_i: 4)
 
       wrapper.append(first)
       wrapper.append(repeated)
