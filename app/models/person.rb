@@ -7,7 +7,7 @@ class Person < ApplicationRecord
     has_many :person_activities
 
     scope :from_pabellon, ->(pabellon_str) {
-        where("pabellon ILIKE '%#{pabellon_str}%'")
+        where("pabellon ILIKE ?", "%#{pabellon_str}%")
     }
     scope :from_san_jose, -> {
         from_pabellon("San_Jose")

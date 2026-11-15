@@ -37,7 +37,24 @@ RSpec.describe OriginPersonLegalPenalty, type: :model do
     expect(penalty.ochenta_porciento_at).to eq(Date.new(2027, 1, 15))
   end
 
+  it "filters recent milestone dates using an allowed percentage column" do
+    penalty = described_class.create!(
+      origin_person: origin_person,
+      origin_person_legal_process: legal_process,
+      sesenta_porciento_at_str: Date.today + 10.days
+    )
+
+    expect(described_class.porcentage_present_and_recent("sesenta_porciento_at")).to include(penalty)
+  end
+
+  it "rejects unsupported percentage column names" do
+    expect {
+      described_class.porcentage_present_and_recent("sesenta_porciento_at); DROP TABLE origin_people; --")
+    }.to raise_error(ArgumentError, "Unsupported percentage column")
+  end
+
   it "leaves values unchanged when their input is EN PROCESO" do
+
     penalty = described_class.new(origin_person: origin_person, origin_person_legal_process: legal_process)
     penalty.cantidad_total_sentencia = 90
     penalty.cantidad_total_sentencia_str = described_class::EN_PROCESO

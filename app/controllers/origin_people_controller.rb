@@ -2,14 +2,17 @@ class OriginPeopleController < ApplicationController
     def index
         @origin_people = OriginPerson.all
         if params[:s].present? && params[:s].length > 2
-            search = "'%#{params[:s]}%'"
-            @origin_people = @origin_people.where("fullname ILIKE #{search} OR dni LIKE #{search}")
+            search = "%#{params[:s]}%"
+            @origin_people = @origin_people.where(
+                "fullname ILIKE :search OR dni LIKE :search",
+                search: search
+            )
         end
         if params[:proceso_num].present? && params[:proceso_num].length > 2
-            proceso_num_search = "'%#{params[:proceso_num]}%'"
             @origin_people = @origin_people.where(
                 origin_person_legal_processes: OriginPersonLegalProcess.where(
-                    "proceso_num LIKE #{proceso_num_search}"
+                    "proceso_num LIKE ?",
+                    "%#{params[:proceso_num]}%"
                 )
             )
         end

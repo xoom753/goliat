@@ -120,14 +120,14 @@
                     Delitos
                 </dt>
                 <dd>
-                    <%= person_ejes_resumen.delitos_array.join("<br />").html_safe %>
+                    <%= safe_join(person_ejes_resumen.delitos_array, tag.br) %>
                 </dd>
 
                 <dt>
                     Sentencias
                 </dt>
                 <dd>
-                    <%= person_ejes_resumen.sentencias_array.join("<br />").html_safe %>
+                    <%= safe_join(person_ejes_resumen.sentencias_array, tag.br) %>
                 </dd>
 
                 <% if person_ejes_resumen.acumulacion_penas.present? %>

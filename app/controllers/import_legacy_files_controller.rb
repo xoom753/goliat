@@ -4,10 +4,7 @@ class ImportLegacyFilesController < ApplicationController
     def show
         scope = LegacyImportFile.sorted_by_date
         if params[:q].present?
-            query = "%#{params[:q]}%"
-            scope = scope.where(
-                "filename ILIKE '#{query}'"
-            )
+            scope = scope.where("filename ILIKE ?", "%#{params[:q]}%")
         end
         if params[:year].present?
             scope = scope.where(year: params[:year])

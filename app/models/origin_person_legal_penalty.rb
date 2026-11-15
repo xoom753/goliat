@@ -14,12 +14,19 @@ class OriginPersonLegalPenalty < ApplicationRecord
   before_save :set_accessors_if_present!
 
   scope :porcentage_present_and_recent, ->(porcentage_str) {
-    # less than 1 year ago
-    where(
-      "#{porcentage_str} IS NOT NULL AND #{porcentage_str} > now() - '1 year' :: interval"
-    ).order(
-      porcentage_str => :asc
-    )
+    percentage_columns = {
+      "veinte_porciento_at" => arel_table[:veinte_porciento_at],
+      "cuarenta_porciento_at" => arel_table[:cuarenta_porciento_at],
+      "sesenta_porciento_at" => arel_table[:sesenta_porciento_at],
+      "ochenta_porciento_at" => arel_table[:ochenta_porciento_at]
+    }
+    column = percentage_columns.fetch(porcentage_str) do
+      raise ArgumentError, "Unsupported percentage column"
+    end
+
+    where.not(column => nil)
+      .where(column.gt(1.year.ago))
+      .order(column => :asc)
   }
 
   private

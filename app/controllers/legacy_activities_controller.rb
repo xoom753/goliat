@@ -3,8 +3,10 @@ class LegacyActivitiesController < ApplicationController
         @legacy_activities = LegacyActivity.all
 
         if params[:s].present? && params[:s].length > 2
-            search = "'%#{params[:s].strip}%'"
-            @legacy_activities = @legacy_activities.where("nombre ILIKE #{search}")
+            @legacy_activities = @legacy_activities.where(
+                "nombre ILIKE ?",
+                "%#{params[:s].strip}%"
+            )
         end
 
         @legacy_activities = @legacy_activities.ordered.page(params[:page]).per(50)

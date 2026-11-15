@@ -17,8 +17,10 @@ class DashboardsController < ApplicationController
         )
 
         if @search_query.present? && @search_query.length > 2
-            search = "'%#{@search_query}%'"
-            @people = @people.where("nombres ILIKE #{search} OR dni LIKE #{search}")
+            @people = @people.where(
+                "nombres ILIKE :search OR dni LIKE :search",
+                search: "%#{@search_query}%"
+            )
         end
 
         if params[:person_id].present?
