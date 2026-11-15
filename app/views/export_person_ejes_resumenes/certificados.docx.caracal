@@ -74,7 +74,8 @@ end
 
     docx.p # whitespace
     docx.p "Por haber participado en la actividad del Eje de Tratamiento: #{activity.kind.to_s.upcase}"
-    docx.p "Curso de Pintura", bold: true
+
+    docx.p "#{activity.actividad_kind.capitalize}#{activity.activity_str}", bold: true
 
     activity_months = activity.by_months.keys
     activity_duracion = activity.duracion_str
