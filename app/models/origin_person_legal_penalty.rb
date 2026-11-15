@@ -24,9 +24,8 @@ class OriginPersonLegalPenalty < ApplicationRecord
       raise ArgumentError, "Unsupported percentage column"
     end
 
-    where.not(column => nil)
-      .where(column.gt(1.year.ago))
-      .order(column => :asc)
+    where(column.not_eq(nil).and(column.gt(1.year.ago)))
+      .order(column.asc)
   }
 
   private
