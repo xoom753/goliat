@@ -10,304 +10,315 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_11_173342) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_15_173330) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.text "name"
+    t.text "record_type"
+    t.bigint "record_id"
+    t.bigint "blob_id"
+    t.timestamptz "created_at"
+    t.index ["blob_id"], name: "idx_16440_index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "idx_16440_index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
+    t.text "key"
+    t.text "filename"
+    t.text "content_type"
     t.text "metadata"
-    t.string "service_name", null: false
-    t.bigint "byte_size", null: false
-    t.string "checksum"
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+    t.text "service_name"
+    t.bigint "byte_size"
+    t.text "checksum"
+    t.timestamptz "created_at"
+    t.index ["key"], name: "idx_16433_index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.bigint "blob_id"
+    t.text "variation_digest"
+    t.index ["blob_id", "variation_digest"], name: "idx_16447_index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "activities", force: :cascade do |t|
-    t.integer "activity_group_id", null: false
-    t.string "nombre", null: false
-    t.index ["activity_group_id"], name: "index_activities_on_activity_group_id"
+    t.bigint "activity_group_id"
+    t.text "nombre"
+    t.index ["activity_group_id"], name: "idx_16402_index_activities_on_activity_group_id"
   end
 
   create_table "activity_groups", force: :cascade do |t|
+    t.text "nombre"
+  end
+
+  create_table "activity_human_names", force: :cascade do |t|
+    t.bigint "activity_id", null: false
     t.string "nombre", null: false
+    t.datetime "created_at"
+    t.index ["activity_id"], name: "index_activity_human_names_on_activity_id"
   end
 
   create_table "extra_activities", force: :cascade do |t|
-    t.string "nombre", null: false
-    t.datetime "created_at", null: false
+    t.text "nombre"
+    t.timestamptz "created_at"
   end
 
   create_table "extranjero_presentes", force: :cascade do |t|
-    t.string "nombres"
-    t.string "pasaporte"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text "nombres"
+    t.text "pasaporte"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
   end
 
   create_table "import_errors", force: :cascade do |t|
     t.text "details"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
   end
 
   create_table "legacy_activities", force: :cascade do |t|
-    t.string "nombre"
-    t.datetime "created_at", null: false
-    t.index ["nombre"], name: "index_legacy_activities_on_nombre"
+    t.text "nombre"
+    t.timestamptz "created_at"
+    t.index ["nombre"], name: "idx_16468_index_legacy_activities_on_nombre"
   end
 
   create_table "legacy_activity_details", force: :cascade do |t|
-    t.string "nombre", null: false
-    t.datetime "created_at", null: false
-    t.index ["nombre"], name: "index_legacy_activity_details_on_nombre"
+    t.text "nombre"
+    t.timestamptz "created_at"
+    t.index ["nombre"], name: "idx_16482_index_legacy_activity_details_on_nombre"
   end
 
   create_table "legacy_activity_groups", force: :cascade do |t|
-    t.string "nombre"
-    t.datetime "created_at", null: false
-    t.integer "activity_group_id"
-    t.index ["activity_group_id"], name: "index_legacy_activity_groups_on_activity_group_id"
-    t.index ["nombre"], name: "index_legacy_activity_groups_on_nombre"
+    t.text "nombre"
+    t.timestamptz "created_at"
+    t.bigint "activity_group_id"
+    t.index ["activity_group_id"], name: "idx_16475_index_legacy_activity_groups_on_activity_group_id"
+    t.index ["nombre"], name: "idx_16475_index_legacy_activity_groups_on_nombre"
   end
 
   create_table "legacy_course_file_parsers", force: :cascade do |t|
-    t.string "parser_name", null: false
+    t.text "parser_name"
     t.text "description"
-    t.integer "skip_rows"
-    t.integer "nombres_col"
-    t.string "fechas_cols"
-    t.string "file_format"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "sheet_numbers"
+    t.bigint "skip_rows"
+    t.bigint "nombres_col"
+    t.text "fechas_cols"
+    t.text "file_format"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.text "sheet_numbers"
   end
 
   create_table "legacy_files_parsers", force: :cascade do |t|
-    t.string "parser_name"
-    t.string "row_number"
-    t.string "nombres"
-    t.string "activity_group_str"
-    t.string "activity_str"
-    t.string "activity_dates"
-    t.string "duracion"
-    t.integer "start_date_index_from"
-    t.integer "start_date_index_to"
-    t.integer "end_date_index_from"
-    t.integer "end_date_index_to"
-    t.string "sheet_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "file_format"
-    t.string "activity_detail_str"
+    t.text "parser_name"
+    t.text "row_number"
+    t.text "nombres"
+    t.text "activity_group_str"
+    t.text "activity_str"
+    t.text "activity_dates"
+    t.text "duracion"
+    t.bigint "start_date_index_from"
+    t.bigint "start_date_index_to"
+    t.bigint "end_date_index_from"
+    t.bigint "end_date_index_to"
+    t.text "sheet_name"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.text "file_format"
+    t.text "activity_detail_str"
     t.text "description"
   end
 
   create_table "legacy_import_files", force: :cascade do |t|
-    t.string "filename"
-    t.string "filepath"
-    t.string "last_modified_at"
-    t.integer "parseable_id"
-    t.integer "status", default: 0
-    t.integer "duplicate_of_id"
-    t.string "weight"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "parseable_type"
-    t.integer "records_count"
-    t.integer "year"
-    t.integer "month"
+    t.text "filename"
+    t.text "filepath"
+    t.text "last_modified_at"
+    t.bigint "parseable_id"
+    t.bigint "status", default: 0
+    t.bigint "duplicate_of_id"
+    t.text "weight"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.text "parseable_type"
+    t.bigint "records_count"
+    t.bigint "year"
+    t.bigint "month"
     t.text "records_list"
     t.date "override_hasta"
-    t.index ["filename", "last_modified_at", "weight", "id"], name: "idx_on_filename_last_modified_at_weight_id_5994fea729"
-    t.index ["last_modified_at", "filename"], name: "index_legacy_import_files_on_last_modified_at_and_filename"
-    t.index ["parseable_id"], name: "index_legacy_import_files_on_parseable_id"
-    t.index ["year", "month"], name: "index_legacy_import_files_on_year_and_month"
+    t.index ["filename", "last_modified_at", "weight", "id"], name: "idx_16538_idx_on_filename_last_modified_at_weight_id_5994fea729"
+    t.index ["last_modified_at", "filename"], name: "idx_16538_index_legacy_import_files_on_last_modified_at_and_fil"
+    t.index ["parseable_id"], name: "idx_16538_index_legacy_import_files_on_parseable_id"
+    t.index ["year", "month"], name: "idx_16538_index_legacy_import_files_on_year_and_month"
   end
 
   create_table "legacy_people", force: :cascade do |t|
-    t.string "nombres", null: false
-    t.string "dni"
-    t.datetime "created_at", null: false
-    t.index ["nombres"], name: "index_legacy_people_on_nombres"
+    t.text "nombres"
+    t.text "dni"
+    t.timestamptz "created_at"
+    t.index ["nombres"], name: "idx_16454_index_legacy_people_on_nombres"
   end
 
   create_table "legacy_person_activities", force: :cascade do |t|
-    t.integer "row_number"
-    t.string "activity_dates"
-    t.string "duracion"
+    t.bigint "row_number"
+    t.text "activity_dates"
+    t.text "duracion"
     t.date "start_date"
     t.date "end_date"
-    t.datetime "created_at", null: false
-    t.integer "legacy_person_id"
-    t.integer "legacy_activity_id"
-    t.integer "legacy_activity_group_id"
-    t.integer "legacy_activity_detail_id"
-    t.integer "legacy_import_file_id"
-    t.index ["end_date"], name: "index_legacy_person_activities_on_end_date"
-    t.index ["legacy_activity_detail_id"], name: "index_legacy_person_activities_on_legacy_activity_detail_id"
-    t.index ["legacy_activity_group_id"], name: "index_legacy_person_activities_on_legacy_activity_group_id"
-    t.index ["legacy_activity_id"], name: "index_legacy_person_activities_on_legacy_activity_id"
-    t.index ["legacy_person_id"], name: "index_legacy_person_activities_on_legacy_person_id"
+    t.timestamptz "created_at"
+    t.bigint "legacy_person_id"
+    t.bigint "legacy_activity_id"
+    t.bigint "legacy_activity_group_id"
+    t.bigint "legacy_activity_detail_id"
+    t.bigint "legacy_import_file_id"
+    t.index ["end_date"], name: "idx_16489_index_legacy_person_activities_on_end_date"
+    t.index ["legacy_activity_detail_id"], name: "idx_16489_index_legacy_person_activities_on_legacy_activity_det"
+    t.index ["legacy_activity_group_id"], name: "idx_16489_index_legacy_person_activities_on_legacy_activity_gro"
+    t.index ["legacy_activity_id"], name: "idx_16489_index_legacy_person_activities_on_legacy_activity_id"
+    t.index ["legacy_person_id"], name: "idx_16489_index_legacy_person_activities_on_legacy_person_id"
   end
 
   create_table "origin_people", force: :cascade do |t|
-    t.date "fecha_registro", null: false
-    t.string "father_lastname", null: false
-    t.string "mother_lastname"
-    t.string "first_name", null: false
-    t.string "middle_name"
-    t.string "fullname", null: false
-    t.string "alias_name"
-    t.string "dni_kind"
-    t.string "dni"
-    t.integer "situacion_actual", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["dni"], name: "index_origin_people_on_dni"
-    t.index ["fullname", "dni"], name: "index_origin_people_on_fullname_and_dni"
-    t.index ["fullname"], name: "index_origin_people_on_fullname"
+    t.date "fecha_registro"
+    t.text "father_lastname"
+    t.text "mother_lastname"
+    t.text "first_name"
+    t.text "middle_name"
+    t.text "fullname"
+    t.text "alias_name"
+    t.text "dni_kind"
+    t.text "dni"
+    t.bigint "situacion_actual", default: 0
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.index ["dni"], name: "idx_16503_index_origin_people_on_dni"
+    t.index ["fullname", "dni"], name: "idx_16503_index_origin_people_on_fullname_and_dni"
+    t.index ["fullname"], name: "idx_16503_index_origin_people_on_fullname"
   end
 
   create_table "origin_person_demographics", force: :cascade do |t|
-    t.string "pais_origen"
+    t.text "pais_origen"
     t.date "fecha_nacimiento"
-    t.string "estado_civil"
-    t.string "nivel_instruccion"
-    t.string "profesion"
-    t.string "gravedad_enfermedad"
-    t.string "tipo_enfermedad"
-    t.string "tipo_discapacidad"
-    t.integer "origin_person_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["origin_person_id"], name: "index_origin_person_demographics_on_origin_person_id"
+    t.text "estado_civil"
+    t.text "nivel_instruccion"
+    t.text "profesion"
+    t.text "gravedad_enfermedad"
+    t.text "tipo_enfermedad"
+    t.text "tipo_discapacidad"
+    t.bigint "origin_person_id"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.index ["origin_person_id"], name: "idx_16511_index_origin_person_demographics_on_origin_person_id"
   end
 
   create_table "origin_person_legal_penalties", force: :cascade do |t|
-    t.integer "anios_acumulacion_pena"
-    t.integer "meses_acumulacion_pena"
-    t.integer "dias_acumulacion_pena"
-    t.integer "acumulacion_total_penas"
-    t.integer "anios_pena_individual"
-    t.integer "meses_pena_individual"
-    t.integer "dias_pena_individual"
-    t.integer "acumulacion_pena_individual_total"
-    t.integer "cantidad_total_sentencia"
+    t.bigint "anios_acumulacion_pena"
+    t.bigint "meses_acumulacion_pena"
+    t.bigint "dias_acumulacion_pena"
+    t.bigint "acumulacion_total_penas"
+    t.bigint "anios_pena_individual"
+    t.bigint "meses_pena_individual"
+    t.bigint "dias_pena_individual"
+    t.bigint "acumulacion_pena_individual_total"
+    t.bigint "cantidad_total_sentencia"
     t.date "termina_condena_at"
     t.date "veinte_porciento_at"
     t.date "cuarenta_porciento_at"
     t.date "sesenta_porciento_at"
     t.date "ochenta_porciento_at"
-    t.integer "origin_person_id", null: false
-    t.integer "origin_person_legal_process_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["origin_person_id"], name: "index_origin_person_legal_penalties_on_origin_person_id"
-    t.index ["origin_person_legal_process_id"], name: "idx_on_origin_person_legal_process_id_796970cb62"
+    t.bigint "origin_person_id"
+    t.bigint "origin_person_legal_process_id"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.index ["origin_person_id"], name: "idx_16526_index_origin_person_legal_penalties_on_origin_person_"
+    t.index ["origin_person_legal_process_id"], name: "idx_16526_idx_on_origin_person_legal_process_id_796970cb62"
   end
 
   create_table "origin_person_legal_processes", force: :cascade do |t|
     t.date "fecha_detencion"
     t.date "fecha_delito"
     t.date "fecha_ingreso"
-    t.integer "estado", default: 0
-    t.integer "anios_sentencia"
-    t.integer "meses_sentencia"
-    t.integer "dias_sentencia"
+    t.bigint "estado", default: 0
+    t.bigint "anios_sentencia"
+    t.bigint "meses_sentencia"
+    t.bigint "dias_sentencia"
     t.date "fecha_sentencia"
-    t.string "boleta_encarcelamiento"
+    t.text "boleta_encarcelamiento"
     t.date "fecha_boleta_encarcelamiento"
-    t.string "proceso_num"
-    t.string "normativa"
-    t.string "infraccion"
-    t.string "incisos"
-    t.string "grupo_infraccion"
-    t.string "subgrupo_infraccion"
-    t.string "parte_policial_num"
+    t.text "proceso_num"
+    t.text "normativa"
+    t.text "infraccion"
+    t.text "incisos"
+    t.text "grupo_infraccion"
+    t.text "subgrupo_infraccion"
+    t.text "parte_policial_num"
     t.text "observaciones"
     t.text "observaciones_2"
-    t.integer "origin_person_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["origin_person_id"], name: "index_origin_person_legal_processes_on_origin_person_id"
-    t.index ["proceso_num"], name: "index_origin_person_legal_processes_on_proceso_num"
+    t.bigint "origin_person_id"
+    t.timestamptz "created_at"
+    t.timestamptz "updated_at"
+    t.index ["origin_person_id"], name: "idx_16518_index_origin_person_legal_processes_on_origin_person_"
+    t.index ["proceso_num"], name: "idx_16518_index_origin_person_legal_processes_on_proceso_num"
   end
 
   create_table "people", force: :cascade do |t|
-    t.string "nombres", null: false
-    t.string "dni"
-    t.string "pabellon"
-    t.integer "estado", default: 0
-    t.index ["dni"], name: "index_people_on_dni"
-    t.index ["nombres"], name: "index_people_on_nombres"
+    t.text "nombres"
+    t.text "dni"
+    t.text "pabellon"
+    t.bigint "estado", default: 0
+    t.index ["dni"], name: "idx_16394_index_people_on_dni"
+    t.index ["nombres"], name: "idx_16394_index_people_on_nombres"
   end
 
   create_table "person_activities", force: :cascade do |t|
-    t.integer "person_id", null: false
-    t.integer "coursable_id", null: false
-    t.integer "mes", null: false
-    t.integer "anio", null: false
-    t.integer "cargo", default: 0
-    t.string "qty_h"
-    t.string "coursable_type"
-    t.index ["coursable_id"], name: "index_person_activities_on_coursable_id"
-    t.index ["coursable_type", "coursable_id"], name: "index_person_activities_on_coursable_type_and_coursable_id"
-    t.index ["person_id"], name: "index_person_activities_on_person_id"
+    t.bigint "person_id"
+    t.bigint "coursable_id"
+    t.bigint "mes"
+    t.bigint "anio"
+    t.bigint "cargo", default: 0
+    t.text "qty_h"
+    t.text "coursable_type"
+    t.index ["coursable_id"], name: "idx_16546_index_person_activities_on_coursable_id"
+    t.index ["coursable_type", "coursable_id"], name: "idx_16546_index_person_activities_on_coursable_type_and_coursab"
+    t.index ["person_id"], name: "idx_16546_index_person_activities_on_person_id"
   end
 
   create_table "person_ejes_resumenes", force: :cascade do |t|
-    t.string "nombres", null: false
-    t.string "dni", null: false
-    t.date "fecha_perdida_libertad", null: false
-    t.text "delitos", null: false
-    t.text "sentencias", null: false
+    t.text "nombres"
+    t.text "dni"
+    t.date "fecha_perdida_libertad"
+    t.text "delitos"
+    t.text "sentencias"
     t.text "acumulacion_penas"
-    t.text "semestres_porcentuales", null: false
-    t.text "periodos_detalle", null: false
-    t.datetime "created_at", null: false
-    t.string "ubicacion"
+    t.text "semestres_porcentuales"
+    t.text "periodos_detalle"
+    t.timestamptz "created_at"
+    t.text "ubicacion"
     t.date "fecha_traslado"
-    t.string "ubicacion_traslado"
-    t.string "legacy_people_ids"
+    t.text "ubicacion_traslado"
+    t.text "legacy_people_ids"
     t.boolean "tipo_porcentual"
-    t.string "people_ids"
-    t.datetime "last_generated_at"
+    t.text "people_ids"
+    t.timestamptz "last_generated_at"
   end
 
   create_table "person_pabellon_updates", force: :cascade do |t|
-    t.string "nombres"
-    t.string "pabellon"
-    t.datetime "created_at", null: false
+    t.text "nombres"
+    t.text "pabellon"
+    t.timestamptz "created_at"
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "activities", "activity_groups"
-  add_foreign_key "legacy_activity_groups", "activity_groups"
-  add_foreign_key "legacy_person_activities", "legacy_activities"
-  add_foreign_key "legacy_person_activities", "legacy_activity_details"
-  add_foreign_key "legacy_person_activities", "legacy_activity_groups"
-  add_foreign_key "legacy_person_activities", "legacy_people"
-  add_foreign_key "origin_person_demographics", "origin_people"
-  add_foreign_key "origin_person_legal_penalties", "origin_people"
-  add_foreign_key "origin_person_legal_penalties", "origin_person_legal_processes"
-  add_foreign_key "origin_person_legal_processes", "origin_people"
-  add_foreign_key "person_activities", "people"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id", name: "active_storage_attachments_blob_id_fkey"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id", name: "active_storage_variant_records_blob_id_fkey"
+  add_foreign_key "activities", "activity_groups", name: "activities_activity_group_id_fkey"
+  add_foreign_key "activity_human_names", "activities"
+  add_foreign_key "legacy_activity_groups", "activity_groups", name: "legacy_activity_groups_activity_group_id_fkey"
+  add_foreign_key "legacy_person_activities", "legacy_activities", name: "legacy_person_activities_legacy_activity_id_fkey"
+  add_foreign_key "legacy_person_activities", "legacy_activity_details", name: "legacy_person_activities_legacy_activity_detail_id_fkey"
+  add_foreign_key "legacy_person_activities", "legacy_activity_groups", name: "legacy_person_activities_legacy_activity_group_id_fkey"
+  add_foreign_key "legacy_person_activities", "legacy_people", name: "legacy_person_activities_legacy_person_id_fkey"
+  add_foreign_key "origin_person_demographics", "origin_people", name: "origin_person_demographics_origin_person_id_fkey"
+  add_foreign_key "origin_person_legal_penalties", "origin_people", name: "origin_person_legal_penalties_origin_person_id_fkey"
+  add_foreign_key "origin_person_legal_penalties", "origin_person_legal_processes", name: "origin_person_legal_penalties_origin_person_legal_process__fkey"
+  add_foreign_key "origin_person_legal_processes", "origin_people", name: "origin_person_legal_processes_origin_person_id_fkey"
+  add_foreign_key "person_activities", "people", name: "person_activities_person_id_fkey"
 end

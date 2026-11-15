@@ -11,11 +11,11 @@ class PersonEjesResumen::ActivitiesGroupService::GroupSimilarActivities
     private
 
     ##
-    # { act1 => [r1, r2] }
+    # { act1Name => [r1, r2] }
     def by_activities
         @activities.inject({}) do |memo, activity|
-            memo[activity.activity_nombre] ||= []
-            memo[activity.activity_nombre] << activity
+            memo[activity.activity_human_name_d] ||= []
+            memo[activity.activity_human_name_d] << activity
             memo
         end
     end
