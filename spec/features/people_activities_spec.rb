@@ -32,7 +32,7 @@ RSpec.describe "People activities", type: :feature do
       expect(page).to have_content("Painting")
       expect(page).not_to have_content("Football")
     end
-    expect(page).to have_select("activity_id", options: ["Todas las actividades", "Painting"])
+    expect(page).to have_select("activity_id", options: [ "Todas las actividades", "Painting" ])
   end
 
   it "ignores an activity not belonging to the selected group" do
