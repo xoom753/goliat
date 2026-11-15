@@ -24,7 +24,7 @@ RSpec.describe "Person Ejes Resumen exports", type: :request do
 
   it "renders the certificates DOCX attachment for cultural, deportivo, and laboral kinds" do
     renderer = instance_double(PersonEjesCertificadosRenderService, activities: [])
-    expect(renderer).to receive(:kinds=).with([:cultural, :deportivo, :laboral])
+    expect(renderer).to receive(:kinds=).with([ :cultural, :deportivo, :laboral ])
     allow(PersonEjesCertificadosRenderService).to receive(:new).with(report).and_return(renderer)
 
     get certificados_export_person_ejes_resumen_path(report, format: :docx)
@@ -36,7 +36,7 @@ RSpec.describe "Person Ejes Resumen exports", type: :request do
 
   it "exports the educational certificates as a named CSV attachment" do
     renderer = instance_double(PersonEjesCertificadosRenderService, to_csv: "N,Nombre\n")
-    expect(renderer).to receive(:kinds=).with([:educativo])
+    expect(renderer).to receive(:kinds=).with([ :educativo ])
     allow(PersonEjesCertificadosRenderService).to receive(:new).with(report).and_return(renderer)
 
     get certificados_educativo_export_person_ejes_resumen_path(report, format: :csv)
