@@ -84,7 +84,7 @@
                                     edit_course_path(activity, date: { month: @month, year: @year }) %>
                         ·
                         <%= link_to "Exportar",
-                                    export_courses_by_month_path(activity_id: activity.id, date: { month: @month, year: @year}) %>
+                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year) %>
                     </th>
                 </tr>
                 <% if activity.person_activities.where(mes: @month, anio: @year).any? %>
@@ -120,6 +120,7 @@
                 <%
                     activities = activity.person_activities
                                          .where(mes: @month, anio: @year)
+                                         .sorted
 
                     if @pabellon == "San_Jose"
                         activities = activities.where(
@@ -144,10 +145,10 @@
                             <%= person_activity.person.dni %>
                         </td>
                         <td>
-                            <%= person_activity.cargo %>
+                            <%= t("person_activity.cargos.#{person_activity.cargo}") %>
                         </td>
                         <td>
-                            <%= person_activity.person.pabellon.titleize if person_activity.person.pabellon.present? %>
+                            <%= person_activity.person.pabellon_to_human %>
                         </td>
                         <td>
                             <%= person_activity.id %>

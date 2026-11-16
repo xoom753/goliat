@@ -6,4 +6,12 @@ class Activity < ApplicationRecord
   scope :order_by_name, -> {
     order(nombre: :asc)
   }
+
+  def human_name
+    if activity_human_name.present?
+      activity_human_name.nombre
+    else
+      nombre
+    end
+  end
 end

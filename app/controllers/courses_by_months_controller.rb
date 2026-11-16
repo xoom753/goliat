@@ -17,7 +17,7 @@ class CoursesByMonthsController < ApplicationController
         month = params.require(:month)
         year = params.require(:year)
 
-        activities = activity.person_activities.where(
+        activities = activity.person_activities.sorted.where(
             mes: month,
             anio: year
         )
@@ -28,8 +28,8 @@ class CoursesByMonthsController < ApplicationController
                 csv << [
                     activity.person.nombres,
                     activity.person.dni,
-                    activity.cargo,
-                    activity.person.pabellon
+                    activity.cargo.upcase,
+                    activity.person.pabellon_to_human
                 ]
             end
         end

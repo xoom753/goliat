@@ -3,6 +3,12 @@ class PersonActivity < ApplicationRecord
   belongs_to :coursable, polymorphic: true
 
   scope :oldest_first, -> { order(anio: :asc, mes: :asc) }
+  scope :sorted, -> {
+    includes(:person).order(
+        cargo: :desc,
+        "people.pabellon": :asc
+    )
+  }
 
   enum :cargo, {
         estudiante: 0,

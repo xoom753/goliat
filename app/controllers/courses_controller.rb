@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
         @person_activities = @activity.person_activities.where(
             mes: @month,
             anio: @year
-        )
+        ).sorted
     end
 
     # adding a participant
@@ -46,5 +46,13 @@ class CoursesController < ApplicationController
         redirect_to action: :edit,
                     month: params[:month],
                     year: params[:year]
+    end
+
+    def update_person_activity_cargo
+        person_activity = PersonActivity.find(
+            params.require(:person_activity_id)
+        )
+        person_activity.update!(cargo: params[:cargo].to_i)
+        head :ok
     end
 end

@@ -83,13 +83,38 @@
                     <%= person_activity.person.dni %>
                 </td>
                 <td>
-                    <%= person_activity.cargo %>
+                    <div class="select">
+                        <%= form_with url: update_person_activity_cargo_courses_path( person_activity_id: person_activity.id),
+                                      method: :post,
+                                      data: {
+                                        controller: "update-person-activity-cargo"
+                                      } do %>
+                            <%=
+                                select_tag :cargo,
+                                        options_from_collection_for_select(
+                                                person_activity_cargos_for_select,
+                                                :first,
+                                                :last,
+                                                person_activity.cargo_for_database
+                                            ),
+                                        data: {
+                                            action: "change->update-person-activity-cargo#update"
+                                        }
+                            %>
+                        <% end %>
+                    </div>
                 </td>
                 <td>
-                    <%= person_activity.person.pabellon %>
+                    <%
+                        pabellon_parser = Person::PabellonParserService.new(
+                            person_activity.person
+                        )
+                    %>
+                    <%= pabellon_parser.pabellon %> -
+                    <%= pabellon_parser.celda %>
                 </td>
                 <td>
-                    <%= link_to "Remove", course_path(person_activity_id: person_activity.id, month: @month, year: @year), data: { turbo_method: :delete } %>
+                    <%= link_to "Quitar", course_path(person_activity_id: person_activity.id, month: @month, year: @year), class: "button is-danger is-light is-small", data: { turbo_method: :delete } %>
                 </td>
             </tr>
             <%= render "already_coursed_notice", person_activity: person_activity %>

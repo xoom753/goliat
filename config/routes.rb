@@ -46,11 +46,16 @@ Rails.application.routes.draw do
       get :social
     end
   end
+  resources :activity_groups, only: [ :index ]
   resources :import_people, only: [ :new, :create ]
   resources :import_people_activities, only: [ :new, :create ]
   resources :import_legacy_people_activities, only: [ :new, :create ]
   resources :people_activities, only: :index
-  resources :courses, only: [ :edit, :update, :destroy ]
+  resources :courses, only: [ :edit, :update, :destroy ] do
+    collection do
+      post :update_person_activity_cargo
+    end
+  end
   resources :extranjeros_presentes
   resources :legacy_people, only: [ :index, :show ] do
     collection do

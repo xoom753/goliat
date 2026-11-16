@@ -42,6 +42,14 @@ en:
 03/10/23	31/03/24	180	27,29%\n\
 01/04/24	28/09/24	180	34,67%\n\
 29/09/24	31/01/25	123,6	40,00%</pre>"
+  person_activity:
+    cargos:
+      estudiante: "Estudiante"
+      instructor: "Instructor"
+      apoyo: "Instructor de apoyo"
+      independiente: "Independiente"
+      responsable: "Responsable"
+      cuentapropia: "Cuenta propia"
   person_ejes_resumen:
     social_report:
       permanente_disciplina: "PERMANENTE: Disciplina, convivencia y/o relaciones interpersonales"

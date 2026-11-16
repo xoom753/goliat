@@ -1,0 +1,18 @@
+.has-text-centered
+    h2 Ejes de tratamiento
+
+table.table.is-striped.is-hoverable
+    thead
+        tr
+            th Eje de tratamiento
+            th Actividad
+            th Nombre en planes de vida
+    tbody
+        - @activity_groups.each do |activity_group|
+            - activity_group.activities.each do |activity|
+                tr
+                    td = activity_group.nombre
+                    td = activity.nombre
+                    td
+                        = link_to activity.human_name,
+                                  legacy_activities_path(s: activity.human_name)
