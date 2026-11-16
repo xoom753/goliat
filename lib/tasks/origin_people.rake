@@ -1,11 +1,10 @@
-require "import_origin_people_task"
+# require "import_origin_people_task"
+require "import_bateria_indicadores_task"
 
 namespace :origin_people do
     task import_origin_people: :environment do
-        file = "indicadores_presentes_16_oct_fixed.xlsx"
-        xlsx = Roo::Spreadsheet.open(file, extension: :xlsx)
-        ImportOriginPeopleTask.new(
-            xlsx
-        ).import!
+        filename = "bateria-indicadores-13-nov-2026.xlsx"
+        xlsx = Roo::Spreadsheet.open(filename, extension: :xlsx)
+        ImportBateriaIndicadoresTask.new(xlsx).import!
     end
 end

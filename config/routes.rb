@@ -77,7 +77,7 @@ Rails.application.routes.draw do
       get :export
     end
   end
-  resources :person_pabellon_updates, only: [ :index, :new, :create ]
+  resources :person_pabellon_updates, only: [ :index, :new, :create, :update ]
   resource :dashboard, only: [] do
     collection do
       get :people

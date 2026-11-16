@@ -54,7 +54,7 @@
                 input_html: { value: params[:end_date] }
     %>
 
-    <%= f.input :people, label: "Personas", as: :text, hint: "<pre>Ej:\nApellido1 Apellido2 Nombre1 Nombre2\nApellido1 Apellido2 Nombre1 Nombre2</pre>".html_safe %>
+    <%= f.input :people, label: "Personas", as: :text, input_html: { class: "textarea" }, hint: "<pre>Ej:\nApellido1 Apellido2 Nombre1 Nombre2\nApellido1 Apellido2 Nombre1 Nombre2</pre>".html_safe %>
 
     <%= f.submit class: "button" %>
 <% end %>

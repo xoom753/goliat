@@ -303,6 +303,8 @@ GEM
     regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
+    requestjs-rails (0.0.14)
+      railties (>= 7.1.0)
     rexml (3.4.4)
     roo (3.0.0)
       base64 (~> 0.2)
@@ -472,6 +474,7 @@ DEPENDENCIES
   rails (~> 8.1.4)
   rails-erd
   readline
+  requestjs-rails
   roo
   roo-xls
   rspec-rails (~> 8.1)
@@ -605,6 +608,7 @@ CHECKSUMS
   readline (0.0.4) sha256=6138eef17be2b98298b672c3ea63bf9cb5158d401324f26e1e84f235879c1d6a
   regexp_parser (2.13.1) sha256=5aedb6b7c35688f51e86eef17a15374dfd287c83f4ca644b2c5f3ec50a33b44b
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
+  requestjs-rails (0.0.14) sha256=bb494198993b9bf136adeeffa3594c0143c7d16c7de4485c5e20d9c126e69a2d
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   roo (3.0.0) sha256=6fdd7a9158d657c69768b4168754ff2110cc21fdc01a1bec1010820cb05c91b1
   roo-xls (2.0.0) sha256=72a6ac126e3fd140f3fb105097e5b212deb9419eb7e100abd72e0f7a94048f01

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_15_173330) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_16_214900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -190,6 +190,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_173330) do
     t.bigint "situacion_actual", default: 0
     t.timestamptz "created_at"
     t.timestamptz "updated_at"
+    t.integer "sexo"
     t.index ["dni"], name: "idx_16503_index_origin_people_on_dni"
     t.index ["fullname", "dni"], name: "idx_16503_index_origin_people_on_fullname_and_dni"
     t.index ["fullname"], name: "idx_16503_index_origin_people_on_fullname"
@@ -263,8 +264,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_173330) do
   create_table "people", force: :cascade do |t|
     t.text "nombres"
     t.text "dni"
-    t.text "pabellon"
+    t.string "pabellon"
     t.bigint "estado", default: 0
+    t.string "celda"
     t.index ["dni"], name: "idx_16394_index_people_on_dni"
     t.index ["nombres"], name: "idx_16394_index_people_on_nombres"
   end
@@ -305,6 +307,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_173330) do
     t.text "nombres"
     t.text "pabellon"
     t.timestamptz "created_at"
+    t.string "celda"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id", name: "active_storage_attachments_blob_id_fkey"

@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer do
-  it "converts both legacy and present records to their respective renderer types" do
+  it "converts both legacy and present records to their respective renderer types and sorts them by end date" do
     legacy_record = double("legacy record")
     present_record = double("present record")
-    legacy_renderer = double("legacy renderer")
-    present_renderer = double("present renderer")
+    legacy_renderer = double("legacy renderer", end_date: Date.new(2024, 1, 31))
+    present_renderer = double("present renderer", end_date: Date.new(2024, 3, 31))
     period_renderer = double("period renderer", by_periods: :periods)
 
     expect(PersonEjesResumen::ActivityRendererService::LegacyActivityRenderer)
@@ -14,7 +14,7 @@ RSpec.describe PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRende
       .to receive(:new).with(current_activity: present_record).and_return(present_renderer)
     expect(PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesByPeriodRenderer)
       .to receive(:new).with(
-        activities: [ present_renderer, legacy_renderer ],
+        activities: [ legacy_renderer, present_renderer ],
         periodos_renderer_service: :periods_service
       ).and_return(period_renderer)
 

@@ -12,7 +12,9 @@
             <th>uuid</th>
             <th>Nombres</th>
             <th>Pabellón</th>
+            <th>Celda</th>
             <th>Fecha registro</th>
+            <th></th>
         </tr>
     </thead>
     <tbody class="table is-striped is-hoverable is-narrow">
@@ -21,19 +23,28 @@
                 <td>
                     <%= update.id %>
                 </td>
-                <td>
+                <td contenteditable
+                    data-controller="person-pabellon-update-nombre-editable"
+                    data-person-pabellon-update-nombre-editable-pabellon-update-value="<%= update.id %>"
+                    data-action= "input->person-pabellon-update-nombre-editable#willUpdate"
+                >
                     <%= update.nombres %>
                 </td>
                 <td>
-                    <% pabellon_service = Person::PabellonParserService.new(
-                            update
-                        )
-                    %>
-                    <%= pabellon_service.pabellon.titleize %>
-                    <%= pabellon_service.celda.titleize %>
+                    <%= update.pabellon %>
+                </td>
+                <td>
+                    <%= update.celda %>
                 </td>
                 <td>
                     <%= update.created_at %>
+                </td>
+                <td>
+                    <%=
+                        link_to "Buscar información jurídica",
+                                origin_people_path(s: update.nombres),
+                                target: "_blank"
+                    %>
                 </td>
             </tr>
         <% end %>

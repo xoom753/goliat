@@ -43,7 +43,7 @@ RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 ## backup db
 
 ```
-pg_dump postgres://postgres:password@db/goliat_db -Fc -f backup.dump
+pg_dump postgres://postgres:password@db/goliat_prod_db -Fc -f backup.dump
 
 pg_restore --dbname="postgres://postgres:password@db/goliat_prod_db" backup.dump
 ```

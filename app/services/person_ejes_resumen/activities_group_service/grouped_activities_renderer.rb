@@ -22,8 +22,12 @@ class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer
         ).by_periods
     end
 
+    ##
+    # sort activities by date
     def all_activities
-        present_activities + legacy_activities
+        (
+            present_activities + legacy_activities
+        ).sort_by(&:end_date)
     end
 
     def legacy_activities

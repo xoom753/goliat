@@ -91,6 +91,7 @@ class ExportPersonEjesResumenesController < ApplicationController
         @csv_renderer.kinds = [ :educativo ]
         respond_to do |format|
             format.docx {
+                render :certificados
                 filename = "Certificados-#{@person_ejes_resumen.nombres}.docx"
                 headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
             }

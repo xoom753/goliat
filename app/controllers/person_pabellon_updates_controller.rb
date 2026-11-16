@@ -13,4 +13,10 @@ class PersonPabellonUpdatesController < ApplicationController
         end
         redirect_to action: :new, notice: "Imported #{people.count} updates!"
     end
+
+    def update
+        person_pabellon_update = PersonPabellonUpdate.find(params[:id])
+        person_pabellon_update.update!(nombres: params.require(:nombres))
+        head :ok
+    end
 end

@@ -1,0 +1,16 @@
+shared:
+  pabellones_list:
+    TRANSITORIA_1: Transitoria 1
+    TRANSITORIA_2: Transitoria 2
+    AISLAMIENTO_G3: Aislamiento
+    "TRANSITORIA SAN JOSE 1 (TERCERA EDAD)": "San José"
+    "TRANSITORIA SAN JOSE 2": "San José"
+    GRADAS_SAN JOSE: "San José"
+    CUARENTENA_G1: Cuarentena
+    PABELLON_CHOFERES_G2: Choferes
+  prefixes:
+    Choferes: CHOF_
+    Cuarentena: CUAR_
+    Aislamiento: AISLA_
+  specific_celdas:
+    CELDA_SAN_JOSE_TRANS_001: San José Transitoria

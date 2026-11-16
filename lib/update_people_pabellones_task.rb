@@ -7,7 +7,11 @@ class UpdatePeoplePabellonesTask
     PersonPabellonUpdate.find_each do |update|
       person = Person.find_by(nombres: update.nombres.strip)
       if person.present?
-        person.update!(estado: :presente, pabellon: update.pabellon)
+        person.update!(
+          estado: :presente,
+          pabellon: update.pabellon,
+          celda: update.celda
+        )
         updated_count += 1
         update.destroy
       else

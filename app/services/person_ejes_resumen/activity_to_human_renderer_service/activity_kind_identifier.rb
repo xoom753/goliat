@@ -40,7 +40,8 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
             /artesan/i,
             /panificaci/i,
             /tejido/i,
-            /tapizado/i
+            /tapizado/i,
+            /sastrer/i
         ].any? do |regex|
             @activity_str =~ regex
         end
