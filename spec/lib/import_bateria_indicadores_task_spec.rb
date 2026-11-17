@@ -17,7 +17,7 @@ RSpec.describe ImportBateriaIndicadoresTask do
     allow(sheet).to receive(:row).with(6).and_return(headers)
     data_row = [ "row data" ] * headers.length
     allow(sheet).to receive(:each) do |&block|
-      (Array.new(6) { ["header"] } + [data_row]).each(&block)
+      (Array.new(6) { [ "header" ] } + [ data_row ]).each(&block)
     end
     row_importer = instance_double(ImportBateriaIndicadoresTask::BateriaIndicadoresRow, import!: true, fullname: "CASEY EXAMPLE")
     expect(ImportBateriaIndicadoresTask::BateriaIndicadoresRow).to receive(:new)

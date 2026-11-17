@@ -58,7 +58,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
 
   it "includes additional ingreso and egreso rows in merged-row counts" do
     allow(summary).to receive(:fechas_ingresos_y_egresos).and_return("Ingreso: 01/01/20\nEgreso: 02/01/20")
-    allow(summary).to receive(:fechas_ingresos_y_egresos_array).and_return(["Ingreso: 01/01/20", "Egreso: 02/01/20"])
+    allow(summary).to receive(:fechas_ingresos_y_egresos_array).and_return([ "Ingreso: 01/01/20", "Egreso: 02/01/20" ])
 
     expect(renderer.get_info_table_merged_rows_count).to eq(5)
     expect(renderer.get_grades_table_merged_rows_count).to eq(5)
@@ -67,7 +67,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
   it "handles a single percentage period and appends zero for later empty periods" do
     single_period_renderer = described_class.new(
       docx: docx,
-      periodos: [first_period],
+      periodos: [ first_period ],
       current_periodo: first_period,
       person_ejes_resumen: summary,
       informes_translator_service: translator,
@@ -77,11 +77,11 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
     expect(single_period_renderer.get_semestre).to eq("20%")
     expect(single_period_renderer.get_subtotal_max_grade).to eq("2")
 
-    rows = [["Axis"], ["Header", "20%"], ["Temporal", "2"]]
+    rows = [ [ "Axis" ], [ "Header", "20%" ], [ "Temporal", "2" ] ]
     renderer.concat_tipo_porcentual_rows!(rows)
 
-    expect(rows[1]).to eq(["Header", "20%", "40%"])
-    expect(rows[2]).to eq(["Temporal", "2", "0"])
+    expect(rows[1]).to eq([ "Header", "20%", "40%" ])
+    expect(rows[2]).to eq([ "Temporal", "2", "0" ])
   end
 
   it "appends later percentage headings and scores based on later-period activities" do
@@ -98,9 +98,9 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
 
   it "flattens grouped activities for rendering when groups contain records" do
     activity = double(render_string: "Grouped certificate")
-    group_with_activities = double(activities: [activity])
+    group_with_activities = double(activities: [ activity ])
     empty_group = double(activities: [])
-    allow(activities_renderer).to receive(:grouped_activities).and_return([group_with_activities, empty_group])
+    allow(activities_renderer).to receive(:grouped_activities).and_return([ group_with_activities, empty_group ])
     allow(docx).to receive(:p)
     allow(docx).to receive(:ol) { |&block| renderer.instance_exec(&block) }
     expect(renderer).to receive(:li).with("Grouped certificate.")

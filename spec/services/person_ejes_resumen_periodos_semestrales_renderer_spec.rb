@@ -54,8 +54,8 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestra
 
   it "computes the info and grades merged row counts" do
     allow(summary).to receive(:fechas_ingresos_y_egresos).and_return("Ingreso: 01/01/2020\nEgreso: 02/02/2020")
-    allow(summary).to receive(:fechas_ingresos_y_egresos_array).and_return(["Ingreso: 01/01/2020", "Egreso: 02/02/2020"])
-    allow(summary).to receive(:delitos_array).and_return(["Robo"])
+    allow(summary).to receive(:fechas_ingresos_y_egresos_array).and_return([ "Ingreso: 01/01/2020", "Egreso: 02/02/2020" ])
+    allow(summary).to receive(:delitos_array).and_return([ "Robo" ])
     allow(summary).to receive(:several_delitos?).and_return(false)
 
     expect(renderer.get_info_table_merged_rows_count).to eq(6)

@@ -77,6 +77,24 @@ RSpec.describe "Dashboard people", type: :feature do
       expect(page).to have_content("Alex Rivera")
     end
 
+    it "filters people by status" do
+      Person.create!(nombres: "Jane Example", dni: "1234567890", estado: :presente, pabellon: "A-1")
+      Person.create!(nombres: "Alex Rivera", dni: "9999999999", estado: :libre, pabellon: "B-2")
+
+      visit people_dashboard_path(estado: Person.estados.fetch("libre"))
+
+      expect(page).to have_content("Alex Rivera")
+      expect(page).not_to have_content("Jane Example")
+    end
+
+    it "fills the search input with the selected person's name" do
+      person = Person.create!(nombres: "Jane Example", dni: "1234567890", pabellon: "A-1")
+
+      visit people_dashboard_path(person_id: person.id)
+
+      expect(page).to have_field("s", with: "Jane Example")
+    end
+
     it "filters by person_id and shows an empty state for a missing person" do
       person = Person.create!(nombres: "Jane Example", dni: "1234567890", pabellon: "A-1")
       Person.create!(nombres: "Alex Rivera", dni: "9999999999", pabellon: "B-2")
