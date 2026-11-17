@@ -10,6 +10,17 @@ RSpec.describe "Person pavilion updates", type: :request do
     end
   end
 
+  describe "PATCH /person_pabellon_updates/:id" do
+    it "updates the name on an existing pavilion update" do
+      update = PersonPabellonUpdate.create!(nombres: "Jane Example", pabellon: "A-1")
+
+      patch person_pabellon_update_path(update), params: { nombres: "Jane Updated" }
+
+      expect(response).to have_http_status(:ok)
+      expect(update.reload.nombres).to eq("Jane Updated")
+    end
+  end
+
   describe "POST /person_pabellon_updates" do
     it "creates one update per tab-separated input row" do
       expect do

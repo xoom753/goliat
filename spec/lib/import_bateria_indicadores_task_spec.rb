@@ -15,10 +15,13 @@ RSpec.describe ImportBateriaIndicadoresTask do
   it "validates configured pre-headers and headers before importing data rows" do
     allow(sheet).to receive(:row).with(5).and_return(pre_headers)
     allow(sheet).to receive(:row).with(6).and_return(headers)
-    allow(sheet).to receive(:each) { |&block| block.call([ "row data" ] * headers.length) }
+    data_row = [ "row data" ] * headers.length
+    allow(sheet).to receive(:each) do |&block|
+      (Array.new(6) { ["header"] } + [data_row]).each(&block)
+    end
     row_importer = instance_double(ImportBateriaIndicadoresTask::BateriaIndicadoresRow, import!: true, fullname: "CASEY EXAMPLE")
     expect(ImportBateriaIndicadoresTask::BateriaIndicadoresRow).to receive(:new)
-      .with([ "row data" ] * headers.length).and_return(row_importer)
+      .with(data_row).and_return(row_importer)
 
     expect { task.import! }.to output(/imported 1 records/).to_stdout
   end

@@ -50,6 +50,6 @@ RSpec.describe ImportListadoPabellonesTask do
 
     expect { task.import! }.to output.to_stdout
 
-    expect(PersonPabellonUpdate).to be_empty
+    expect(PersonPabellonUpdate.count).to eq(0)
   end
 end
