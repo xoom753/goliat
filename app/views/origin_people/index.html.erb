@@ -11,12 +11,28 @@
                 <%= text_field_tag :s, params[:s], placeholder: "Nombre o DNI", class: "input" %>
                 </p>
             </div>
+        </div>
+    </div>
 
+    <div class="field is-horizontal">
+        <div class="field-body">
             <div class="field">
                 <p class="control">
 
                 <%= text_field_tag :proceso_num, params[:proceso_num], placeholder: "Núm. Proceso", class: "input" %>
                 </p>
+            </div>
+
+            <div class="field is-narrow">
+                <div class="select">
+
+                <%=
+                    situaciones_actuales = OriginPerson.situacion_actuals.map{|k,v| [k.titleize, v]}
+                    select_tag :situacion_actual,
+                               options_from_collection_for_select(situaciones_actuales, :last, :first, params[:situacion_actual]),
+                               include_blank: "Situación actual (Todos)"
+                %>
+                </div>
             </div>
 
             <div class="field is-narrow">
@@ -31,6 +47,13 @@
 <% end %>
 
 <div class="has-text-right mt-2">
+    <div class="is-inline-block mt-2">
+        <%= pluralize @origin_people.total_count, "registro", "registros" %>
+        en total
+    </div>
+    <div class="is-inline-block mt-2 ml-4 mr-2">
+        ·
+    </div>
     <%= link_to "Ordenar por 40%",
                 by_percentage_origin_people_path(sort_by: "cuarenta"),
                 class: "button is-text" %>
@@ -53,5 +76,10 @@
         <% end %>
     </tbody>
 </table>
+
+<div class="has-text-right">
+    <%= @origin_people.limit_value %>
+    por página
+</div>
 
 <%= paginate @origin_people %>

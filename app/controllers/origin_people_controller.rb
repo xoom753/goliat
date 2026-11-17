@@ -16,6 +16,11 @@ class OriginPeopleController < ApplicationController
                 )
             )
         end
+        if params[:situacion_actual].present?
+            @origin_people = @origin_people.where(
+                situacion_actual: params[:situacion_actual]
+            )
+        end
         @origin_people =
             @origin_people.includes(
                     origin_person_legal_processes: :origin_person_legal_penalty

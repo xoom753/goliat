@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_17_200750) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_17_211813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -194,6 +194,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_200750) do
     t.index ["dni"], name: "idx_16503_index_origin_people_on_dni"
     t.index ["fullname", "dni"], name: "idx_16503_index_origin_people_on_fullname_and_dni"
     t.index ["fullname"], name: "idx_16503_index_origin_people_on_fullname"
+    t.index ["situacion_actual"], name: "index_origin_people_on_situacion_actual"
   end
 
   create_table "origin_person_demographics", force: :cascade do |t|

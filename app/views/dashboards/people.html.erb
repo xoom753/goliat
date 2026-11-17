@@ -57,6 +57,12 @@
   </div>
 <% end %>
 
+<div class="my-2 has-text-right">
+    <%=
+        pluralize @people.total_count, "registro", "registros"
+    %>
+</div>
+
 <%
     max_activities_count = @activity_groups.map{|ag|
         ag.activities.count
@@ -123,5 +129,10 @@
         <% end %>
     </tbody>
 </table>
+
+<div class="has-text-right">
+    <%= @people.limit_value %>
+    por página
+</div>
 
 <%= paginate @people %>
