@@ -29,6 +29,18 @@ RSpec.describe "Courses controller", type: :request do
       expect(response).to redirect_to(edit_course_path(activity, date: { month: "3", year: "2024" }, dni: nil))
   end
 
+  it "updates a participant's cargo and returns success" do
+    participant = PersonActivity.create!(person: person, coursable: activity, mes: 3, anio: 2024)
+
+    post update_person_activity_cargo_courses_path, params: {
+      person_activity_id: participant.id,
+      cargo: "2"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(participant.reload.cargo).to eq("apoyo")
+  end
+
   it "removes a participant and redirects with the month and year" do
     person
     activity
