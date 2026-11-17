@@ -9,29 +9,29 @@ RSpec.describe ImportBateriaIndicadoresTask do
   let(:headers) { Rails.application.config_for(:bateria_indicadores)[:headers] }
 
   def rows_after_headers(*data_rows)
-    Array.new(6) { |index| ["ignored header #{index}"] } + [*data_rows]
+    Array.new(6) { |index| [ "ignored header #{index}" ] } + [ *data_rows ]
   end
 
   it "validates configured pre-headers and headers before importing data rows" do
     allow(sheet).to receive(:row).with(5).and_return(pre_headers)
     allow(sheet).to receive(:row).with(6).and_return(headers)
-    allow(sheet).to receive(:each) { |&block| block.call(["row data"] * headers.length) }
+    allow(sheet).to receive(:each) { |&block| block.call([ "row data" ] * headers.length) }
     row_importer = instance_double(ImportBateriaIndicadoresTask::BateriaIndicadoresRow, import!: true, fullname: "CASEY EXAMPLE")
     expect(ImportBateriaIndicadoresTask::BateriaIndicadoresRow).to receive(:new)
-      .with(["row data"] * headers.length).and_return(row_importer)
+      .with([ "row data" ] * headers.length).and_return(row_importer)
 
     expect { task.import! }.to output(/imported 1 records/).to_stdout
   end
 
   it "raises when the pre-header row does not match the configured template" do
-    allow(sheet).to receive(:row).with(5).and_return(["wrong"])
+    allow(sheet).to receive(:row).with(5).and_return([ "wrong" ])
 
     expect { task.import! }.to raise_error("pre-headers wrong")
   end
 
   it "reports missing header values and raises when the header row is invalid" do
     allow(sheet).to receive(:row).with(5).and_return(pre_headers)
-    allow(sheet).to receive(:row).with(6).and_return(["UNKNOWN COLUMN"])
+    allow(sheet).to receive(:row).with(6).and_return([ "UNKNOWN COLUMN" ])
 
     expect {
       expect { task.import! }.to output(/missing: \["UNKNOWN COLUMN"\]/).to_stdout

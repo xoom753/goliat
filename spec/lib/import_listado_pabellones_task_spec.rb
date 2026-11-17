@@ -7,7 +7,7 @@ RSpec.describe ImportListadoPabellonesTask do
 
   def stub_rows(*data_rows)
     allow(sheet).to receive(:each) do |&block|
-      (Array.new(6) { |index| ["header #{index}"] } + data_rows.map { |value| [value] }).each(&block)
+      (Array.new(6) { |index| [ "header #{index}" ] } + data_rows.map { |value| [ value ] }).each(&block)
     end
   end
 
@@ -39,9 +39,9 @@ RSpec.describe ImportListadoPabellonesTask do
 
     expect { task.import! }.to output(/Choferes.*014.*San José Transitoria/m).to_stdout
 
-    expect(PersonPabellonUpdate.order(:id).map { |update| [update.nombres, update.celda, update.pabellon] }).to eq([
-      ["MORGAN RIVERA", "014", "Choferes"],
-      ["ALEX RIVERA", "San José Transitoria", "Choferes"]
+    expect(PersonPabellonUpdate.order(:id).map { |update| [ update.nombres, update.celda, update.pabellon ] }).to eq([
+      [ "MORGAN RIVERA", "014", "Choferes" ],
+      [ "ALEX RIVERA", "San José Transitoria", "Choferes" ]
     ])
   end
 

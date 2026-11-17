@@ -13,7 +13,7 @@ class ImportBateriaIndicadoresTask
         current_row_n = 0
         @sheet.each do |row|
             if current_row_n < skip_headers
-                # puts "skip header"
+            # puts "skip header"
             else
                 indicadores_row = BateriaIndicadoresRow.new(
                     row

@@ -14,7 +14,7 @@ class ImportListadoPabellonesTask
         @sheet.each do |row|
             val = row[0]
             if current_row_n < skip_headers
-                # skip header
+            # skip header
             elsif row_is_pabellon?(val)
                 current_pabellon = get_pabellon(val)
                 puts current_pabellon.titleize

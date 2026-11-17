@@ -87,7 +87,7 @@ class ImportBateriaIndicadoresTask::BateriaIndicadoresRow
             ochenta_porciento_at_str: legal_penalty_attributes[:cumple_80_en]
         )
 
-        return true
+        true
     end
 
     private
@@ -116,7 +116,7 @@ class ImportBateriaIndicadoresTask::BateriaIndicadoresRow
     def get_attrs_cols_for(namespace)
         attributes = Rails.application.config_for(:bateria_indicadores).fetch(namespace)
         attributes.inject({}) do |memo, attr_name|
-            key_name = attr_name.parameterize.underscore[0,35]
+            key_name = attr_name.parameterize.underscore[0, 35]
             memo[key_name] = @headers.index(attr_name)
             memo
         end

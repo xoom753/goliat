@@ -48,6 +48,6 @@ class OriginPerson < ApplicationRecord
         return if situacion_actual_str.blank?
         # _LIBRE => LIBRE => libre
         # _LIBERTAD CONTROLADA => LIBERTAD CONTROLADA => libertad_controlada
-        self.situacion_actual = situacion_actual_str.sub(/^_/,"").parameterize.underscore
+        self.situacion_actual = situacion_actual_str.sub(/^_/, "").parameterize.underscore
     end
 end

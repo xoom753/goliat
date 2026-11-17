@@ -38,6 +38,6 @@ RSpec.describe "Courses controller", type: :request do
       delete course_path(activity), params: { person_activity_id: participant.id, month: "3", year: "2024" }
     end.to change(PersonActivity, :count).by(-1)
 
-    expect(response).to redirect_to(edit_course_path(activity, month: "3", year: "2024"))
+    expect(response).to redirect_to(edit_course_path(activity, date: { month: "3", year: "2024" }))
   end
 end
