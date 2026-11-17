@@ -1,0 +1,35 @@
+.has-text-centered
+    h2 Pabellones y celdas (PPL presentes)
+
+.tabs.is-centered.is-toggle
+    ul.ml-0
+        li class="#{"is-active" if params[:pabellon].blank?}"
+            = link_to "Todos",
+                      presentes_pabellones_path,
+                      class: "is-active"
+        - @pabellones_list.each do |pabellon|
+            li class="#{"is-active" if params[:pabellon] == pabellon}"
+                = link_to I18n.t("person.pabellones.#{pabellon}", default: pabellon),
+                          presentes_pabellones_path(pabellon: pabellon),
+                          class: "is-active"
+
+- @people_by_pabellon.each do |pabellon, people|
+    .has-text-centered
+        h3
+            ' Pabellón:
+            = pabellon
+
+    table.table.is-striped.is-hoverable.content
+        thead
+            tr
+                th
+                th Nombres
+                th Cédula / Pasaporte
+                th Celda
+        tbody
+            - people.each_with_index do |person, index|
+                tr
+                    td = index + 1
+                    td = person.nombres
+                    td = person.dni
+                    td = person.celda
