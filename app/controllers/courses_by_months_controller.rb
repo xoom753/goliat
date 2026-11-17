@@ -23,13 +23,14 @@ class CoursesByMonthsController < ApplicationController
         )
 
         csv_data = CSV.generate(headers: true) do |csv|
-            csv << [ "Nombres", "Cédula", "Cargo", "Pabellón" ]
+            csv << [ "Nombres", "Cédula", "Cargo", "Pabellón", "Celda" ]
             activities.each do |activity|
                 csv << [
                     activity.person.nombres,
                     activity.person.dni,
                     activity.cargo.upcase,
-                    activity.person.pabellon_to_human
+                    activity.person.pabellon,
+                    activity.person.celda
                 ]
             end
         end

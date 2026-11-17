@@ -6,6 +6,10 @@ class DashboardsController < ApplicationController
             @people = Person.all
         end
 
+        if params[:estado].present?
+            @people = @people.where(estado: params[:estado])
+        end
+
         @search_query = params[:s]
 
         @activity_groups = ActivityGroup.where(

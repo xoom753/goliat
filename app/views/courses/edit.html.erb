@@ -105,13 +105,8 @@
                     </div>
                 </td>
                 <td>
-                    <%
-                        pabellon_parser = Person::PabellonParserService.new(
-                            person_activity.person
-                        )
-                    %>
-                    <%= pabellon_parser.pabellon %> -
-                    <%= pabellon_parser.celda %>
+                    <%= person_activity.person.pabellon %> -
+                    <%= person_activity.person.celda %>
                 </td>
                 <td>
                     <%= link_to "Quitar", course_path(person_activity_id: person_activity.id, month: @month, year: @year), class: "button is-danger is-light is-small", data: { turbo_method: :delete } %>

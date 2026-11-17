@@ -1,5 +1,32 @@
+<%
+    filter_params = {
+        s: params[:s]
+    }
+%>
+
 <div class="has-text-centered">
     <h2>PPL presentes</h2>
+</div>
+
+<div class="tabs is-centered is-toggle">
+    <ul class="ml-0">
+        <li class="<%= "is-active" if params[:estado].blank? %>">
+            <%=
+                link_to "Todos",
+                        people_dashboard_path(filter_params),
+                        class: "is-active"
+            %>
+        </li>
+        <% Person.estados.each do |estado, value| %>
+            <li class="<%= "is-active" if params[:estado] == value.to_s %>">
+                <%=
+                    link_to estado.titleize,
+                            people_dashboard_path(filter_params.merge(estado: value)),
+                            class: "is-active"
+                %>
+            </li>
+        <% end %>
+    </ul>
 </div>
 
 <%=
@@ -7,6 +34,7 @@
                     url: people_dashboard_path,
                     method: :get do |f|
 %>
+  <%= hidden_field_tag :estado, params[:estado] %>
   <div class="field has-addons">
     <div class="control is-expanded">
         <%=

@@ -15,9 +15,4 @@ class Person < ApplicationRecord
     scope :not_from_san_jose, -> {
         where.not("pabellon ILIKE '%San_Jose%'")
     }
-
-    def pabellon_to_human
-        service = Person::PabellonParserService.new(self)
-        "#{service.pabellon} - #{service.celda}"
-    end
 end

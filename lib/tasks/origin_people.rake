@@ -1,4 +1,3 @@
-# require "import_origin_people_task"
 require "import_bateria_indicadores_task"
 
 namespace :origin_people do

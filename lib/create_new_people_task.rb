@@ -10,7 +10,8 @@ class CreateNewPeopleTask
           estado: :presente,
           dni: origin_person.dni,
           nombres: sanitized_name,
-          pabellon: update.pabellon
+          pabellon: update.pabellon,
+          celda: update.celda
         )
         update.destroy
         puts "Created #{sanitized_name}"

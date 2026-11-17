@@ -1,8 +1,6 @@
 class UpdatePeoplePabellonesTask
   def call
     updated_count = 0
-    puts "WARN setting all people as :indefinido"
-    Person.update_all(estado: :indefinido)
 
     PersonPabellonUpdate.find_each do |update|
       person = Person.find_by(nombres: update.nombres.strip)
