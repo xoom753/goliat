@@ -33,8 +33,10 @@ class CoursesController < ApplicationController
         end
         redirect_to action: :edit,
                         dni: dni,
-                        month: params[:month],
-                        year: params[:year]
+                        date: {
+                            month: params[:month],
+                            year: params[:year]
+                        }
     end
 
     # removing a participant
@@ -44,8 +46,10 @@ class CoursesController < ApplicationController
         )
         person_activity.destroy
         redirect_to action: :edit,
-                    month: params[:month],
-                    year: params[:year]
+                    date: {
+                        month: params[:month],
+                        year: params[:year]
+                    }
     end
 
     def update_person_activity_cargo

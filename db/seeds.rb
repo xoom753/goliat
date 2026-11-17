@@ -26,7 +26,9 @@ puts "Seeding groups & activities"
         "Cultivo de huertos",
         "Mantenimiento y limpieza",
         "Origami",
-        "Sastrería"
+        "Sastrería",
+        "Origami - Intramuros cuenta propia",
+        "Atarrayas - Independiente"
     ],
     "Eje Educativo" => []
 }.each do |group_name, activities|

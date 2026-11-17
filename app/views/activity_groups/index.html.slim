@@ -5,6 +5,7 @@ table.table.is-striped.is-hoverable
     thead
         tr
             th Eje de tratamiento
+            th uid
             th Actividad
             th Nombre en planes de vida
     tbody
@@ -12,6 +13,7 @@ table.table.is-striped.is-hoverable
             - activity_group.activities.each do |activity|
                 tr
                     td = activity_group.nombre
+                    td = activity.id
                     td = activity.nombre
                     td
                         = link_to activity.human_name,
