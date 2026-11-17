@@ -77,6 +77,17 @@ RSpec.describe "Dashboard people", type: :feature do
       expect(page).to have_content("Alex Rivera")
     end
 
+    it "lists only present people on the present-only dashboard route" do
+      present_person = Person.create!(nombres: "Jane Example", dni: "1234567890", estado: :presente, pabellon: "A-1")
+      Person.create!(nombres: "Alex Rivera", dni: "9999999999", estado: :libre, pabellon: "B-2")
+
+      visit people_presente_dashboard_path
+
+      expect(page).to have_content("Jane Example")
+      expect(page).to have_content(present_person.dni)
+      expect(page).not_to have_content("Alex Rivera")
+    end
+
     it "filters people by status" do
       Person.create!(nombres: "Jane Example", dni: "1234567890", estado: :presente, pabellon: "A-1")
       Person.create!(nombres: "Alex Rivera", dni: "9999999999", estado: :libre, pabellon: "B-2")

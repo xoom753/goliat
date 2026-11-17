@@ -23,6 +23,27 @@ RSpec.describe "Person ejes resumen management", type: :request do
     expect(response.body).to include("Casey Example", "Cultural.docx", "Certificados.csv")
   end
 
+  it "filters summaries by a query longer than two characters" do
+    PersonEjesResumen.create!(attributes.merge(nombres: "Casey Example", dni: "111"))
+    PersonEjesResumen.create!(attributes.merge(nombres: "Morgan Rivera", dni: "222"))
+
+    get person_ejes_resumenes_path(s: "Casey")
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Casey Example")
+    expect(response.body).not_to include("Morgan Rivera")
+  end
+
+  it "ignores search queries shorter than three characters" do
+    PersonEjesResumen.create!(attributes.merge(nombres: "Casey Example", dni: "111"))
+    PersonEjesResumen.create!(attributes.merge(nombres: "Morgan Rivera", dni: "222"))
+
+    get person_ejes_resumenes_path(s: "Ca")
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Casey Example", "Morgan Rivera")
+  end
+
   it "prefills the new summary from a legacy person" do
     legacy_person = LegacyPerson.create!(nombres: "CASEY EXAMPLE", dni: "1234567890")
     allow(PersonDataService).to receive(:new).with(legacy_person).and_return(

@@ -34,6 +34,18 @@ RSpec.describe "Person Ejes Resumen exports", type: :request do
     expect(response.body).to start_with("PK")
   end
 
+  it "renders the educational certificates DOCX attachment through the shared certificate template" do
+    renderer = instance_double(PersonEjesCertificadosRenderService, activities: [])
+    expect(renderer).to receive(:kinds=).with([ :educativo ])
+    allow(PersonEjesCertificadosRenderService).to receive(:new).with(report).and_return(renderer)
+
+    get certificados_educativo_export_person_ejes_resumen_path(report, format: :docx)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.headers["Content-Disposition"]).to include("attachment", "Certificados-Casey Example.docx")
+    expect(response.body).to start_with("PK")
+  end
+
   it "exports the educational certificates as a named CSV attachment" do
     renderer = instance_double(PersonEjesCertificadosRenderService, to_csv: "N,Nombre\n")
     expect(renderer).to receive(:kinds=).with([ :educativo ])

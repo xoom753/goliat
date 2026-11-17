@@ -46,7 +46,7 @@ RSpec.describe "Origin people", type: :feature do
       expect(page).to have_content("Información jurídica")
       expect(page).to have_content("Casey Example")
       expect(page).to have_content("1234567890")
-      expect(page).to have_content("presente_beneficio_revocado")
+      expect(page).to have_content("Presente Beneficio Revocado")
       expect(page).to have_content("CASE-2024-001")
       expect(page).to have_content("Con Sentencia")
       expect(page).to have_content("Robo")
