@@ -42,6 +42,11 @@ en:
 03/10/23	31/03/24	180	27,29%\n\
 01/04/24	28/09/24	180	34,67%\n\
 29/09/24	31/01/25	123,6	40,00%</pre>"
+        fechas_ingresos_y_egresos: "<pre>Ej:\n\
+Fecha de primer ingreso CPLL1: 21/10/2010\n\
+Fecha de traslado CPLL1: 12/07/2018\n\
+Fecha de egreso por beneficio CPLL1: 07/02/2022\
+</pre>"
   person_activity:
     cargos:
       estudiante: "Estudiante"

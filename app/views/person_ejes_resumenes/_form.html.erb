@@ -12,6 +12,9 @@
     <%= f.input :acumulacion_penas, input_html: { class: "textarea" }, label: "Acumulación de penas" %>
     <%= f.input :semestres_porcentuales, input_html: { class: "textarea" } %>
     <%= f.input :periodos_detalle, input_html: { class: "textarea" } %>
+    <%= f.input :fechas_ingresos_y_egresos, input_html: { class: "textarea" }, label: "Fechas ingresos y egresos (sobreescribir)" %>
+    <%= f.input :primer_semestre_index %>
+    <%= f.input :primer_semestre_porcentaje %>
 
     <div class="mb-2">
         <%= f.label :people_ids, "PPLs presentes asociados", class: "label" %>

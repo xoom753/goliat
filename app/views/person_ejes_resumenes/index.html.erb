@@ -103,18 +103,27 @@
                 </dd>
 
                 <dt>
-                    Fecha pérdida libertad
-                </dt>
-                <dd>
-                    <%= person_ejes_resumen.fecha_perdida_libertad %>
-                </dd>
-
-                <dt>
                     Ubicación
                 </dt>
                 <dd>
                     <%= person_ejes_resumen.ubicacion %>
                 </dd>
+
+                <% if person_ejes_resumen.fechas_ingresos_y_egresos.present? %>
+                    <dt>
+                        Fechas ingresos y egresos
+                    </dt>
+                    <dd>
+                        <%= safe_join(person_ejes_resumen.fechas_ingresos_y_egresos_array, tag.br) %>
+                    </dd>
+                <% else %>
+                    <dt>
+                        Fecha pérdida libertad
+                    </dt>
+                    <dd>
+                        <%= person_ejes_resumen.fecha_perdida_libertad %>
+                    </dd>
+                <% end %>
 
                 <dt>
                     Delitos

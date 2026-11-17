@@ -11,6 +11,10 @@ class PersonEjesResumen < ApplicationRecord
         @sentencias_array ||= sentencias.split("\n")
     end
 
+    def fechas_ingresos_y_egresos_array
+        @fechas_ingresos_y_egresos_array ||= fechas_ingresos_y_egresos.split("\n")
+    end
+
     def legacy_people
         LegacyPerson.find(
             legacy_people_ids.split(",")

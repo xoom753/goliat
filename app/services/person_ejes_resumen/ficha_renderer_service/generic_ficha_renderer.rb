@@ -69,14 +69,25 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
             [
                 "Cédula de identidad:".upcase,
                 @person_ejes_resumen.dni
-            ],
-            [
-                "Fecha de pérdida de libertad:".upcase,
-                date_to_str(@person_ejes_resumen.fecha_perdida_libertad)
             ]
         ]
 
-        if @person_ejes_resumen.fecha_traslado.present?
+        if @person_ejes_resumen.fecha_perdida_libertad.present?
+            @common_table_rows << [
+                "Fecha de pérdida de libertad:".upcase,
+                date_to_str(@person_ejes_resumen.fecha_perdida_libertad)
+            ]
+        end
+
+        if @person_ejes_resumen.fechas_ingresos_y_egresos.present?
+            @person_ejes_resumen.fechas_ingresos_y_egresos_array.each do |ingreso_o_egreso|
+                title_str, fecha_str = ingreso_o_egreso.split(":")
+                @common_table_rows << [
+                    "#{title_str.upcase}:",
+                    fecha_str.strip
+                ]
+            end
+        elsif @person_ejes_resumen.fecha_traslado.present?
             ubicacion_traslado_str = @person_ejes_resumen.ubicacion_traslado.present? ? " #{@person_ejes_resumen.ubicacion_traslado}" : nil
             @common_table_rows += [
                 [

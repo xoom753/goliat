@@ -64,8 +64,8 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
     def semestres_percentages
         return @semestres_percentages if @semestres_percentages
         @semestres_percentages = {}
-        semestre_name_idx = 0
-        last_percentage = "0"
+        semestre_name_idx = get_first_semestre_idx
+        last_percentage = get_first_semestre_percentage
         periodos_detalles_by_semestres.each do |semestres|
             semestres.split("\n").each do |periodo|
                 _, _, _, percentage = periodo.split("\t")
@@ -94,5 +94,21 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
         parsed_number = number.sub(",", ".").to_f
         parsed_number = "%.2f" % parsed_number
         "#{parsed_number.sub(".", ",")}%"
+    end
+
+    def get_first_semestre_idx
+        if @person_ejes_resumen.primer_semestre_index.present?
+            @person_ejes_resumen.primer_semestre_index - 1 # zero based
+        else
+            0
+        end
+    end
+
+    def get_first_semestre_percentage
+        if @person_ejes_resumen.primer_semestre_porcentaje.present?
+            @person_ejes_resumen.primer_semestre_porcentaje
+        else
+            "0"
+        end
     end
 end

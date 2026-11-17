@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_16_214900) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_17_161537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -285,8 +285,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_214900) do
   end
 
   create_table "person_ejes_resumenes", force: :cascade do |t|
-    t.text "nombres"
-    t.text "dni"
+    t.string "nombres"
+    t.string "dni"
     t.date "fecha_perdida_libertad"
     t.text "delitos"
     t.text "sentencias"
@@ -294,13 +294,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_214900) do
     t.text "semestres_porcentuales"
     t.text "periodos_detalle"
     t.timestamptz "created_at"
-    t.text "ubicacion"
+    t.string "ubicacion"
     t.date "fecha_traslado"
-    t.text "ubicacion_traslado"
+    t.string "ubicacion_traslado"
     t.text "legacy_people_ids"
     t.boolean "tipo_porcentual"
     t.text "people_ids"
     t.timestamptz "last_generated_at"
+    t.text "fechas_ingresos_y_egresos"
+    t.integer "primer_semestre_index"
+    t.string "primer_semestre_porcentaje"
   end
 
   create_table "person_pabellon_updates", force: :cascade do |t|

@@ -31,6 +31,9 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
         rows += extra_info_table_merged_rows
         rows += 1 if @person_ejes_resumen.fecha_traslado.present?
         rows += 1 if several_delitos?
+        if @person_ejes_resumen.fechas_ingresos_y_egresos.present?
+            rows += (@person_ejes_resumen.fechas_ingresos_y_egresos_array.length - 1)
+        end
         rows + (@person_ejes_resumen.delitos_array.length * 2)
     end
 

@@ -68,6 +68,9 @@ class PersonEjesResumenesController < ApplicationController
             :fecha_traslado,
             :ubicacion_traslado,
             :tipo_porcentual,
+            :fechas_ingresos_y_egresos,
+            :primer_semestre_index,
+            :primer_semestre_porcentaje,
             people_ids: [],
             legacy_people_ids: []
         )
