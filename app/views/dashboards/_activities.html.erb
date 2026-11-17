@@ -18,7 +18,7 @@
             <%
                 coursed_status = activity.person_activities.where(person: person).exists? ? "has-background-success-light" : "has-background-warning-light"
             %>
-            <td align=center class="<%= coursed_status %>">
+            <td align=center class="<%= coursed_status %> is-size-7">
                 <%= activity.nombre %>
             </td>
         <% end %>
@@ -37,7 +37,7 @@
                 <% end %>
                 <ul>
                     <% person_activities.each do |person_activity| %>
-                        <li>
+                        <li class="is-size-7">
                             <%= Date::MONTHNAMES[person_activity.mes] %>
                             <%= person_activity.anio %>:
                             <%= person_activity.cargo %>
