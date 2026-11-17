@@ -82,6 +82,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: [] do
     collection do
       get :people
+      get :people_presente
       get :hello
     end
   end

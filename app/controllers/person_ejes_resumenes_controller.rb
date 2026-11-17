@@ -1,10 +1,20 @@
 class PersonEjesResumenesController < ApplicationController
     def index
+        @search_query = params[:s]
+
+        scope = PersonEjesResumen.all
+
+        if @search_query.present? && @search_query.length > 2
+            scope = scope.where(
+                "nombres ILIKE :search OR dni LIKE :search",
+                search: "%#{@search_query}%"
+            )
+        end
+
         @person_ejes_resumenes =
-            PersonEjesResumen.all
-                             .order(last_generated_at: :desc, id: :desc)
-                             .page(params[:page])
-                             .per(6)
+            scope.order(last_generated_at: :desc, id: :desc)
+                  .page(params[:page])
+                  .per(6)
     end
 
     def new

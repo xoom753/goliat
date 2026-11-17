@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_17_161537) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_17_200750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -268,6 +268,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_161537) do
     t.bigint "estado", default: 0
     t.string "celda"
     t.index ["dni"], name: "idx_16394_index_people_on_dni"
+    t.index ["estado"], name: "index_people_on_estado"
     t.index ["nombres"], name: "idx_16394_index_people_on_nombres"
   end
 

@@ -2,6 +2,29 @@
     <h2>Fichas</h2>
 </div>
 
+<%=
+    simple_form_for :person_ejes_resumenes_path,
+                    url: person_ejes_resumenes_path,
+                    method: :get do |f|
+%>
+  <%= hidden_field_tag :estado, params[:estado] %>
+  <div class="field has-addons">
+    <div class="control is-expanded">
+        <%=
+            f.input :s,
+                    label: false,
+                    placeholder: "Buscar",
+                    input_html: { name: :s, value: @search_query },
+                    wrapper: false
+        %>
+    </div>
+    <div class="control">
+        <%= f.submit "Buscar", class: "button" %>
+    </div>
+  </div>
+<% end %>
+
+
 <div class="has-text-right">
     <%= link_to "Nueva ficha ejes", new_person_ejes_resumen_path, class: "button is-ghost" %>
 </div>

@@ -33,4 +33,26 @@ namespace :people do
       end
     end
   end
+
+  task update_people_who_are_not_present: :environment do
+    Person.where(estado: :indefinido).each do |person|
+      origin_person = OriginPerson.find_by(
+        situacion_actual: [
+          :libre,
+          :regimen_semiabierto,
+          :traslado_hacia_otro_cpl,
+          :fallecimiento_por_violencia_intracarcelaria
+        ],
+        fullname: person.nombres
+      )
+      if origin_person.present?
+        person.update!(
+          estado: origin_person.situacion_actual
+        )
+        puts "#{origin_person.situacion_actual} #{person.nombres}"
+      else
+        puts "#{person.nombres} no encontrado"
+      end
+    end
+  end
 end

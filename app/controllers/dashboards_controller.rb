@@ -10,8 +10,18 @@ class DashboardsController < ApplicationController
             @people = @people.where(estado: params[:estado])
         end
 
-        @search_query = params[:s]
+        generic_people
+    end
 
+    def people_presente
+        @people = Person.where(estado: :presente)
+        generic_people
+        render :people
+    end
+
+    private
+
+    def generic_people
         @activity_groups = ActivityGroup.where(
             nombre: [
                 "Eje Cultural",
@@ -19,6 +29,8 @@ class DashboardsController < ApplicationController
                 "Eje Laboral"
             ]
         )
+
+        @search_query = params[:s]
 
         if @search_query.present? && @search_query.length > 2
             @people = @people.where(

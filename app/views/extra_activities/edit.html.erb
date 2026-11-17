@@ -28,6 +28,8 @@
     <thead>
         <tr>
             <th>
+            </th>
+            <th>
                 Nombres
             </th>
             <th>
@@ -41,8 +43,11 @@
         </tr>
     </thead>
     <tbody>
-        <% @person_activities.each do |person_activity| %>
+        <% @person_activities.each_with_index do |person_activity, index| %>
             <tr>
+                <td>
+                    <%= index + 1 %>
+                </td>
                 <td>
                     <%= person_activity.person.nombres %>
                 </td>

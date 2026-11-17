@@ -4,7 +4,8 @@ class PresentesPabellonesController < ApplicationController
             estado: :presente
         ).order(
             pabellon: :asc,
-            celda: :asc
+            celda: :asc,
+            nombres: :asc
         )
 
         if params[:pabellon].present?
