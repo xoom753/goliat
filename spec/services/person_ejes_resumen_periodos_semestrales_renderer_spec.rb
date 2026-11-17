@@ -15,6 +15,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestra
     double(
       several_delitos?: false,
       fecha_traslado: nil,
+      fechas_ingresos_y_egresos: nil,
       delitos_array: [ "Robo" ]
     )
   end
@@ -44,6 +45,21 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestra
     expect(renderer.get_semestre).to eq("20%")
     expect(renderer.get_kind_specific_table_header_colspan).to eq(4)
     expect(renderer.get_subtotal_max_grade).to eq("5")
+  end
+
+  it "subtracts temporalidad from the grades merged-row count" do
+    expect(renderer.get_info_table_merged_rows_count).to eq(5)
+    expect(renderer.get_grades_table_merged_rows_count).to eq(4)
+  end
+
+  it "computes the info and grades merged row counts" do
+    allow(summary).to receive(:fechas_ingresos_y_egresos).and_return("Ingreso: 01/01/2020\nEgreso: 02/02/2020")
+    allow(summary).to receive(:fechas_ingresos_y_egresos_array).and_return(["Ingreso: 01/01/2020", "Egreso: 02/02/2020"])
+    allow(summary).to receive(:delitos_array).and_return(["Robo"])
+    allow(summary).to receive(:several_delitos?).and_return(false)
+
+    expect(renderer.get_info_table_merged_rows_count).to eq(6)
+    expect(renderer.get_grades_table_merged_rows_count).to eq(5)
   end
 
   it "renders the permanent and temporal empty activity notices" do

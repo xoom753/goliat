@@ -59,6 +59,19 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GenericFichaRenderer do
     end
   end
 
+  it "renders ingreso and egreso entries instead of transfer details" do
+    allow(summary).to receive(:fechas_ingresos_y_egresos).and_return("Ingreso: 01/01/2020\nEgreso: 02/02/2020")
+    allow(summary).to receive(:fechas_ingresos_y_egresos_array).and_return(["Ingreso: 01/01/2020", "Egreso: 02/02/2020"])
+
+    rows = renderer.send(:common_table_rows)
+
+    expect(rows).to include(
+      ["INGRESO:", "01/01/2020"],
+      ["EGRESO:", "02/02/2020"]
+    )
+    expect(rows).not_to include(["FECHA DE TRASLADO PABELLÓN B:", "05/04/2022"])
+  end
+
   describe "period-type renderer delegation" do
     it "builds and memoizes a semester renderer" do
       allow(summary).to receive(:tipo_porcentual?).and_return(false)
