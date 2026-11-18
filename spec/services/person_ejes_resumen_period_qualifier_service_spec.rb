@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PersonEjesResumen::PeriodQualifierService do
   def qualifier_for(*durations)
     grouped_activities = durations.each_with_index.to_h do |duration, index|
-      ["activity-#{index}", double(duracion_i: duration)]
+      [ "activity-#{index}", double(duracion_i: duration) ]
     end
     described_class.new(double(group_similar_activities: grouped_activities))
   end

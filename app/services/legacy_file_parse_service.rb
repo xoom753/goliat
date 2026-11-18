@@ -43,7 +43,6 @@ class LegacyFileParseService
     private
 
     def build_legacy_person_activity(hash)
-
         if hash.has_key?(:servicios)
             activity_group_str = hash[:servicios].strip.titleize
         else
