@@ -35,6 +35,8 @@ en:
         delitos: "<pre>Ej:\ndelito 1\ndelito 2</pre>"
         sentencias: "<pre>Ej:\nsentencia 1\nsentencia 2</pre>"
         semestres_porcentuales: "<pre>Ej:\n20%\n40%\n60%</pre>"
+        primer_semestre_index: "<pre>Ej:\nPrimer semestre: dejar vacío;\nPara tercer semestre: 3</pre>"
+        primer_semestre_porcentaje: "<pre>Ej:\nPara comenzar en 23,33%\n</pre>"
         periodos_detalle: "<pre>Ej:\n02/06/22	29/11/22	180	7,39%\n\
 30/11/22	29/05/23	180	14,77%\n\
 30/05/23	02/10/23	125	20,00%\n\

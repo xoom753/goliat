@@ -4,17 +4,55 @@
     <%= f.input :nombres %>
     <%= f.input :dni %>
     <%= f.input :ubicacion, label: "Ubicación" %>
-    <%= f.input :fecha_perdida_libertad, as: :date, html5: true, label: "Fecha pérdida libertad" %>
-    <%= f.input :fecha_traslado, as: :date, html5: true %>
-    <%= f.input :ubicacion_traslado, label: "Ubicación traslado" %>
+
+    <%
+        tipo_ingresos_egresos = f.object.fechas_ingresos_y_egresos.present? ? "several" : "single"
+    %>
+
+    <div data-controller="form-single-or-several-options">
+        <label class="label">Uno o varios ingresos</label>
+        <div class="control">
+            <label class="radio">
+                <input type="radio"
+                       name="tipo_ingresos_egresos"
+                       value="single"
+                       data-form-single-or-several-options-target="radio"
+                       data-action="change->form-single-or-several-options#changed"
+                       <%= "checked" if tipo_ingresos_egresos == "single" %> />
+                Fecha pérdida libertad y traslado
+            </label>
+        </div>
+        <div class="control mb-2">
+            <label class="radio">
+                <input type="radio"
+                       name="tipo_ingresos_egresos"
+                       value="several"
+                       data-form-single-or-several-options-target="radio"
+                       data-action="change->form-single-or-several-options#changed"
+                       <%= "checked" if tipo_ingresos_egresos == "several" %> />
+                Varios ingresos y egresos
+            </label>
+        </div>
+
+        <div data-form-single-or-several-options-target="singleOptions">
+            <%= f.input :fecha_perdida_libertad, as: :date, html5: true, label: "Fecha pérdida libertad" %>
+            <%= f.input :fecha_traslado, as: :date, html5: true %>
+            <%= f.input :ubicacion_traslado, label: "Ubicación traslado" %>
+        </div>
+
+        <div data-form-single-or-several-options-target="severalOptions">
+            <%= f.input :fechas_ingresos_y_egresos, input_html: { class: "textarea" }, label: "Fechas ingresos y egresos" %>
+        </div>
+    </div>
+
     <%= f.input :delitos, input_html: { class: "textarea" } %>
     <%= f.input :sentencias, input_html: { class: "textarea" } %>
     <%= f.input :acumulacion_penas, input_html: { class: "textarea" }, label: "Acumulación de penas" %>
     <%= f.input :semestres_porcentuales, input_html: { class: "textarea" } %>
     <%= f.input :periodos_detalle, input_html: { class: "textarea" } %>
-    <%= f.input :fechas_ingresos_y_egresos, input_html: { class: "textarea" }, label: "Fechas ingresos y egresos (sobreescribir)" %>
-    <%= f.input :primer_semestre_index %>
-    <%= f.input :primer_semestre_porcentaje %>
+
+    <%= f.input :primer_semestre_index, label: "Índice para primer semestre (sobreescribir)" %>
+    <%= f.input :primer_semestre_porcentaje, label: "Porcentaje de primer semestre (sobreescribir)" %>
 
     <div class="mb-2">
         <%= f.label :people_ids, "PPLs presentes asociados", class: "label" %>
