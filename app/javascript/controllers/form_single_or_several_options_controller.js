@@ -29,7 +29,6 @@ export default class extends Controller {
 
     changed(event) {
         const selectedValue = event.target.value
-
         this.updateSelection(selectedValue)
     }
 }

@@ -28,7 +28,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
 
     def grades_table
         header_colspan = get_kind_specific_table_header_colspan
-        column_widths = [ 370, 1400, 110, 90, 90, 90 ]
+        column_widths = [ 370, 1400, 110, 90, 90, 90, 90 ]
 
         permanente_row = 2
         temporal_row = tipo_porcentual? ? 2 : 3
@@ -45,6 +45,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
             cell_style rows[1][2], align: :center, bold: true
             cell_style rows[1][3], align: :center, bold: true
             cell_style rows[1][4], align: :center, bold: true
+            cell_style rows[1][5], align: :center, bold: true
 
             unless tipo_porcentual
                 cell_style rows[permanente_row][0], align: :center, bold: true, vertical_align: :center
@@ -84,11 +85,9 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     end
 
     def temp_grade
-        if @current_periodo.activities.empty?
-            "0"
-        else
-            "2"
-        end
+        ::PersonEjesResumen::PeriodQualifierService.new(
+            @current_periodo
+        ).get_grade
     end
 
     def grades_table_rows

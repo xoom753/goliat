@@ -31,8 +31,6 @@ class PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPeriod
         end
     end
 
-    private
-
     def duracion_i
         by_months.values.inject(0) do |memo, value|
             memo += value.duracion_i

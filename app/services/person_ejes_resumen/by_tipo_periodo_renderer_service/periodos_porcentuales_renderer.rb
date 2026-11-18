@@ -34,11 +34,9 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentualesRende
     def concat_tipo_porcentual_rows!(table_rows)
         remaining_periods = @periodos.drop(1)
         grades = remaining_periods.map do |remaining_period|
-            if remaining_period.activities.length > 0
-                "2"
-            else
-                "0"
-            end
+            ::PersonEjesResumen::PeriodQualifierService.new(
+                remaining_period
+            ).get_grade
         end
         table_rows.each_with_index do |row, index|
             if index == 1
