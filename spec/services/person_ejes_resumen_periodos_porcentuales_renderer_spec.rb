@@ -7,15 +7,18 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
       period_percentage: "20%",
       start_date_str: "01/01/2024",
       end_date_str: "30/06/2024",
-      activities: []
+      activities: [],
+      group_similar_activities: {}
     )
   end
   let(:second_period) do
+    group_similar_activities = later_activities.empty? ? {} : { activity: double(duracion_i: 30) }
     double(
       period_percentage: "40%",
       start_date_str: "01/07/2024",
       end_date_str: "31/12/2024",
-      activities: later_activities
+      activities: later_activities,
+      group_similar_activities: group_similar_activities
     )
   end
   let(:periods) { [ first_period, second_period ] }
@@ -86,6 +89,7 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
 
   it "appends later percentage headings and scores based on later-period activities" do
     allow(second_period).to receive(:activities).and_return([ :activity ])
+    allow(second_period).to receive(:group_similar_activities).and_return({ activity: double(duracion_i: 30) })
     rows = [ [ "Axis" ], [ "Header", "20%" ], [ "Permanent", "0" ], [ "Temporal", "2" ], [ "Subtotal", "2" ] ]
 
     renderer.concat_tipo_porcentual_rows!(rows)

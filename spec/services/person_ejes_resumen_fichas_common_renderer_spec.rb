@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer do
-  let(:current_period) { double(period_percentage: "20%", activities: [ :activity ]) }
-  let(:later_period) { double(period_percentage: "40%", activities: []) }
+  let(:current_period) { double(period_percentage: "20%", activities: [ :activity ], group_similar_activities: { activity: double(duracion_i: 30) }) }
+  let(:later_period) { double(period_percentage: "40%", activities: [], group_similar_activities: {}) }
   let(:periods) { [ current_period, later_period ] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
   let(:by_tipo_periodo_renderer) do
@@ -28,6 +28,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCommonRend
   it "returns the temporal grade based on current-period activity presence" do
     expect(renderer.send(:temp_grade)).to eq("2")
     allow(current_period).to receive(:activities).and_return([])
+    allow(current_period).to receive(:group_similar_activities).and_return({})
     expect(renderer.send(:temp_grade)).to eq("0")
   end
 

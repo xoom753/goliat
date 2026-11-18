@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Laboral and educativo grade ficha renderers" do
   let(:docx) { double }
   let(:periods) { [ current_period, later_period ] }
-  let(:current_period) { double(period_percentage: "20%", activities: []) }
+  let(:current_period) { double(period_percentage: "20%", activities: [], group_similar_activities: {}) }
   let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
   let(:later_activities) { [] }
   let(:period_type_renderer) do
@@ -61,6 +61,7 @@ RSpec.describe "Laboral and educativo grade ficha renderers" do
     it "omits permanent rows and delegates percentage extension" do
       allow(summary).to receive(:tipo_porcentual?).and_return(true)
       allow(later_period).to receive(:activities).and_return([ :activity ])
+      allow(later_period).to receive(:group_similar_activities).and_return({ activity: double(duracion_i: 30) })
       renderer = build_renderer(:laboral)
       allow(period_type_renderer).to receive(:get_subtotal_max_grade).and_return("2")
       expect(period_type_renderer).to receive(:concat_tipo_porcentual_rows!) do |rows|

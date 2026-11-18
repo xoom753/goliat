@@ -1,8 +1,17 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRenderer do
-  let(:current_period) { double(period_percentage: "20%", activities: []) }
-  let(:later_period) { double(period_percentage: "40%", activities: later_activities) }
+  let(:current_period) do
+    double(
+      period_percentage: "20%",
+      activities: [],
+      group_similar_activities: { cultural: double(duracion_i: 30) }
+    )
+  end
+  let(:later_period) do
+    later_groups = later_activities.empty? ? {} : { cultural: double(duracion_i: 30) }
+    double(period_percentage: "40%", activities: later_activities, group_similar_activities: later_groups)
+  end
   let(:later_activities) { [] }
   let(:periods) { [ current_period, later_period ] }
   let(:person_summary) { double(tipo_porcentual?: percentage_mode) }
@@ -32,8 +41,8 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRe
       expect(rows[0]).to eq([ "CULTURAL" ])
       expect(rows[1].last).to eq("20%")
       expect(rows[2]).to include("PERMANENTE", "3", "0")
-      expect(rows[3]).to include("TEMPORAL", "2", "0")
-      expect(rows.last).to include("Subtotal", "2", "0")
+      expect(rows[3]).to include("TEMPORAL", "2", "2")
+      expect(rows.last).to include("Subtotal", "2", "2")
     end
 
     renderer.grades_table

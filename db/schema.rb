@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_17_211813) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_18_203019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -127,6 +127,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_211813) do
     t.text "file_format"
     t.text "activity_detail_str"
     t.text "description"
+    t.string "default_activity_group_str"
   end
 
   create_table "legacy_import_files", force: :cascade do |t|

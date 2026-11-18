@@ -43,7 +43,12 @@ class LegacyFileParseService
     private
 
     def build_legacy_person_activity(hash)
-        activity_group_str = hash[:servicios].strip.titleize
+
+        if hash.has_key?(:servicios)
+            activity_group_str = hash[:servicios].strip.titleize
+        else
+            activity_group_str = @legacy_files_parser.default_activity_group_str
+        end
 
         ##
         # there's some rows in which :actividad is empty:
@@ -93,11 +98,13 @@ class LegacyFileParseService
         headers_row = {
             row_number: @legacy_files_parser.row_number,
             nombres: @legacy_files_parser.nombres,
-            servicios: @legacy_files_parser.activity_group_str,
             actividad: @legacy_files_parser.activity_str,
             fecha: @legacy_files_parser.activity_dates,
             duracion: @legacy_files_parser.duracion
         }
+        if @legacy_files_parser.activity_group_str.present?
+            headers_row[:servicios] = @legacy_files_parser.activity_group_str
+        end
         if @legacy_files_parser.activity_detail_str.present?
             headers_row[:activity_detail] = @legacy_files_parser.activity_detail_str
         end

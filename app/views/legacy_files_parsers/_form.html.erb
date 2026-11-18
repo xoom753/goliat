@@ -12,81 +12,86 @@
   <% end %>
 
   <div>
-    <%= form.label :parser_name, style: "display: block" %>
-    <%= form.text_field :parser_name %>
+    <%= form.label :parser_name, class: "label" %>
+    <%= form.text_field :parser_name, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :row_number, style: "display: block" %>
-    <%= form.text_field :row_number %>
+    <%= form.label :row_number, class: "label" %>
+    <%= form.text_field :row_number, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :nombres, style: "display: block" %>
-    <%= form.text_field :nombres %>
+    <%= form.label :nombres, class: "label" %>
+    <%= form.text_field :nombres, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+    <%= form.label :description, class: "label" %>
+    <%= form.text_area :description, class: "textarea" %>
   </div>
 
   <div>
-    <%= form.label :activity_group_str, style: "display: block" %>
-    <%= form.text_field :activity_group_str %>
+    <%= form.label :activity_group_str, class: "label" %>
+    <%= form.text_field :activity_group_str, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :activity_str, style: "display: block" %>
-    <%= form.text_field :activity_str %>
+    <%= form.label :default_activity_group_str, class: "label" %>
+    <%= form.text_field :default_activity_group_str, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :activity_detail_str, style: "display: block" %>
-    <%= form.text_field :activity_detail_str %>
+    <%= form.label :activity_str, class: "label" %>
+    <%= form.text_field :activity_str, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :activity_dates, style: "display: block" %>
-    <%= form.text_field :activity_dates %>
+    <%= form.label :activity_detail_str, class: "label" %>
+    <%= form.text_field :activity_detail_str, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :duracion, style: "display: block" %>
-    <%= form.text_field :duracion %>
+    <%= form.label :activity_dates, class: "label" %>
+    <%= form.text_field :activity_dates, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :start_date_index_from, style: "display: block" %>
-    <%= form.number_field :start_date_index_from %>
+    <%= form.label :duracion, class: "label" %>
+    <%= form.text_field :duracion, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :start_date_index_to, style: "display: block" %>
-    <%= form.number_field :start_date_index_to %>
+    <%= form.label :start_date_index_from, class: "label" %>
+    <%= form.number_field :start_date_index_from, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :end_date_index_from, style: "display: block" %>
-    <%= form.number_field :end_date_index_from %>
+    <%= form.label :start_date_index_to, class: "label" %>
+    <%= form.number_field :start_date_index_to, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :end_date_index_to, style: "display: block" %>
-    <%= form.number_field :end_date_index_to %>
+    <%= form.label :end_date_index_from, class: "label" %>
+    <%= form.number_field :end_date_index_from, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :sheet_name, style: "display: block" %>
-    <%= form.text_field :sheet_name %>
+    <%= form.label :end_date_index_to, class: "label" %>
+    <%= form.number_field :end_date_index_to, class: "input" %>
   </div>
 
   <div>
-    <%= form.label :file_format, style: "display: block" %>
-    <%= form.text_field :file_format %>
+    <%= form.label :sheet_name, class: "label" %>
+    <%= form.text_field :sheet_name, class: "input" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="field">
+    <%= form.label :file_format, class: "label" %>
+    <%= form.text_field :file_format, class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= form.submit "Guardar", class: "button" %>
   </div>
 <% end %>

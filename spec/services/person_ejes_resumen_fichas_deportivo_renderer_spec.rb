@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer do
-  let(:current_period) { double(period_percentage: "20%", activities: []) }
+  let(:current_period) { double(period_percentage: "20%", activities: [], group_similar_activities: {}) }
   let(:later_period) { double(period_percentage: "40%", activities: []) }
   let(:periods) { [ current_period, later_period ] }
   let(:summary) { double(tipo_porcentual?: percentage_mode) }
@@ -40,6 +40,7 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoR
 
     it "delegates percentage row extensions to the period type renderer" do
       allow(summary).to receive(:tipo_porcentual?).and_return(true)
+      allow(later_period).to receive(:group_similar_activities).and_return({ activity: double(duracion_i: 30) })
       expect(period_type_renderer).to receive(:get_kind_specific_table_header_colspan).and_return(5)
       expect(period_type_renderer).to receive(:get_semestre).and_return("20%")
       expect(period_type_renderer).to receive(:get_subtotal_max_grade).and_return("2")

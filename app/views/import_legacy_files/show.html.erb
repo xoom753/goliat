@@ -77,12 +77,27 @@
                     <% end %>
                 </td>
                 <td>
-                    <%= form_tag update_dates_import_legacy_files_path(id: legacy_import_file.id) do %>
-                        <%= legacy_import_file.year %>
-                        <%= legacy_import_file.month %>
-                        <%= number_field_tag :year, legacy_import_file.year, placeholder: "Year" %>
-                        <%= number_field_tag :month, legacy_import_file.month, placeholder: "Month" %>
-                        <%= submit_tag %>
+                    <%= form_tag update_dates_import_legacy_files_path(id: legacy_import_file.id),
+                                 data: { controller: "legacy-file-date-form" } do %>
+                        <div>
+                            Año:
+                            <span contenteditable
+                                  data-legacy-file-date-form-target="yearOutput"
+                                  data-action="input->legacy-file-date-form#input"
+                            >
+                                <%= legacy_import_file.year.presence || "-" %>
+                            </span>
+                        </div>
+
+                        <div>
+                            Mes:
+                            <span contenteditable
+                                  data-legacy-file-date-form-target="monthOutput"
+                                  data-action="input->legacy-file-date-form#input"
+                            >
+                                <%= legacy_import_file.month.presence || "-" %>
+                            </span>
+                        </div>
                     <% end %>
                 </td>
                 <td>

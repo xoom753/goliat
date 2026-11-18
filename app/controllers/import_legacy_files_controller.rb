@@ -92,6 +92,6 @@ class ImportLegacyFilesController < ApplicationController
             year: params[:year],
             month: params[:month]
         )
-        redirect_to action: :show
+        head :ok
     end
 end

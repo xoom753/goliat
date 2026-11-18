@@ -120,7 +120,7 @@ RSpec.describe "Import legacy files", type: :request do
 
       post "/import_legacy_files/update_dates", params: { id: import_file.id, year: "2024", month: "5" }
 
-      expect(response).to redirect_to(action: :show)
+      expect(response).to have_http_status(:ok)
       expect(import_file.reload).to have_attributes(year: 2024, month: 5)
     end
   end
