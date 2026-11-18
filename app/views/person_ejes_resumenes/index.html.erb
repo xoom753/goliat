@@ -137,7 +137,9 @@
                         Fechas ingresos y egresos
                     </dt>
                     <dd>
-                        <%= safe_join(person_ejes_resumen.fechas_ingresos_y_egresos_array, tag.br) %>
+                        <% person_ejes_resumen.fechas_ingresos_y_egresos_array.each_with_index do |ingreso_o_egreso, index| %>
+                            <%= index + 1 %>.- <%= ingreso_o_egreso %> <br />
+                        <% end %>
                     </dd>
                 <% else %>
                     <dt>
@@ -152,14 +154,18 @@
                     Delitos
                 </dt>
                 <dd>
-                    <%= safe_join(person_ejes_resumen.delitos_array, tag.br) %>
+                    <% person_ejes_resumen.delitos_array.each_with_index do |delito, index| %>
+                        <%= index + 1%>.- <%= delito %> <br />
+                    <% end %>
                 </dd>
 
                 <dt>
                     Sentencias
                 </dt>
                 <dd>
-                    <%= safe_join(person_ejes_resumen.sentencias_array, tag.br) %>
+                    <% person_ejes_resumen.sentencias_array.each_with_index do |sentencia, index| %>
+                        <%= index + 1 %>.- <%= sentencia %> <br />
+                    <% end %>
                 </dd>
 
                 <% if person_ejes_resumen.acumulacion_penas.present? %>
