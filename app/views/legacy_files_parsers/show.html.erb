@@ -1,10 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
+<%= link_to "Back to legacy files parsers", legacy_files_parsers_path, class: "button is-ghost" %>
+
 <%= render @legacy_files_parser %>
 
-<div>
-  <%= link_to "Edit this legacy files parser", edit_legacy_files_parser_path(@legacy_files_parser) %> |
-  <%= link_to "Back to legacy files parsers", legacy_files_parsers_path %>
+<hr />
 
-  <%= button_to "Destroy this legacy files parser", @legacy_files_parser, method: :delete %>
+<div>
+  <%= link_to "Edit this legacy files parser", edit_legacy_files_parser_path(@legacy_files_parser), class: "button" %>
+
+  <hr />
+
+  <%= button_to "Destroy this legacy files parser", @legacy_files_parser, class: "button is-danger", method: :delete %>
 </div>

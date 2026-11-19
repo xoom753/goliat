@@ -17,7 +17,7 @@ class LegacyPersonActivitiesController < ApplicationController
         if params[:activity_group_id].present?
             @activities = LegacyActivity.where(
                 id: scope.pluck(:legacy_activity_id)
-            )
+            ).ordered
         end
         if params[:legacy_activity_id].present?
             scope = scope.where(

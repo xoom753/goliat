@@ -10,7 +10,7 @@ table.table.is-striped.is-hoverable
             th Nombre en planes de vida
     tbody
         - @activity_groups.each do |activity_group|
-            - activity_group.activities.each do |activity|
+            - activity_group.activities.order_by_name.each do |activity|
                 tr
                     td = activity_group.nombre
                     td = activity.id

@@ -1,0 +1,206 @@
+<div class="has-text-centered">
+    <h2>Información jurídica</h2>
+</div>
+
+h3
+    => @origin_person.fullname.titleize
+    ' ·
+    = @origin_person.situacion_actual.titleize
+
+/ origin_person
+
+table.table.is-striped.is-hoverable
+    thead
+        tr
+            th uid
+            th Fecha registro
+            th Nombres
+            th Alias
+            th = @origin_person.dni_kind.titleize
+            th Situación actual
+            th Sexo
+    tbody
+        tr
+            td = @origin_person.id
+            td = @origin_person.fecha_registro
+            td = @origin_person.fullname
+            td = @origin_person.alias_name
+            td = @origin_person.dni
+            td.has-text-weight-bold
+                = @origin_person.situacion_actual.titleize
+            td = @origin_person.sexo.titleize
+
+/ origin_person_demographic
+
+table.table.is-striped.is-hoverable
+    thead
+        tr
+            th País origen
+            th Fecha nacimiento
+            th Edad
+            th Estado civil
+            th Nivel de instrucción
+            th Profesión
+            th Gravedad enfermedad
+            th Tipo enfermedad
+            th Tipo discapacidad
+    tbody
+        tr
+            td = @origin_person_demographic.pais_origen.titleize
+            td = @origin_person_demographic.fecha_nacimiento
+            td = calculate_age(@origin_person_demographic.fecha_nacimiento)
+            td = @origin_person_demographic.estado_civil.titleize
+            td = @origin_person_demographic.nivel_instruccion.titleize
+            td = @origin_person_demographic.profesion.titleize
+            td = @origin_person_demographic.gravedad_enfermedad.to_s.titleize
+            td = @origin_person_demographic.tipo_enfermedad.to_s.titleize
+            td = @origin_person_demographic.tipo_discapacidad.to_s.titleize
+
+/ origin_person_legal_processes
+
+- @origin_person_legal_processes.each_with_index do |origin_person_legal_process, index|
+    h3
+        = "Proceso #{index + 1} · "
+        => origin_person_legal_process.fecha_delito
+        ' ·
+        = origin_person_legal_process.proceso_num
+
+    table.table.is-striped.is-hoverable
+        thead
+            tr
+                th Proceso núm
+                th Fecha detención
+                th Fecha delito
+                th Fecha ingreso
+                th Estado
+                th Boleta encarcelamiento
+                th Fecha boleta encarcelamiento
+
+        tbody
+            tr
+                td.has-text-weight-bold
+                    = origin_person_legal_process.proceso_num
+                td = origin_person_legal_process.fecha_detencion
+                td = origin_person_legal_process.fecha_delito
+                td = origin_person_legal_process.fecha_ingreso
+                td.has-text-weight-bold
+                    = origin_person_legal_process.estado.titleize
+                td = origin_person_legal_process.boleta_encarcelamiento
+                td = origin_person_legal_process.fecha_boleta_encarcelamiento
+
+    table.table.is-striped.is-hoverable
+        thead
+            tr
+                th Normativa
+                th Infracción
+                th Incisos
+                th Grupo infracción
+                th Subgrupo infracción
+                th Parte policial núm
+
+        tbody
+            tr
+                td = origin_person_legal_process.normativa
+                td = origin_person_legal_process.infraccion
+                td = origin_person_legal_process.incisos
+                td = origin_person_legal_process.grupo_infraccion
+                td = origin_person_legal_process.subgrupo_infraccion
+                td = origin_person_legal_process.parte_policial_num
+
+    - if origin_person_legal_process.observaciones.present? || origin_person_legal_process.observaciones_2.present?
+        table.table.is-striped.is-hoverable
+            thead
+                tr
+                    th Observaciones
+                    th Observaciones 2
+            tbody
+                tr
+                    td = origin_person_legal_process.observaciones
+                    td = origin_person_legal_process.observaciones_2
+
+    - if origin_person_legal_process.estado == "en_proceso"
+        h4
+             = "Proceso #{index + 1} sin sentencia"
+    - else
+        h3
+            = "Sentencia #{index + 1} · "
+            => origin_person_legal_process.fecha_sentencia
+            ' ·
+            = origin_person_legal_process.proceso_num
+
+        - origin_person_legal_penalty = origin_person_legal_process.origin_person_legal_penalty
+
+        table.table.is-striped.is-hoverable
+            thead
+                tr
+                    th Sentencia
+                    th Fecha sentencia
+                    th Acumulación de penas
+                    th Acumulación total de penas
+                    th Pena individual
+                    th Pena individual total
+                    th Cantidad total sentencia
+                    th Termina condena
+                    th Porcentajes condena
+            tbody
+                tr
+                    td
+                        => origin_person_legal_process.anios_sentencia
+                        | años
+                        br
+                        => origin_person_legal_process.meses_sentencia
+                        | meses
+                        br
+                        => origin_person_legal_process.dias_sentencia
+                        | días
+                    td = origin_person_legal_process.fecha_sentencia
+
+                    td
+                        => origin_person_legal_penalty.anios_acumulacion_pena
+                        | años
+                        br
+                        => origin_person_legal_penalty.meses_acumulacion_pena
+                        | meses
+                        br
+                        => origin_person_legal_penalty.dias_acumulacion_pena
+                        | días
+
+                    td
+                        => origin_person_legal_penalty.acumulacion_total_penas
+                        | meses
+
+                    td
+                        => origin_person_legal_penalty.anios_pena_individual
+                        | años
+                        br
+                        => origin_person_legal_penalty.meses_pena_individual
+                        | meses
+                        br
+                        => origin_person_legal_penalty.dias_pena_individual
+                        | días
+
+                    td
+                        => origin_person_legal_penalty.acumulacion_pena_individual_total
+                        | meses
+                    td
+                        => origin_person_legal_penalty.cantidad_total_sentencia
+                        | meses
+                    td = origin_person_legal_penalty.termina_condena_at
+
+                    td
+                        ' 20%:
+                        => origin_person_legal_penalty.veinte_porciento_at
+                        br
+
+                        ' 40%:
+                        => origin_person_legal_penalty.cuarenta_porciento_at
+                        br
+
+                        ' 60%:
+                        = origin_person_legal_penalty.sesenta_porciento_at
+                        br
+
+                        ' 80%:
+                        = origin_person_legal_penalty.ochenta_porciento_at
+
+    hr

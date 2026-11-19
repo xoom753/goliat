@@ -34,6 +34,7 @@
                 <%= origin_person.situacion_actual.titleize %>
             </dd>
         </dl>
+        <%= link_to "Ver más detalles", origin_person_path(origin_person) %>
     </td>
 </tr>
 <% origin_person.origin_person_legal_processes.each do |origin_person_legal_process| %>
@@ -154,28 +155,18 @@
                     </dd>
                 </dl>
             <% end %>
-            <% if origin_person_legal_penalty.veinte_porciento_at.present? %>
+            <% if origin_person_legal_penalty.ochenta_porciento_at.present? %>
                 <dl>
                     <dt>
-                        20%
+                        80%
                     </dt>
                     <dd>
-                        <%= origin_person_legal_penalty.veinte_porciento_at %>
-                    </dd>
-                </dl>
-            <% end %>
-            <% if origin_person_legal_penalty.cuarenta_porciento_at.present? %>
-                <dl class="<%= 'strong' if params[:sort_by] == "cuarenta" %>">
-                    <dt>
-                        40%
-                    </dt>
-                    <dd>
-                        <%= origin_person_legal_penalty.cuarenta_porciento_at %>
+                        <%= origin_person_legal_penalty.ochenta_porciento_at %>
                     </dd>
                 </dl>
             <% end %>
             <% if origin_person_legal_penalty.sesenta_porciento_at.present? %>
-                <dl class="<%= 'strong' if params[:sort_by] == "sesenta" %>">
+                <dl class="<%= 'has-text-weight-bold' if params[:sort_by] == "sesenta" %>">
                     <dt>
                         60%
                     </dt>
@@ -184,13 +175,23 @@
                     </dd>
                 </dl>
             <% end %>
-            <% if origin_person_legal_penalty.ochenta_porciento_at.present? %>
-                <dl>
+            <% if origin_person_legal_penalty.cuarenta_porciento_at.present? %>
+                <dl class="<%= 'has-text-weight-bold' if params[:sort_by] == "cuarenta" %>">
                     <dt>
-                        80%
+                        40%
                     </dt>
                     <dd>
-                        <%= origin_person_legal_penalty.ochenta_porciento_at %>
+                        <%= origin_person_legal_penalty.cuarenta_porciento_at %>
+                    </dd>
+                </dl>
+            <% end %>
+            <% if origin_person_legal_penalty.veinte_porciento_at.present? %>
+                <dl>
+                    <dt>
+                        20%
+                    </dt>
+                    <dd>
+                        <%= origin_person_legal_penalty.veinte_porciento_at %>
                     </dd>
                 </dl>
             <% end %>

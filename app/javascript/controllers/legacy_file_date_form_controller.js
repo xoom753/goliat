@@ -6,29 +6,9 @@ export default class extends Controller {
         "yearOutput",
         "monthOutput"
     ]
-    // @property({ type: String }) declare currentYear: String;
-
-    // declare currentYear: string
-
-    // declare currentYear: String;
-
-    // default = {
-        // currentYear: String
-    // }
-
-    // currentYear = Number
-    // currentMonth = Number
 
     connect() {
         this.formAction = this.element.action
-    }
-
-    update(e) {
-        const yearValue = this.yearInputTarget.value
-        const monthValue = this.monthInputTarget.value
-        console.log("yearValue")
-        console.log(yearValue)
-        console.log(monthValue)
     }
 
     input(e) {

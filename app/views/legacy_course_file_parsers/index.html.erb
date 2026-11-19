@@ -8,9 +8,9 @@
   <% @legacy_course_file_parsers.each do |legacy_course_file_parser| %>
     <%= render legacy_course_file_parser %>
     <p>
-      <%= link_to "Show this legacy course file parser", legacy_course_file_parser %>
+      <%= link_to "Show this legacy course file parser", legacy_course_file_parser, class: "button is-ghost" %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New legacy course file parser", new_legacy_course_file_parser_path %>
+<%= link_to "New legacy course file parser", new_legacy_course_file_parser_path, class: "button" %>

@@ -41,4 +41,10 @@ class OriginPeopleController < ApplicationController
         @origin_person_legal_penalties =
                 @origin_person_legal_penalties.page(params[:page]).per(5)
     end
+
+    def show
+        @origin_person = OriginPerson.find(params[:id])
+        @origin_person_demographic = @origin_person.origin_person_demographic
+        @origin_person_legal_processes = @origin_person.origin_person_legal_processes
+    end
 end

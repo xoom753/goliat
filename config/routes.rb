@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       post :update_dates
     end
   end
-  resources :origin_people, only: :index do
+  resources :origin_people, only: [:index, :show] do
     collection do
       get :by_percentage
     end
