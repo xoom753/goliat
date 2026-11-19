@@ -72,6 +72,16 @@ RSpec.describe "Origin people", type: :feature do
       expect(page).not_to have_content("Casey Example")
     end
 
+    it "filters people by current situation" do
+      create_origin_person(name: "Casey Example", dni: "1234567890", situation: :presente_beneficio_revocado)
+      create_origin_person(name: "Morgan Rivera", dni: "9876543210", situation: :presente)
+
+      visit origin_people_path(situacion_actual: OriginPerson.situacion_actuals.fetch("presente_beneficio_revocado"))
+
+      expect(page).to have_content("Casey Example")
+      expect(page).not_to have_content("Morgan Rivera")
+    end
+
     it "filters people by a partial process number" do
       matching_person = create_origin_person(name: "Casey Example", dni: "1234567890")
       other_person = create_origin_person(name: "Morgan Rivera", dni: "9876543210")
@@ -102,6 +112,73 @@ RSpec.describe "Origin people", type: :feature do
 
       expect(page).to have_content("Información jurídica")
       expect(page).not_to have_content("Casey Example")
+    end
+  end
+
+  describe "GET /origin_people/:id" do
+    it "shows demographic details, age, and sentenced legal process data" do
+      person = create_origin_person(name: "Casey Example", dni: "1234567890")
+      person.update!(dni_kind: "CEDULA", sexo: :mujer)
+      person.create_origin_person_demographic!(
+        pais_origen: "Ecuador",
+        fecha_nacimiento: Date.new(Date.today.year - 34, 1, 1),
+        estado_civil: "Soltera",
+        nivel_instruccion: "Superior",
+        profesion: "Docente"
+      )
+      process = person.origin_person_legal_processes.create!(
+        proceso_num: "CASE-DETAIL-001",
+        estado: :con_sentencia,
+        fecha_delito: Date.new(2019, 12, 1),
+        fecha_detencion: Date.new(2020, 2, 3),
+        fecha_ingreso: Date.new(2020, 2, 4),
+        fecha_sentencia: Date.new(2020, 1, 15),
+        infraccion: "Robo",
+        normativa: "COIP",
+        observaciones: "Case detail note",
+        anios_sentencia: 4
+      )
+      OriginPersonLegalPenalty.create!(
+        origin_person: person,
+        origin_person_legal_process: process,
+        cantidad_total_sentencia_str: "1530",
+        termina_condena_at_str: Date.new(2030, 4, 3),
+        veinte_porciento_at_str: Date.new(2022, 1, 1)
+      )
+
+      visit origin_person_path(person)
+
+      expect(page).to have_content("Casey Example")
+      expect(page).to have_content("Ecuador")
+      expect(page).to have_content("Soltera")
+      expect(page).to have_content("Docente")
+      expect(page).to have_content("34")
+      expect(page).to have_content("CASE-DETAIL-001")
+      expect(page).to have_content("Case detail note")
+      expect(page).to have_content("1530")
+    end
+
+    it "shows in-process legal cases without sentence details" do
+      person = create_origin_person(name: "Morgan Rivera", dni: "9876543210")
+      person.update!(dni_kind: "CEDULA", sexo: :hombre)
+      person.create_origin_person_demographic!(
+        pais_origen: "Ecuador",
+        fecha_nacimiento: Date.new(1992, 6, 10),
+        estado_civil: "Soltero",
+        nivel_instruccion: "Basica",
+        profesion: "Carpintero"
+      )
+      person.origin_person_legal_processes.create!(
+        proceso_num: "CASE-IN-PROGRESS",
+        estado: :en_proceso,
+        infraccion: "Robo"
+      )
+
+      visit origin_person_path(person)
+
+      expect(page).to have_content("CASE-IN-PROGRESS")
+      expect(page).to have_content("Proceso 1 sin sentencia")
+      expect(page).not_to have_content("Sentencia 1 ·")
     end
   end
 end

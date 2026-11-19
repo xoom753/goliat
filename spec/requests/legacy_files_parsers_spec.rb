@@ -55,6 +55,27 @@ RSpec.describe "Legacy files parsers", type: :request do
     expect(LegacyFilesParser.exists?(parser.id)).to be(false)
   end
 
+  it "renders the new form when HTML creation fails" do
+    allow_any_instance_of(LegacyFilesParser).to receive(:save).and_return(false)
+
+    post legacy_files_parsers_path, params: { legacy_files_parser: { parser_name: "Parser" } }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("New legacy files parser")
+  end
+
+  it "renders the edit form when an HTML update fails" do
+    parser = LegacyFilesParser.create!(parser_name: "Legacy workbook")
+    allow_any_instance_of(LegacyFilesParser).to receive(:update).and_return(false)
+
+    patch legacy_files_parser_path(parser), params: {
+      legacy_files_parser: { parser_name: "" }
+    }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("Editing legacy files parser")
+  end
+
   it "returns validation errors when parser creation is invalid" do
     post legacy_files_parsers_path(format: :json), params: { legacy_files_parser: {} }
 

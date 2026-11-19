@@ -71,6 +71,24 @@ RSpec.describe LegacyFileParseService do
       expect(record.activity_detail_str).to eq("")
     end
 
+    it "uses the parser default activity group when the sheet has no services column" do
+      allow(parser).to receive(:default_activity_group_str).and_return("General courses")
+      sheet = double
+      allow(service).to receive(:sheet).and_return(sheet)
+      allow(sheet).to receive(:each).and_yield({}).and_yield(
+        row_number: 2,
+        nombres: "ana perez",
+        actividad: "",
+        fecha: "01/01/2024 - 31/03/2024",
+        duracion: "5 horas"
+      )
+
+      record = service.records.first
+
+      expect(record.activity_group_str).to eq("General courses")
+      expect(record.activity_str).to eq("General courses")
+    end
+
     it "returns an empty list when the spreadsheet headers are missing" do
       sheet = double
       allow(service).to receive(:sheet).and_return(sheet)
