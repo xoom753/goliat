@@ -54,7 +54,7 @@ RSpec.describe PersonEjesResumen, type: :model do
   it "splits and memoizes ingreso and egreso entries" do
     resumen.fechas_ingresos_y_egresos = "Ingreso: 01/01/2020\nEgreso: 02/02/2020"
 
-    expect(resumen.fechas_ingresos_y_egresos_array).to eq(["Ingreso: 01/01/2020", "Egreso: 02/02/2020"])
+    expect(resumen.fechas_ingresos_y_egresos_array).to eq([ "Ingreso: 01/01/2020", "Egreso: 02/02/2020" ])
     expect(resumen.fechas_ingresos_y_egresos_array).to equal(resumen.fechas_ingresos_y_egresos_array)
   end
 

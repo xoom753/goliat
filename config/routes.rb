@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       post :update_dates
     end
   end
-  resources :origin_people, only: [:index, :show] do
+  resources :origin_people, only: [ :index, :show ] do
     collection do
       get :by_percentage
     end
@@ -93,5 +93,5 @@ Rails.application.routes.draw do
 
   # Option 3: Silence .well-known noise specifically
   # If you just want to stop Chrome DevTools probes from cluttering production logs, add a quick route returning 204 or 404 without raising an exception:
-  get '/.well-known/*path', to: proc { [404, {}, ['']] }
+  get "/.well-known/*path", to: proc { [ 404, {}, [ "" ] ] }
 end
