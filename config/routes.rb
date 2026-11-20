@@ -90,4 +90,8 @@ Rails.application.routes.draw do
     get :people
     get :legacy_people
   end
+
+  # Option 3: Silence .well-known noise specifically
+  # If you just want to stop Chrome DevTools probes from cluttering production logs, add a quick route returning 204 or 404 without raising an exception:
+  get '/.well-known/*path', to: proc { [404, {}, ['']] }
 end
