@@ -48,6 +48,7 @@ gem "caracal-rails"
 gem "simple_form"
 gem "slim-rails"
 gem "requestjs-rails"
+gem "lograge"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

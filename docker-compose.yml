@@ -1,32 +1,62 @@
 version: '3.8'
 
 services:
-  web:
-    image: ruby
+  webprod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: goliat:prod
     volumes:
-      - ./app:/app
+      - .:/app
+      - rails_storage:/app/storage
     ports:
       - '3000:3000'
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     tty: true
     working_dir: /app
     #rerun used in below command
-    command:  bash -c "bundle config set path /app/local_gems && bundle exec rerun ruby --dir src /app/src/hello.rb"
+    # command:  bash -c "bundle config set path /app/local_gems && bundle exec rerun ruby --dir src /app/src/hello.rb"
     environment:
-      - RAILS_ENV=development
-      # - DATABASE_URL=postgres://postgres:password@db/goliat_db
+      RAILS_ENV: production
+      RAISL_LOG_TO_STDOUT: "true"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/up || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   db:
     image: postgres:14
     environment:
-      POSTGRES_DB: goliat_db
+      POSTGRES_DB: goliat_production
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d goliat_production"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  webdev:
+    image: ruby
+    volumes:
+      - .:/app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    tty: true
+    working_dir: /app
+    environment:
+      - RAILS_ENV=development
 
 volumes:
   db_data:
+  rails_storage:

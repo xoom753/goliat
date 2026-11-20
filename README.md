@@ -45,10 +45,17 @@ RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 ```
 pg_dump postgres://postgres:password@db/goliat_prod_db -Fc -f backup.dump
 
-pg_restore --dbname="postgres://postgres:password@db/goliat_prod_db" backup.dump
+pg_restore --dbname="postgres://postgres:password@db/goliat_db_production" backup.dump
 ```
 
-## docker containers
+## build docker container for prod
+
+```
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+
+## docker containers for dev env
 
 1. list all containers:
 

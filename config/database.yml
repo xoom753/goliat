@@ -24,7 +24,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: goliat_prod_db
+    database: goliat_production
   cache:
     <<: *default
     database: goliat_prod_cache
