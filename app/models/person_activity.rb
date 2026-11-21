@@ -6,7 +6,8 @@ class PersonActivity < ApplicationRecord
   scope :sorted, -> {
     includes(:person).order(
         cargo: :desc,
-        "people.pabellon": :asc
+        "people.pabellon": :asc,
+        "people.nombres": :asc
     )
   }
 

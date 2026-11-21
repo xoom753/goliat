@@ -57,7 +57,7 @@ class ExtraActivitiesController < ApplicationController
 
     def export
         @extra_activity = ExtraActivity.find params[:id]
-        activities = @extra_activity.person_activities
+        activities = @extra_activity.person_activities.sorted
 
         headers = [
             "Nombres",
