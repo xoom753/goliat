@@ -79,7 +79,8 @@ table.table.is-striped.is-hoverable
         tbody
             tr
                 td.has-text-weight-bold
-                    = origin_person_legal_process.proceso_num
+                    = link_to origin_person_legal_process.proceso_num,
+                              origin_people_path(proceso_num: origin_person_legal_process.proceso_num)
                 td = origin_person_legal_process.fecha_detencion
                 td = origin_person_legal_process.fecha_delito
                 td = origin_person_legal_process.fecha_ingreso
