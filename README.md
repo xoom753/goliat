@@ -51,7 +51,7 @@ pg_restore --dbname="postgres://postgres:password@db/goliat_production" backup.d
 ## build docker container for prod
 
 ```
-docker compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.yml up -d --build
 ```
 
 

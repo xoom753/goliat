@@ -92,7 +92,7 @@ class ExportPersonEjesResumenesController < ApplicationController
         respond_to do |format|
             format.docx {
                 render :certificados
-                filename = "Certificados-#{@person_ejes_resumen.nombres}.docx"
+                filename = "Certificados-Educativo-#{@person_ejes_resumen.nombres}.docx"
                 headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
             }
             format.csv {

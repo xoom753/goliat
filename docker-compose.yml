@@ -44,18 +44,18 @@ services:
       timeout: 5s
       retries: 10
 
-  webdev:
-    image: ruby
-    volumes:
-      - .:/app
-    ports:
-      - '3000:3000'
-    depends_on:
-      - db
-    tty: true
-    working_dir: /app
-    environment:
-      - RAILS_ENV=development
+  # webdev:
+  #   image: ruby:4.0.10-slim-trixie
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - db
+  #   tty: true
+  #   working_dir: /app
+  #   environment:
+  #     - RAILS_ENV=development
 
 volumes:
   db_data:
