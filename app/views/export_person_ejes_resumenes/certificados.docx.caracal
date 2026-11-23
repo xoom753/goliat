@@ -29,6 +29,7 @@ docx.style do
     size 40
     bold false
     font "Berlin Sans FB"
+    color "000000"
 end
 
 docx.style do
@@ -37,6 +38,7 @@ docx.style do
     size 32
     bold false
     font "Berlin Sans FB"
+    color "000000"
 end
 
 docx.style do
@@ -46,6 +48,7 @@ docx.style do
     bold true
     italic true
     font "Berlin Sans FB"
+    color "000000"
 end
 
 docx.style do
@@ -54,6 +57,7 @@ docx.style do
     size 24
     align :both
     font "Berlin Sans FB"
+    color "000000"
 end
 
 docx.style do
@@ -61,6 +65,7 @@ docx.style do
     name "TableNormal"
     size 28
     font "Berlin Sans FB"
+    color "000000"
 end
 
 @csv_renderer.activities.each do |activity|

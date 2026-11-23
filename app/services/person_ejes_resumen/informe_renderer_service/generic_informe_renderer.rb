@@ -34,6 +34,7 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
             id "Heading1"
             name "Heading1"
             font "Calibri (Cuerpo)"
+            color "000000"
             size 20
             bold true
         end
@@ -42,6 +43,7 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
             id "Normal"
             name "Normal"
             font "Calibri (Cuerpo)"
+            color "000000"
             size 20
             align :both
             line 240
@@ -51,6 +53,7 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
             id "TableNormal"
             name "TableNormal"
             font "Calibri (Cuerpo)"
+            color "000000"
             size 20
             align :both
         end
