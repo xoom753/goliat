@@ -26,6 +26,7 @@
                 th Nombres
                 th Cédula / Pasaporte
                 th Celda
+                th uuid
         tbody
             - people.each_with_index do |person, index|
                 tr
@@ -33,3 +34,4 @@
                     td = person.nombres
                     td = person.dni
                     td = person.celda
+                    td = person.id

@@ -119,8 +119,8 @@ RSpec.describe "Extra activities", type: :request do
         "Cédula",
         "Pabellón",
         "Workshop",
-        "Creado: #{activity.created_at.to_date.to_s}",
-        "Exportado: #{time_now.to_s}",
+        "Creado: #{activity.created_at.to_date}",
+        "Exportado: #{time_now}"
       ])
       expect(csv.headers.length).to eq(6)
       expect(csv.headers.last).to be_present

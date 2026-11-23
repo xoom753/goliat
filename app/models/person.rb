@@ -9,13 +9,22 @@ class Person < ApplicationRecord
     }
     has_many :person_activities
 
-    scope :from_pabellon, ->(pabellon_str) {
-        where("pabellon ILIKE ?", "%#{pabellon_str}%")
+    scope :from_pabellones, ->(*pabellones) {
+        query_str = pabellones.map do |pabellon_str|
+            "pabellon ILIKE ?"
+        end.join(" OR ")
+        args = pabellones.map do |pabellon_str|
+            "%#{pabellon_str}%"
+        end
+        where(query_str, *args)
     }
     scope :from_san_jose, -> {
-        from_pabellon("San_Jose")
+        from_pabellones("San_Jose", "San_José")
     }
     scope :not_from_san_jose, -> {
-        where.not("pabellon ILIKE '%San_Jose%'")
+        where(
+            "NOT pabellon ILIKE '%San_Jose%' \
+            AND NOT pabellon ILIKE '%San_José%'"
+        )
     }
 end

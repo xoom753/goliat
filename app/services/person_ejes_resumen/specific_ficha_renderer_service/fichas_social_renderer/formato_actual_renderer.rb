@@ -30,7 +30,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::For
     def get_table_col_widths
         cols_widths = [ 700, 1300, 400 ]
         if @person_ejes_resumen.tipo_porcentual?
-            cols_widths.concat( @periodos.map { 200 } )
+            cols_widths.concat(@periodos.map { 200 })
         else
             cols_widths << 200
         end
@@ -83,7 +83,7 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::For
             "0,50",
             "0,50",
             @person_ejes_resumen.tipo_porcentual? ? "0,25" : "1",
-            @person_ejes_resumen.tipo_porcentual? ? "0,25" : "1",
+            @person_ejes_resumen.tipo_porcentual? ? "0,25" : "1"
         ]
     end
 
