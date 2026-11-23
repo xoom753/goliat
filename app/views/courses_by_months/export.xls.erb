@@ -1,0 +1,16 @@
+<%=
+workbook = Spreadsheet::Workbook.new
+worksheet = workbook.create_worksheet
+
+worksheet.row(0).replace @headers
+
+@rows.each_with_index do |row, index|
+    worksheet.row(index + 1).replace(row)
+end
+
+file = StringIO.new
+
+workbook.write(file)
+
+file.string.html_safe
+%>

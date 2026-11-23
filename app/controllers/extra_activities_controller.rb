@@ -58,28 +58,39 @@ class ExtraActivitiesController < ApplicationController
     def export
         @extra_activity = ExtraActivity.find params[:id]
         activities = @extra_activity.person_activities.sorted
-
-        headers = [
+        filename_base = "#{@extra_activity.nombre}-#{Date.today}"
+        @headers = [
             "Nombres",
             "Cédula",
             "Pabellón",
             @extra_activity.nombre,
-            @extra_activity.created_at.to_date,
-            Time.now
+            "Creado: #{@extra_activity.created_at.to_date}",
+            "Exportado: #{Time.zone.now}"
         ]
-        csv_data = CSV.generate(headers: true) do |csv|
-            csv << headers
-            activities.each do |activity|
-                csv << [
-                    activity.person.nombres,
-                    activity.person.dni,
-                    activity.person.pabellon
-                ]
+        @rows = activities.map do |activity|
+            [
+                activity.person.nombres,
+                activity.person.dni,
+                activity.person.pabellon
+            ]
+        end
+
+        respond_to do |format|
+            format.xls do
+                response.headers["Content-Disposition"] = "attachment; filename=\"#{filename_base}.xls\""
+            end
+            format.csv do
+                csv_data = CSV.generate(headers: true) do |csv|
+                    csv << @headers
+                    @rows.each do |row|
+                        csv << row
+                    end
+                end
+
+                send_data csv_data,
+                        filename: "#{filename_base}.csv",
+                        disposition: :attachment
             end
         end
-        csv_name = "#{@extra_activity.nombre}-#{Date.today}"
-        send_data csv_data,
-                  filename: "#{csv_name}.csv",
-                  disposition: :attachment
     end
 end

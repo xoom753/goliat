@@ -83,8 +83,11 @@
                         <%= link_to "Editar",
                                     edit_course_path(activity, date: { month: @month, year: @year }) %>
                         ·
-                        <%= link_to "Exportar",
-                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year) %>
+                        <%= link_to "Exportar CSV",
+                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year, format: :csv) %>
+                        ·
+                        <%= link_to "Exportar Excel",
+                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year, format: :xls) %>
                     </th>
                 </tr>
                 <% if activity.person_activities.where(mes: @month, anio: @year).any? %>

@@ -18,7 +18,7 @@ RAILS_ENV=production bin/rails server
 
 - [x] when importing presentes por pabellón: mark as inactive the ones who are not present
 - [] associate person#pabellon
-- [] associate LegacyPersonActivity to parseable to track what file is it imported from
+- [x] associate LegacyPersonActivity to parseable to track what file is it imported from
 
 ## ERD
 
@@ -38,6 +38,11 @@ RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 ## rubocop
 ```
 ./bin/rubocop -a
+```
+
+## yard
+```
+bundle exec yard server -p 3000
 ```
 
 ## backup db

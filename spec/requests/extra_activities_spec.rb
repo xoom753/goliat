@@ -103,7 +103,9 @@ RSpec.describe "Extra activities", type: :request do
       person = Person.create!(nombres: "Jane Example", dni: "123", pabellon: "A-1")
       PersonActivity.create!(person: person, coursable: activity, mes: 3, anio: 2024)
 
-      get export_extra_activity_path(activity)
+      time_now = Time.zone.now
+
+      get export_extra_activity_path(activity, format: :csv)
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/csv")
@@ -112,8 +114,13 @@ RSpec.describe "Extra activities", type: :request do
         "Workshop-#{Date.today}.csv"
       )
       csv = CSV.parse(response.body, headers: true)
-      expect(csv.headers.first(5)).to eq([
-        "Nombres", "Cédula", "Pabellón", "Workshop", activity.created_at.to_date.to_s
+      expect(csv.headers.first(6)).to eq([
+        "Nombres",
+        "Cédula",
+        "Pabellón",
+        "Workshop",
+        "Creado: #{activity.created_at.to_date.to_s}",
+        "Exportado: #{time_now.to_s}",
       ])
       expect(csv.headers.length).to eq(6)
       expect(csv.headers.last).to be_present

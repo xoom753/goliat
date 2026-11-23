@@ -10,13 +10,21 @@ RSpec.describe "Courses by month export", type: :request do
     PersonActivity.create!(person: included_person, coursable: activity, mes: 3, anio: 2024, cargo: :instructor)
     PersonActivity.create!(person: excluded_person, coursable: activity, mes: 4, anio: 2024)
 
-    get export_courses_by_month_path(activity_id: activity.id, month: 3, year: 2024)
+    time_now = Time.zone.now
+    get export_courses_by_month_path(activity_id: activity.id, month: 3, year: 2024, format: :csv)
 
     expect(response).to have_http_status(:ok)
     expect(response.media_type).to eq("text/csv")
     expect(response.headers["Content-Disposition"]).to include("Painting-March-#{Date.today}.csv")
     rows = CSV.parse(response.body, headers: true)
-    expect(rows.headers).to eq([ "Nombres", "Cédula", "Cargo", "Pabellón", "Celda" ])
-    expect(rows.map(&:fields)).to eq([ [ "Jane Example", "111", "INSTRUCTOR", "A", "1" ] ])
+    expect(rows.headers).to eq([
+      "Nombres",
+      "Cédula",
+      "Cargo",
+      "Pabellón",
+      "Celda",
+      "Exportado: #{time_now}"
+    ])
+    expect(rows.map(&:fields)).to eq([ [ "Jane Example", "111", "INSTRUCTOR", "A", "1", nil ] ])
   end
 end

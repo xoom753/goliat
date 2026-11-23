@@ -42,7 +42,7 @@ RSpec.describe "Person Ejes Resumen exports", type: :request do
     get certificados_educativo_export_person_ejes_resumen_path(report, format: :docx)
 
     expect(response).to have_http_status(:ok)
-    expect(response.headers["Content-Disposition"]).to include("attachment", "Certificados-Casey Example.docx")
+    expect(response.headers["Content-Disposition"]).to include("attachment", "Certificados-Educativo-Casey Example.docx")
     expect(response.body).to start_with("PK")
   end
 

@@ -64,7 +64,7 @@ RSpec.describe "Courses by month", type: :feature do
       visit courses_by_month_path(date: { month: 3, year: 2024 })
 
       expect(page).to have_link("Edit", href: edit_course_path(cultural_activity, date: { month: "3", year: "2024" }))
-      expect(page).to have_link("Export", href: export_courses_by_month_path(activity_id: cultural_activity.id, month: "3", year: "2024"))
+      expect(page).to have_link("Exportar CSV", href: export_courses_by_month_path(activity_id: cultural_activity.id, month: "3", year: "2024", format: :csv))
     end
   end
 end

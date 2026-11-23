@@ -22,8 +22,11 @@
                     <%= link_to "Editar",
                                 edit_extra_activity_path(activity) %>
                     ·
-                    <%= link_to "Exportar",
-                                export_extra_activity_path(activity) %>
+                    <%= link_to "Exportar CSV",
+                                export_extra_activity_path(activity, format: :csv) %>
+                    ·
+                    <%= link_to "Exportar Excel",
+                                export_extra_activity_path(activity, format: :xls) %>
                 </td>
             </tr>
         <% end %>

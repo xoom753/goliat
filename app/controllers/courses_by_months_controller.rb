@@ -22,21 +22,43 @@ class CoursesByMonthsController < ApplicationController
             anio: year
         )
 
-        csv_data = CSV.generate(headers: true) do |csv|
-            csv << [ "Nombres", "Cédula", "Cargo", "Pabellón", "Celda" ]
-            activities.each do |activity|
-                csv << [
-                    activity.person.nombres,
-                    activity.person.dni,
-                    activity.cargo.upcase,
-                    activity.person.pabellon,
-                    activity.person.celda
-                ]
+        @headers = [
+            "Nombres",
+            "Cédula",
+            "Cargo",
+            "Pabellón",
+            "Celda",
+            "Exportado: #{Time.zone.now}"
+        ]
+        @rows = activities.map do |activity|
+            [
+                activity.person.nombres,
+                activity.person.dni,
+                activity.cargo.upcase,
+                activity.person.pabellon,
+                activity.person.celda
+            ]
+        end
+
+        filename_base = "#{activity.nombre}-#{Date::MONTHNAMES[month.to_i]}-#{Date.today}"
+
+        respond_to do |format|
+            format.xls do
+                response.headers["Content-Disposition"] = "attachment; filename=\"#{filename_base}.xls\""
+            end
+
+            format.csv do
+                csv_data = CSV.generate(headers: true) do |csv|
+                    csv << @headers
+                    @rows.each do |row|
+                        csv << row
+                    end
+                end
+
+                send_data csv_data,
+                        filename: "#{filename_base}.csv",
+                        disposition: :attachment
             end
         end
-        csv_name = "#{activity.nombre}-#{Date::MONTHNAMES[month.to_i]}-#{Date.today}"
-        send_data csv_data,
-                  filename: "#{csv_name}.csv",
-                  disposition: :attachment
     end
 end

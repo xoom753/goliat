@@ -49,6 +49,7 @@ gem "simple_form"
 gem "slim-rails"
 gem "requestjs-rails"
 gem "lograge"
+gem "spreadsheet"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -74,6 +75,7 @@ group :development do
   gem "web-console"
   gem "rails-erd"
   gem "ruby-graphviz"
+  gem "yard"
 end
 
 group :test do
