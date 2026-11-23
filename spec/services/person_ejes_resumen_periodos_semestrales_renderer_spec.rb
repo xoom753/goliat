@@ -34,6 +34,18 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestra
     )
   end
 
+  describe "#has_any_activity?" do
+    it "returns false when the current semester has no activities" do
+      expect(renderer.has_any_activity?).to be(false)
+    end
+
+    it "returns true when the current semester has activities" do
+      allow(period).to receive(:activities).and_return([ :activity ])
+
+      expect(renderer.has_any_activity?).to be(true)
+    end
+  end
+
   it "returns semester-specific bottom rows and grades-table metadata" do
     expect(renderer.ficha_info_table_bottom_rows).to eq([
       [ "TEMPORALIDAD", "20%" ],

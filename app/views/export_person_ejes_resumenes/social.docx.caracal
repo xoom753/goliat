@@ -6,10 +6,10 @@
 
 @informe_renderer_service.get_fichas_indexes.each do |index|
     activities_ficha = @informe_renderer_service.get_activities_ficha(index)
-
-    activities_ficha.info_table
-
     grades_ficha = @informe_renderer_service.get_grades_ficha(index)
+
+    activities_ficha.title
+    grades_ficha.info_table
 
     docx.p "Parámetros de Evaluación".upcase, align: :center, bold: true
     docx.p

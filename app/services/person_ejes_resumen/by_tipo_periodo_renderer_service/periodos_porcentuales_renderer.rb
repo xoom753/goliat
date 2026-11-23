@@ -54,6 +54,10 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentualesRende
         "2"
     end
 
+    def has_any_activity?
+        @periodos.any? { |periodo| periodo.activities.any? }
+    end
+
     protected
 
     def extra_info_table_merged_rows

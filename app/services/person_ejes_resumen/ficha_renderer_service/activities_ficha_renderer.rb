@@ -38,10 +38,10 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
 
     def info_summary
         docx.p stringify("common.informe_kind").upcase, bold: true
-        if current_periodo.activities.empty?
-            info_no_cumple
-        else
+        if has_any_activity?
             info_si_cumple
+        else
+            info_no_cumple
         end
         docx.p
     end

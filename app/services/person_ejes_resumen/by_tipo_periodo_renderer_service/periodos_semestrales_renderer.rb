@@ -53,6 +53,10 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRender
         "5"
     end
 
+    def has_any_activity?
+        @current_periodo.activities.any?
+    end
+
     protected
 
     def extra_info_table_merged_rows

@@ -18,6 +18,7 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
              to: :@periodos_renderer_service
 
     delegate :get_kind_specific_table_header_colspan,
+             :has_any_activity?,
              to: :by_tipo_periodo_renderer
 
     def initialize(

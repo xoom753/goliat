@@ -87,6 +87,18 @@ RSpec.describe PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer 
       renderer.info_summary
     end
 
+    it "uses the success summary when a percentage report has activities in any period" do
+      allow(summary).to receive(:tipo_porcentual?).and_return(true)
+      later_period = double(activities: [ :activity ])
+      allow(period_renderer).to receive(:periodos).and_return([ period, later_period ])
+      allow(period_type_renderer).to receive(:has_any_activity?).and_return(true)
+      allow(renderer).to receive(:by_tipo_periodo_renderer).and_return(period_type_renderer)
+      expect(docx).to receive(:p).with("TRANSLATED", bold: true)
+      expect(renderer).to receive(:info_si_cumple)
+
+      renderer.info_summary
+    end
+
     it "uses the success summary when the current period has activities" do
       allow(period).to receive(:activities).and_return([ :activity ])
       expect(docx).to receive(:p).with("TRANSLATED", bold: true)

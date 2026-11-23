@@ -46,10 +46,10 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
     end
 
     def grades_summary
-        if current_periodo.activities.empty?
-            grades_no_cumple
-        else
+        if has_any_activity?
             grades_si_cumple
+        else
+            grades_no_cumple
         end
         docx.p
     end

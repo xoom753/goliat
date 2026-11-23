@@ -46,6 +46,18 @@ RSpec.describe PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosPorcentu
     )
   end
 
+  describe "#has_any_activity?" do
+    it "returns false when every percentage period has no activities" do
+      expect(renderer.has_any_activity?).to be(false)
+    end
+
+    it "returns true when a later percentage period has activities" do
+      allow(second_period).to receive(:activities).and_return([ :activity ])
+
+      expect(renderer.has_any_activity?).to be(true)
+    end
+  end
+
   it "builds percentage bottom rows and merges information rows without semester temporalidad" do
     expect(renderer.ficha_info_table_bottom_rows).to eq([])
     expect(renderer.grades_ficha_bottom_rows).to eq([

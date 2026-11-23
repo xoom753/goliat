@@ -47,45 +47,30 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasSocialRend
     end
   end
 
-  it "renders the current percentage-format social table and percentage scores" do
+  it "delegates current-format table rendering with all percentage periods" do
     allow(period_type_renderer).to receive(:get_semestre).and_return("20%")
-    render_table_and_run_styles
+    social_table_renderer = double(table: :rendered_table)
+    periods = [ period, double(period_percentage: "40%") ]
+    allow(periods_renderer).to receive(:periodos).and_return(periods)
+    table_renderer_class = PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::FormatoActualRenderer
 
-    expect(renderer.grades_table).to eq([
-      [ "ACTIVIDADES", "DETALLES DE ACTIVIDADES", "PUNTAJE", "20%", "JUSTIFICACIÓN DE LA CALIFICACIÓN" ],
-      [ "Permanent discipline", "Permanent respect", "0,50 puntos", "0,50", "Sí cumple" ],
-      [ "Permanent discipline", "Permanent behavior", "0,50 puntos", "0,50", "Sí cumple" ],
-      [ "Temporary training", "Temporary participation", "0,50 puntos", "0,50", "Charlas motivacionales individuales" ],
-      [ "Permanent support", "Permanent participation", "0,50 puntos", "0,50", "Orientaciones psicológicas grupales" ]
-    ])
+    expect(table_renderer_class).to receive(:new).with(
+      docx: docx,
+      semestre: "20%",
+      person_ejes_resumen: summary,
+      periodos: periods
+    ).and_return(social_table_renderer)
+
+    expect(renderer.grades_table).to eq(:rendered_table)
   end
 
-  it "uses semester scores in the current-format table for semester reports" do
-    allow(summary).to receive(:tipo_porcentual?).and_return(false)
-    render_table_and_run_styles
-
-    rows = renderer.grades_table
-
-    expect(rows[3][2..3]).to eq([ "2 puntos", "1" ])
-    expect(rows[4][2..3]).to eq([ "2 puntos", "1" ])
-  end
-
-  it "renders and styles the legacy-format table" do
+  it "delegates legacy-format table rendering to the legacy table renderer" do
     allow(period).to receive(:is_formato_antiguo?).and_return(true)
-    render_table_and_run_styles
-    expect(renderer).to receive(:cell_style).with(anything, bold: true, align: :center).at_least(:once)
-    expect(renderer).to receive(:cell_style).with(anything, rowspan: 5, vertical_align: :center).twice
+    social_table_renderer = double(table: :legacy_table)
+    table_renderer_class = PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::FormatoAntiguoRenderer
 
-    rows = renderer.grades_table
+    expect(table_renderer_class).to receive(:new).with(docx: docx).and_return(social_table_renderer)
 
-    expect(rows.first).to eq([ "ÁREAS", "PARÁMETROS", "PUNTUACIÓN", "CALIFICACIÓN", "TOTAL POR ÁREA" ])
-    expect(rows.length).to eq(6)
-    expect(rows[1]).to eq([
-      "RELACIONES INTERPERSONALES - 2,5 PUNTOS",
-      "Asistencia a terapias individuales o grupales",
-      "0,50",
-      "0,50",
-      "2,5"
-    ])
+    expect(renderer.grades_table).to eq(:legacy_table)
   end
 end

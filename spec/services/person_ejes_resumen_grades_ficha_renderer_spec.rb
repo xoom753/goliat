@@ -81,6 +81,17 @@ RSpec.describe PersonEjesResumen::FichaRendererService::GradesFichaRenderer do
       renderer.grades_summary
     end
 
+    it "renders the success branch when a percentage report has activities in any period" do
+      allow(summary).to receive(:tipo_porcentual?).and_return(true)
+      allow(period_renderer).to receive(:periodos).and_return([ period, double(activities: [ :activity ]) ])
+      period_type_renderer = double(has_any_activity?: true)
+      allow(renderer).to receive(:by_tipo_periodo_renderer).and_return(period_type_renderer)
+      allow(docx).to receive(:p)
+      expect(renderer).to receive(:grades_si_cumple)
+
+      renderer.grades_summary
+    end
+
     it "renders the no-activity branch when the period is empty" do
       allow(docx).to receive(:p)
       allow(period).to receive(:activities).and_return([])
