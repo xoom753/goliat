@@ -52,7 +52,7 @@ class LegacyCourseFileParserService::LegacyPersonActivityBuilder
             return @params[:rango].to_s.strip.titleize
         end
         if month_name_in_each_sheet?
-            return @sheet_name.titleize
+            @sheet_name.titleize
         end
     end
 
@@ -61,7 +61,7 @@ class LegacyCourseFileParserService::LegacyPersonActivityBuilder
             return @params[:desde]
         end
         if month_name_in_each_sheet?
-            return current_date
+            current_date
         end
     end
 
@@ -70,7 +70,7 @@ class LegacyCourseFileParserService::LegacyPersonActivityBuilder
             return @params[:hasta]
         end
         if month_name_in_each_sheet?
-            return current_date.end_of_month
+            current_date.end_of_month
         end
     end
 
