@@ -1,0 +1,38 @@
+.has-text-centered
+    h2 Detalle actividades (archivo)
+
+= simple_form_for :legacy_activity_details_path,
+                  url: legacy_activity_details_path,
+                  method: :get do |f|
+    .field.has-addons
+        .control.is-expanded
+            = f.input :s,
+                      label: false,
+                      placeholder: "Buscar",
+                      input_html: { name: :s, value: params[:s] },
+                      wrapper: false
+        .control
+            = f.submit "Buscar", class: "button"
+
+.has-text-right
+    => pluralize @legacy_activity_details.total_count, "detalle actividad", "detalles actividades"
+    | en total
+
+table.table.is-striped.is-hoverable
+    thead
+        tr
+            th uid
+            th Nombre
+            th Actividades
+    tbody
+        - @legacy_activity_details.each do |legacy_activity_detail|
+            tr
+                td = legacy_activity_detail.id
+                td = legacy_activity_detail.nombre
+                td = legacy_activity_detail.legacy_person_activities.count
+
+.has-text-right
+    => @legacy_activity_details.limit_value
+    | por página
+
+= paginate @legacy_activity_details

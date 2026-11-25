@@ -23,7 +23,15 @@ RSpec.describe PersonEjesResumen::SpecificFichaRendererService::FichasSocialRend
     allow(I18n).to receive(:t).with("person_ejes_resumen.social_report.temporal_participacion").and_return("Temporary participation")
     allow(I18n).to receive(:t).with("person_ejes_resumen.social_report.permanente_apoyo").and_return("Permanent support")
     allow(I18n).to receive(:t).with("person_ejes_resumen.social_report.permanente_participacion").and_return("Permanent participation")
-    allow(docx).to receive(:table) { |rows, &_block| rows }
+    allow(docx).to receive(:table) do |rows, &style_block|
+      allow(docx).to receive(:rows).and_return(rows)
+      allow(docx).to receive(:cols).and_return(rows.transpose)
+      allow(docx).to receive(:column_widths)
+      allow(docx).to receive(:border_size)
+      allow(docx).to receive(:cell_style)
+      docx.instance_exec(&style_block)
+      rows
+    end
   end
 
   it "renders a score column for every percentage period" do

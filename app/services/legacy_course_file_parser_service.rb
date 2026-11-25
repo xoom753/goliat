@@ -1,5 +1,5 @@
 class LegacyCourseFileParserService
-    attr_reader :records, :headers
+    attr_reader :records, :headers, :ignored_rows, :sheets
 
     def initialize(legacy_import_file, params:)
         @params = params
@@ -10,16 +10,14 @@ class LegacyCourseFileParserService
     def parse!
         @records = []
         @headers = []
+        @ignored_rows = []
+        @sheets = xlsx.sheets
         if @legacy_course_file_parser.sheet_numbers.present?
             @legacy_course_file_parser.sheet_numbers.split(",").each do |num|
-                parse_sheet!(
-                    xlsx.sheet(num.to_i)
-                )
+                get_and_parse_sheet!(num.to_i)
             end
         else
-            parse_sheet!(
-                xlsx.sheet(0) # first sheet
-            )
+            get_and_parse_sheet!(0) # first sheet
         end
     end
 
@@ -36,8 +34,16 @@ class LegacyCourseFileParserService
 
     private
 
-    def parse_sheet!(current_sheet)
+    def get_and_parse_sheet!(index)
+        parse_sheet!(
+            current_sheet: xlsx.sheet(index),
+            sheet_name: xlsx.sheets[index]
+        )
+    end
+
+    def parse_sheet!(current_sheet:, sheet_name:)
         reached_footer = false
+        footer_rows_count = 0
         current_row_n = -1 # will skip headers
         current_sheet.each do |row|
             current_row_n += 1
@@ -45,36 +51,41 @@ class LegacyCourseFileParserService
                 break
             elsif current_row_n < @legacy_course_file_parser.skip_rows
                 @headers << row
+            elsif ignore_specific_row?(row)
+                puts current_row_n
+                @ignored_rows << row
             elsif row[@legacy_course_file_parser.nombres_col].present?
                 @records << build_legacy_person_activity(
                     row: row,
-                    current_row_n: current_row_n
+                    current_row_n: current_row_n,
+                    sheet_name: sheet_name
                 )
             else
-                reached_footer = true
+                footer_rows_count += 1
+                reached_footer = true if footer_rows_count > @legacy_course_file_parser.emtpy_rows_for_footer_count.to_i
             end
         end
     end
 
-    def build_legacy_person_activity(row:, current_row_n:)
-        nombres_str = row[@legacy_course_file_parser.nombres_col].strip.titleize
-        activity_group_str = @params[:grupo].to_s.strip.titleize
-        activity_str = @params[:actividad].to_s.strip.titleize
-        activity_dates = @params[:rango].to_s.strip.titleize
-        legacy_person_activity = LegacyPersonActivity.new(
-            row_number: current_row_n + 1,
-            nombres_str: nombres_str,
-            activity_group_str: activity_group_str,
-            activity_str: activity_str,
-            activity_dates: activity_dates,
-            duracion: @params[:duracion],
-            end_date: @params[:hasta],
-            legacy_import_file_id: @legacy_import_file.id
-        )
-        if @params[:detalle].present?
-            legacy_person_activity.activity_detail_str = @params[:detalle].strip.titleize
+    def build_legacy_person_activity(row:, current_row_n:, sheet_name:)
+        ::LegacyCourseFileParserService::LegacyPersonActivityBuilder.new(
+            row: row,
+            params: @params,
+            sheet_name: sheet_name,
+            current_row_n: current_row_n,
+            legacy_import_file: @legacy_import_file,
+            legacy_course_file_parser: @legacy_course_file_parser
+        ).build_legacy_person_activity
+    end
+
+    def ignore_specific_row?(row)
+        nombres_str = row[@legacy_course_file_parser.nombres_col].to_s.strip.downcase
+        if @legacy_course_file_parser.ignore_specific_rows.present?
+            puts nombres_str.squeeze.strip
+            @legacy_course_file_parser.ignore_specific_rows_array.map(&:downcase).include?(
+                nombres_str.squeeze.strip
+            )
         end
-        legacy_person_activity
     end
 
     def skipping_footer?

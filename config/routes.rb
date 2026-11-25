@@ -64,6 +64,7 @@ Rails.application.routes.draw do
   end
   resources :import_errors, only: :index
   resources :legacy_activities, only: :index
+  resources :legacy_activity_details, only: :index
   resources :legacy_activity_groups, only: [ :index, :update ]
   resources :legacy_person_activities, only: :index
   resources :extra_activities, only: [ :index, :new, :edit, :update, :destroy ] do

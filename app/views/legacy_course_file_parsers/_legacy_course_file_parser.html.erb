@@ -29,4 +29,22 @@
     <%= legacy_course_file_parser.sheet_numbers %>
   </div>
 
+  <div>
+    <strong>Empty rows for footer:</strong>
+    <%= legacy_course_file_parser.emtpy_rows_for_footer_count %>
+  </div>
+
+  <div>
+    <strong>Month name in each sheet:</strong>
+    <%= legacy_course_file_parser.month_name_in_each_sheet %>
+  </div>
+
+  <% if legacy_course_file_parser.ignore_specific_rows.present? %>
+    <div>
+      <strong>Ignore specific rows:</strong>
+      <% legacy_course_file_parser.ignore_specific_rows_array.each do |ignore_specific_row| %>
+        <%= ignore_specific_row %> <br />
+      <% end %>
+    </div>
+  <% end %>
 </div>

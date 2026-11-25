@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_18_203019) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_24_201726) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -107,6 +107,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_18_203019) do
     t.timestamptz "created_at"
     t.timestamptz "updated_at"
     t.text "sheet_numbers"
+    t.integer "emtpy_rows_for_footer_count"
+    t.boolean "month_name_in_each_sheet"
+    t.text "ignore_specific_rows"
   end
 
   create_table "legacy_files_parsers", force: :cascade do |t|

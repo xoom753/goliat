@@ -80,40 +80,42 @@
                         <h4>
                             <%= activity.nombre %>
                         </h4>
-                        <%= link_to "Editar",
-                                    edit_course_path(activity, date: { month: @month, year: @year }) %>
-                        ·
-                        <%= link_to "Exportar CSV",
-                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year, format: :csv) %>
-                        ·
-                        <%= link_to "Exportar Excel",
-                                    export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year, format: :xls) %>
+                        <% if activity.person_activities.where(mes: @month, anio: @year).any? %>
+                            <%= link_to "Editar",
+                                        edit_course_path(activity, date: { month: @month, year: @year }) %>
+                            ·
+                            <%= link_to "Exportar CSV",
+                                        export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year, format: :csv) %>
+                            ·
+                            <%= link_to "Exportar Excel",
+                                        export_courses_by_month_path(activity_id: activity.id, month: @month, year: @year, format: :xls) %>
+                        <% end %>
                     </th>
                 </tr>
-                <% if activity.person_activities.where(mes: @month, anio: @year).any? %>
+                <tr>
+                    <th>
+                        N
+                    </th>
+                    <th>
+                        Nombres
+                    </th>
+                    <th>
+                        DNI
+                    </th>
+                    <th>
+                        Cargo
+                    </th>
+                    <th>
+                        Pabellón
+                    </th>
+                    <th>
+                        uuid
+                    </th>
+                </tr>
+
+                <% unless activity.person_activities.where(mes: @month, anio: @year).any? %>
                     <tr>
-                        <th>
-                            N
-                        </th>
-                        <th>
-                            Nombres
-                        </th>
-                        <th>
-                            DNI
-                        </th>
-                        <th>
-                            Cargo
-                        </th>
-                        <th>
-                            Pabellón
-                        </th>
-                        <th>
-                            uuid
-                        </th>
-                    </tr>
-                <% else %>
-                    <tr>
-                        <td>
+                        <td colspan="6" class="has-text-centered">
                             (<%= activity.nombre %> sin participantes)
                         </td>
                     </tr>

@@ -42,6 +42,8 @@ class ImportLegacyFilesController < ApplicationController
             parser_service.parse!
             @file_headers = parser_service.headers
             @legacy_person_activities = parser_service.records
+            @ignored_rows = parser_service.ignored_rows
+            @sheets = parser_service.sheets
         end
     end
 

@@ -1,0 +1,17 @@
+shared:
+  meses:
+    - nombre: enero
+    - nombre: febrero
+      matches:
+        - febero
+        - feberro
+    - nombre: marzo
+    - nombre: abril
+    - nombre: mayo
+    - nombre: junio
+    - nombre: julio
+    - nombre: agosto
+    - nombre: septiembre
+    - nombre: octubre
+    - nombre: noviembre
+    - nombre: diciembre

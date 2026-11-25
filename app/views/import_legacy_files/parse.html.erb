@@ -55,6 +55,10 @@
             <%= text_field_tag :rango, params[:rango], placeholder: "Ej: 01-12-2023 AL 29-12-2023" %>
         </div>
         <div>
+            <%= label_tag :desde, "Desde (fecha comienzo)" %>
+            <%= date_field_tag :desde, params[:desde], placeholder: "Desde" %>
+        </div>
+        <div>
             <%= label_tag :hasta, "Hasta (fecha final)" %>
             <%= date_field_tag :hasta, params[:hasta], placeholder: "Hasta" %>
         </div>
@@ -64,6 +68,29 @@
         </div>
         <%= submit_tag %>
     <% end %>
+
+    <hr />
+
+    <table class="table is-striped is-hoverable is-narrow">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Sheets</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @sheets.each_with_index do |sheet, index| %>
+                <tr>
+                    <td>
+                        <%= index %>
+                    </td>
+                    <td>
+                        <%= sheet %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
 
     <hr />
 
@@ -87,6 +114,27 @@
             <% end %>
         </tbody>
     </table>
+
+    <table class="table is-striped is-hoverable is-narrow">
+        <thead>
+            <tr>
+                <th>Ignored rows</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @ignored_rows.each do |ignored_row| %>
+                <tr>
+                    <% ignored_row.compact.each do |col| %>
+                        <td>
+                            <%=
+                                col.is_a?(String) ? col.titleize : col
+                            %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
 <% end %>
 
 <% if @legacy_person_activities.present? %>
@@ -97,11 +145,7 @@
                 <th>Nombres</th>
                 <th>Grupo</th>
                 <th>Actividad</th>
-                <%
-                    if @legacy_import_file.parseable.is_a?(LegacyFilesParser) && @legacy_import_file.parseable.activity_detail_str.present?
-                %>
-                    <th>Detalle</th>
-                <% end %>
+                <th>Detalle</th>
                 <th>Rango</th>
                 <th>Desde</th>
                 <th>Hasta</th>
@@ -123,13 +167,9 @@
                     <td>
                         <%= legacy_person_activity.activity_str %>
                     </td>
-                    <%
-                        if @legacy_import_file.parseable.is_a?(LegacyFilesParser) && @legacy_import_file.parseable.activity_detail_str.present?
-                    %>
-                        <td>
-                            <%= legacy_person_activity.activity_detail_str %>
-                        </td>
-                    <% end %>
+                    <td>
+                        <%= legacy_person_activity.activity_detail_str %>
+                    </td>
                     <td>
                         <%= legacy_person_activity.activity_dates %>
                     </td>

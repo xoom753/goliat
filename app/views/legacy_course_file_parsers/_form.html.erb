@@ -42,8 +42,24 @@
   </div>
 
   <div>
-    <%= form.label :sheet_numbers, style: "display: block" %>
+    <%= form.label :sheet_numbers, "Sheet numbers (comma separated, 0 based)", style: "display: block" %>
     <%= form.text_field :sheet_numbers %>
+  </div>
+
+  <div>
+    <%= form.label :emtpy_rows_for_footer_count, style: "display: block" %>
+    <%= form.number_field :emtpy_rows_for_footer_count %>
+  </div>
+
+  <div>
+    <%= form.label :month_name_in_each_sheet, style: "display: block" %>
+    <%= form.select :month_name_in_each_sheet,
+                    [[true, true], [false, false]], include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.label :ignore_specific_rows, style: "display: block" %>
+    <%= form.textarea :ignore_specific_rows %>
   </div>
 
   <div>

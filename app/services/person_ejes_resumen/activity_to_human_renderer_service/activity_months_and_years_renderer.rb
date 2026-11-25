@@ -1,18 +1,7 @@
 class PersonEjesResumen::ActivityToHumanRendererService::ActivityMonthsAndYearsRenderer
-    MESES = [
-        "enero",
-        "febrero",
-        "marzo",
-        "abril",
-        "mayo",
-        "junio",
-        "julio",
-        "agosto",
-        "septiembre",
-        "octubre",
-        "noviembre",
-        "diciembre"
-    ].freeze
+    MESES = Rails.application.config_for(:meses_list)[:meses].map do |mes_h|
+        mes_h[:nombre]
+    end.freeze
 
     def initialize(by_months:)
         @by_months = by_months
