@@ -19,6 +19,7 @@ RAILS_ENV=production bin/rails server
 - [x] when importing presentes por pabellón: mark as inactive the ones who are not present
 - [] associate person#pabellon
 - [x] associate LegacyPersonActivity to parseable to track what file is it imported from
+- [] LegacyPersonActivity.where(start_date is invalid)
 
 ## ERD
 
@@ -43,6 +44,8 @@ RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 ## yard
 ```
 bundle exec yard server -p 3000
+
+bundle exec yard graph --protected --full --dependencies | dot -T pdf -o diagram.pdf
 ```
 
 ## backup db
@@ -96,4 +99,13 @@ root@3479cb09c955:/app# RAILS_ENV=production ./goliat/bin/rails s
 
 ```
 http://localhost:3000/
+```
+
+## dev deps
+```
+postgresql-client
+tmux
+build-essential
+graphviz
+git
 ```

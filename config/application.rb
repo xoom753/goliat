@@ -23,5 +23,6 @@ module Goliat
     #
     config.time_zone = "Quito"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.i18n.available_locales = [ :en, :es ]
   end
 end

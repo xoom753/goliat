@@ -52,9 +52,11 @@ class LegacyCourseFileParserService
             elsif current_row_n < @legacy_course_file_parser.skip_rows
                 @headers << row
             elsif ignore_specific_row?(row)
-                puts current_row_n
                 @ignored_rows << row
             elsif row[@legacy_course_file_parser.nombres_col].present?
+            #     puts current_row_n
+            # puts row
+
                 @records << build_legacy_person_activity(
                     row: row,
                     current_row_n: current_row_n,
@@ -81,9 +83,8 @@ class LegacyCourseFileParserService
     def ignore_specific_row?(row)
         nombres_str = row[@legacy_course_file_parser.nombres_col].to_s.strip.downcase
         if @legacy_course_file_parser.ignore_specific_rows.present?
-            puts nombres_str.strip
             @legacy_course_file_parser.ignore_specific_rows_array.map(&:downcase).include?(
-                nombres_str.strip
+                nombres_str
             )
         end
     end

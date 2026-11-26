@@ -63,6 +63,8 @@ class ExtraActivitiesController < ApplicationController
             "Nombres",
             "Cédula",
             "Pabellón",
+            "Celda",
+            "Estado",
             @extra_activity.nombre,
             "Creado: #{@extra_activity.created_at.to_date}",
             "Exportado: #{Time.zone.now}"
@@ -71,7 +73,9 @@ class ExtraActivitiesController < ApplicationController
             [
                 activity.person.nombres,
                 activity.person.dni,
-                activity.person.pabellon
+                activity.person.pabellon,
+                activity.person.celda,
+                activity.person.estado
             ]
         end
 

@@ -7,7 +7,7 @@ class ImportListadoPabellonesTask
     end
 
     def import!
-        skip_headers = 6
+        skip_headers = 5
         current_row_n = 0
         current_pabellon = nil
         current_celda = nil

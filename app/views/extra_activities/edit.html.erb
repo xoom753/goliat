@@ -39,6 +39,9 @@
                 Pabellón
             </th>
             <th>
+                Estado
+            </th>
+            <th>
             </th>
         </tr>
     </thead>
@@ -56,6 +59,9 @@
                 </td>
                 <td>
                     <%= person_activity.person.pabellon %>
+                </td>
+                <td class="<%= 'has-text-warning' if person_activity.person.estado != 'presente' %>">
+                    <%= person_activity.person.estado.titleize %>
                 </td>
                 <td>
                     <%= link_to "Remove", extra_activity_path(person_activity_id: person_activity.id, month: @month, year: @year), data: { turbo_method: :delete } %>

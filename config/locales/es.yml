@@ -1,0 +1,20 @@
+es:
+  number:
+    human:
+      decimal_units:
+        units:
+          thousand:
+            one: "mil"
+            other: "mil"
+          million:
+            one: "millón"
+            other: "millones"
+          billion:
+            one: "mil millones"
+            other: "mil millones"
+          trillion:
+            one: "billón"
+            other: "billones"
+          quadrillion:
+            one: "mil billones"
+            other: "mil billones"

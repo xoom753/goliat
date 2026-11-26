@@ -15,7 +15,7 @@ namespace :people do
   end
 
   task import_listado_pabellones: :environment do
-    filename = "LISTADO-PABELLONES-16-11-2026.xlsx"
+    filename = "LISTADO DE PABELLONES 26-11-2026(1).xlsx"
     xlsx = Roo::Spreadsheet.open(filename, extension: :xlsx)
     ImportListadoPabellonesTask.new(xlsx).import!
   end

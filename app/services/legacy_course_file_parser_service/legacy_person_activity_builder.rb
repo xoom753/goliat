@@ -1,4 +1,6 @@
 class LegacyCourseFileParserService::LegacyPersonActivityBuilder
+    include ActionView::Helpers::SanitizeHelper
+
     MESES = Rails.application.config_for(:meses_list)[:meses].freeze
 
     delegate :month_name_in_each_sheet?,
@@ -44,6 +46,7 @@ class LegacyCourseFileParserService::LegacyPersonActivityBuilder
 
     def get_nombres_str
         nombres_str = @row[@legacy_course_file_parser.nombres_col].strip.titleize
+        nombres_str = strip_tags(nombres_str)
         nombres_str.sub("(Ingresa)", "").strip
     end
 

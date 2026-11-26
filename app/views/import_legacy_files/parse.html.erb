@@ -190,13 +190,14 @@
 
 <% if @legacy_import_file.parseable.present? %>
     <%= form_tag import_records_import_legacy_files_path(id: @legacy_import_file.id) do %>
-        <%= hidden_field_tag :grupo, params[:grupo], placeholder: "Grupo" %>
-        <%= hidden_field_tag :actividad, params[:actividad], placeholder: "Actividad" %>
-        <%= hidden_field_tag :detalle, params[:detalle], placeholder: "detalle" %>
-        <%= hidden_field_tag :rango, params[:rango], placeholder: "Rango" %>
+        <%= hidden_field_tag :grupo, params[:grupo] %>
+        <%= hidden_field_tag :actividad, params[:actividad] %>
+        <%= hidden_field_tag :detalle, params[:detalle] %>
+        <%= hidden_field_tag :rango, params[:rango] %>
 
-        <%= hidden_field_tag :hasta, params[:hasta], placeholder: "Hasta" %>
-        <%= hidden_field_tag :duracion, params[:duracion], placeholder: "Duración" %>
+        <%= hidden_field_tag :desde, params[:desde] %>
+        <%= hidden_field_tag :hasta, params[:hasta] %>
+        <%= hidden_field_tag :duracion, params[:duracion] %>
         <%= @legacy_person_activities.count %> records
         <%= submit_tag "Import records" %>
     <% end %>

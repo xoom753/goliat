@@ -68,9 +68,15 @@
 <% end %>
 
 <div class="my-2 has-text-right">
-    <%=
-        pluralize @legacy_person_activities.total_count, "registro", "registros"
-    %>
+    <% if filter_enabled? %>
+        <%= link_to "Quitar filtro", legacy_person_activities_path, class: "button is-text" %> ·
+    <% end %>
+    <span class="mt-2 ml-2 is-inline-block">
+        <%= number_to_human(@legacy_person_activities.total_count, locale: :es) %>
+        <%=
+            "registro".pluralize(@legacy_person_activities.total_count)
+        %>
+    </span>
 </div>
 
 <table class="table is-striped is-hoverable">

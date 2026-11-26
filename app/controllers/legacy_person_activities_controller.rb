@@ -34,4 +34,18 @@ class LegacyPersonActivitiesController < ApplicationController
         end
         @legacy_person_activities = scope.page(params[:page]).per(100)
     end
+
+    private
+
+    def filter_enabled?
+        [
+            :date_from,
+            :activity_group_id,
+            :legacy_activity_id,
+            :nombres_str
+        ].any? do |filter_name|
+            params[filter_name].present?
+        end
+    end
+    helper_method :filter_enabled?
 end
