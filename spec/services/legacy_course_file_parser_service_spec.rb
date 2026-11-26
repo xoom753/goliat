@@ -2,11 +2,20 @@ require "rails_helper"
 
 RSpec.describe LegacyCourseFileParserService do
   let(:parser_config) do
-    double(sheet_numbers: nil, skip_rows: 1, nombres_col: 0, file_format: "xlsx")
+    double(
+      sheet_numbers: nil,
+      skip_rows: 1,
+      nombres_col: 0,
+      file_format: "xlsx",
+      emtpy_rows_for_footer_count: 0,
+      ignore_specific_rows: nil,
+      ignore_specific_rows_array: [],
+      month_name_in_each_sheet?: false
+    )
   end
   let(:import_file) { double(parseable: parser_config, id: 7) }
   let(:sheet) { double }
-  let(:xlsx) { double }
+  let(:xlsx) { double(sheets: [ "March 2024", "April 2024", "May 2024" ]) }
   let(:params) do
     {
       grupo: "artes culturales",
@@ -23,6 +32,7 @@ RSpec.describe LegacyCourseFileParserService do
     before do
       allow(service).to receive(:xlsx).and_return(xlsx)
       allow(xlsx).to receive(:sheet).with(0).and_return(sheet)
+      allow(xlsx).to receive(:sheets).and_return([ "March 2024" ])
     end
 
     it "parses normalized activity records, stores headers, and stops at the first footer row" do
@@ -45,12 +55,29 @@ RSpec.describe LegacyCourseFileParserService do
       )
     end
 
+    it "records configured ignored rows without importing them" do
+      allow(parser_config).to receive(:ignore_specific_rows).and_return("TOTAL")
+      allow(parser_config).to receive(:ignore_specific_rows_array).and_return([ "total" ])
+      allow(sheet).to receive(:each)
+        .and_yield([ "Nombres" ])
+        .and_yield([ "ANA PEREZ" ])
+        .and_yield([ "  Total  " ])
+        .and_yield([ nil ])
+        .and_yield([ "FOOTER" ])
+
+      service.parse!
+
+      expect(service.records.length).to eq(1)
+      expect(service.ignored_rows).to eq([ [ "  Total  " ] ])
+    end
+
     it "uses configured sheet numbers" do
       allow(parser_config).to receive(:sheet_numbers).and_return("1,2")
       first_sheet = double
       second_sheet = double
       allow(xlsx).to receive(:sheet).with(1).and_return(first_sheet)
       allow(xlsx).to receive(:sheet).with(2).and_return(second_sheet)
+      allow(xlsx).to receive(:sheets).and_return([ "January", "February", "March" ])
       allow(first_sheet).to receive(:each).and_yield([ "First header" ])
       allow(second_sheet).to receive(:each).and_yield([ "Second header" ])
 

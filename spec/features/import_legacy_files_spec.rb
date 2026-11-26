@@ -50,6 +50,8 @@ RSpec.describe "Import legacy files", type: :feature do
     allow_any_instance_of(LegacyCourseFileParserService).to receive(:parse!).and_return(nil)
     allow_any_instance_of(LegacyCourseFileParserService).to receive(:headers).and_return([ [ "Names" ] ])
     allow_any_instance_of(LegacyCourseFileParserService).to receive(:records).and_return([])
+    allow_any_instance_of(LegacyCourseFileParserService).to receive(:ignored_rows).and_return([])
+    allow_any_instance_of(LegacyCourseFileParserService).to receive(:sheets).and_return([ "March 2024" ])
 
     visit parse_import_legacy_files_path(id: import_file.id)
 

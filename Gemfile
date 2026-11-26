@@ -50,6 +50,7 @@ gem "slim-rails"
 gem "requestjs-rails"
 gem "lograge"
 gem "spreadsheet"
+gem "docx"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -81,9 +81,9 @@ class LegacyCourseFileParserService
     def ignore_specific_row?(row)
         nombres_str = row[@legacy_course_file_parser.nombres_col].to_s.strip.downcase
         if @legacy_course_file_parser.ignore_specific_rows.present?
-            puts nombres_str.squeeze.strip
+            puts nombres_str.strip
             @legacy_course_file_parser.ignore_specific_rows_array.map(&:downcase).include?(
-                nombres_str.squeeze.strip
+                nombres_str.strip
             )
         end
     end
