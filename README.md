@@ -9,7 +9,7 @@ RAILS_ENV=production bin/rails server
 
 ## todo
 
-* Ruby version `ruby 4.0.7`
+* Ruby version `ruby 4.0.10`
 
 * System dependencies `bundle install`
 
