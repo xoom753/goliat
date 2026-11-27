@@ -1,4 +1,7 @@
+# Formats activity kind, name, duration, and dates for report and certificate output.
 class PersonEjesResumen::ActivityToHumanRendererService
+    # @param activities [Array] source activity renderers
+    # @param kind [Symbol] treatment axis used for localized wording
     def initialize(
             kind:,
             activities:,
@@ -11,6 +14,8 @@ class PersonEjesResumen::ActivityToHumanRendererService
         @by_months = by_months
     end
 
+    # Returns the activity's combined human-readable description.
+    # @return [String]
     def to_string
         I18n.t(
             "certs.to_h.#{by_months_identifier}.#{activity_kind_identifier.genre}",

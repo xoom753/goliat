@@ -1,12 +1,17 @@
+# Formats grouped activity months and years for report output.
 class PersonEjesResumen::ActivityToHumanRendererService::ActivityMonthsAndYearsRenderer
     MESES = Rails.application.config_for(:meses_list)[:meses].map do |mes_h|
         mes_h[:nombre]
     end.freeze
 
+    # @param by_months [Hash] month labels and activities grouped by year
     def initialize(by_months:)
         @by_months = by_months
     end
 
+    # Returns a localized string describing the covered months and years.
+    # @param upcase [Boolean] whether to uppercase the formatted text
+    # @return [String]
     def meses_y_anios_str(upcase: false)
         if @by_months.keys.length > 1
             several_months_str(upcase:)

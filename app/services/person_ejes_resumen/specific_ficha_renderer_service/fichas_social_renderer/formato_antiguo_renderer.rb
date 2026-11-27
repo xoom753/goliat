@@ -1,8 +1,12 @@
+# Builds the legacy-format social evaluation table.
 class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::FormatoAntiguoRenderer
+    # @param docx [Object] document receiving the table
     def initialize(docx:)
         @docx = docx
     end
 
+    # Renders and styles the legacy social evaluation table.
+    # @return [Object] document table result
     def table
         table_rows = [
             [

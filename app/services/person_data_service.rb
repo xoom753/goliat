@@ -1,6 +1,11 @@
+# Resolves identifying and location details for a legacy person from current records.
+#
+# DNI and location are matched by uppercased name; detention date comes from the
+# earliest legal process for a matching origin person.
 class PersonDataService
     attr_reader :dni, :ubicacion, :fecha_detencion
 
+    # @param legacy_person [LegacyPerson] record used to resolve matching person data
     def initialize(legacy_person)
         @legacy_person = legacy_person
 

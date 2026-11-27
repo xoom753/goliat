@@ -1,4 +1,8 @@
+# Combines present and legacy activities into period-based groups for reports.
 class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer
+    # @param legacy_activities [Array] historical activities
+    # @param present_activities [Array] current activities
+    # @param periodos_renderer_service [PersonEjesResumen::PeriodosRendererService] periods receiving activities
     def initialize(
             legacy_activities:,
             present_activities:,
@@ -9,6 +13,8 @@ class PersonEjesResumen::ActivitiesGroupService::GroupedActivitiesRenderer
         @periodos_renderer_service = periodos_renderer_service
     end
 
+    # Returns grouped activities with period summaries attached.
+    # @return [Array] grouped activity objects
     def grouped_activities
         by_period_grouped
     end

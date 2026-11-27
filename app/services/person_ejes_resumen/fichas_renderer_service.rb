@@ -1,5 +1,12 @@
+# Builds and caches the activity and grading ficha renderers for a report.
 class PersonEjesResumen::FichasRendererService
     delegate :tipo_porcentual?, to: :@person_ejes_resumen
+    # @param docx [Object] document receiving rendered content
+    # @param kind [Symbol] treatment axis
+    # @param person_ejes_resumen [PersonEjesResumen] report data
+    # @param informes_translator_service [Object] translation adapter
+    # @param periodos_renderer_service [Object] report period provider
+    # @param activities_by_periods_renderer_service [Object] grouped activity provider
     def initialize(
         docx:,
         kind:,
@@ -16,10 +23,16 @@ class PersonEjesResumen::FichasRendererService
         @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
+    # Returns the activity ficha renderer at the requested period index.
+    # @param index [Integer] period position
+    # @return [PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer]
     def get_activities_ficha(index)
         activities_fichas.fetch(index)
     end
 
+    # Returns the grading ficha renderer at the requested period index.
+    # @param index [Integer] period position
+    # @return [PersonEjesResumen::FichaRendererService::GradesFichaRenderer]
     def get_grades_ficha(index)
         grades_fichas.fetch(index)
     end

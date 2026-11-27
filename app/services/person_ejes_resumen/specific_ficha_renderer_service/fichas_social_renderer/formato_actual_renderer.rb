@@ -1,7 +1,12 @@
+# Builds the current-format social evaluation table for all report periods.
 class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::FormatoActualRenderer
     delegate :t,
              to: I18n
 
+    # @param docx [Object] document receiving the table
+    # @param semestre [String] label for the first period column
+    # @param periodos [Array] percentage periods represented in the table
+    # @param person_ejes_resumen [PersonEjesResumen] report determining score mode
     def initialize(
             docx:,
             semestre:,
@@ -14,6 +19,8 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer::For
         @person_ejes_resumen = person_ejes_resumen
     end
 
+    # Renders and styles the social evaluation table.
+    # @return [Object] document table result
     def table
         table_col_widths = get_table_col_widths
         @docx.table table_rows do

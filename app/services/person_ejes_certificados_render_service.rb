@@ -1,12 +1,16 @@
 require "csv"
 
+# Collects treatment-axis activities and exports them as certificate CSV rows.
 class PersonEjesCertificadosRenderService
     attr_accessor :kinds
 
+    # @param person_ejes_resumen [PersonEjesResumen] report supplying the person's name and activities
     def initialize(person_ejes_resumen)
         @person_ejes_resumen = person_ejes_resumen
     end
 
+    # Serializes configured activities into a CSV with a header row.
+    # @return [String] CSV document
     def to_csv
         CSV.generate(headers: true) do |csv|
             csv << [ "N", "Apellidos y nombres", "Tipo curso", "Nombre curso", "Eje tratamiento", "Mes", "Horas" ]
@@ -24,6 +28,8 @@ class PersonEjesCertificadosRenderService
         end
     end
 
+    # Returns configured activities in the configured treatment-axis order.
+    # @return [Array] flattened activity renderers
     def activities
         kinds.map do |kind|
             informe_renderer_service = get_informe_renderer_service(kind)

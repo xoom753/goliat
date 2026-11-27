@@ -1,3 +1,4 @@
+# Identifies an activity category from its normalized name and treatment axis.
 class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
     attr_reader :identifier_str
 
@@ -6,6 +7,8 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
         :actividades_apoyo
     ].freeze
 
+    # @param kind [Symbol] treatment axis
+    # @param activity_str [String] source activity name
     def initialize(kind:, activity_str:)
         @kind = kind
         @activity_str = activity_str
@@ -22,6 +25,8 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
 
     private
 
+    # Determines and stores the activity-kind identifier.
+    # @return [String, nil] matched identifier, if any
     def set_activity_kind_identifier!
         @identifier_str = :actividades if actividad_actividades?
         @identifier_str = :actividades_apoyo if actividad_actividades_apoyo?

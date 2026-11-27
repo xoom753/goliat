@@ -1,3 +1,4 @@
+# Shares report-summary and temporal-activity rendering across period formats.
 class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
     KIND_SPECIFIC_TABLE_HEADER_COLSPAN_BASE = 4
 
@@ -10,6 +11,12 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
     delegate :date_to_str,
              to: PersonEjesResumen
 
+    # @param docx [Object] document being rendered
+    # @param periodos [Array] periods included in the report
+    # @param current_periodo [Object] period associated with this ficha
+    # @param person_ejes_resumen [PersonEjesResumen] report data
+    # @param informes_translator_service [Object] report translation adapter
+    # @param activities_by_periods_renderer_service [Object] grouped activity provider
     def initialize(
             docx:,
             periodos:,
@@ -26,6 +33,8 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
         @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
+    # Returns the number of common and period-specific rows requiring merged cells.
+    # @return [Integer]
     def get_info_table_merged_rows_count
         rows = 2 # base
         rows += extra_info_table_merged_rows
@@ -37,6 +46,8 @@ class PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
         rows + (@person_ejes_resumen.delitos_array.length * 2)
     end
 
+    # Renders the temporal activity list or its empty-state message.
+    # @return [void]
     def info_actividades_temporales_list
         @docx.p stringify("common.act_temporal").upcase, bold: true
 

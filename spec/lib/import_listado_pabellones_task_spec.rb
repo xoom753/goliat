@@ -7,11 +7,11 @@ RSpec.describe ImportListadoPabellonesTask do
 
   def stub_rows(*data_rows)
     allow(sheet).to receive(:each) do |&block|
-      (Array.new(6) { |index| [ "header #{index}" ] } + data_rows.map { |value| [ value ] }).each(&block)
+      (Array.new(5) { |index| [ "header #{index}" ] } + data_rows.map { |value| [ value ] }).each(&block)
     end
   end
 
-  it "skips six header rows and imports people under mapped pavilion and cell labels" do
+  it "skips five header rows and imports people under mapped pavilion and cell labels" do
     stub_rows(
       "PABELLON_A",
       "CELDA_A_001",
@@ -25,6 +25,21 @@ RSpec.describe ImportListadoPabellonesTask do
       nombres: "  CASEY EXAMPLE  ",
       celda: "001",
       pabellon: "A"
+    )
+  end
+
+  it "maps pavilion rows that match configured aliases directly" do
+    stub_rows(
+      "TRANSITORIA_2",
+      "CELDA_Transitoria 2_003",
+      "JAMIE EXAMPLE"
+    )
+
+    expect { task.import! }.to output(/Transitoria 2\n    003/).to_stdout
+    expect(PersonPabellonUpdate.last).to have_attributes(
+      nombres: "JAMIE EXAMPLE",
+      celda: "003",
+      pabellon: "Transitoria 2"
     )
   end
 

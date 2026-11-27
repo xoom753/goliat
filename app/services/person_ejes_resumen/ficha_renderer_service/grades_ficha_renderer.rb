@@ -1,3 +1,4 @@
+# Renders grading tables and compliance summaries for one report period.
 class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     delegate :grades_si_cumple,
              :grades_no_cumple,
@@ -10,6 +11,8 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
     delegate :grades_table,
              to: :specific_renderer
 
+    # Indicates whether current-format grading content should be included.
+    # @return [Boolean]
     def should_render_grades_ficha?
         !current_periodo.is_formato_antiguo?
     end
@@ -45,6 +48,8 @@ class PersonEjesResumen::FichaRendererService::GradesFichaRenderer < PersonEjesR
         docx.p
     end
 
+    # Renders the grading compliance summary based on activity in the report.
+    # @return [void]
     def grades_summary
         if has_any_activity?
             grades_si_cumple

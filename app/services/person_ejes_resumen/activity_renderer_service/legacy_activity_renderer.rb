@@ -1,3 +1,6 @@
+# Adapts a historical activity record to the report renderer interface.
+# @see PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
+# @group Activity renderers
 class PersonEjesResumen::ActivityRendererService::LegacyActivityRenderer < PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
     def activity_nombre
         @current_activity.legacy_activity.nombre

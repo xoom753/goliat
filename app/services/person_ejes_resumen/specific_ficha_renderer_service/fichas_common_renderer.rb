@@ -1,3 +1,4 @@
+# Provides shared grading-table structure and styles for treatment-axis fichas.
 class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     attr_reader :docx
 
@@ -12,6 +13,11 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
              :concat_tipo_porcentual_rows!,
              to: :@by_tipo_periodo_renderer
 
+    # @param docx [Object] document receiving the table
+    # @param current_periodo [Object] period represented by the ficha
+    # @param person_ejes_resumen [PersonEjesResumen] report data
+    # @param periodos_renderer_service [Object] report period provider
+    # @param by_tipo_periodo_renderer [Object] period-specific table data provider
     def initialize(
         docx:,
         current_periodo:,
@@ -26,6 +32,8 @@ class PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
         @by_tipo_periodo_renderer = by_tipo_periodo_renderer
     end
 
+    # Renders the grading table with shared cells and period-specific rows.
+    # @return [void]
     def grades_table
         header_colspan = get_kind_specific_table_header_colspan
         column_widths = [ 370, 1400, 110, 90, 90, 90, 90 ]

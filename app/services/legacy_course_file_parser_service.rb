@@ -1,12 +1,20 @@
+# Parses a legacy course spreadsheet and builds importable activity records.
+#
+# Headers, ignored rows, and sheet names are exposed after parsing for review
+# before records are imported.
 class LegacyCourseFileParserService
     attr_reader :records, :headers, :ignored_rows, :sheets
 
+    # @param legacy_import_file [LegacyImportFile] uploaded file and parser configuration
+    # @param params [ActionController::Parameters, Hash] course metadata and date options
     def initialize(legacy_import_file, params:)
         @params = params
         @legacy_import_file = legacy_import_file
         @legacy_course_file_parser = @legacy_import_file.parseable
     end
 
+    # Reads configured sheets and populates {#records}, {#headers}, {#ignored_rows}, and {#sheets}.
+    # @return [void]
     def parse!
         @records = []
         @headers = []
@@ -21,6 +29,8 @@ class LegacyCourseFileParserService
         end
     end
 
+    # Saves parsed records and marks the uploaded file as imported.
+    # @return [void]
     def import_records!
         records.each do |record|
             record.save!
@@ -54,8 +64,8 @@ class LegacyCourseFileParserService
             elsif ignore_specific_row?(row)
                 @ignored_rows << row
             elsif row[@legacy_course_file_parser.nombres_col].present?
-            #     puts current_row_n
-            # puts row
+                #     puts current_row_n
+                # puts row
 
                 @records << build_legacy_person_activity(
                     row: row,

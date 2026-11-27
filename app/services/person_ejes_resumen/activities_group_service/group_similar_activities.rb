@@ -1,9 +1,14 @@
+# Groups activity renderers by their human-readable activity name.
 class PersonEjesResumen::ActivitiesGroupService::GroupSimilarActivities
+    # @param kind [Symbol] treatment axis for the activity summaries
+    # @param activities [Array] rendered activities to group
     def initialize(kind:, activities:)
         @kind = kind
         @activities = activities
     end
 
+    # Returns summaries keyed by normalized activity name.
+    # @return [Hash<String, PersonEjesResumen::ActivitiesGroupService::SummariseActivityForPeriod>]
     def grouped
         summarised_activities_for_period
     end

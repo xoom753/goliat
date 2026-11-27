@@ -1,3 +1,4 @@
+# Shares report data access and table-row construction across ficha renderers.
 class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     attr_reader :docx
 
@@ -21,6 +22,13 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
              :has_any_activity?,
              to: :by_tipo_periodo_renderer
 
+    # @param docx [Object] document being rendered
+    # @param kind [Symbol] treatment axis
+    # @param person_ejes_resumen [PersonEjesResumen] report data
+    # @param informes_translator_service [Object] report translation adapter
+    # @param periodos_renderer_service [Object] period provider
+    # @param activities_by_periods_renderer_service [Object] grouped activity provider
+    # @param index [Integer] current period index
     def initialize(
         docx:,
         kind:,
@@ -39,6 +47,8 @@ class PersonEjesResumen::FichaRendererService::GenericFichaRenderer
         @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
+    # Renders the responsible-person label.
+    # @return [void]
     def encargado_title
         docx.p stringify("common.encargado").upcase, bold: true
     end

@@ -1,6 +1,13 @@
+# Represents one semester period with parsed dates and percentage metadata.
 class PersonEjesResumen::PeriodosWrapper::SemestralWrapper < PersonEjesResumen::PeriodosWrapper::GenericWrapper
     attr_reader :semestre_str, :percentage
 
+    # @param kind [Symbol] treatment axis
+    # @param start_date [String] start date in day/month/year format
+    # @param end_date [String] end date in day/month/year format
+    # @param percentage [String] calculated percentage reached in the period
+    # @param semestre_str [String] display name for the semester range
+    # @param period_percentage [String] target percentage for the semester
     def initialize(
             kind:,
             start_date:,

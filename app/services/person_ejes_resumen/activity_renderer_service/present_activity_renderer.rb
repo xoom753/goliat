@@ -1,3 +1,6 @@
+# Adapts a current activity record to the report renderer interface.
+# @see PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
+# @group Activity renderers
 class PersonEjesResumen::ActivityRendererService::PresentActivityRenderer < PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
     def activity_nombre
         @current_activity.coursable.nombre

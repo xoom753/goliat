@@ -1,3 +1,5 @@
+# Supplies occupational-axis rows and styles for the grading ficha table.
+# @see PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
 class PersonEjesResumen::SpecificFichaRendererService::FichasLaboralRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     def grades_table
         header_colspan = get_kind_specific_table_header_colspan

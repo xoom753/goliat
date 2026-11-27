@@ -1,11 +1,15 @@
+# Calculates a capped grade from the duration of summarized period activities.
 class PersonEjesResumen::PeriodQualifierService
     REQUIRED_HOURS = 30.0
     MAX_GRADE = 2.0
 
+    # @param period [#group_similar_activities] period providing duration summaries
     def initialize(period)
         @period = period
     end
 
+    # Calculates a grade from zero to the configured maximum and formats decimals with a comma.
+    # @return [String] localized numeric grade
     def get_grade
         grade = (activities_h.to_f * MAX_GRADE) / REQUIRED_HOURS
         if grade > MAX_GRADE

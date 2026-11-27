@@ -1,4 +1,7 @@
+# Selects the legacy or current social-axis grading table for a report period.
 class PersonEjesResumen::SpecificFichaRendererService::FichasSocialRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
+    # Renders the social table matching the current period's format.
+    # @return [Object] document table result
     def grades_table
         if @current_periodo.is_formato_antiguo?
             formato_antiguo_table

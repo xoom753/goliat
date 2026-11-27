@@ -1,3 +1,5 @@
+# Supplies sports-axis rows for the shared grading ficha table.
+# @see PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
 class PersonEjesResumen::SpecificFichaRendererService::FichasDeportivoRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     private
 

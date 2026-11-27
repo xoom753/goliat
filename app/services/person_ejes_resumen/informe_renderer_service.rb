@@ -1,3 +1,4 @@
+# Coordinates period, activity, ficha, and document rendering for a treatment report.
 class PersonEjesResumen::InformeRendererService
     delegate :header,
              :footer,
@@ -21,6 +22,8 @@ class PersonEjesResumen::InformeRendererService
 
     attr_accessor :docx
 
+    # @param person_ejes_resumen [PersonEjesResumen] report data
+    # @param kind [Symbol] treatment axis for the report
     def initialize(person_ejes_resumen:, kind:)
         @kind = kind
         @person_ejes_resumen = person_ejes_resumen
@@ -29,6 +32,8 @@ class PersonEjesResumen::InformeRendererService
         )
     end
 
+    # Returns the report's calculated periods.
+    # @return [Array] period wrappers
     def periodos
         periodos_renderer_service.periodos
     end

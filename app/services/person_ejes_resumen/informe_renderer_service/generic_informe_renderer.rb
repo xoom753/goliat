@@ -1,9 +1,13 @@
+# Provides shared page layout, branding, signature, and delivery-date sections.
 class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
     attr_reader :docx
 
     delegate :date_to_str,
              to: PersonEjesResumen
 
+    # @param kind [Symbol] treatment axis selecting the signature credentials
+    # @param docx [Object] document receiving report layout and content
+    # @param activities_by_periods_renderer_service [Object] activity data provider
     def initialize(
             kind:,
             docx:,
@@ -14,6 +18,8 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
         @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
+    # Configures document-wide fonts, page dimensions, margins, and styles.
+    # @return [void]
     def generic_styles
         docx.font name: "Calibri (Cuerpo)"
 
@@ -72,6 +78,8 @@ class PersonEjesResumen::InformeRendererService::GenericInformeRenderer
         end
     end
 
+    # Renders the closing and selects the signer by treatment axis.
+    # @return [void]
     def signature
         docx.p "Atentamente,"
 

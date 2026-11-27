@@ -1,3 +1,4 @@
+# Reads a legacy spreadsheet using its configured header names and builds activity records.
 class LegacyFileParseService
     delegate :start_date_index_from,
              :start_date_index_to,
@@ -5,11 +6,14 @@ class LegacyFileParseService
              :end_date_index_to,
              to: :@legacy_files_parser
 
+    # @param legacy_import_file [LegacyImportFile] uploaded spreadsheet and parser configuration
     def initialize(legacy_import_file)
         @legacy_import_file = legacy_import_file
         @legacy_files_parser = @legacy_import_file.parseable
     end
 
+    # Parses non-empty person rows, returning an empty list when headers are missing.
+    # @return [Array<LegacyPersonActivity>]
     def records
         activities = []
         parsing_first_row = true
@@ -29,6 +33,8 @@ class LegacyFileParseService
         []
     end
 
+    # Saves parsed records and updates the import file's status and record count.
+    # @return [void]
     def import_records!
         records.each do |record|
             record.save!

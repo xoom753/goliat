@@ -100,7 +100,7 @@ RSpec.describe "Extra activities", type: :request do
   describe "GET /extra_activities/:id/export" do
     it "sends participant data as a dated CSV attachment" do
       activity = create_extra_activity("Workshop")
-      person = Person.create!(nombres: "Jane Example", dni: "123", pabellon: "A-1")
+      person = Person.create!(nombres: "Jane Example", dni: "123", pabellon: "A-1", celda: "12", estado: :presente)
       PersonActivity.create!(person: person, coursable: activity, mes: 3, anio: 2024)
 
       time_now = Time.zone.now
@@ -114,17 +114,19 @@ RSpec.describe "Extra activities", type: :request do
         "Workshop-#{Date.today}.csv"
       )
       csv = CSV.parse(response.body, headers: true)
-      expect(csv.headers.first(6)).to eq([
+      expect(csv.headers).to eq([
         "Nombres",
         "Cédula",
         "Pabellón",
+        "Celda",
+        "Estado",
         "Workshop",
         "Creado: #{activity.created_at.to_date}",
         "Exportado: #{time_now}"
       ])
-      expect(csv.headers.length).to eq(6)
+      expect(csv.headers.length).to eq(8)
       expect(csv.headers.last).to be_present
-      expect(csv.first.fields.first(3)).to eq([ "Jane Example", "123", "A-1" ])
+      expect(csv.first.fields.first(5)).to eq([ "Jane Example", "123", "A-1", "12", "presente" ])
     end
   end
 end

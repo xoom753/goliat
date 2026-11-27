@@ -1,3 +1,7 @@
+# Converts one legacy course spreadsheet row into an unsaved activity record.
+#
+# Normalizes names and activity metadata, using sheet names to infer dates when
+# the parser is configured for month-per-sheet workbooks.
 class LegacyCourseFileParserService::LegacyPersonActivityBuilder
     include ActionView::Helpers::SanitizeHelper
 
@@ -6,6 +10,12 @@ class LegacyCourseFileParserService::LegacyPersonActivityBuilder
     delegate :month_name_in_each_sheet?,
              to: :@legacy_course_file_parser
 
+    # @param row [Array] spreadsheet row containing person data
+    # @param params [ActionController::Parameters, Hash] import metadata and optional date overrides
+    # @param sheet_name [String] source sheet used for inferred month dates
+    # @param current_row_n [Integer] zero-based row index in the source sheet
+    # @param legacy_import_file [LegacyImportFile] parent import record
+    # @param legacy_course_file_parser [LegacyCourseFileParser] parser configuration
     def initialize(
             row:,
             params:,
@@ -22,6 +32,8 @@ class LegacyCourseFileParserService::LegacyPersonActivityBuilder
         @legacy_course_file_parser = legacy_course_file_parser
     end
 
+    # Builds an unsaved {LegacyPersonActivity} with normalized data and inferred dates.
+    # @return [LegacyPersonActivity]
     def build_legacy_person_activity
         activity_group_str = @params[:grupo].to_s.strip.titleize
         activity_str = @params[:actividad].to_s.strip.titleize

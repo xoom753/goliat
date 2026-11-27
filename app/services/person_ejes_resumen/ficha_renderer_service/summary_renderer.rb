@@ -1,7 +1,11 @@
+# Renders narrative compliance and grading summaries for report fichas.
 class PersonEjesResumen::FichaRendererService::SummaryRenderer
     delegate :stringify,
              to: :@informes_translator_service
 
+    # @param docx [Object] document receiving summary paragraphs
+    # @param person_ejes_resumen [PersonEjesResumen] report subject
+    # @param informes_translator_service [Object] translation adapter
     def initialize(
             docx:,
             person_ejes_resumen:,
@@ -12,6 +16,8 @@ class PersonEjesResumen::FichaRendererService::SummaryRenderer
         @informes_translator_service = informes_translator_service
     end
 
+    # Renders the narrative that the person meets the process requirements.
+    # @return [void]
     def info_si_cumple
         person_nombres = @person_ejes_resumen.nombres
         se_informa = stringify("common.se_informa")
@@ -26,6 +32,8 @@ class PersonEjesResumen::FichaRendererService::SummaryRenderer
         end
     end
 
+    # Renders the narrative that the person does not meet the process requirements.
+    # @return [void]
     def info_no_cumple
         person_nombres = @person_ejes_resumen.nombres
         se_informa = stringify("common.se_informa")

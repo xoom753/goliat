@@ -1,3 +1,5 @@
+# Supplies cultural-axis rows for the shared grading ficha table.
+# @see PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
 class PersonEjesResumen::SpecificFichaRendererService::FichasCulturalRenderer < PersonEjesResumen::SpecificFichaRendererService::FichasCommonRenderer
     private
 

@@ -1,3 +1,4 @@
+# Builds semester period wrappers from the report's semester and detail fields.
 class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
     SEMESTRE_NAMES = [
         "Primer semestre",
@@ -18,11 +19,15 @@ class PersonEjesResumen::PeriodosRendererService::SemestresPorcentualesRenderer
 
     delegate :date_to_str, to: PersonEjesResumen
 
+    # @param kind [Symbol] treatment axis used by each period wrapper
+    # @param person_ejes_resumen [PersonEjesResumen] source report and semester data
     def initialize(kind:, person_ejes_resumen:)
         @kind = kind
         @person_ejes_resumen = person_ejes_resumen
     end
 
+    # Returns semester wrappers with calculated labels and date ranges.
+    # @return [Array<PersonEjesResumen::PeriodosWrapper::SemestralWrapper>]
     def semestres_porcentuales
         # @semestres_porcentuales = {}
         # percentages.each_with_index do |semestre_porcentual, index|

@@ -1,3 +1,4 @@
+# Renders report identity, activity, and compliance information for one period.
 class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonEjesResumen::FichaRendererService::GenericFichaRenderer
     delegate :info_si_cumple,
              :info_no_cumple,
@@ -36,6 +37,8 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
         docx.p
     end
 
+    # Renders the compliance summary based on activity across the relevant periods.
+    # @return [void]
     def info_summary
         docx.p stringify("common.informe_kind").upcase, bold: true
         if has_any_activity?
@@ -46,6 +49,8 @@ class PersonEjesResumen::FichaRendererService::ActivitiesFichaRenderer < PersonE
         docx.p
     end
 
+    # Renders permanent and temporal activity sections.
+    # @return [void]
     def info_actividades_list
         info_actividades_permanentes_list
         info_actividades_temporales_list

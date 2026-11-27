@@ -1,9 +1,14 @@
+# Selects the percentage or semester period builder for a report.
 class PersonEjesResumen::PeriodosRendererService
+    # @param person_ejes_resumen [PersonEjesResumen] report with period configuration
+    # @param kind [Symbol] treatment axis used by period wrappers
     def initialize(person_ejes_resumen:, kind:)
         @kind = kind
         @person_ejes_resumen = person_ejes_resumen
     end
 
+    # Returns report periods using the format selected by the report.
+    # @return [Array] report period wrappers
     def periodos
         if @person_ejes_resumen.tipo_porcentual?
             periodos_porcentuales
@@ -12,6 +17,8 @@ class PersonEjesResumen::PeriodosRendererService
         end
     end
 
+    # Groups report periods by their percentage label.
+    # @return [Hash] periods keyed by percentage
     def grouped_activities
         periodos.group_by(&:period_percentage)
     end

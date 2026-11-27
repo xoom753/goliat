@@ -19,7 +19,7 @@ RAILS_ENV=production bin/rails server
 - [x] when importing presentes por pabellón: mark as inactive the ones who are not present
 - [] associate person#pabellon
 - [x] associate LegacyPersonActivity to parseable to track what file is it imported from
-- [] LegacyPersonActivity.where(start_date is invalid)
+- [x] LegacyPersonActivity.where(start_date is invalid)
 
 ## ERD
 
@@ -43,7 +43,7 @@ RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 
 ## yard
 ```
-bundle exec yard server -p 3000
+bundle exec yard server -p 3000 --reload > log/yard.log
 
 bundle exec yard graph --protected --full --dependencies | dot -T pdf -o diagram.pdf
 ```
@@ -108,4 +108,5 @@ tmux
 build-essential
 graphviz
 git
+nano
 ```

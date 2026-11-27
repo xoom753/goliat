@@ -1,3 +1,5 @@
+# Supplies semester-period metadata and activity checks for report fichas.
+# @see PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
 class PersonEjesResumen::ByTipoPeriodoRendererService::PeriodosSemestralesRenderer < PersonEjesResumen::ByTipoPeriodoRendererService::GenericPeriodosRenderer
     def get_grades_table_merged_rows_count
         qualy_table_merged_rows_count = get_info_table_merged_rows_count

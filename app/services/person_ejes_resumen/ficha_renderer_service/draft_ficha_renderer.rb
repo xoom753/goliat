@@ -1,3 +1,4 @@
+# Renders draft report sections before a final report is generated.
 class PersonEjesResumen::FichaRendererService::DraftFichaRenderer
     delegate :info_si_cumple,
              :info_no_cumple,
@@ -6,6 +7,11 @@ class PersonEjesResumen::FichaRendererService::DraftFichaRenderer
              to: :summary_renderer,
              prefix: :draft
 
+    # @param docx [Object] document receiving the draft content
+    # @param kind [Symbol] treatment axis
+    # @param person_ejes_resumen [PersonEjesResumen] report data
+    # @param activities_by_periods_renderer_service [Object] grouped activity provider
+    # @param informes_translator_service [Object] report translation adapter
     def initialize(
             kind:,
             docx:,
@@ -20,6 +26,8 @@ class PersonEjesResumen::FichaRendererService::DraftFichaRenderer
         @activities_by_periods_renderer_service = activities_by_periods_renderer_service
     end
 
+    # Renders the activity list included in the draft.
+    # @return [void]
     def draft_activities_list
         @docx.h1 "Todas las actividades"
         @activities_by_periods_renderer_service.grouped_activities.each do |grouped_activities|
@@ -29,6 +37,8 @@ class PersonEjesResumen::FichaRendererService::DraftFichaRenderer
         end
     end
 
+    # Renders the draft template heading.
+    # @return [void]
     def draft_template_title
         @docx.h1 "(Plantillas)", align: :center
     end

@@ -1,4 +1,6 @@
+# Translates report strings while applying treatment-axis-specific wording.
 class PersonEjesResumen::ActivityToHumanRendererService::InformesTranslator
+    # @param kind [Symbol] treatment axis whose localized report strings are used
     def initialize(kind:)
         @kind = kind
         @kind_str = I18n.t("common.#{@kind}")
@@ -7,6 +9,11 @@ class PersonEjesResumen::ActivityToHumanRendererService::InformesTranslator
         end
     end
 
+    # Translates a key with the selected treatment-axis wording and case.
+    # @param identifier_key [String] translation key
+    # @param kind_f [Boolean] whether to use feminine wording when available
+    # @param downcase [Boolean] whether to lowercase the treatment-axis label
+    # @return [String] formatted translation
     def stringify(identifier_key, kind_f: false, downcase: false)
         kind_str = get_kind_str(kind_f: kind_f)
         kind_str = kind_str.downcase if downcase
