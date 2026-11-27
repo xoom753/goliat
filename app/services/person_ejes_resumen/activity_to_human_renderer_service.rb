@@ -1,5 +1,9 @@
 # Formats activity kind, name, duration, and dates for report and certificate output.
 class PersonEjesResumen::ActivityToHumanRendererService
+    delegate :activity_nombre,
+             :activity_detail_str,
+             to: :first_activity
+
     # @param activities [Array] source activity renderers
     # @param kind [Symbol] treatment axis used for localized wording
     def initialize(
@@ -33,9 +37,7 @@ class PersonEjesResumen::ActivityToHumanRendererService
     end
 
     def activity_str
-        @activity_str ||= PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer.new(
-            actividad_str: @by_months.values.first.activity_nombre
-        ).activity_str
+        "#{ortography_fixed_activity_str}#{activity_detail_str}"
     end
 
     def meses_y_anios_str(upcase: false)
@@ -49,6 +51,17 @@ class PersonEjesResumen::ActivityToHumanRendererService
     end
 
     private
+
+    # @return [LegacyActivityRenderer|PresentActivityRenderer]
+    def first_activity
+        @first_activity ||= @by_months.values.first
+    end
+
+    def ortography_fixed_activity_str
+        @ortography_fixed_activity_str ||= PersonEjesResumen::ActivityToHumanRendererService::OrtographyFixer.new(
+            actividad_str: activity_nombre
+        ).activity_str
+    end
 
     def by_months_identifier
         if @by_months.keys.length > 1

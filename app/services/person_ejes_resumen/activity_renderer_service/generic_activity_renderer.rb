@@ -11,6 +11,10 @@ class PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
         @current_activity = current_activity
     end
 
+    def activity_detail
+        nil
+    end
+
     protected
 
     # Parses a stored duration string as hours.

@@ -77,7 +77,8 @@ class PersonEjesResumen::ActivityToHumanRendererService::ActivityKindIdentifier
             /concurso/i,
             /agasajo/i,
             /taller/i,
-            /cine/i
+            /cine/i,
+            /curso/i
         ].any? do |regex|
             @activity_str =~ regex
         end

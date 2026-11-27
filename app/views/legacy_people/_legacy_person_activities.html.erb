@@ -1,5 +1,5 @@
 <%
-    colspan = 5
+    colspan = 6
 %>
 
 <% legacy_person_activities_by_group.each do |activity_group_id, legacy_person_activities| %>
@@ -32,6 +32,9 @@
             </td>
             <td>
                 <%= legacy_person_activity.duracion.downcase %>
+            </td>
+            <td>
+                <%= legacy_person_activity.id %>
             </td>
         </tr>
     <% end %>

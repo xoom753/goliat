@@ -2,6 +2,9 @@
 # @see PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
 # @group Activity renderers
 class PersonEjesResumen::ActivityRendererService::LegacyActivityRenderer < PersonEjesResumen::ActivityRendererService::GenericActivityRenderer
+    delegate :legacy_activity_detail,
+             to: :@current_activity
+
     def activity_nombre
         @current_activity.legacy_activity.nombre
     end
@@ -16,5 +19,17 @@ class PersonEjesResumen::ActivityRendererService::LegacyActivityRenderer < Perso
 
     def month
         @current_activity.end_date.strftime "%m-%Y"
+    end
+
+    def activity_detail_str
+        if should_render_detail? && legacy_activity_detail.present?
+            " #{legacy_activity_detail.nombre.titleize}"
+        end
+    end
+
+    private
+
+    def should_render_detail?
+        activity_human_name_d == "curso"
     end
 end

@@ -7,7 +7,7 @@ RAILS_ENV=production bin/rails assets:precompile
 RAILS_ENV=production bin/rails server
 ```
 
-## todo
+## requirements
 
 * Ruby version `ruby 4.0.10`
 
@@ -20,6 +20,7 @@ RAILS_ENV=production bin/rails server
 - [] associate person#pabellon
 - [x] associate LegacyPersonActivity to parseable to track what file is it imported from
 - [x] LegacyPersonActivity.where(start_date is invalid)
+- [] some LegacyPersonActivity used to be Cultural but they need to be updated to be Educucativo
 
 ## ERD
 
@@ -43,6 +44,8 @@ RAILS_ENV=test bundle exec rspec --format h --out spec_results.html spec
 
 ## yard
 ```
+bundle exec yard doc
+
 bundle exec yard server -p 3000 --reload > log/yard.log
 
 bundle exec yard graph --protected --full --dependencies | dot -T pdf -o diagram.pdf
