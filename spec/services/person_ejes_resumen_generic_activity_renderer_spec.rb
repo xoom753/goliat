@@ -8,6 +8,10 @@ RSpec.describe PersonEjesResumen::ActivityRendererService::GenericActivityRender
     expect(renderer.end_date).to eq(Date.new(2024, 3, 31))
   end
 
+  it "returns no activity detail by default" do
+    expect(renderer.activity_detail).to be_nil
+  end
+
   describe "#get_duracion_h" do
     it "uses the default duration when the value is nil" do
       expect(renderer.send(:get_duracion_h, nil)).to eq(30)

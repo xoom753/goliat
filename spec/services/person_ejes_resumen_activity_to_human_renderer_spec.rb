@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PersonEjesResumen::ActivityToHumanRendererService do
   let(:by_months) do
     {
-      Date.new(2024, 1, 31) => double(activity_nombre: "Tejido", duracion_i: 4)
+      Date.new(2024, 1, 31) => double(activity_nombre: "Tejido", activity_detail_str: "", duracion_i: 4)
     }
   end
   subject(:renderer) do
@@ -17,7 +17,7 @@ RSpec.describe PersonEjesResumen::ActivityToHumanRendererService do
 
   describe "#activity_str" do
     it "corrects known Spanish spelling while preserving unknown words" do
-      activities = { Date.new(2024, 1, 31) => double(activity_nombre: "Area de Pabellon Especial", duracion_i: 2) }
+      activities = { Date.new(2024, 1, 31) => double(activity_nombre: "Area de Pabellon Especial", activity_detail_str: "", duracion_i: 2) }
       instance = described_class.new(kind: :cultural, activities: activities.values, duracion_i: 2, by_months: activities)
 
       expect(instance.activity_str).to eq("Área de Pabellón Especial")
@@ -30,7 +30,7 @@ RSpec.describe PersonEjesResumen::ActivityToHumanRendererService do
     end
 
     it "defaults unmatched cultural activity names to course" do
-      activities = { Date.new(2024, 1, 31) => double(activity_nombre: "Lectura", duracion_i: 1) }
+      activities = { Date.new(2024, 1, 31) => double(activity_nombre: "Lectura", activity_detail_str: "", duracion_i: 1) }
       instance = described_class.new(kind: :cultural, activities: activities.values, duracion_i: 1, by_months: activities)
 
       expect(instance.actividad_kind).to eq("curso de ")
@@ -45,8 +45,8 @@ RSpec.describe PersonEjesResumen::ActivityToHumanRendererService do
 
     it "lists multiple months in one year" do
       activities = {
-        Date.new(2024, 1, 31) => double(activity_nombre: "Tejido", duracion_i: 1),
-        Date.new(2024, 3, 31) => double(activity_nombre: "Tejido", duracion_i: 2)
+        Date.new(2024, 1, 31) => double(activity_nombre: "Tejido", activity_detail_str: "", duracion_i: 1),
+        Date.new(2024, 3, 31) => double(activity_nombre: "Tejido", activity_detail_str: "", duracion_i: 2)
       }
       instance = described_class.new(kind: :cultural, activities: activities.values, duracion_i: 3, by_months: activities)
 
@@ -73,7 +73,7 @@ RSpec.describe PersonEjesResumen::ActivityToHumanRendererService do
     end
 
     it "uses plural feminine wording for actividades" do
-      activities = { Date.new(2024, 2, 29) => double(activity_nombre: "Adecentamiento", duracion_i: 3) }
+      activities = { Date.new(2024, 2, 29) => double(activity_nombre: "Adecentamiento", activity_detail_str: "", duracion_i: 3) }
       instance = described_class.new(kind: :laboral, activities: activities.values, duracion_i: 3, by_months: activities)
 
       expect(instance.to_string).to include("Por participar en las actividades de", "realizadas durante el mes")
@@ -81,8 +81,8 @@ RSpec.describe PersonEjesResumen::ActivityToHumanRendererService do
 
     it "uses plural month wording when activities span multiple months" do
       activities = {
-        Date.new(2024, 1, 31) => double(activity_nombre: "Lectura", duracion_i: 2),
-        Date.new(2024, 2, 29) => double(activity_nombre: "Lectura", duracion_i: 5)
+        Date.new(2024, 1, 31) => double(activity_nombre: "Lectura", activity_detail_str: "", duracion_i: 2),
+        Date.new(2024, 2, 29) => double(activity_nombre: "Lectura", activity_detail_str: "", duracion_i: 5)
       }
       instance = described_class.new(kind: :cultural, activities: activities.values, duracion_i: 7, by_months: activities)
 

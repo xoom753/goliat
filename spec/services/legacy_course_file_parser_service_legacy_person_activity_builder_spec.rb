@@ -45,6 +45,27 @@ RSpec.describe LegacyCourseFileParserService::LegacyPersonActivityBuilder do
     )
   end
 
+  it "parses misspelled month aliases in sheet names and removes alias text from the year" do
+    allow(parser).to receive(:month_name_in_each_sheet?).and_return(true)
+    allow(params).to receive(:[]).and_call_original
+    allow(params).to receive(:[]).with(:rango).and_return(nil)
+    allow(params).to receive(:[]).with(:desde).and_return(nil)
+    allow(params).to receive(:[]).with(:hasta).and_return(nil)
+    builder = described_class.new(
+      row: [ "ANA PEREZ" ],
+      params: params,
+      sheet_name: "febero G2 2024",
+      current_row_n: 0,
+      legacy_import_file: import_file,
+      legacy_course_file_parser: parser
+    )
+
+    activity = builder.build_legacy_person_activity
+
+    expect(activity.start_date).to eq(Date.new(2024, 2, 1))
+    expect(activity.end_date).to eq(Date.new(2024, 2, 29))
+  end
+
   it "uses explicit dates and the provided date range" do
     allow(parser).to receive(:month_name_in_each_sheet?).and_return(false)
     params[:rango] = " febrero a abril "
